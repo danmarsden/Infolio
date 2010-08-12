@@ -1,0 +1,45 @@
+php_value error_reporting 8191
+php_value session.gc_maxlifetime "7200"
+php_value arg_separator.output "&amp;"
+php_value session.use_trans_sid "false"
+php_value post_max_size "8M"
+php_value upload_max_filesize "32M"
+php_value memory_limit "64M"
+php_value register_globals "0"
+php_value auto_detect_line_endings "1"
+php_value short_open_tag "1"
+
+IndexIgnore *.LCK
+RewriteEngine on
+
+# Rule key
+# NC = No case
+# QSA = Query string append
+# L = last (no more rewrites after this if it matches)
+# R = rewrite (change the URL the user sees to the rewritten one)
+
+# Image and video resize script
+RewriteRule ^images/([\d\w\-_]+)/(-{0,1}\d*)/$ /system/get.image.php?id=$2&size=$1 [NC,QSA,L]
+RewriteRule ^videos/([\d\w\-_]+)/(-{0,1}\d*)/$ /system/get.video.php?id=$2&size=$1 [NC,QSA,L]
+
+# back end
+RewriteRule ^admin/help.php admin/help.php [NC,QSA,L]
+RewriteRule ^([\w\-\_]+)/admin/$ /admin/bo.php [NC,QSA,L]
+RewriteRule ^([\w\-\_]+)/admin$ /$1/admin/ [NC,QSA,L,R]
+RewriteRule ^([\w\-\_]+)/admin/logout/$ /admin/bo-login.php?a=logout [NC,QSA,L]
+RewriteRule ^([\w\-\_]+)/admin/login/$ /admin/bo-login.php?institution=$1 [NC,QSA,L]
+RewriteRule ^export/([\d\w\-_]+)/$ /system/get.exportzip.php?user_id=$1 [NC,QSA,L]
+
+# Front end
+RewriteRule ^([\w\-\_]+)/tab-([\w\-\_\'!]+) tab.php?institution=$1&name=$2 [NC,QSA,L]
+RewriteRule ^([\w\-\_]+)/tab tab.php?institution=$1 [NC,QSA,L]
+RewriteRule ^([\w\-\_]+)/page-(\d+) page.php?institution=$1&id=$2 [NC,QSA,L]
+RewriteRule ^([\w\-\_]+)/collection.php collection.php?institution=$1 [NC,QSA,L]
+RewriteRule ^([\w\-\_]+)/help.php help.php?institution=$1 [NC,QSA,L]
+RewriteRule ^([\w\-\_]+)/bulkupload.shtml bulkupload.shtml [NC,QSA,L]
+RewriteRule ^([\w\-\_]+)/bulkupload.php bulkupload.php?institution=$1 [NC,QSA,L]
+RewriteRule ^([\w\-\_]+)/settings.php settings.php?institution=$1 [NC,QSA,L]
+RewriteRule ^([\w\-\_]+)/login.php login.php?institution=$1 [NC,QSA,L]
+RewriteRule ^([\w\-\_]+)/login2.php login2.php?institution=$1 [NC,QSA,L]
+RewriteRule ^([\w\-\_]+)/$ index.php?institution=$1 [NC,QSA,L]
+RewriteRule ^([\w\-\_]+)$ /$1/ [NC,QSA,L,R]

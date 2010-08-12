@@ -1,0 +1,93 @@
+/* container for the scrollable items */
+ul.items {
+	height: 64px;
+	width: 80%;
+	float: left;
+}
+
+
+/* next / prev buttons */
+a.prev, a.next {
+	display:block;
+	width:42px;
+	height:87px;
+	cursor: pointer;
+}
+
+#new-tab {top:10px;z-index:1; left:40px }
+#prev-tab {top:4px; left:0; float: left;}
+#next-tab {top:4px; right:0;float: right;}
+
+/* Collection scroller bits */
+
+#collection-scroller {
+	height:100px;
+}
+#collection-scroller ul.items {
+	height: 100px;
+}
+#collection-scroller a.prev, #collection-scroller a.next {
+	width:16px;
+	height:27px;
+}
+
+#scroll-left{position:absolute;top:25px; left:0;height:35px;}
+#scroll-right {position:absolute;top:25px; right:0;height:35px;}
+
+/* Red - default */
+#collection-scroller a.prev { background:url(../../_images/si/red/left-arrow.gif); }
+#collection-scroller a.next { background:url(../../_images/si/red/right-arrow.gif); }
+
+/* Green */
+body.green #collection-scroller a.prev { background:url(../../_images/si/green/left-arrow.gif); }
+body.green #collection-scroller a.next { background:url(../../_images/si/green/right-arrow.gif); }
+
+/* Blue */
+body.blue #collection-scroller a.prev { background:url(../../_images/si/blue/left-arrow.gif); }
+body.blue #collection-scroller a.next { background:url(../../_images/si/blue/right-arrow.gif); }
+
+/* Dark blue */
+body.dark_blue #collection-scroller a.prev { background:url(../../_images/si/dark_blue/left-arrow.gif); }
+body.dark_blue #collection-scroller a.next { background:url(../../_images/si/dark_blue/right-arrow.gif); }
+
+/* Grey */
+body.grey #collection-scroller a.prev { background:url(../../_images/si/grey/left-arrow.gif); }
+body.grey #collection-scroller a.next { background:url(../../_images/si/grey/right-arrow.gif); }
+
+/* Yellow */
+body.yellow #collection-scroller a.prev { background:url(../../_images/si/yellow/left-arrow.gif); }
+body.yellow #collection-scroller a.next { background:url(../../_images/si/yellow/right-arrow.gif); }
+
+/* Orange */
+body.orange #collection-scroller a.prev { background:url(../../_images/si/orange/left-arrow.gif); }
+body.orange #collection-scroller a.next { background:url(../../_images/si/orange/right-arrow.gif); }
+
+/* Tab scroller bits */
+
+/* Red - default */
+a.prev { background:url(../../_images/si/red/prev.gif); }
+a.next { background:url(../../_images/si/red/next.gif); }
+
+/* Green */
+body.green a.prev { background:url(../../_images/si/green/prev.gif); }
+body.green a.next { background:url(../../_images/si/green/next.gif); }
+
+/* Blue */
+body.blue a.prev { background:url(../../_images/si/blue/prev.gif); }
+body.blue a.next { background:url(../../_images/si/blue/next.gif); }
+
+/* Dark blue */
+body.dark_blue a.prev { background:url(../../_images/si/dark_blue/prev.gif); }
+body.dark_blue a.next { background:url(../../_images/si/dark_blue/next.gif); }
+
+/* Grey */
+body.grey a.prev { background:url(../../_images/si/grey/prev.gif); }
+body.grey a.next { background:url(../../_images/si/grey/next.gif); }
+
+/* Yellow */
+body.yellow a.prev { background:url(../../_images/si/yellow/prev.gif); }
+body.yellow a.next { background:url(../../_images/si/yellow/next.gif); }
+
+/* Orange */
+body.orange a.prev { background:url(../../_images/si/orange/prev.gif); }
+body.orange a.next { background:url(../../_images/si/orange/next.gif); }

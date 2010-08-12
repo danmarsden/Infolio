@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>QTObject embed by Geoff Stearns</title>
+<!-- QTObject embed by Geoff Stearns geoff@deconcept.com http://blog.deconcept.com/ -->
+<script type="text/javascript" src="qtobject.js"></script>
+<style type="text/css">
+	body {
+		background-color: #eeeeee;
+		font: 12px verdana, arial, helvetica, sans-serif;
+	}
+</style>
+</head>
+<body>
+	<p>The Quicktime movie below was embedded using the <a href="http://blog.deconcept.com/2005/01/26/web-standards-compliant-javascript-quicktime-detect-and-embed/
+">QTObject</a> embed method by <a href="http://blog.deconcept.com/">Geoff Stearns</a>.</p>
+	
+	<p>This is an example of a simple QuickTime movie embed.</p>
+	
+	<p>See also the <a href="qtobject.html">advanced embed</a>.</p>
+	
+	<p>
+		<a href="view-source:http://blog.deconcept.com/code/qtobject/qtobject_simple.html">View source</a> | <a href="qtobject.js">View Javascript</a>.
+	</p>
+	
+	<p>
+		<a href="http://blog.deconcept.com/code/qtobject/qtobjectembed.zip">Download Source</a>.
+	</p>
+
+	<div id="video">
+		<script type="text/javascript">
+		// <![CDATA[
+			
+			// create the qtobject and write it to the page, this includes plugin detection
+			// be sure to add 15px to the height to allow for the controls
+			var myQTObject = new QTObject("bushuncensored.mov", "bushfinger", "320", "255");
+			myQTObject.addParam("autostart", "false");
+			myQTObject.write();
+			
+		// ]]>
+		</script>
+		<noscript>
+			<p>You must enable Javascript to view this content. <a href="#">(Link to alternate content)</a></p>
+		</noscript>
+	</div>
+</body>
+</html>

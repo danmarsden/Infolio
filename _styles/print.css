@@ -1,0 +1,31 @@
+/* Things that should be hidden */
+
+#loader,
+#loaderImg,
+a#my-collection,
+#nav-tabs,
+#upload-image-frm,
+#wrap-head,
+a.icon,
+ul.inline-list,
+.debug
+{
+	display: none;
+}
+
+/* Profile header */
+
+.header_pic {
+	float: left;
+	margin-right: 5px;
+}
+
+/* Boxes */
+
+div.box {
+	border: 2px solid #000;
+	padding: 0 20px;
+	margin-bottom: 20px;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+}

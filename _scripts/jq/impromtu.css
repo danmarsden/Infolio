@@ -1,0 +1,35 @@
+/* $id$ */
+
+.jqiwarning .jqi{
+	background-color: #f00;
+}
+.jqifade{
+	background-color: #000;
+}
+div.jqi{
+	position: absolute;
+	background-color: #aa0200;
+	padding: 10px;
+	width: 300px;
+}
+div.jqi .jqiclose{
+	display: none;
+}
+div.jqi .jqicontainer{
+	background-color: #ba0500;
+	padding: 5px;
+	color: #000;
+	font-weight: bold;
+}
+div.jqi .jqimessage{
+	background-color: #fff;
+	padding: 10px;
+}
+div.jqi .jqibuttons{
+	text-align: center;
+	padding: 5px 0 0 0;
+}
+div.jqi button{
+	padding: 3px 10px 3px 10px;
+	margin: 0 10px;
+}

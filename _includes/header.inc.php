@@ -1,0 +1,60 @@
+<?php
+
+/**
+ * header.inc.php
+ * Produces the HTML for the header section of the page with all the correct menus.
+ *
+ * LICENSE: This is an Open Source Project
+ *
+ * @author     Richard Garside [www.richardsprojects.co.uk]
+ * @copyright  2008 Rix Centre
+ * @license    http://creativecommons.org/licenses/by-nc-sa/2.0/uk/
+ * @version    $Id: header.inc.php 827 2009-12-18 16:36:47Z richard $
+ * @link       NA
+ * @since      NA
+*/
+include_once('ui.inc.php');
+
+$helpHref = 'Help.php';
+switch($page->getName())
+{
+	case 'Login':
+		$helpHref .= "?section=" . HELP_LOGIN;
+		break;
+	case 'About-me':
+		$helpHref .= "?section=" . HELP_ABOUT_ME;
+		break;
+	case 'Collection':
+		$helpHref .= "?section=" . HELP_COLLECTION;
+		break;
+	case 'Settings':
+		$helpHref .= "?section=" . HELP_SETTINGS;
+		break;
+	default:
+		$helpHref .= "?section=" . HELP_PAGES;
+		break;
+}
+
+$accessibilityMenu = new Menu( array(	Link::CreateImageLink($studentTheme->Icon('small-text', 'Smaller text'), $page->PathWithQueryString(array('fs'=>Theme::SIZE_SMALL)), Image::SIZE_ORIGINAL, array('class'=>'bSmall')),
+										Link::CreateImageLink($studentTheme->Icon('med-text', 'Medium text'), $page->PathWithQueryString(array('fs'=>Theme::SIZE_MEDIUM)), Image::SIZE_ORIGINAL, array('class'=>'bMedium')),
+										Link::CreateImageLink($studentTheme->Icon('large-text', 'Bigger text'), $page->PathWithQueryString(array('fs'=>Theme::SIZE_BIG)), Image::SIZE_ORIGINAL, array('class'=>'bBig')),
+										Link::CreateImageLink($studentTheme->Icon('invert-text', 'Swap colours'), $page->PathWithQueryString(array('a'=>EventDispatcher::ACTION_COLOUR_SWAP)), Image::SIZE_ORIGINAL, array('class'=>'bSwap')) ),
+								'nav-access' );
+
+$toolMenu = new Menu( array(	Link::CreateImageLink($studentTheme->Icon('help', 'Help'), $helpHref, Image::SIZE_ORIGINAL, array('class'=>'bHelp'))
+								), 'nav-tools' );
+
+// Get menu and set selected tab
+if( isset($studentUser) ) {
+	$tabsMenu =  $studentUser->getTabMenu();
+
+	$tabsMenu->setAsActiveLink( $page->getSectionName() );
+
+	$toolMenu->addLink( Link::CreateImageLink($studentTheme->Icon('logout', 'Logout'), 'login.php?log=out', Image::SIZE_ORIGINAL) );
+	$toolMenu->addLink( Link::CreateImageLink($studentTheme->Icon('settings', 'Settings'), 'settings.php', Image::SIZE_ORIGINAL, array('class'=>'bSettings')) );
+}
+
+?><div id="wrap-head"><?
+print $accessibilityMenu->Html();
+print $toolMenu->Html();
+?></div><?

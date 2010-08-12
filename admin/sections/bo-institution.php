@@ -1,0 +1,112 @@
+<?php
+
+/**
+ * Institution admin section
+ *
+ * LICENSE: This is an Open Source Project
+ *
+ * @author     Elvir Leonard
+ * @copyright  2008 Rix Centre
+ * @license    http://creativecommons.org/licenses/by-nc-sa/2.0/uk/
+ * @version    $Id: bo-institution.php 818 2009-11-09 12:00:12Z richard $
+ * @link       NA
+ * @since      NA
+ */
+
+include_once('model/Institution.class.php');
+
+//controller
+switch($a) {
+	case 'edit':
+	case 'add':
+	case 'delete':
+		showForm();
+		break;
+	default:
+	 	showGrid();
+		break;
+}
+
+/**
+ * Shows list of institutions
+ */
+function showGrid()
+{
+?>
+	<script type="text/javascript" src="/admin/_scripts/bo-institution-grid.js"></script>
+	<div dojoType="dijit.Dialog" id="dialogDeleteConfirmation" title="Delete tab_school">
+		<p>Are you sure you want to delete this institution?</p>
+		<button dojoType="dijit.form.Button" type="submit" onclick="onDeleteConfirm()">Yes</button>
+		<button dojoType="dijit.form.Button" type="submit" onclick="onDeleteCancel()">No</button>
+	</div>		
+	<form action="." method="get">
+	<table class="dataGridTable" cellspacing="1">
+		<tr>
+			<th>Name</th>
+			<th class="actionTd"><a href="?do=<? print SECTION_INSTITUTION; ?>&a=add">Create</a></th>
+		</tr>
+		<?
+
+		$institutions = Institution::RetrieveAll();
+		$i = 0;
+		foreach($institutions as $institution){
+			$i++;
+			?>
+			<tr id="i<? print($institution->getId()); ?>" class="<? print($i%2==1)?"even":"odd"?>">
+				<td><a href="?do=<? print SECTION_INSTITUTION; ?>&amp;a=edit&amp;id=<? print $institution->getid(); ?>"><? print $institution->getName(); ?></a></td>
+				<td class="actionTd">
+					<a href="?do=<? print SECTION_INSTITUTION; ?>&amp;a=edit&amp;id=<? print $institution->getid(); ?>">Edit</a>,
+					<a onclick="onDelete(<? print $institution->getid(); ?>);" onkeyup="onDelete(<? print $institution->getid(); ?>);">Delete</a>
+				</td>
+			</tr>			
+			<?
+		}
+		?>
+	</table>
+	</form>
+	<?
+}
+
+/**
+ * Show edit/create form for institution
+ */
+function showForm()
+{
+	if(isset($_GET["id"])){
+		$institution =	Institution::RetrieveById($_GET["id"]);
+	}
+	?>
+	<script type="text/javascript" src="/admin/_scripts/bo-institution-form.js"></script>
+
+
+	<div class="formContainer" dojoType="dijit.layout.TabContainer" style="height:600px; width:95%;">
+		<div id="dataFormContainer55" dojoType="dijit.layout.ContentPane" title="Institution">
+			<form method="post" id="form" action="." dojoType="dijit.form.Form">
+				<input type="hidden" name="id" id="id" value="<? print (isset($institution)) ? $institution->getId():""?>" />
+				<input type="hidden" name="do" id="do" value="<? print SECTION_INSTITUTION; ?>" />
+				<input type="hidden" name="a" id="a" value="<? print ((isset($institution)) ? 'Update' : 'Insert' ) ?>" />
+				<div dojoType="dijit.Toolbar" style="clear:both;">
+					<div dojoType="dijit.form.Button" onclick="doSubmit" showLabel="true">Save</div>
+					<? if(isset($_GET["id"])){?>
+					<div dojoType="dijit.form.Button" onclick="deleteRow(dojo.byId('id').value,'')" showLabel="true">Delete</div>
+					<? } ?>
+					<div dojoType="dijit.form.Button" onclick="doCancel" showLabel="true">Cancel</div>
+				</div>
+				<table class="dataForm">
+					<tr>
+						<td colspan="2"><div id="inlineNotification"></div></td>
+					</tr>
+					<tr>
+						<td class="captionLabel">Name</td>
+						<td><input dojoType="dijit.form.ValidationTextBox" type="text" name="name" id="name" value="<? if(isset($institution))print $institution->getName(); ?>" required="true" invalidMessage="Can't be empty" /></td>
+					</tr>
+					<tr>
+						<td class="captionLabel">Short name for URL</td>
+						<td><input dojoType="dijit.form.ValidationTextBox" type="text" name="url" id="url" value="<? if(isset($institution))print $institution->getUrl(); ?>" required="true" regExp="[\w\d_\-]+" invalidMessage="Can't be empty and must only contain letters, numbers and _ or -" /></td>
+					</tr>
+				</table>			
+			</form>	
+		</div>		
+	</div>
+	<?
+}

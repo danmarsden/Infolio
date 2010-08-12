@@ -1,0 +1,10 @@
+/*
+	Author : Alex Armstrong
+	V
+	Date : 19/01/2009
+	Site : xxxx.com
+	Basic Style sheet for older browsers
+	
+*/
+
+@import url(screen.css); /* imports modern styles */

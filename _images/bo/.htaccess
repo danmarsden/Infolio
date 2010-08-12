@@ -1,0 +1,42 @@
+Options -Indexes
+php_flag register_globals 0
+php_flag arg_separator &amp;
+php_flag session.use_trans_sid 0
+
+RewriteEngine on
+
+#SEARCH FUNCTION
+RewriteRule ^search.html$ search.php [NC,QSA,L]
+
+#CONTACT US
+RewriteRule ^contact.html$ contact.php?page=contact-us [NC,QSA,L]
+
+RewriteRule ^index.php$ index.php?page=homepage [NC,QSA]
+RewriteRule ^index.html$ index.php?page=homepage [NC,QSA]
+RewriteRule ^add-page.html$ index.php?action=add&page= [NC,QSA]
+
+#CUSTOM PAGES
+RewriteRule ^sitemap.html$ sitemap.php [NC,QSA,L]
+RewriteRule ^backoffice_no_access.html$ backoffice_login.php?action=noaccess [NC,QSA]
+RewriteRule ^paragraphList.html$ ajax.php?action=getParagraph [NC,QSA,L]
+RewriteRule ^paragraph.html$ ajax.php [NC,QSA,L]
+RewriteRule ^content.html$ ajax.php?action=content [NC,QSA,L]
+
+#CONTENT
+RewriteRule ^([0-9a-zA-Z_-]+)(\/)([^//]+)(\/)([^//]+)(\/)([^//]+)(\.)html$ index.php?page=$1&subpage=$3&subsubpage=$5&subsubsubpage=$7 [NC,QSA]
+RewriteRule ^([0-9a-zA-Z_-]+)(\/)([^//]+)(\/)([^//]+)(\.)html$ index.php?page=$1&subpage=$3&subsubpage=$5 [NC,QSA]
+RewriteRule ^([0-9a-zA-Z_-]+)(\/)([^//]+)(\.)html$ index.php?page=$1&subpage=$3 [NC,QSA]
+RewriteRule ^([0-9a-zA-Z_-]+)(\.)html$ index.php?page=$1 [NC,QSA]
+RewriteRule ^$ index.php?page=homepage [NC,QSA]
+
+#BACKOFFICE Redirection
+Redirect 301 /backoffice http://www.rixcentre.org/backoffice.php
+
+ErrorDocument 403 /missing-article.xhtml
+ErrorDocument 404 /missing-article.xhtml
+ErrorDocument 500 /missing-article.xhtml
+ErrorDocument 400 /missing-article.xhtml
+ErrorDocument 401 /missing-article.xhtml
+
+RewriteRule ^no-access.xhtml$ error.php?page=no_access
+RewriteRule ^missing-article.xhtml$ error.php?page=page_error

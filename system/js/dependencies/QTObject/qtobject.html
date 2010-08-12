@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>QTObject embed by Geoff Stearns</title>
+<!-- QTObject embed by Geoff Stearns geoff@deconcept.com http://blog.deconcept.com/ -->
+<script type="text/javascript" src="qtobject.js"></script>
+<style type="text/css">
+	body {
+		background-color: #eeeeee;
+		font: 12px verdana, arial, helvetica, sans-serif;
+	}
+</style>
+</head>
+<body>
+	<p>The Quicktime movie below was embedded using the <a href="http://blog.deconcept.com/2005/01/26/web-standards-compliant-javascript-quicktime-detect-and-embed/">QTObject</a> embed method by <a href="http://blog.deconcept.com/">Geoff Stearns</a>.</p>
+	
+	<p>This movie uses an advanced method of using a placeholder image with a link to the actual QuickTime movie. This method can save you bandwidth by not loading the entire movie each time a visitor loads the page, and can improve the user experience by giving the user more information on what plugin is needed and letting them click the movie to start playing it.</p>
+	
+	<p>See also the <a href="qtobject_simple.html">simple embed</a>.</p>
+	
+	<p>
+		<a href="view-source:http://blog.deconcept.com/code/qtobject/qtobject.html">View source</a> | <a href="qtobject.js">View Javascript</a>.
+	</p>
+	
+	<p>
+		<a href="http://blog.deconcept.com/code/qtobject/qtobjectembed.zip">Download Source</a>.
+
+	</p>
+
+	<div id="video">
+		<script type="text/javascript">
+		// <![CDATA[
+		
+			// create the qtobject and write it to the page, this includes plugin detection
+			// be sure to add 15px to the height to allow for the controls
+			var myQTObject = new QTObject("bushplaceholder.jpg", "bushfinger", "320", "255");
+			myQTObject.addParam("href", "bushuncensored.mov");
+			myQTObject.addParam("target", "myself");
+			myQTObject.addParam("controller", "false");
+			myQTObject.write();
+		
+		// ]]>
+		</script>
+	
+	</div>
+</body>
+</html>

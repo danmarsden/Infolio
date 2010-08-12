@@ -1,0 +1,22 @@
+/*
+	Author : Alex Armstrong
+	Date : 19/01/2009
+	Site : xxxx.com
+	IE6 only styles	
+*/
+
+body {
+	font:75.5%/1.5 Verdana , Arial, sans-serif; /* font size for ie6 */
+}
+
+/* Scrollable fixes */
+p#prev-tab {
+	z-index: 30;
+}
+p#scroll-left {
+	z-index: 30;
+}
+div#wrap-content ul.items {
+	width: 300px;
+	margin-left: 15px;
+}

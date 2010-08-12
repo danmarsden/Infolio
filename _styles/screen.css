@@ -1,0 +1,1083 @@
+/*
+	Author : Alex Armstrong
+	Date : 08/02/2009
+	Site : eFolio	Main styles
+	
+	Table of Contents:
+
+	1. Body
+	2. Typography
+	3. Layout
+	4. Navigation
+	5. Content
+		5a Data Tables
+		5b Forms
+		5c Colour swatch interface
+		5d Password setting
+	6. Footer
+	7. Common Classes
+		a.box class
+	8. Theme colours
+		
+	Colours:
+	red: #CD3301
+	yellow: #CD3301
+*/
+@import url(reset.css); /*import reset style sheet*/
+
+/* 1. Body
+--------------------------------------------------------------------------------------- */
+/* This means that roughly 1em = 10 px we can now use ems */
+body {
+	font: 80.5%/1.5 Arial, sans-serif !important; /* font size for firefox keeping this in just in case ie6 is doing odd things */
+	font: 75.5%/1.5 Arial, sans-serif; /* font size for ie6 */
+	margin:auto;
+}
+
+body.s-small #wrap-main {
+	font-size: 0.7em;
+}
+body.s-big #wrap-main {
+	font-size: 1.6em;
+}
+
+/* 2. Typography
+--------------------------------------------------------------------------------------- */
+h1,h2,h3,h4,h5,h6,p,ul,dl,ol,blockquote {margin-bottom:15px;}
+
+p,ul,dl,ol,blockquote,td,th,label,input,select {font-size:1em}
+
+h1 {font-size:2em; color:#fff; line-height:1em; margin-bottom:15px; font-weight:normal}
+
+h2 {font-size:1.5em;font-weight:normal}
+
+h3 {font-size:1.3em}
+
+h4 {font-size:1.1em}
+
+h4 {}
+
+h6 {}
+
+ul {list-style:disc;}
+
+ul li {margin-left:2em;}
+
+ol {list-style:decimal;}
+
+ol li {margin-left:4em;}
+
+hr {}
+
+blockquote {font-style:italic;}
+
+abbr {
+	cursor:help;
+	border-bottom:1px dotted red;
+}
+
+del {text-decoration:line-through;}
+
+strong {font-weight:bold;}
+
+em {font-style:italic;}
+
+th {font-weight:bold;}
+
+label {font-weight: bold;}
+
+p#site-name {
+	font-size:2em;
+	color:#CD3301;
+	margin-bottom:0;
+	line-height:1.2;
+}
+
+p#site-subname {
+	font-size:1.5em;
+	}
+
+a {
+	color:#000;
+	text-decoration:none;
+}
+
+a:hover {
+	color:#000;
+	text-decoration:underline;
+}
+
+.rb .box-head h2 { 
+font-size:1.2em;
+}
+
+/* 3. Layout
+--------------------------------------------------------------------------------------- */
+#wrap-head {
+	width:100%;
+	overflow:auto;
+}
+
+/* 4. Navigation
+--------------------------------------------------------------------------------------- */
+#wrap-head {
+	padding:3px 0;
+}
+#nav-access, #nav-tools {
+	list-style:none;
+	float:left;
+	margin-bottom:0;
+}
+#nav-tools {
+	float:right;
+}
+#nav-access li, #nav-tools li {
+	display:inline;
+	margin:0;
+}
+
+#nav-tabs {
+	clear:both;
+	position:relative;
+    float:left;
+    width:100%;
+    background:#fff;
+    font-size:1.4em;
+    line-height:normal;
+	/* IE 6 needs this line - RG
+		margin-bottom: -4px!important;*/
+	margin: 4px 0 -5px 0;
+	}
+#nav-tabs ul {
+	margin:0 50px;
+    padding:10px 10px 0 10px;
+    list-style:none;
+   }
+    #nav-tabs li {
+      float:left;
+      background:url(/_images/si/red/left_both.gif) no-repeat left top;
+      margin:0;
+      padding:0 0 0 9px;
+	  margin-left:10px;
+      border-bottom:1px solid #fff;
+      }
+    #nav-tabs li a {
+      float:left;
+      display:block;
+      background:url(/_images/si/red/right_both.gif) no-repeat right top;
+      padding:0px 15px 4px 6px;
+      text-decoration:none;
+	  color:#000;
+      }
+    #nav-tabs li a:hover {
+      color:#fff!important;
+	  color:#CD3301;
+      }
+    
+	#home li.active {
+      background-position:0 -150px;
+      border-width:0;
+      }
+    #home li.active a {
+      background-position:100% -150px;
+      padding-bottom:5px;
+      color:#fff;
+      }
+ 
+    #nav-tabs li:hover, #nav-tabs li:hover a {
+      background-position:0% -150px;
+      color:#fff;
+      }
+    #nav-tabs li:hover a {
+      background-position:100% -150px;
+      }
+	  
+	  #new-tab, #next-tab, #prev-tab {
+	position:absolute;
+	  }
+	  
+
+#collection-scroller {
+	clear:both;
+	position:relative;
+      width:inherit;
+      font-size:1.4em;
+      line-height:normal;
+	  overflow:hidden;
+	margin: 0 auto 10px auto;
+	width: 98%;
+      }
+  #collection-scroller ul {
+      margin:0;
+      padding:0;
+	  list-style:none;
+	  margin:0 20px;
+	   width:100%;
+      }
+    #collection-scroller li {
+      float:left;
+      margin:0;
+      padding:0;
+	  margin-left:10px;
+      }
+
+/* 5. Content
+--------------------------------------------------------------------------------------- */
+	#wrap-head {
+	background:url(/_images/si/header-bk.jpg) repeat-x;
+	margin-bottom:5px;
+	}
+	
+	#wrap-profile {
+	float:left;
+	width:50%;
+	}
+	#wrap-profile img {
+	float:left;
+	padding:5px 5px 0px 5px;
+	}
+	
+	#wrap-content {
+	background: #CD3301;
+	padding:1em 2em;
+	clear:both;
+	text-align:centre;
+	}
+	#wrap-content-inner {
+	width:80%;
+	max-width:1240px;
+	min-width:700px;
+	margin:0 auto;
+	text-align:left;
+	}
+	
+	#my-collection {
+	float:right;
+	display:block;
+	background:url(/_images/si/my-collection.gif) right top no-repeat;
+	padding: 60px 80px 0 0;
+	margin-right:10px;
+	}
+
+
+	/* 5a Data Tables */
+	table {width:500px;}
+	td, th{border:1px solid #ccc;}
+	
+	/* 5b Forms */
+
+	textarea {
+		font-family: Arial, sans-serif;
+		font-size: 1.4em;
+		font-weight: normal;
+		width: 47%;
+		margin: 0 0 1em 0;
+	}
+
+	div.fileinputs {
+		position: relative;
+		float:left;
+		padding-right: 20px;
+	}
+
+	div.fakefile {
+		position: absolute;
+		top: 0px;
+		left: 0px;
+		z-index: 1;
+	}
+
+	div.fakefile img {
+		padding: 0 0 0 10px;
+	}
+
+	div.fakefile input {
+		padding: 6px 0;
+		border: 2px solid #CD3301;
+	}
+	input.file {
+		position: relative;
+		text-align: right;
+		-moz-opacity:0 ;
+		filter:alpha(opacity: 0);
+		opacity: 0;
+		z-index: 2;
+	}
+
+	form.page_update input {
+		font-size: 1.3em;
+	}
+
+	/* 5c Colour swatch interface */
+
+	ul#colour_choice li {
+		display: block;
+		float: left;
+		width: 8em;
+		border: 3px solid #666;
+		margin: 0 1em 1em 0;
+		font-size: 1.5em;
+	}
+	ul#colour_choice li.active {
+		border: 3px solid #000;
+		font-weight: bold;
+		text-decoration: underline;
+	}
+	ul#colour_choice li a {
+		display: block;
+		padding-left: 2em;
+	}
+
+	ul#colour_choice li span {
+		display: block;
+		padding: 2px 5px;
+		background-color: #fff;
+	}
+	ul#colour_choice li.red a { background-color: #cd3301; }
+	ul#colour_choice li.green a { background-color: #a4d867; }
+	ul#colour_choice li.blue a { background-color: #61b8d4; }
+	ul#colour_choice li.dark_blue a { background-color: #002d51; }
+	ul#colour_choice li.grey a { background-color: #999; }
+	ul#colour_choice li.yellow a { background-color: #ffb310; }
+	ul#colour_choice li.orange a { background-color: #fc681e; }
+
+	/* 5d Password setting */
+
+	form#password-form {
+		margin: 1em 0 2em 0;
+	}
+
+	form#password-form label {
+		float: left;
+		margin: 15px 1em 0 0;
+	}
+
+/* 6. Footer 
+--------------------------------------------------------------------------------------- */
+
+div#footer {
+	clear: both;
+}
+
+/* 7. Common Classes 
+--------------------------------------------------------------------------------------- */
+
+div#loader {
+	display: none;
+	text-align: center;
+	background-color: #fff;
+	padding: 20px 0 5px 0 ;
+	margin: 1.5em 0;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+}
+.hideme {
+	visibility:hidden;
+}
+
+/* set the image to use and establish the lower-right position */ 
+.box, .box-content, .box-head, .box-head h2 { 
+	background: transparent url(/_images/si/red/box.png) no-repeat bottom right;
+	zoom:1;
+	overflow:hidden; 
+	} 
+
+.box {
+	margin: 0 auto 1.5em auto; /* use to position the box */ 
+	padding-right: 15px; /* the gap on the right edge of the image (not content padding) */
+	} 
+
+/* set the top-right image */ 
+.box-head { 
+	background-position: top right; 
+	margin-right: -15px; /* pull the right image over on top of border */
+	padding-right: 5px; /* right-image-gap + right-inside padding */
+	} 
+ 
+  /* set the top-left image */ 
+.box-head h2 { 
+	background-position: top left; margin: 0; /* reset main site styles*/ 
+	border: 0;/* ditto */ 
+	padding: 10px 0 10px 20px; /* padding-left = image gap + interior padding ... no padding-right */
+	float:left;
+	width: 42%;
+ } 
+ 
+ /* set the lower-left corner image */ 
+.box-content {
+	position: relative;
+	background-position: bottom left; 
+	/* margin-right: 25px; /* interior-padding right */ 
+	padding: 10px 0 50px 20px; /* mirror .box-head right/left */
+	overflow:hidden; 
+  }
+
+   	.box-image, .box-image0, .box-image1 {
+	float: left;
+	width: 350px;
+	padding: 0 4px 20px 4px;
+	}
+
+	.box img.icon {
+	position: absolute;
+	z-index: 2;
+	padding: 10px;
+	}
+
+	.box a.hidden {
+	display: none;
+	}
+
+	/* Box templates */
+
+	p.block-com {
+		clear: both;
+	}
+
+	.bl1 .box-image {
+		float: left;
+	}
+
+	.bl2 .box-image {
+		padding-left: 0;
+		padding-right: 0;
+		float: right;
+	}
+
+	.bl2 .box-text {
+		width: 300px;
+		float: left;
+	}
+
+	.bl2 textarea {
+		width: 99%;
+	}
+
+	.bl3 .box-text {
+		padding-right: 0;
+		padding-bottom: 25px;
+	}
+
+	.bl4 .box-image0 {
+		margin: 0;
+		padding-right: 0;
+		float: left;
+	}
+	.bl4 .box-image1 {
+		margin: 0;
+		padding-right: 0;
+		float: right;
+	}
+	.bl4 .box-image1 img {
+		float: right;
+	}
+	.bl4 .box-text {
+		clear: both;
+		padding-bottom: 25px;
+	}
+
+	.bl4 textarea {
+		width: 98%;
+		height: 5em;
+	}
+	
+	.playbutton {
+		width: 50px;
+		position: absolute;
+		bottom: 10px;
+	}
+
+	.box-admin {
+	border-top : 1px dashed #CD3301;
+	margin:10px 20px 0 0;
+	padding:15px 0;
+	}
+	.box-tools {
+	font-size:0.9em;
+	float:right;
+	text-align:right;
+	padding-top:22px;
+	padding-bottom:10px;
+	}
+	#upload-image-frm{
+	clear:both;
+	border-top : 1px dashed #CD3301;
+	padding-top:10px;
+	}
+#upload-image-frm label {display:block;	margin-bottom:-15px;}
+#upload-btn {margin-bottom:-15px;}
+a.icon {padding: 5px;}
+a.icon img {vertical-align: middle;}
+a.edit {background: url(/_images/si/icons/edit2.gif) no-repeat 0% 50%;}
+a.delete {background: url(/_images/si/icons/delete.gif) no-repeat 0% 50%;}
+a.stop-editing {background: url(/_images/si/icons/stop-edit.gif) no-repeat 0% 50%;}
+a.change-pic {background: url(/_images/si/icons/change-pic.gif) no-repeat 0% 50%;}
+a.add-desc {background: url(/_images/si/icons/add-description.gif) no-repeat 0% 50%;}
+a.add-fav {background: url(/_images/si/icons/add-fav.gif) no-repeat 0% 50%;}
+a.delete-image {background: url(/_images/si/icons/delete-image.gif) no-repeat 10px 50%;}
+a.show-fav {background: url(/_images/si/icons/favourite.gif) no-repeat 0% 50%;}
+a.show-tags {background: url(/_images/si/icons/tags.gif) no-repeat 0% 50%;}
+a.show-all {background: url(/_images/si/icons/show-all.gif) no-repeat 0% 50%;}
+a.add-page {background: url(/_images/si/icons/add-page.gif) no-repeat 0% 50%;}
+a.sort-old {background: url(/_images/si/icons/sort-oldest.gif) no-repeat 0% 50%;}
+a.sort-new {background: url(/_images/si/icons/sort-newest.gif) no-repeat 0% 50%;}
+a.sort-az {background: url(/_images/si/icons/sort-az.gif) no-repeat 0% 50%;}
+
+.help-items p {font-size: 1.3em;}
+.help-items a {font-weight: bold; text-decoration: underline;}
+
+/* An image in edit mode */
+img.edit {
+	padding: 1px;
+	border: 3px dashed #00f;
+}
+
+ 	/* CSS for the box starts here */
+	.yb {
+		padding:0;
+		background:#ffCC00;
+		clear:both;
+	}
+	.bi {padding:10px;}
+	.bt {
+		height:17px;
+		margin:0 -5px;
+		background:url(/_images/si/red/yellow-box.gif) 100% 0 no-repeat;
+	}
+	.bt div {
+		width:18px;
+		height:17px;
+		background:url(/_images/si/red/yellow-box.gif) 0 0 no-repeat;
+	}
+	.bb {
+		clear:both;
+		height:17px;
+		margin:0 -5px;
+		background:url(/_images/si/red/yellow-box.gif) 100% 100% no-repeat;
+	}
+	.bb div {
+		width:18px;
+		height:17px;
+		background:url(/_images/si/red/yellow-box.gif) 0 100% no-repeat;
+	}
+  	/* CSS for the grey box starts here */
+	.gb {background:url(/_images/si/red/grey-box.gif) right top no-repeat;color:#fff; width:auto;}
+	.yb .gb{background:url(/_images/si/red/grey-box-yellow.gif) right top no-repeat;}
+	.rb .gb{background-image:url(/_images/si/red/grey-box-red-bk.png)}
+	.grey-bi  {
+	margin-right:20px;
+	background:url(/_images/si/red/grey-box.gif) left top no-repeat;
+	padding:14px 10px;
+	}
+	.yb .grey-bi {background:url(/_images/si/red/grey-box-yellow.gif) left top no-repeat;}
+	.rb .grey-bi {background-image:url(/_images/si/red/grey-box-red-bk.png)}
+	.gb a  {
+	color:#fff;
+	}
+.rb {
+	padding:0;
+	background:#A42900;
+	margin: 0 auto;
+	clear:both;
+	}
+
+.rb .bt {background:url(/_images/si/red/red-box.gif) 100% 0 no-repeat;}
+.rb .bt div {background:url(/_images/si/red/red-box.gif) 0 0 no-repeat;}
+.rb .bb {background:url(/_images/si/red/red-box.gif) 100% 100% no-repeat;}
+.rb .bb div {background:url(/_images/si/red/red-box.gif) 0 100% no-repeat;}
+
+
+.right {float:right;}
+.left {float:left;}
+.clear {clear:both;}
+
+#stop-editing {width : 180px;}
+#save-btn {background:#fc0;border:none;}
+	
+.yb a img{margin-bottom:-10px;}
+	
+ul#image-tools{list-style:none;float:right;}
+ul#image-tools li{margin:0 0 20px 0;}
+
+.rb .box, .rb .box-content, .rb .box-head, .rb .box-head h2 {background: transparent url(/_images/si/red/box-red-bk.gif) no-repeat bottom right;}
+ 
+.rb .box {padding-right: 15px; margin:10px;}
+
+/* set the top-right image */ 
+.rb .box-head { 
+	background-position: top right; 
+	margin-right: -15px; /* pull the right image over on top of border */
+	padding-right: 15px; /* right-image-gap + right-inside padding */
+	} 
+ 
+  /* set the top-left image */ 
+.rb .box-head h2 { 
+	background-position: top left; margin: 0; /* reset main site styles*/ 
+	border: 0;/* ditto */ 
+	padding: 5px 0 5px 10px; /* padding-left = image gap + interior padding ... no padding-right */
+	float:left;
+	width: 97%;
+ } 
+ 
+ /* set the lower-left corner image */ 
+.rb .box-content {
+	background-position: bottom left;
+	padding: 10px 0 20px 10px; /* mirror .box-head right/left */
+	overflow:hidden;
+  }
+
+.small {width:210px;}
+.tool-box {background : #3D3D3D}
+.inline-list{list-style:none;}
+.inline-list li {margin-left:7px; display:inline;}
+.inline-list li.title {font-weight:bold; margin-right: 0.3em;}
+
+/* 8. Theme colours */
+body.red #wrap-content { background-color: #cd3301; }
+body.inv div.box-content,
+body.inv div.box-content a,
+body.inv div.box-content a:hover { color: #fff;}
+body.inv ul#colour_choice li span {background-color: #000;}
+
+body.red li.file_document {list-style-image: url(/_images/si/icons/red/file_document.gif);}
+body.red li.file_image {list-style-image: url(/_images/si/icons/red/file_image.gif);}
+body.red li.file_audio {list-style-image: url(/_images/si/icons/red/file_audio.gif);}
+body.red li.file_movie {list-style-image: url(/_images/si/icons/red/file_movie.gif);}
+body.red li.file_other {list-style-image: url(/_images/si/icons/red/file_other.gif);}
+
+/* Theme: Green */
+/*body.green #wrap-content{background-color: #3fcd01;}*/
+body.green #wrap-content { background: #a4d867; }
+body.green p#site-name {color: #A4D867}
+body.green .box-admin, body.green #upload-image-frm{border-color :#A4D867;}
+body.green #nav-tabs li {background-image:url(/_images/si/green/left_both.gif);}
+body.green #nav-tabs li a {background-image:url(/_images/si/green/right_both.gif)}
+body.green .box, body.green .box-content, body.green .box-head, body.green .box-head h2 {background-image:url(/_images/si/green/box.png)}
+body.green .yb, body.green #save-btn  {background:#0072B1; color: #fff;}
+body.green .box-head h2, body.green .box-head a, body.green .yb a {color:#fff}
+body.green #save-btn, body.green .yb form p {color:#fff}
+body.green .bt {background-image:url(/_images/si/green/yellow-box.gif)}
+body.green .bt div {background-image:url(/_images/si/green/yellow-box.gif)}
+body.green .bb {background-image:url(/_images/si/green/yellow-box.gif)}
+body.green .bb div {background-image:url(/_images/si/green/yellow-box.gif)}
+body.green .gb {background-image:url(/_images/si/green/grey-box.gif)}
+body.green .yb .gb{background-image:url(/_images/si/green/grey-box-yellow.gif)}
+body.green .rb .gb{background-image:url(/_images/si/green/grey-box-red-bk.png)}
+body.green .grey-bi  {background-image:url(/_images/si/green/grey-box.gif)}
+body.green .yb .grey-bi {background-image:url(/_images/si/green/grey-box-yellow.gif)}
+body.green .rb .grey-bi {background-image:url(/_images/si/green/grey-box-red-bk.png)}
+body.green .rb {background:#70A82B}
+body.green .rb .bt {background-image:url(/_images/si/green/red-box.gif)}
+body.green .rb .bt div {background-image:url(/_images/si/green/red-box.gif)}
+body.green .rb .bb {background-image:url(/_images/si/green/red-box.gif)}
+body.green .rb .bb div {background-image:url(/_images/si/green/red-box.gif)}
+body.green .rb .box, body.green .rb .box-content, body.green .rb .box-head, body.green .rb .box-head h2 {background-image:url(/_images/si/green/box-red-bk.gif)}
+
+body.green li.file_document { list-style-image: url(/_images/si/icons/green/file_document.gif); }
+body.green li.file_image { list-style-image: url(/_images/si/icons/green/file_image.gif); }
+body.green li.file_audio { list-style-image: url(/_images/si/icons/green/file_audio.gif); }
+body.green li.file_movie { list-style-image: url(/_images/si/icons/green/file_movie.gif); }
+body.green li.file_other { list-style-image: url(/_images/si/icons/green/file_other.gif); }
+
+/* Theme: Green inv */
+/*body.green #wrap-content{background-color: #3fcd01;}*/
+body.green.inv #wrap-content { background: #a4d867; }
+body.green.inv p#site-name {color: #A4D867}
+body.green.inv .box-admin,
+body.green.inv #upload-image-frm{border-color :#A4D867;}
+body.green.inv #nav-tabs li {background-image:url(/_images/si/green_inv/left_both.gif);}
+body.green.inv #nav-tabs li a {background-image:url(/_images/si/green_inv/right_both.gif)}
+body.green.inv .box,
+body.green.inv .box-content,
+body.green.inv .box-head,
+body.green.inv .box-head h2 {background-image:url(/_images/si/green_inv/box.png)}
+body.green.inv .yb, body.green #save-btn  {background:#0072B1}
+body.green.inv .box-head h2,
+body.green.inv .box-head a{color:#fff}
+body.green.inv #save-btn,
+body.green.inv .yb form p {color:#fff}
+body.green.inv .bt {background-image:url(/_images/si/green_inv/yellow-box.gif)}
+body.green.inv .bt div {background-image:url(/_images/si/green_inv/yellow-box.gif)}
+body.green.inv .bb {background-image:url(/_images/si/green_inv/yellow-box.gif)}
+body.green.inv .bb div {background-image:url(/_images/si/green_inv/yellow-box.gif)}
+body.green.inv .gb {background-image:url(/_images/si/green_inv/grey-box.gif)}
+body.green.inv .yb .gb{background-image:url(/_images/si/green_inv/grey-box-yellow.gif)}
+body.green.inv .rb .gb{background-image:url(/_images/si/green_inv/grey-box-red-bk.png)}
+body.green.inv .grey-bi  {background-image:url(/_images/si/green_inv/grey-box.gif)}
+body.green.inv .yb .grey-bi {background-image:url(/_images/si/green_inv/grey-box-yellow.gif)}
+body.green.inv .rb .grey-bi {background-image:url(/_images/si/green_inv/grey-box-red-bk.png)}
+body.green.inv .rb {background:#70A82B}
+body.green.inv .rb .bt {background-image:url(/_images/si/green_inv/red-box.gif)}
+body.green.inv .rb .bt div {background-image:url(/_images/si/green_inv/red-box.gif)}
+body.green.inv .rb .bb {background-image:url(/_images/si/green_inv/red-box.gif)}
+body.green.inv .rb .bb div {background-image:url(/_images/si/green_inv/red-box.gif)}
+body.green.inv .rb .box,
+body.green.inv .rb .box-content,
+body.green.inv .rb .box-head,
+body.green.inv .rb .box-head h2 {background-image:url(/_images/si/green_inv/box-red-bk.gif)}
+
+
+/* Theme: blue */
+/*body.blue #wrap-content{background-color:#01cdc6;}*/
+body.blue #wrap-content{background:#61B8D4}
+body.blue p#site-name {color: #61b8d4}
+body.blue .box-admin, body.blue #upload-image-frm{border-color :#61b8d4;}
+body.blue #nav-tabs li {background-image:url(/_images/si/blue/left_both.gif)}
+body.blue #nav-tabs li a {background-image:url(/_images/si/blue/right_both.gif)}
+body.blue .box, body.blue .box-content, body.blue .box-head, body.blue .box-head h2 {background-image:url(/_images/si/blue/box.png)}
+body.blue .yb, body.blue #save-btn {background:#A4C765}
+body.blue .bt {background-image:url(/_images/si/blue/yellow-box.gif)}
+body.blue .bt div {background-image:url(/_images/si/blue/yellow-box.gif)}
+body.blue .bb {background-image:url(/_images/si/blue/yellow-box.gif)}
+body.blue .bb div {background-image:url(/_images/si/blue/yellow-box.gif)}
+body.blue .gb {background-image:url(/_images/si/blue/grey-box.gif)}
+body.blue .yb .gb{background-image:url(/_images/si/blue/grey-box-yellow.gif)}
+body.blue .rb .gb{background-image:url(/_images/si/blue/grey-box-red-bk.png)}
+body.blue .grey-bi  {background-image:url(/_images/si/blue/grey-box.gif)}
+body.blue .yb .grey-bi {background-image:url(/_images/si/blue/grey-box-yellow.gif)}
+body.blue .rb .grey-bi {background-image:url(/_images/si/blue/grey-box-red-bk.png)}
+body.blue .rb {background:#308EAD}
+body.blue .rb .bt {background-image:url(/_images/si/blue/red-box.gif)}
+body.blue .rb .bt div {background-image:url(/_images/si/blue/red-box.gif)}
+body.blue .rb .bb {background-image:url(/_images/si/blue/red-box.gif)}
+body.blue .rb .bb div {background-image:url(/_images/si/blue/red-box.gif)}
+body.blue .rb .box, body.blue .rb .box-content, body.blue .rb .box-head, body.blue .rb .box-head h2 {background-image:url(/_images/si/blue/box-red-bk.gif)}
+
+body.blue li.file_document {list-style-image: url(/_images/si/icons/blue/file_document.gif);}
+body.blue li.file_image {list-style-image: url(/_images/si/icons/blue/file_image.gif);}
+body.blue li.file_audio {list-style-image: url(/_images/si/icons/blue/file_audio.gif);}
+body.blue li.file_movie {list-style-image: url(/_images/si/icons/blue/file_movie.gif);}
+body.blue li.file_other {list-style-image: url(/_images/si/icons/blue/file_other.gif);}
+
+/* Theme: blue invert */
+/*body.blue #wrap-content{background-color:#01cdc6;}*/
+body.blue.inv #wrap-content{background:#61B8D4}
+body.blue.inv p#site-name {color: #61b8d4;}
+body.blue.inv .box-admin,
+body.blue.inv #upload-image-frm{border-color :#61b8d4;}
+body.blue.inv #nav-tabs li {background-image:url(/_images/si/blue_inv/left_both.gif)}
+body.blue.inv #nav-tabs li a {background-image:url(/_images/si/blue_inv/right_both.gif)}
+body.blue.inv .box,
+body.blue.inv .box-content,
+body.blue.inv .box-head,
+body.blue.inv .box-head h2 {background-image:url(/_images/si/blue_inv/box.png)}
+body.blue.inv .yb,
+body.blue.inv #save-btn {background:#A4C765}
+body.blue.inv .bt {background-image:url(/_images/si/blue_inv/yellow-box.gif)}
+body.blue.inv .bt div {background-image:url(/_images/si/blue_inv/yellow-box.gif)}
+body.blue.inv .bb {background-image:url(/_images/si/blue_inv/yellow-box.gif)}
+body.blue.inv .bb div {background-image:url(/_images/si/blue_inv/yellow-box.gif)}
+body.blue.inv .gb {background-image:url(/_images/si/blue_inv/grey-box.gif)}
+body.blue.inv .yb .gb{background-image:url(/_images/si/blue_inv/grey-box-yellow.gif)}
+body.blue.inv .rb .gb{background-image:url(/_images/si/blue_inv/grey-box-red-bk.png)}
+body.blue.inv .grey-bi  {background-image:url(/_images/si/blue_inv/grey-box.gif)}
+body.blue.inv .yb .grey-bi {background-image:url(/_images/si/blue_inv/grey-box-yellow.gif)}
+body.blue.inv .rb .grey-bi {background-image:url(/_images/si/blue_inv/grey-box-red-bk.png)}
+body.blue.inv .rb {background:#308EAD}
+body.blue.inv .rb .bt {background-image:url(/_images/si/blue_inv/red-box.gif)}
+body.blue.inv .rb .bt div {background-image:url(/_images/si/blue_inv/red-box.gif)}
+body.blue.inv .rb .bb {background-image:url(/_images/si/blue_inv/red-box.gif)}
+body.blue.inv .rb .bb div {background-image:url(/_images/si/blue_inv/red-box.gif)}
+body.blue.inv .rb .box,
+body.blue.inv .rb .box-content,
+body.blue.inv .rb .box-head,
+body.blue.inv .rb .box-head h2 {background-image:url(/_images/si/blue_inv/box-red-bk.gif)}
+
+/* Theme: Dark blue */
+/*body.dark_blue #wrap-content{background-color:#3f01cd;}*/
+body.dark_blue #wrap-content {background:#002d51;}
+body.dark_blue p#site-name {color: #002D51}
+body.dark_blue .box-admin, body.dark_blue #upload-image-frm{border-color :#002D51;}
+body.dark_blue #nav-tabs li {background-image:url(../_images/si/dark_blue/left_both.gif);}
+body.dark_blue #nav-tabs li a {background-image:url(../_images/si/dark_blue/right_both.gif)}
+body.dark_blue .box, body.dark_blue .box-content, body.dark_blue .box-head, body.dark_blue .box-head h2 {background-image:url(../_images/si/dark_blue/box.png)}
+body.dark_blue .yb, body.dark_blue #save-btn {background:#ffB310}
+body.dark_blue .bt {background-image:url(../_images/si/dark_blue/yellow-box.gif)}
+body.dark_blue .bt div {background-image:url(../_images/si/dark_blue/yellow-box.gif)}
+body.dark_blue .bb {background-image:url(../_images/si/dark_blue/yellow-box.gif)}
+body.dark_blue .bb div {background-image:url(../_images/si/dark_blue/yellow-box.gif)}
+body.dark_blue .gb {background-image:url(../_images/si/dark_blue/grey-box.gif)}
+body.dark_blue .yb .gb{background-image:url(../_images/si/dark_blue/grey-box-yellow.gif)}
+body.dark_blue .rb .gb{background-image:url(../_images/si/dark_blue/grey-box-red-bk.png)}
+body.dark_blue .grey-bi  {background-image:url(../_images/si/dark_blue/grey-box.gif)}
+body.dark_blue .yb .grey-bi {background-image:url(../_images/si/dark_blue/grey-box-yellow.gif)}
+body.dark_blue .rb .grey-bi {background-image:url(../_images/si/dark_blue/grey-box-red-bk.png)}
+body.dark_blue .rb {background:#0067BB}
+body.dark_blue .rb .bt {background-image:url(../_images/si/dark_blue/red-box.gif)}
+body.dark_blue .rb .bt div {background-image:url(../_images/si/dark_blue/red-box.gif)}
+body.dark_blue .rb .bb {background-image:url(../_images/si/dark_blue/red-box.gif)}
+body.dark_blue .rb .bb div {background-image:url(../_images/si/dark_blue/red-box.gif)}
+body.dark_blue .rb .box, body.dark_blue .rb .box-content, body.dark_blue .rb .box-head, body.dark_blue .rb .box-head h2 {background-image:url(../_images/si/dark_blue/box-red-bk.gif)}
+
+body.dark_blue li.file_document {list-style-image: url(/_images/si/icons/dark_blue/file_document.gif);}
+body.dark_blue li.file_image {list-style-image: url(/_images/si/icons/dark_blue/file_image.gif);}
+body.dark_blue li.file_audio {list-style-image: url(/_images/si/icons/dark_blue/file_audio.gif);}
+body.dark_blue li.file_movie {list-style-image: url(/_images/si/icons/dark_blue/file_movie.gif);}
+body.dark_blue li.file_other {list-style-image: url(/_images/si/icons/dark_blue/file_other.gif);}
+
+/* Theme: Dark blue invert */
+/*body.dark_blue #wrap-content{background-color:#3f01cd;}*/
+body.dark_blue.inv #wrap-content {background:#002d51;}
+body.dark_blue.inv p#site-name {color: #002D51}
+body.dark_blue.inv div.box-content {color: #fff;}
+body.dark_blue.inv .box-admin,
+body.dark_blue.inv #upload-image-frm{border-color :#002D51;}
+body.dark_blue.inv #nav-tabs li {background-image:url(../_images/si/dark_blue_inv/left_both.gif);}
+body.dark_blue.inv #nav-tabs li a {background-image:url(../_images/si/dark_blue_inv/right_both.gif)}
+body.dark_blue.inv .box,
+body.dark_blue.inv .box-content,
+body.dark_blue.inv .box-head,
+body.dark_blue.inv .box-head h2 {background-image:url(../_images/si/dark_blue_inv/box.png)}
+body.dark_blue.inv .yb,
+body.dark_blue.inv #save-btn {background:#ffB310}
+body.dark_blue.inv .bt {background-image:url(../_images/si/dark_blue_inv/yellow-box.gif)}
+body.dark_blue.inv .bt div {background-image:url(../_images/si/dark_blue_inv/yellow-box.gif)}
+body.dark_blue.inv .bb {background-image:url(../_images/si/dark_blue_inv/yellow-box.gif)}
+body.dark_blue.inv .bb div {background-image:url(../_images/si/dark_blue_inv/yellow-box.gif)}
+body.dark_blue.inv .gb {background-image:url(../_images/si/dark_blue_inv/grey-box.gif)}
+body.dark_blue.inv .yb .gb{background-image:url(../_images/si/dark_blue_inv/grey-box-yellow.gif)}
+body.dark_blue.inv .rb .gb{background-image:url(../_images/si/dark_blue_inv/grey-box-red-bk.png)}
+body.dark_blue.inv .grey-bi  {background-image:url(../_images/si/dark_blue_inv/grey-box.gif)}
+body.dark_blue.inv .yb .grey-bi {background-image:url(../_images/si/dark_blue_inv/grey-box-yellow.gif)}
+body.dark_blue.inv .rb .grey-bi {background-image:url(../_images/si/dark_blue_inv/grey-box-red-bk.png)}
+body.dark_blue.inv .rb {background:#0067BB}
+body.dark_blue.inv .rb .bt {background-image:url(../_images/si/dark_blue_inv/red-box.gif)}
+body.dark_blue.inv .rb .bt div {background-image:url(../_images/si/dark_blue_inv/red-box.gif)}
+body.dark_blue.inv .rb .bb {background-image:url(../_images/si/dark_blue_inv/red-box.gif)}
+body.dark_blue.inv .rb .bb div {background-image:url(../_images/si/dark_blue_inv/red-box.gif)}
+body.dark_blue.inv .rb .box,
+body.dark_blue.inv .rb .box-content,
+body.dark_blue.inv .rb .box-head,
+body.dark_blue.inv .rb .box-head h2 {background-image:url(../_images/si/dark_blue_inv/box-red-bk.gif)}
+
+/* Theme: Grey */
+/*body.grey #wrap-content{background-color:#666;}*/
+body.grey #wrap-content {background: #999;}
+body.grey p#site-name {color: #999;}
+body.grey .box-admin, body.grey #upload-image-frm{border-color :#999;}
+body.grey #nav-tabs li {background-image:url(/_images/si/grey/left_both.gif);}
+body.grey #nav-tabs li a {background-image:url(/_images/si/grey/right_both.gif)}
+body.grey .box, body.grey .box-content, body.grey .box-head, body.grey .box-head h2 {background-image:url(/_images/si/grey/box.png)}
+body.grey .yb, body.grey #save-btn {background:#ccc}
+body.grey .box-head h2, body.grey .box-head a{color:#fff}
+body.grey #save-btn, body.grey .yb form p {color:#333}
+body.grey .bt {background-image:url(/_images/si/grey/yellow-box.gif)}
+body.grey .bt div {background-image:url(/_images/si/grey/yellow-box.gif)}
+body.grey .bb {background-image:url(/_images/si/grey/yellow-box.gif)}
+body.grey .bb div {background-image:url(/_images/si/grey/yellow-box.gif)}
+body.grey .gb {background-image:url(/_images/si/grey/grey-box.gif)}
+body.grey .yb .gb{background-image:url(/_images/si/grey/grey-box-yellow.gif)}
+body.grey .rb .gb{background-image:url(/_images/si/grey/grey-box-red-bk.png)}
+body.grey .grey-bi  {background-image:url(/_images/si/grey/grey-box.gif)}
+body.grey .yb .grey-bi {background-image:url(/_images/si/grey/grey-box-yellow.gif)}
+body.grey .rb .grey-bi {background-image:url(/_images/si/grey/grey-box-red-bk.png)}
+body.grey .rb {background:#ccc}
+body.grey .rb .bt {background-image:url(/_images/si/grey/red-box.gif)}
+body.grey .rb .bt div {background-image:url(/_images/si/grey/red-box.gif)}
+body.grey .rb .bb {background-image:url(/_images/si/grey/red-box.gif)}
+body.grey .rb .bb div {background-image:url(/_images/si/grey/red-box.gif)}
+body.grey .rb .box, body.grey .rb .box-content, body.grey .rb .box-head, body.grey .rb .box-head h2 {background-image:url(/_images/si/grey/box-red-bk.gif)}
+
+body.grey li.file_document {list-style-image: url(/_images/si/icons/grey/file_document.gif);}
+body.grey li.file_image {list-style-image: url(/_images/si/icons/grey/file_image.gif);}
+body.grey li.file_audio {list-style-image: url(/_images/si/icons/grey/file_audio.gif);}
+body.grey li.file_movie {list-style-image: url(/_images/si/icons/grey/file_movie.gif);}
+body.grey li.file_other {list-style-image: url(/_images/si/icons/grey/file_other.gif);}
+
+/* Theme: Grey invert*/
+body.grey.inv #wrap-content {background: #999;}
+body.grey.inv p#site-name {color: #999;}
+body.grey.inv .box-admin,
+body.grey.inv #upload-image-frm{border-color :#999;}
+body.grey.inv #nav-tabs li {background-image:url(/_images/si/grey_inv/left_both.gif);}
+body.grey.inv #nav-tabs li a {background-image:url(/_images/si/grey_inv/right_both.gif)}
+body.grey.inv .box,
+body.grey.inv .box-content,
+body.grey.inv .box-head,
+body.grey.inv .box-head h2 {background-image:url(/_images/si/grey_inv/box.png)}
+body.grey.inv .yb, body.grey #save-btn {background:#ccc}
+body.grey.inv .box-head h2,
+body.grey.inv .box-head a{color:#fff}
+body.grey.inv #save-btn,
+body.grey.inv .yb form p {color:#333}
+body.grey.inv .bt {background-image:url(/_images/si/grey_inv/yellow-box.gif)}
+body.grey.inv .bt div {background-image:url(/_images/si/grey_inv/yellow-box.gif)}
+body.grey.inv .bb {background-image:url(/_images/si/grey_inv/yellow-box.gif)}
+body.grey.inv .bb div {background-image:url(/_images/si/grey_inv/yellow-box.gif)}
+body.grey.inv .gb {background-image:url(/_images/si/grey_inv/grey-box.gif)}
+body.grey.inv .yb .gb{background-image:url(/_images/si/grey_inv/grey-box-yellow.gif)}
+body.grey.inv .rb .gb{background-image:url(/_images/si/grey_inv/grey-box-red-bk.png)}
+body.grey.inv .grey-bi  {background-image:url(/_images/si/grey_inv/grey-box.gif)}
+body.grey.inv .yb .grey-bi {background-image:url(/_images/si/grey_inv/grey-box-yellow.gif)}
+body.grey.inv .rb .grey-bi {background-image:url(/_images/si/grey_inv/grey-box-red-bk.png)}
+body.grey.inv .rb {background:#ccc}
+body.grey.inv .rb .bt {background-image:url(/_images/si/grey_inv/red-box.gif)}
+body.grey.inv .rb .bt div {background-image:url(/_images/si/grey_inv/red-box.gif)}
+body.grey.inv .rb .bb {background-image:url(/_images/si/grey_inv/red-box.gif)}
+body.grey.inv .rb .bb div {background-image:url(/_images/si/grey_inv/red-box.gif)}
+body.grey.inv .rb .box,
+body.grey.inv .rb .box-content,
+body.grey.inv .rb .box-head,
+body.grey.inv .rb .box-head h2 {background-image:url(/_images/si/grey_inv/box-red-bk.gif)}
+
+/* Theme: Yellow */
+/*body.yellow #wrap-content{background-color:#fc0;} */
+body.yellow #wrap-content {background:#ffB310}
+body.yellow p#site-name {color: #ffB310}
+body.yellow .box-admin, body.yellow #upload-image-frm{border-color :#ffB310;}
+body.yellow #nav-tabs li {background-image:url(../_images/si/yellow/left_both.gif);}
+body.yellow #nav-tabs li a {background-image:url(../_images/si/yellow/right_both.gif)}
+body.yellow .box, body.yellow .box-content, body.yellow .box-head, body.yellow .box-head h2 {background-image:url(../_images/si/yellow/box.png)}
+body.yellow .yb,  body.yellow #save-btn {background:#002D51; color: #fff;}
+body.yellow .box-head h2, body.yellow .box-head a, body.yellow .yb a {color:#fff}
+body.yellow #save-btn, body.yellow .yb form p {color:#fff}
+body.yellow .bt {background-image:url(../_images/si/yellow/yellow-box.gif)}
+body.yellow .bt div {background-image:url(../_images/si/yellow/yellow-box.gif)}
+body.yellow .bb {background-image:url(../_images/si/yellow/yellow-box.gif)}
+body.yellow .bb div {background-image:url(../_images/si/yellow/yellow-box.gif)}
+body.yellow .gb {background-image:url(../_images/si/yellow/grey-box.gif)}
+body.yellow .yb .gb{background-image:url(../_images/si/yellow/grey-box-yellow.gif)}
+body.yellow .rb .gb{background-image:url(../_images/si/yellow/grey-box-red-bk.png)}
+body.yellow .grey-bi  {background-image:url(../_images/si/yellow/grey-box.gif)}
+body.yellow .yb .grey-bi {background-image:url(../_images/si/yellow/grey-box-yellow.gif)}
+body.yellow .rb .grey-bi {background-image:url(../_images/si/yellow/grey-box-red-bk.png)}
+body.yellow .rb {background:#E19800}
+body.yellow .rb .bt {background-image:url(../_images/si/yellow/red-box.gif)}
+body.yellow .rb .bt div {background-image:url(../_images/si/yellow/red-box.gif)}
+body.yellow .rb .bb {background-image:url(../_images/si/yellow/red-box.gif)}
+body.yellow .rb .bb div {background-image:url(../_images/si/yellow/red-box.gif)}
+body.yellow .rb .box, body.yellow .rb .box-content, body.yellow .rb .box-head, body.yellow .rb .box-head h2 {background-image:url(../_images/si/yellow/box-red-bk.gif)}
+
+body.yellow li.file_document {list-style-image: url(/_images/si/icons/yellow/file_document.gif);}
+body.yellow li.file_image {list-style-image: url(/_images/si/icons/yellow/file_image.gif);}
+body.yellow li.file_audio {list-style-image: url(/_images/si/icons/yellow/file_audio.gif);}
+body.yellow li.file_movie {list-style-image: url(/_images/si/icons/yellow/file_movie.gif);}
+body.yellow li.file_other {list-style-image: url(/_images/si/icons/yellow/file_other.gif);}
+
+/* Theme: Yellow invert */
+body.yellow.inv #wrap-content {background:#ffB310}
+body.yellow.inv p#site-name {color: #ffB310}
+body.yellow.inv .box-admin,
+body.yellow.inv #upload-image-frm{border-color :#ffB310;}
+body.yellow.inv #nav-tabs li {background-image:url(../_images/si/yellow_inv/left_both.gif);}
+body.yellow.inv #nav-tabs li a {background-image:url(../_images/si/yellow_inv/right_both.gif)}
+body.yellow.inv .box,
+body.yellow.inv .box-content,
+body.yellow.inv .box-head,
+body.yellow.inv .box-head h2 {background-image:url(../_images/si/yellow_inv/box.png)}
+body.yellow.inv .yb,
+body.yellow.inv #save-btn {background:#002D51;}
+body.yellow.inv .box-head h2,
+body.yellow.inv .box-head a{color:#fff}
+body.yellow.inv #save-btn,
+body.yellow.inv .yb form p {color:#fff}
+body.yellow.inv .bt {background-image:url(../_images/si/yellow_inv/yellow-box.gif)}
+body.yellow.inv .bt div {background-image:url(../_images/si/yellow_inv/yellow-box.gif)}
+body.yellow.inv .bb {background-image:url(../_images/si/yellow_inv/yellow-box.gif)}
+body.yellow.inv .bb div {background-image:url(../_images/si/yellow_inv/yellow-box.gif)}
+body.yellow.inv .gb {background-image:url(../_images/si/yellow_inv/grey-box.gif)}
+body.yellow.inv .yb .gb{background-image:url(../_images/si/yellow_inv/grey-box-yellow.gif)}
+body.yellow.inv .rb .gb{background-image:url(../_images/si/yellow_inv/grey-box-red-bk.png)}
+body.yellow.inv .grey-bi  {background-image:url(../_images/si/yellow_inv/grey-box.gif)}
+body.yellow.inv .yb .grey-bi {background-image:url(../_images/si/yellow_inv/grey-box-yellow.gif)}
+body.yellow.inv .rb .grey-bi {background-image:url(../_images/si/yellow_inv/grey-box-red-bk.png)}
+body.yellow.inv .rb {background:#E19800}
+body.yellow.inv .rb .bt {background-image:url(../_images/si/yellow_inv/red-box.gif)}
+body.yellow.inv .rb .bt div {background-image:url(../_images/si/yellow_inv/red-box.gif)}
+body.yellow.inv .rb .bb {background-image:url(../_images/si/yellow_inv/red-box.gif)}
+body.yellow.inv .rb .bb div {background-image:url(../_images/si/yellow_inv/red-box.gif)}
+body.yellow.inv .rb .box,
+body.yellow.inv .rb .box-content,
+body.yellow.inv .rb .box-head,
+body.yellow.inv .rb .box-head h2 {background-image:url(../_images/si/yellow_inv/box-red-bk.gif)}
+
+/* Theme: Orange */
+/*body.orange #wrap-content{background-color:#cd7e01;}*/
+body.orange #wrap-content {background: #fc681e;}
+body.orange p#site-name {color: #FC681E;}
+body.orange .box-admin, body.orange #upload-image-frm{border-color :#FC681E;}
+body.orange #nav-tabs li {background-image:url(/_images/si/orange/left_both.gif);}
+body.orange #nav-tabs li a {background-image:url(/_images/si/orange/right_both.gif)}
+body.orange .box, body.orange .box-content, body.orange .box-head, body.orange .box-head h2 {background-image:url(/_images/si/orange/box.png)}
+body.orange .yb, body.orange #save-btn {background:#333; color: #fff;}
+body.orange .box-head h2, body.orange .box-head a, body.orange .yb a {color:#fff}
+body.orange #save-btn, body.orange .yb form p {color:#fff}
+body.orange .bt {background-image:url(/_images/si/orange/yellow-box.gif)}
+body.orange .bt div {background-image:url(/_images/si/orange/yellow-box.gif)}
+body.orange .bb {background-image:url(/_images/si/orange/yellow-box.gif)}
+body.orange .bb div {background-image:url(/_images/si/orange/yellow-box.gif)}
+body.orange .gb {background-image:url(/_images/si/orange/grey-box.gif)}
+body.orange .yb .gb{background-image:url(/_images/si/orange/grey-box-yellow.gif)}
+body.orange .rb .gb{background-image:url(/_images/si/orange/grey-box-red-bk.png)}
+body.orange .grey-bi  {background-image:url(/_images/si/orange/grey-box.gif)}
+body.orange .yb .grey-bi {background-image:url(/_images/si/orange/grey-box-yellow.gif)}
+body.orange .rb .grey-bi {background-image:url(/_images/si/orange/grey-box-red-bk.png)}
+body.orange .rb {background:#D64703}
+body.orange .rb .bt {background-image:url(/_images/si/orange/red-box.gif)}
+body.orange .rb .bt div {background-image:url(/_images/si/orange/red-box.gif)}
+body.orange .rb .bb {background-image:url(/_images/si/orange/red-box.gif)}
+body.orange .rb .bb div {background-image:url(/_images/si/orange/red-box.gif)}
+body.orange .rb .box, body.orange .rb .box-content, body.orange .rb .box-head, body.orange .rb .box-head h2 {background-image:url(/_images/si/orange/box-red-bk.gif)}
+
+body.orange li.file_document {list-style-image: url(/_images/si/icons/orange/file_document.gif);}
+body.orange li.file_image {list-style-image: url(/_images/si/icons/orange/file_image.gif);}
+body.orange li.file_audio {list-style-image: url(/_images/si/icons/orange/file_audio.gif);}
+body.orange li.file_movie {list-style-image: url(/_images/si/icons/orange/file_movie.gif);}
+body.orange li.file_other {list-style-image: url(/_images/si/icons/orange/file_other.gif);}
+
+/* Theme: Orange invert */
+body.orange.inv #wrap-content {background: #fc681e;}
+body.orange.inv p#site-name {color: #FC681E;}
+body.orange.inv .box-admin,
+body.orange.inv #upload-image-frm{border-color :#FC681E;}
+body.orange.inv #nav-tabs li {background-image:url(/_images/si/orange_inv/left_both.gif);}
+body.orange.inv #nav-tabs li a {background-image:url(/_images/si/orange_inv/right_both.gif)}
+body.orange.inv .box,
+body.orange.inv .box-content,
+body.orange.inv .box-head,
+body.orange.inv .box-head h2 {background-image:url(/_images/si/orange_inv/box.png)}
+body.orange.inv .yb,
+body.orange.inv #save-btn {background:#333}
+body.orange.inv .box-head h2,
+body.orange.inv .box-head a{color:#fff}
+body.orange.inv #save-btn,
+body.orange.inv .yb form p {color:#fff}
+body.orange.inv .bt {background-image:url(/_images/si/orange_inv/yellow-box.gif)}
+body.orange.inv .bt div {background-image:url(/_images/si/orange_inv/yellow-box.gif)}
+body.orange.inv .bb {background-image:url(/_images/si/orange_inv/yellow-box.gif)}
+body.orange.inv .bb div {background-image:url(/_images/si/orange_inv/yellow-box.gif)}
+body.orange.inv .gb {background-image:url(/_images/si/orange_inv/grey-box.gif)}
+body.orange.inv .yb .gb{background-image:url(/_images/si/orange_inv/grey-box-yellow.gif)}
+body.orange.inv .rb .gb{background-image:url(/_images/si/orange_inv/grey-box-red-bk.png)}
+body.orange.inv .grey-bi  {background-image:url(/_images/si/orange_inv/grey-box.gif)}
+body.orange.inv .yb .grey-bi {background-image:url(/_images/si/orange_inv/grey-box-yellow.gif)}
+body.orange.inv .rb .grey-bi {background-image:url(/_images/si/orange_inv/grey-box-red-bk.png)}
+body.orange.inv .rb {background:#D64703}
+body.orange.inv .rb .bt {background-image:url(/_images/si/orange_inv/red-box.gif)}
+body.orange.inv .rb .bt div {background-image:url(/_images/si/orange_inv/red-box.gif)}
+body.orange.inv .rb .bb {background-image:url(/_images/si/orange_inv/red-box.gif)}
+body.orange.inv .rb .bb div {background-image:url(/_images/si/orange_inv/red-box.gif)}
+body.orange.inv .rb .box,
+body.orange.inv .rb .box-content,
+body.orange.inv .rb .box-head,
+body.orange.inv .rb .box-head h2 {background-image:url(/_images/si/orange_inv/box-red-bk.gif)}
+
+/* Theme: Red invert */
+body.red.inv #wrap-content {background: #c30;}
+body.red.inv p#site-name {color: #c30;}
+body.red.inv .box-admin,
+body.red.inv #upload-image-frm{border-color :#c30;}
+body.red.inv #nav-tabs li {background-image:url(/_images/si/red_inv/left_both.gif);}
+body.red.inv #nav-tabs li a {background-image:url(/_images/si/red_inv/right_both.gif)}
+body.red.inv .box,
+body.red.inv .box-content,
+body.red.inv .box-head,
+body.red.inv .box-head h2 {background-image:url(/_images/si/red_inv/box.png)}
+body.red.inv .yb,
+body.red.inv #save-btn {background:#333}
+body.red.inv .box-head h2,
+body.red.inv .box-head a{color:#fff}
+body.red.inv #save-btn,
+body.red.inv .yb form p {color:#fff}
+body.red.inv .bt {background-image:url(/_images/si/red_inv/yellow-box.gif)}
+body.red.inv .rb .bt {background:url(/_images/si/red_inv/red-box.gif) 100% 0 no-repeat;}
