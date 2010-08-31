@@ -32,6 +32,7 @@ class Tab extends DatabaseObject
 	private $m_user;
 	private $m_owner;
 	private $m_viewer;
+	private $m_weight;
 	
 	private $m_pageSortSql;
 	
@@ -40,16 +41,18 @@ class Tab extends DatabaseObject
 	const TAB_LINK = 'tab-';
 	const HOME_PAGE_NAME = 'About-me';
 	const COLLECTION_PAGE_NAME = 'collection';
+	const MANAGETABS_PAGE_NAME = 'managetabs';
 
 	const MAX_TITLE_LENGTH = 20;
 
 	/* ** Factory methods ** */
 
 	public static function CreateNewTab($name, $user)
-	{
+    {
 		$tab = new Tab(null);
 		$tab->m_user = $user;
 		$tab->setNameAndSlug($name);
+		$tab->setWeight();
 		$tab->m_enabled = true;
 		
 		return $tab;
@@ -82,9 +85,9 @@ class Tab extends DatabaseObject
 	public static function getTabsByTemplateId($templateId, $mode = ""){
 		$db = Database::getInstance();
 		if($mode=="backoffice"){
-			$sqlTabs = 'SELECT * from tab WHERE template_id=' . $templateId . ' AND (user_id=0 OR user_id IS null) ORDER BY weight, name';
+			$sqlTabs = 'SELECT * from tab WHERE template_id=' . $templateId . ' AND (user_id=0 OR user_id IS null) ORDER BY weight';
 		}else{
-			$sqlTabs = 'SELECT * from tab WHERE template_id=' . $templateId . ' ORDER BY weight, name';
+			$sqlTabs = 'SELECT * from tab WHERE template_id=' . $templateId . ' ORDER BY weight';
 		}
 		$query = $db->query($sqlTabs);
 		$tabArray = array();
@@ -102,7 +105,7 @@ class Tab extends DatabaseObject
 		$sql = "SELECT * from tab WHERE enabled=1 AND user_id={$user->getId()}" .
 				' OR template_id=0' .
 				" OR template_id IN (SELECT template_id FROM template_viewers WHERE user_id={$user->getId()} OR group_id IN (SELECT group_id FROM group_members WHERE user_id={$user->getId()}))" .
-				' ORDER BY weight, name';
+				' ORDER BY weight';
 		Debugger::debug($sql, 'Tab::GetTabsByUser_1', Debugger::LEVEL_SQL);
 
 		$result = $db->query($sql);
@@ -113,6 +116,7 @@ class Tab extends DatabaseObject
 		while($row = $db->fetchArray($result, MYSQL_ASSOC)) {
 			$tab = self::createFromHashArray($row);
 			$tab->m_index = $tabIndex;
+			$tab->m_weight = $row['weight'];
 
 			// About me tab is a special case - depends on this having ID set in DB
 			if($tab->getId() == self::ABOUT_ME_TAB_ID) {
@@ -124,7 +128,7 @@ class Tab extends DatabaseObject
 
 			$tabArray[$row['slug']] = $tab;
 			$tabIndex++;
-		}
+        }
 		Debugger::debug('Tab count: ' . count($tabArray), 'Tab::GetTabsByUser_2', Debugger::LEVEL_SQL);
 		return $tabArray;
 	}
@@ -170,6 +174,7 @@ class Tab extends DatabaseObject
 		$tab->m_description = $hashArray['description'];
 		$tab->m_user = new User($hashArray['user_id']);
 		$tab->m_owner = new User($hashArray['owner']);
+		$tab->m_weight = $hashArray['weight'];
 		
 		$tab->m_filled = true;
 		return $tab;
@@ -325,7 +330,8 @@ class Tab extends DatabaseObject
 			'updated_time' => Date::formatForDatabase($this->m_updatedTime),
 			'updated_by' => $this->m_updatedBy->getId(),
 			'created_time' => Date::formatForDatabase($this->m_createdTime),
-			'created_by' => $this->m_createdBy->getId()
+			'created_by' => $this->m_createdBy->getId(),
+			'weight' => $this->m_weight,
 		);
 		$db = Database::getInstance();
 		$db->perform('tab', $data, Database::INSERT);
@@ -338,7 +344,7 @@ class Tab extends DatabaseObject
 	}
 	
 	protected function dbUpdate()
-	{
+    {
 		Debugger::debug($this->m_name, 'dbUpdate', Debugger::LEVEL_INFO);
 		$data=array(
 			'name' => $this->m_name,
@@ -347,9 +353,10 @@ class Tab extends DatabaseObject
 			'enabled' => $this->m_enabled,
 			'owner' => $this->m_owner->getId(),
 			'user_id' => $this->m_user->getId(),
+			'weight' => $this->m_weight,
 			
 			'template_id' => isset($this->m_template)? $this->m_template->getId() : 'null',
-			'updated_time' => Date::formatForDatabase($this->m_updatedTime),
+            'updated_time' => Date::formatForDatabase($this->m_updatedTime),
 			'updated_by' => $this->m_updatedBy->getId()
 		);
 
@@ -447,8 +454,136 @@ class Tab extends DatabaseObject
 
 		$this->m_name = $name;
 		$this->m_slug = $newSlug;
-	}
+    }
 
+
+	/**
+     * sets up the page for managing tabs
+     *
+	 * @param User $user
+	 * @param Theme $theme
+     * @param SimplePage $page
+     * @return String html
+	 */
+    public static function manageTabsContent(User $user, Theme $theme, SimplePage $page) 
+    {
+
+        $tabs = Tab::retrieveTabsByUser($user);
+        $index = 1; // to display the up/down arrows
+        $html = '<ol id="manage-tab-weights">';
+        if ($tabs) {
+            foreach ($tabs as $tab) {
+                if ($tab->getId() != self::ABOUT_ME_TAB_ID) {
+                    // both up and down arrows
+                    if ($index != 1 && $index != (count($tabs)-1)) {
+                        $tabMenu = new Menu (array(
+                            Link::CreateIconLink('Up', $page->PathWithQueryString(array('mode'=>EventDispatcher::ACTION_MOVE_UP,'t'=>$tab->getId() )), $theme->Icon('up-arrow')),
+                            Link::CreateIconLink('Down', $page->PathWithQueryString(array('mode'=>EventDispatcher::ACTION_MOVE_DOWN,'t'=>$tab->getId())), $theme->Icon('down-arrow')),
+                        ));
+                        $tabMenu->setClass('inline-list');
+                        $html .= '<li class="manage-tab">' . $tab->m_name . $tabMenu->Html() . '</li>';
+                    // down arrow only
+                    } else if ($index == 1) {
+                        $tabMenu = new Menu (array(
+                            Link::CreateIconLink('Down', $page->PathWithQueryString(array('mode'=>EventDispatcher::ACTION_MOVE_DOWN,'t'=>$tab->getId())), $theme->Icon('down-arrow')),
+                        ));
+                        $tabMenu->setClass('inline-list');
+                        $html .= '<li class="manage-tab">' . $tab->m_name . $tabMenu->Html() . '</li>';
+                    // up arrow only
+                    } else if ($index == count($tabs)-1) {
+                        $tabMenu = new Menu (array(
+                            Link::CreateIconLink('Up', $page->PathWithQueryString(array('mode'=>EventDispatcher::ACTION_MOVE_UP,'t'=>$tab->getId())), $theme->Icon('up-arrow')),
+                        ));
+                        $tabMenu->setClass('inline-list');
+                        $html .= '<li class="manage-tab">' . $tab->m_name . $tabMenu->Html() . '</li>';
+                    }
+                    $index++;
+                }
+            }
+        }
+        $html .= '</ol>';
+
+        return $html;
+    }
+
+    /**
+     * Update existing weights from all 0 to something
+     * useful
+     *
+     *  NB: this function is to ensure existing tabs are inline with the new tab ordering weights
+     *
+	 */
+    public static function updateWeights($max=0, $tabs) 
+    {
+
+        if (count($tabs) >= 1 && $max == 0) {
+            foreach ($tabs as $tab) {
+                if ($tab->getId() != self::ABOUT_ME_TAB_ID) { // don't update ABOUT_ME tab
+                    $max++; // tab ordering starts at 1
+                    $tab->m_weight = $max;
+                    $tab->m_updatedBy = $this->m_user;
+                    $tab->dbUpdate(); 
+                }
+            }
+        }
+
+        // return the new max weight after updating
+        return $max;
+    }
+
+	/**
+     * Set the new weight of the tab
+     *
+     * @param string direction (left/right)
+	 */
+    public function setWeight($direction=null) 
+    {
+        
+        $db = Database::getInstance();
+        $tabs = Tab::RetrieveTabsByUser($this->m_user);
+
+        // retrieve the current max weight
+        $maxsql     = "SELECT MAX(weight) AS max FROM tab WHERE user_id = {$this->m_user->getId()}";
+        $result = $db->query($maxsql);
+        while( $row = $db->fetchArray($result, MYSQL_ASSOC) ) {
+            $max = (int)$row['max'];
+        }
+
+        $max = Tab::updateWeights($max, $tabs); // update initial weights in case they are all 0
+
+        // if there is no direction just set the initial weight
+        if (!$direction) {
+            $this->m_weight = $max + 1;
+            return;
+        }
+
+        // tabs current values
+        $oldweight = (int)$this->m_weight;
+        $id = (int)$this->getID();
+
+        $weights = array();
+        foreach ($tabs as $tab) {
+            if ($tab->getId() != self::ABOUT_ME_TAB_ID) { // don't update ABOUT_ME tab weight
+                $weights[(int)$tab->m_weight] = $tab->getId();
+            }
+        }
+
+        if ($direction == 'move-up' && $oldweight > 1) {
+            $weights[$oldweight] = $weights[$oldweight-1];
+            $weights[$oldweight-1] = $id;
+        }
+        else if ($direction == 'move-down' && $oldweight < $max) {
+            $weights[$oldweight] = $weights[$oldweight+1];
+            $weights[$oldweight+1] = $id;
+        }
+
+        foreach ($weights as $w => $t) {
+            $tab = Tab::GetTabById($t);
+            $tab->m_weight = (int)$w;
+            $tab->m_updatedBy = $this->m_user;
+            $tab->dbUpdate(); 
+        }
+    }
 
 	/* ** Display opperations ** */
 	

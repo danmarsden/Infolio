@@ -24,6 +24,8 @@ abstract class EventDispatcher
 	const ACTION_NEW_TAB = 'new-tab';
 	const ACTION_SAVE = 'save';
 	const ACTION_UPLOAD = 'upload';
+	const ACTION_MOVE_UP = 'move-up';
+	const ACTION_MOVE_DOWN = 'move-down';
 
 	/* ** Private member data ** */
 

@@ -192,6 +192,9 @@ class TabEventDispatcher extends EventDispatcher
 			case Tab::COLLECTION_PAGE_NAME:
 				header( 'Location: collection.php' ) ;
 				break;
+			case Tab::MANAGETABS_PAGE_NAME:
+				header( 'Location: managetabs.php' ) ;
+				break;
 			default:
 				// Just continue with page, don't redirect
 		}

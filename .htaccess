@@ -35,6 +35,7 @@ RewriteRule ^([\w\-\_]+)/tab-([\w\-\_\'!]+) tab.php?institution=$1&name=$2 [NC,Q
 RewriteRule ^([\w\-\_]+)/tab tab.php?institution=$1 [NC,QSA,L]
 RewriteRule ^([\w\-\_]+)/page-(\d+) page.php?institution=$1&id=$2 [NC,QSA,L]
 RewriteRule ^([\w\-\_]+)/collection.php collection.php?institution=$1 [NC,QSA,L]
+RewriteRule ^([\w\-\_]+)/managetabs.php managetabs.php?institution=$1 [NC,QSA,L]
 RewriteRule ^([\w\-\_]+)/help.php help.php?institution=$1 [NC,QSA,L]
 RewriteRule ^([\w\-\_]+)/bulkupload.shtml bulkupload.shtml [NC,QSA,L]
 RewriteRule ^([\w\-\_]+)/bulkupload.php bulkupload.php?institution=$1 [NC,QSA,L]
