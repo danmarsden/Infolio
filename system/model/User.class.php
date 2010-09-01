@@ -822,7 +822,46 @@ class User extends DatabaseObject
 	}
 
 	
-	/* ** Display opperations ** */
+    /* ** Display operations ** */
+
+    /**
+     * Set up the html for managing users tabs in the admin section
+     *
+     */
+    public function HtmlManageTabs() {
+
+        $this->fetchAndSetTabs(null, false);
+
+        $html  = '<form method="post" action="/enabletabs.php">';
+		$html .= '<input type="hidden" name="tab_count" value="' . count($this->m_tabs) . '" />';
+        $html .= '<table width="50%">';
+        $html .= '<thead><tr><th>&nbsp;</th><th>Enabled</th><th>Disabled</th></tr></thead>';
+        $html .= '</tbody>';
+        $index = 1;
+		foreach($this->m_tabs as $aTab) {
+            if($aTab->getId() != 1) {
+                $enabled = $aTab->getEnabled();
+                $html .= '<tr>';
+                $html .= '<td><label><strong>'.$aTab->getName().'</strong></label></td>';
+                if ($enabled) {
+                    $html .= '<td><input type="radio" name="tab_id'.$index.'" value="enabled_'.$aTab->getId().'" checked=checked /></td>';
+                    $html .= '<td><input type="radio" name="tab_id'.$index.'" value="disabled_'.$aTab->getId().'" /></td>';
+                } else {
+                    $html .= '<td><input type="radio" name="tab_id'.$index.'" value="enabled_'.$aTab->getId().'" /></td>';
+                    $html .= '<td><input type="radio" name="tab_id'.$index.'" value="disabled_'.$aTab->getId().'" checked=checked /></td>';
+                }
+                $html .= '</tr>';
+                $index++;
+			}
+		}
+        $html .= '</table>';
+        $html .= '<br/>';
+		$html .= '<input type="hidden" name="user_id" value="' . $this->getId() . '" />';
+		$html .= '<input type="submit" value="Update Tabs" />';
+		$html .= '</form>';
+
+		return $html;
+    }
 
 	public function HtmlExportProfileForm()
 	{
@@ -1003,10 +1042,10 @@ class User extends DatabaseObject
 	 * Fetches the tab info for this user from the DB and sets this classes tab related member data
 	 * @return 
 	 */
-	private function fetchAndSetTabs($tabIds = null)
-	{
+	private function fetchAndSetTabs($tabIds = null, $enabled=true)
+    {
 		// Populate $m_tabs with an array of Tab objects
-		$this->m_tabs = Tab::RetrieveTabsByUser($this);
+		$this->m_tabs = Tab::RetrieveTabsByUser($this, $enabled);
 
 		// If specified only show the given tabIds (required for static version)
 		if(isset($tabIds)) {

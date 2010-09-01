@@ -36,6 +36,11 @@ dojo.addOnLoad( function() {
 	if(document.$_GET['tab'] == "export") {
 		dijit.byId("mainTabContainer").selectChild(dijit.byId("exportTab"));
 	}
+
+    // After enable/disable tabs go to correct tab
+	if(document.$_GET['tab'] == "tabs") {
+		dijit.byId("mainTabContainer").selectChild(dijit.byId("manageTabs"));
+	}
 });
 
 // Deletes the user

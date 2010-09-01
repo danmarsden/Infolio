@@ -340,6 +340,10 @@ function showForm(){
 				<p>Select the tabs for this user that you would like to include in the export.</p>
 				<? print $user->HtmlExportProfileForm(); ?>
 			</div>
+			<div id="manageTabs" dojoType="dijit.layout.ContentPane" class="tab" title="Tabs">
+				<p>Tabs allows an adminstrator to manage a users tabs.  The administrator can disable and enable tabs that the user will then see.</p>
+				<? print $user->HtmlManageTabs(); ?>
+			</div>
 			<? } ?>
 		</div>			
 	</div>

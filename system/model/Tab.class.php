@@ -99,10 +99,15 @@ class Tab extends DatabaseObject
 		return $tabArray;
 	}
 	
-	public static function RetrieveTabsByUser(User $user)
-	{
+	public static function RetrieveTabsByUser(User $user, $enabled=true)
+    {
+        $enabledstr = '';
+        if ($enabled) {
+            $enabledstr = ' AND enabled=1';
+        }
 		$db = Database::getInstance();
-		$sql = "SELECT * from tab WHERE enabled=1 AND user_id={$user->getId()}" .
+        $sql = "SELECT * from tab WHERE user_id={$user->getId()}"
+                . $enabledstr .
 				' OR template_id=0' .
 				" OR template_id IN (SELECT template_id FROM template_viewers WHERE user_id={$user->getId()} OR group_id IN (SELECT group_id FROM group_members WHERE user_id={$user->getId()}))" .
 				' ORDER BY weight';
@@ -206,6 +211,24 @@ class Tab extends DatabaseObject
 		$this->checkFilled();
 		return $this->m_name;
 	}
+
+	public function getenabled()
+	{
+		$this->checkfilled();
+		return $this->m_enabled;
+    }
+
+	public function setEnabled($enabled)
+	{
+		$this->checkfilled();
+		$this->m_enabled = $enabled;
+    }
+
+    public function setUpdatedBy(User $user)
+	{
+		$this->checkfilled();
+		$this->m_updatedBy = $user;
+    }
 
 	public function setDescription($text)
 	{
