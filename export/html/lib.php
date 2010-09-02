@@ -164,7 +164,7 @@ function export_portfolio($studentUser, $tabIds, $returnfile=false) {
     if ($returnfile) {
         return $filename;
     } else {
-        return $tabId;
+        send_temp_file($filename, 'html-export-user'. $studentUser->getId() . '-' . time() . '.zip');
     }
 }
 
