@@ -22,6 +22,9 @@ switch($do){
 	case SECTION_UPLOAD_MANAGER:
 		$template = 'upload-manager';
 		break;
+	case SECTION_SITEEXPORT:
+	    $template = 'site-export';
+	    break;
 	default:
 		$template = 'index';
 		break;

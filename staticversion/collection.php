@@ -14,6 +14,10 @@
 */
 
 include_once('staticversion/collection.inc.php');
+if (empty($collection)) {
+    $collection = $studentUser->getAssetCollection();
+    $assetFilter = AssetCollection::FILTER_ALL;
+}
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 

@@ -12,7 +12,7 @@
  * @since      NA
 */
 
-function export_portfolio($studentUser, $tabIds) {
+function export_portfolio($studentUser, $tabIds, $returnfile=false) {
     global $userTabs, $userAssetCollection, $userAssets, $tabId, $pageId;
     $includeOriginalAssets = false;
 
@@ -84,7 +84,6 @@ function export_portfolio($studentUser, $tabIds) {
     }
 
     //printTimeElapsed("Created all pages");
-
     // Copy all user's assets
     foreach($userAssets as $asset)
     {
@@ -162,7 +161,11 @@ function export_portfolio($studentUser, $tabIds) {
     delTree($userStaticDir);
 
     //printTimeElapsed("Done");
-    return $tabId;
+    if ($returnfile) {
+        return $filename;
+    } else {
+        return $tabId;
+    }
 }
 
 
@@ -182,7 +185,6 @@ function copyForSize(Asset $asset, $size, $copyToDir)
     if(!isset($assetId)) $assetId = 0;
     $fileExtension = ($asset->getType() == Asset::IMAGE) ? $asset->getFileExtension() : 'gif';
     $dstPath = "{$copyToDir}/{$asset->getType()}/$size/{$assetId}.{$fileExtension}";
-    echo $srcPath."<br>";
     copy($srcPath, $dstPath);
 }
 

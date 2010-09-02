@@ -7,6 +7,7 @@ $do = (isset($_REQUEST['do'])) ? $_REQUEST['do'] : 0;
 	<li<?php if($do==SECTION_ASSET)print ' id="bo-active"'; ?>><a href=".?do=<?php print SECTION_ASSET; ?>">Asset manager</a></li>
 	<li<?php if($do==SECTION_UPLOAD_MANAGER) print ' id="bo-active"'; ?>><a href=".?do=<?php print SECTION_UPLOAD_MANAGER; ?>">Upload manager</a></li>
 	<li <?php if($do==SECTION_TEMPLATE) print ' id="bo-active"'; ?>><a href=".?do=<?php print SECTION_TEMPLATE; ?>">Template manager</a></li>
+	<li <?php if($do==SECTION_SITEEXPORT) print ' id="bo-active"'; ?>><a href=".?do=<?php print SECTION_SITEEXPORT; ?>">Site Export</a></li>
 </ul>
 <?php if($adminUser->getPermissionManager()->hasRight(PermissionManager::RIGHT_ALL_ADMIN)): ?>
 	<br /><br />
