@@ -109,12 +109,7 @@ function leap_entryfooter() {
     return '
     </entry>';
 }
-function leap_links() {
-    
-}
-function leap_view() {
-    
-}
+
 function leap_resource($resource) {
     $output = "
     <rdf:type rdf:resource=\"leap2:resource\" />
