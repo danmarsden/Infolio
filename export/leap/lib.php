@@ -30,9 +30,18 @@ function export_portfolio($studentUser, $tabIds, $returnfile=false) {
         $tabId = $aTab->getId();
         $aTab->setViewer($studentUser);
         if($tabId != 1 && (!isset($tabIds) || in_array($tabId, $tabIds))) {
-            //TODO: group each page into the tabs?
-            // Get pages for tab
+            $entry->title = $aTab->getName();
+            $entry->contenttype = 'html';
+            $entry->id = "portfolio:collection".$aTab->getId();
+            $entry->leaptype = 'selection';
+            $leapxml .= leap_entry($entry);
             $tabPages = $aTab->getPages();
+            foreach($tabPages as $aPage) {
+                $leapxml .= "<link rel=\"has_part\" href=\"portfolio:view".$aPage->getId()."\"/>";
+            }
+            $leapxml .= leap_entryfooter();
+
+            //now do actual pages.
             foreach($tabPages as $aPage) {
                 $entry->title = $aPage->getTitle();
                 $entry->id = "portfolio:view".$aPage->getId();
