@@ -44,7 +44,7 @@ class User extends DatabaseObject
 	
 	// From other table
 	private $m_assetCollection;
-	private $m_tabs;
+	var $m_tabs;
 	private $m_tabMenu;
 
 	private $m_enabled;
@@ -1042,7 +1042,7 @@ class User extends DatabaseObject
 	 * Fetches the tab info for this user from the DB and sets this classes tab related member data
 	 * @return 
 	 */
-	private function fetchAndSetTabs($tabIds = null, $enabled=true)
+	function fetchAndSetTabs($tabIds = null, $enabled=true)
     {
 		// Populate $m_tabs with an array of Tab objects
 		$this->m_tabs = Tab::RetrieveTabsByUser($this, $enabled);

@@ -25,7 +25,6 @@ function export_portfolio($studentUser, $tabIds, $returnfile=false) {
     
     //get content for leap xml
     $leapxml = leap_header($studentUser, $exporttime);
-
     foreach ($userTabs as $aTab)  {
         $tabId = $aTab->getId();
         $aTab->setViewer($studentUser);
