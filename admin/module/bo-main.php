@@ -25,6 +25,9 @@ switch($do){
 	case SECTION_SITEEXPORT:
 	    $template = 'site-export';
 	    break;
+	case SECTION_LEAPIMPORT:
+	    $template = 'leap-import';
+	    break;
 	default:
 		$template = 'index';
 		break;

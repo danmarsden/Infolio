@@ -385,3 +385,39 @@ function mimeinfo($element, $filename) {
         return $mimeinfo['xxx'][$element];   // By default
     }
 }
+// function that checks if admin user is logged in.
+function require_admin() {
+    $adminUser = null;
+    session_start();
+    if( isset($_SESSION) ) {
+        $adminUser = User::RetrieveBySessionData($_SESSION);
+
+        // Nullify user if they don't have permission
+        if( isset($adminUser) &&  !$adminUser->getPermissionManager()->hasRight(PermissionManager::RIGHT_GENERAL_ADMIN) ) {
+            $adminUser = null;
+        }
+    }
+
+    // Stop, if user not valid
+    if(!isset($adminUser) ) {
+        error('Admin user not logged in');
+    } else {
+        return $adminUser;
+    }
+}
+
+/**
+ * Dump a given object's information in a PRE block.
+ *
+ * Mostly just used for debugging.
+ *
+ * @param mixed $object The data to be printed
+ */
+function print_object($object) {
+    echo '<pre class="notifytiny">' . htmlspecialchars(print_r($object,true)) . '</pre>';
+}
+//function user to print errors and die.
+function error($message) {
+    echo "<p style='color:red;'><strong>$message</strong></p>";
+    die;
+}

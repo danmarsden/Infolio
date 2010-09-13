@@ -1,14 +1,11 @@
 <?
 
 /**
- * export.php - Creates a static html version of a user's infolio
- *
- * LICENSE: This is an Open Source Project
+ * export.php - provides an export of Infolio
  *
  * @author     Richard Garside [www.richardsprojects.co.uk]
  * @copyright  2009 Rix Centre
  * @license    http://creativecommons.org/licenses/by-nc-sa/2.0/uk/
- * @version    $Id: export.php 851 2010-01-07 11:33:48Z richard $
  * @link       NA
  * @since      NA
 */
@@ -19,8 +16,8 @@ set_time_limit(360);
 $startTime = microtime(true);
 function printTimeElapsed($timeLabel)
 {
-	global $startTime;
-	print '<p><strong>' . $timeLabel . ':</strong> ' . (microtime(true) - $startTime) . '</p>';
+    global $startTime;
+    print '<p><strong>' . $timeLabel . ':</strong> ' . (microtime(true) - $startTime) . '</p>';
 }
 
 
@@ -30,22 +27,7 @@ include_once("function/shared.php");
 include_once("function/core.php");
 
 // Check user is logged in before letting them do stuff (except logging in)
-$adminUser = null;
-session_start();
-if( isset($_SESSION) ) {
-	$adminUser = User::RetrieveBySessionData($_SESSION);
-
-	// Nullify user if they don't have permission
-	if( isset($adminUser) &&  !$adminUser->getPermissionManager()->hasRight(PermissionManager::RIGHT_GENERAL_ADMIN) ) {
-		$adminUser = null;
-	}
-}
-
-// Stop, if user not valid
-if(!isset($adminUser) ) {
-	die('Admin user not logged in');
-}
-
+$adminUser = require_admin();
 
 // Take userID as input.
 // Take tabIds as input, generate for them and then get them if they exist in users tabs
@@ -58,15 +40,15 @@ if (!is_dir("staticversion/export")) {
 $tabIds = array();
 for($i=0; $i<$_POST['tab_count']; $i++)
 {
-	$tabLabel = 'tab_id'.$i;
-	if(isset($_POST[$tabLabel])) {
-		if(is_numeric($_POST[$tabLabel])) {
-			array_push($tabIds, $_POST[$tabLabel]);
-		}
-		else {
-			die("You have sent a bad tab id");
-		}
-	}
+    $tabLabel = 'tab_id'.$i;
+    if(isset($_POST[$tabLabel])) {
+        if(is_numeric($_POST[$tabLabel])) {
+            array_push($tabIds, $_POST[$tabLabel]);
+        }
+        else {
+            die("You have sent a bad tab id");
+        }
+    }
 }
 $users = array();
 if (!empty($_POST['siteexport'])) {
