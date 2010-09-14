@@ -416,8 +416,103 @@ function require_admin() {
 function print_object($object) {
     echo '<pre class="notifytiny">' . htmlspecialchars(print_r($object,true)) . '</pre>';
 }
+function notify($message) {
+    echo "<p style='color:red;'><strong>$message</strong></p>";
+}
 //function user to print errors and die.
 function error($message) {
-    echo "<p style='color:red;'><strong>$message</strong></p>";
+    notify($message);
     die;
+}
+
+    //Function to delete all the directory contents recursively
+    //it supports a excluded dit too
+    //Copied from the web !!
+    function delete_dir_recursive ($dir,$excludeddir="") {
+
+        if (!is_dir($dir)) {
+            // if we've been given a directory that doesn't exist yet, return true.
+            // this happens when we're trying to clear out a course that has only just
+            // been created.
+            return true;
+        }
+        $slash = "/";
+
+        // Create arrays to store files and directories
+        $dir_files      = array();
+        $dir_subdirs    = array();
+
+        // Make sure we can delete it
+        chmod($dir, 0777);
+
+        if ((($handle = opendir($dir))) == FALSE) {
+            // The directory could not be opened
+            return false;
+        }
+
+        // Loop through all directory entries, and construct two temporary arrays containing files and sub directories
+        while(false !== ($entry = readdir($handle))) {
+            if (is_dir($dir. $slash .$entry) && $entry != ".." && $entry != "." && $entry != $excludeddir) {
+                $dir_subdirs[] = $dir. $slash .$entry;
+            }
+            else if ($entry != ".." && $entry != "." && $entry != $excludeddir) {
+                $dir_files[] = $dir. $slash .$entry;
+            }
+        }
+
+        // Delete all files in the curent directory return false and halt if a file cannot be removed
+        for($i=0; $i<count($dir_files); $i++) {
+            chmod($dir_files[$i], 0777);
+            if (((unlink($dir_files[$i]))) == FALSE) {
+                return false;
+            }
+        }
+
+        // Empty sub directories and then remove the directory
+        for($i=0; $i<count($dir_subdirs); $i++) {
+            chmod($dir_subdirs[$i], 0777);
+            if (delete_dir_recursive($dir_subdirs[$i]) == FALSE) {
+                return false;
+            }
+            else {
+                if (remove_dir($dir_subdirs[$i]) == FALSE) {
+                return false;
+                }
+            }
+        }
+
+        // Close directory
+        closedir($handle);
+        //remove actual dir
+        remove_dir($dir);
+        // Success, every thing is gone return true
+        return true;
+    }
+/**
+ * Delete directory or only it's content
+ * @param string $dir directory path
+ * @param bool $content_only
+ * @return bool success, true also if dir does not exist
+ */
+function remove_dir($dir, $content_only=false) {
+    if (!file_exists($dir)) {
+        // nothing to do
+        return true;
+    }
+    $handle = opendir($dir);
+    $result = true;
+    while (false!==($item = readdir($handle))) {
+        if($item != '.' && $item != '..') {
+            if(is_dir($dir.'/'.$item)) {
+                $result = remove_dir($dir.'/'.$item) && $result;
+            }else{
+                $result = unlink($dir.'/'.$item) && $result;
+            }
+        }
+    }
+    closedir($handle);
+    if ($content_only) {
+        return $result;
+    }
+    return rmdir($dir); // if anything left the result will be false, noo need for && $result
 }
