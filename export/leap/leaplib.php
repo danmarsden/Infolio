@@ -18,6 +18,7 @@ function leap_header($user, $export_time) {
     xmlns:categories=\"http://wiki.cetis.ac.uk/2009-03/LEAP2A_categories/\"
     xmlns:portfolio=\"".$_SERVER['SERVER_NAME']."/export/leap/".$user->getId()."/$export_time/\"
     xmlns:infolio=\"http://www.in-folio.org.uk/help/user_manager.html\"
+    xmlns:mahara=\"http://wiki.mahara.org/Developer_Area/Import%2F%2FExport/LEAP_Extensions#\"
 >
     <id>".$_SERVER['SERVER_NAME']."export/".$user->getId()."/$export_time</id>
     <title>Infolio LEAP2A Export for ".$user->getFullName().", ".date("F j, Y, g:i a", $export_time)."</title>
