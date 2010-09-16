@@ -420,8 +420,13 @@ function notify($message) {
     echo "<p style='color:red;'><strong>$message</strong></p>";
 }
 //function user to print errors and die.
-function error($message) {
-    notify($message);
+function error($message, $return ='') {
+    if (!empty($return)) {
+        add_error_msg($message);
+        header('Location: '. $return);
+    } else {
+        notify($message);
+    }
     die;
 }
 

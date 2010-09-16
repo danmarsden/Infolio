@@ -20,14 +20,14 @@ $uploaddir = 'data/import';
 
 // Check user is logged in before letting them do stuff (except logging in)
 $adminUser = require_admin();
-
+$returnurl = $adminUser->getInstitution()->getUrl() . '/' . DIR_WS_ADMIN . '?do=' . SECTION_LEAPIMPORT;
 if (empty($_FILES['leapimport'])) {
-    error("please select a LEAP export file to submit");
+    error("please select a LEAP export file to submit", $returnurl);
 }
 $file = $_FILES['leapimport'];
 //now check if the user has submitted a zip file.
 if (substr(strrchr($file['name'], '.'), 1) !== 'zip') {
-    error("Invalid LEAP export provided");
+    error("Invalid LEAP export provided", $returnurl);
 }
 if (!is_dir($uploaddir)) {
     mkdir($uploaddir);
@@ -36,7 +36,7 @@ if (!is_dir($uploaddir)) {
 //now extract files.
 $zip = new ZipArchive();
 if (!$zip->open($file['tmp_name'])) {
-    error("couldn't open zip");
+    error("couldn't open zip", $returnurl);
 }
 $uploaddir .= '/'.time();
 if (!is_dir($uploaddir)) {
@@ -53,7 +53,7 @@ if ($_POST['type'] =='site') {
             LIBXML_NONET        // Disable network access - security check
             ;
         if (!$xml = simplexml_load_file($uploaddir.'/institution.xml', 'SimpleXMLElement', $options)) {
-            error("invalid institution xml");
+            error("invalid institution xml", $returnurl);
         }
         foreach ($xml->institution as $institution) {
             $insurl = (string)$institution->url[0];
@@ -90,7 +90,7 @@ if ($_POST['type'] =='site') {
                 if (filetype($uploaddir."/".$object) == "file" && substr(strrchr($object, '.'), 1) == 'zip') {
                     $zip = new ZipArchive();
                     if (!$zip->open($uploaddir."/".$object)) {
-                        error("couldn't open zip");
+                        error("couldn't open zip", $returnurl);
                     }
                     $newdir = $uploaddir.'/'.substr($object, 0, -4);
                     if (!is_dir($newdir)) {
@@ -142,7 +142,7 @@ function leap_restore_user($dir, $user = '') {
         LIBXML_NONET        // Disable network access - security check
         ;
     if (!$xml = simplexml_load_file($dir.'/leap2a.xml', 'SimpleXMLElement', $options)) {
-        error("invalid xml");
+        error("invalid xml", $returnurl);
     }
     //TODO: clean vars to prevent injection.
     $usertype = isset($user['userType']) ? $user['userType'] : $xml->author->xpath('infolio:usertype');
@@ -154,10 +154,15 @@ function leap_restore_user($dir, $user = '') {
     $username = is_array($username) ? (string)$username[0] : $user['username'];
 
     $description = $xml->author->xpath('infolio:userdesc');
-    $description = (string)$description[0];
+    $description = isset($description[0]) ? (string)$description[0] : '';
     
-    $institution = isset($user['institution']) ? $user['institution'] : $xml->author->xpath('infolio:institution');
-    $institution = is_array($institution) ? (string)$institution[0] : $user['institution'];
+    if (isset($user['institution'])) {
+        $institution = $user['institution'];
+    } else {
+        $insxml = $xml->author->xpath('infolio:institution');
+        $institution = isset($insxml[0]) ? (string)$insxml[0] : '';
+    }
+
     if (!empty($institution)) {
         //get institution id based on institution url above.
         $sqlUser = "SELECT * from institution WHERE url='$institution'";
@@ -173,7 +178,7 @@ function leap_restore_user($dir, $user = '') {
         $institutionId = 1;
     }
     $theme = $xml->author->xpath('infolio:theme');
-    $theme = (string)$theme[0];
+    $theme = isset($theme[0]) ? (string)$theme[0] : '';
 
     $name = explode(', ',$xml->author->name[0]);
 
@@ -221,9 +226,9 @@ function leap_restore_user($dir, $user = '') {
          //now create pages
 
      } else {
-         notify("The user '{$username}' at " . $newUser->getInstitution()->getName() .' already exists');
+         add_error_msg("The user '{$username}' at " . $newUser->getInstitution()->getName() .' already exists');
      }
 }
 
 // redirect back to correct page
-header('Location: ' . $adminUser->getInstitution()->getUrl() . '/' . DIR_WS_ADMIN . '?do=' . SECTION_LEAPIMPORT );
+header('Location: '. $returnurl);
