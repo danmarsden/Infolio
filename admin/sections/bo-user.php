@@ -316,7 +316,7 @@ function showForm(){
 				<h2>Switch Login</h2>
 				<span dojoType="dojo.data.ItemFileReadStore" jsId="loginShapeData" url="/system/ajax/flash/switch_loginShapes.json.php"></span>
 				<span dojoType="dojo.data.ItemFileReadStore" jsId="loginPhotoData" url="/system/ajax/flash/switch_loginPhotos.json.php"></span>
-				<p><label>Enabled: <input name="ppEnabled" type="checkbox" value="yes"<? if($user->getPermissionManager()->getSymbolLogin()->isEnabled()) print 'checked="checked"'; ?> /></label></p>
+				<p><label for="ppEnabled">Enabled: <input id="ppEnabled" name="ppEnabled" type="checkbox" value="yes"<? if($user->getPermissionManager()->getSymbolLogin()->isEnabled()) print 'checked="checked"'; ?> /></label></p>
 
 				<div id="symbolpass" style="margin: 0 0 0 2em; border: 2px solid #ccc; padding: 0 20px 0 20px; width:250px;">
 				<h3>Switch login symbol password</h3>

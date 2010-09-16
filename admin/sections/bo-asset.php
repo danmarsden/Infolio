@@ -42,7 +42,7 @@ $uploader = new Uploader('Upload a new asset', UPLOAD_LIMIT);
 		$institution = $adminUser->getInstitution();
 	}
 ?>
-<br /><label>Tags:<br /><select id="iFilterTags" style="width:60%">
+<br /><label for="iFilterTags">Tags:<br /><select id="iFilterTags" style="width:60%">
 	<option value="">All tags</option>
 		<? // Get possible tags for this institute
 		$tags = Tag::RetrieveByInstitution($institution);
@@ -113,7 +113,7 @@ $emptyPicture = Image::GetPlaceHolder();
 	<tr>
 		<td colspan="2"><a href="#tags" id="lnkAddTags">Add tags</a><br />
 		<div jsid="paneTagEdit" dojoType="dijit.layout.ContentPane">
-			<label>New tags: <select jsid="iNewTags" dojoType="dijit.form.ComboBox">
+			<label for="iNewTags">New tags: <select jsid="iNewTags" id="iNewTags" dojoType="dijit.form.ComboBox">
 			<option></option>
 			<? // Get possible tags for this institute
 			foreach($tags as $tag) {
