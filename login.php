@@ -18,24 +18,24 @@ include_once('login.inc.php');
 	<h1>Log in to <? print $institution->getName(); ?></h1>
 	<p>If you're <a href="/where.php"><strong>not</strong> in <strong><? print $institution->getName(); ?></strong> click here</a>.</p>
 	<div class="box clear">
-		<div class="box-head"><h2><img src="/_images/si/icons/set-password.gif" width="35" height="35" alt="" /> Login</h2></div>
+		<div class="box-head"><h2><img src="/_images/si/icons/set-password.gif" width="35" height="35" alt="Login" /> Login</h2></div>
 		<div class="box-content">
 			<? print $message; ?>
 			<form action="login.php" method="post" name="login">
 			<input type="hidden" name="a" value="login" />
-			<p><label>Username: <input name="tUser" type="text" size="15" maxlength="55" /></label></p>
-			<p><label>Password: <input name="tPass" type="password" size="15" maxlength="55" /></label></p>
+			<p><label for="username">Username: <input name="tUser" type="text" size="15" maxlength="55" id="username" title="username" /></label></p>
+			<p><label for="password">Password: <input name="tPass" type="password" size="15" maxlength="55" id="password" title="password" /></label></p>
 			<p><input type="submit" value="Login" /></p>
 			</form>
 			<p>Or</p>
 			<ul class="inline-list">
-				<li><a href="login2.php"><img src="/_images/si/icons/password-picture.gif" width="50" height="50" alt="" /> Picture login</a></li>
+				<li><a href="login2.php"><img src="/_images/si/icons/password-picture.gif" width="50" height="50" alt="Picture Login" /> Picture login</a></li>
 			</ul>
 		</div>
 	</div><!-- /.box -->
 
 	<div class="box clear">
-		<div class="box-head"><h2><img src="/_images/si/icons/lost-password.gif" width="35" height="35" alt="" />Lost your password?</h2></div>
+		<div class="box-head"><h2><img src="/_images/si/icons/lost-password.gif" width="35" height="35" alt="Lost Your Password?" />Lost your password?</h2></div>
 		<div class="box-content">
 			<p>Ask the person in charge for a new password, if you've lost it.</p>
 		</div>

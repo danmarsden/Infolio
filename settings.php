@@ -32,13 +32,13 @@ include_once('settings.inc.php');
 	<div id="wrap-content">
 	<div id="wrap-content-inner">
 		<h1>Tools and settings</h1>
-		<? print $studentTheme->Box($studentTheme->HtmlColourOptions(), '<h2><img src="/_images/si/icons/pallete.gif" width="35" height="35" alt="" /> Colour</h2>'); ?>
+		<? print $studentTheme->Box($studentTheme->HtmlColourOptions(), '<h2><img src="/_images/si/icons/pallete.gif" width="35" height="35" alt="Colour" /> Colour</h2>'); ?>
 		
 		<?
 		// Password options
-		print $studentTheme->Box($studentUser->HtmlPasswordOptions($passwordChanged), '<h2 id="password-sect"><img src="/_images/si/icons/set-password.gif" width="35" height="35" alt="" /> Password</h2>'); ?>
+		print $studentTheme->Box($studentUser->HtmlPasswordOptions($passwordChanged), '<h2 id="password-sect"><img src="/_images/si/icons/set-password.gif" width="35" height="35" alt="Password" /> Password</h2>'); ?>
 
-		<? print $studentTheme->BoxBegin('<h2 id="btnShowHide"><img src="/_images/si/icons/pic-pword.gif" width="35" height="35" alt="" /> Change picture password</h2>'); ?>
+		<? print $studentTheme->BoxBegin('<h2 id="btnShowHide"><img src="/_images/si/icons/pic-pword.gif" width="35" height="35" alt="Change picture password" /> Change picture password</h2>'); ?>
 		
 		<div class="hideBit">
 		<div id="flvPassword">
@@ -59,14 +59,14 @@ include_once('settings.inc.php');
         $tabCount = 0;
         foreach($studentUser->m_tabs as $aTab) {
             if($aTab->getId() != 1) {
-                $html .= '<li><label><input type="checkbox" name="tab_id' . $tabCount . '" value="' .$aTab->getId(). '" checked="checked" /> ' .$aTab->getName().  '</label></li>';
+                $html .= '<li><label for="tabids"><input type="checkbox" id="tabids" name="tab_id' . $tabCount . '" value="' .$aTab->getId(). '" checked="checked" /> ' .$aTab->getName().  '</label></li>';
                 $tabCount++;
             }
         }
         $html .= "</ul>";
         echo $html;
 ?>
-        <h3>Choose an export format</h3><div class="element"><div><input type="radio" class="radio" id="export_formate091" name="format" tabindex="1" value="html" checked="checked">
+        <h3>Choose an export format</h3><div class="element"><div><input type="radio" class="radio" id="export_formate091" name="format" tabindex="1" value="html"  checked="checked">
 
         <label for="export_formate091">Standalone HTML Website</label><div class="radio-description">Creates a self-contained website with your portfolio data. You cannot import this again, but it's readable in a standard web browser.</div></div><div>
         <input type="radio" class="radio" id="export_format442a" name="format" tabindex="1" value="leap"> <label for=\"export_format442a\">LEAP2A</label><div class=\"radio-description\">Gives you an export in the LEAP2A standard format. You can use this to import your data into other LEAP2A compliant systems, although the export is hard for humans to read.</div></div></div>
