@@ -1,6 +1,7 @@
 
 
 <link href="/_styles/backoffice.css" rel="stylesheet" type="text/css" />
+<link href="/_styles/styles.css" rel="stylesheet" type="text/css" />
 <style type="text/css">
 @import "/_scripts/dojo/dojo/resources/dojo.css";
 @import "/_scripts/dojo/dijit/themes/tundra/tundra.css";

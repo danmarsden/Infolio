@@ -78,31 +78,39 @@ if ($_POST['type'] =='site') {
             }
             
         }
+    } else {
+        add_info_msg('no institution to add');
     }
     //TODO: in future handle any other site level files here - like site groups or site data.
     
     $objects = scandir($uploaddir);
-    foreach ($objects as $object)
-        if ($object != "." && $object != "..") {
-            if (filetype($uploaddir."/".$object) == "file" && substr(strrchr($object, '.'), 1) == 'zip') {
-                $zip = new ZipArchive();
-                if (!$zip->open($uploaddir."/".$object)) {
-                    error("couldn't open zip");
+    if (!empty($objects)) {
+        foreach ($objects as $object) {
+            if ($object != "." && $object != "..") {
+                if (filetype($uploaddir."/".$object) == "file" && substr(strrchr($object, '.'), 1) == 'zip') {
+                    $zip = new ZipArchive();
+                    if (!$zip->open($uploaddir."/".$object)) {
+                        error("couldn't open zip");
+                    }
+                    $newdir = $uploaddir.'/'.substr($object, 0, -4);
+                    if (!is_dir($newdir)) {
+                        mkdir($newdir);
+                    }
+                    $zip->extractTo($newdir);
+                    //delete original zip
+                    unlink($uploaddir."/".$object);
+                    //now trigger import of this folder
+                    leap_restore_user($newdir);
+                    
+                    //Delete directory as no longer needed.
+                    delete_dir_recursive($newdir);
                 }
-                $newdir = $uploaddir.'/'.substr($object, 0, -4);
-                if (!is_dir($newdir)) {
-                    mkdir($newdir);
-                }
-                $zip->extractTo($newdir);
-                //delete original zip
-                unlink($uploaddir."/".$object);
-                //now trigger import of this folder
-                leap_restore_user($newdir);
-                
-                //Delete directory as no longer needed.
-                delete_dir_recursive($newdir);
-            }
-        } 
+            } 
+        }
+    } else {
+        add_info_msg('no users to add');
+    }
+
 } else if ($_POST['type'] === 'user'){
     $objects = scandir($uploaddir);
     if (!empty($objects)) {

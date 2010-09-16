@@ -1,0 +1,34 @@
+/* Styles */
+
+#messages {
+    padding: 0;
+}
+#messages div {
+	margin: 0 0 1em 0;
+}
+
+/* different message types */
+#messages .ok,
+div.ok {
+    color: #547c22;
+    background: #e7f1c3 url(/_images/si/success.gif) no-repeat .5em .5em;
+    border: 1px solid #C0D76E;
+	padding: .5em;
+}
+#messages .error,
+div.error {
+    color: #dd0221;
+    background: #ffd3d9 url(/_images/si/failure.gif) no-repeat .5em .5em;
+    border: 1px solid #dd0221;
+	padding: .5em;
+}
+#messages .info {
+    color: #1666a9;
+    background: #d2ebff;
+	border: 1px solid #B1DCFF; 
+	padding: .5em;
+}
+#messages img {
+    padding: .1em;
+}
+
