@@ -132,28 +132,37 @@ function leap_restore_user($dir, $user = '') {
     //TODO: clean vars to prevent injection.
     $usertype = $xml->author->xpath('infolio:usertype');
     $usertype = (string)$usertype[0];
+    if (empty($usertype)) {
+        $usertype = 'student';
+    }
     $username = $xml->author->xpath('infolio:username');
     $username = (string)$username[0];
+
     $description = $xml->author->xpath('infolio:userdesc');
     $description = (string)$description[0];
+    
     $institution = $xml->author->xpath('infolio:institution');
     $institution = (string)$institution[0];
-    //get institution id based on institution url above.
-    $sqlUser = "SELECT * from institution WHERE url='$institution'";
-    $result = $db->query($sqlUser);
-    $row = mysql_fetch_assoc($result);
-    if (empty($row)) {
-        notify('couldn\'t find insitution for user - using default instead');
-        $institutionId = 1;
+    if (!empty($institution)) {
+        //get institution id based on institution url above.
+        $sqlUser = "SELECT * from institution WHERE url='$institution'";
+        $result = $db->query($sqlUser);
+        $row = mysql_fetch_assoc($result);
+        if (empty($row)) {
+            notify('couldn\'t find insitution for user - using default instead');
+            $institutionId = 1;
+        } else {
+            $institutionId = $row['id'];
+        }
     } else {
-        $institutionId = $row['id'];
+        $institutionId = 1;
     }
     $theme = $xml->author->xpath('infolio:theme');
     $theme = (string)$theme[0];
 
     $name = explode(', ',$xml->author->name[0]);
 
-    $password = "test"; //TODO: randomise password and give option to e-mail new password to users.
+    $password = generatePassword(); //TODO: think about e-mailing the user their password?
 
     //TODO: check for SQL injection here. (and in ajax.dispatcher where this is used)
      try {
@@ -163,7 +172,7 @@ function leap_restore_user($dir, $user = '') {
              die($e->getMessage());
          }
 
-         $newUser = User::CreateNewUser(
+     $newUser = User::CreateNewUser(
              $name[1],
              $name[0],
              $xml->author->email[0],
@@ -171,14 +180,32 @@ function leap_restore_user($dir, $user = '') {
              $permissionManager,
              new Institution($institutionId));
 
-            if($newUser->isUnique()) {
-                $newUser->Save($adminUser);
-                //print $newUser->getId();
-                //now update theme:
-                $sqlUser = "UPDATE user SET colour='$theme' WHERE ID={$newUser->getId()}";
-                $result = $db->query($sqlUser);
-            } else {
-                notify("The user '{$username}' at " . $newUser->getInstitution()->getName() .' already exists');
+     if($newUser->isUnique()) {
+         $newUser->Save($adminUser);
+         //now update theme:
+         $sqlUser = "UPDATE user SET colour='$theme' WHERE ID={$newUser->getId()}";
+         $result = $db->query($sqlUser);
+         //now upload files
+         if (is_dir($dir.'/files')) {
+             $objects = scandir($dir.'/files');
+             foreach ($objects as $object) {
+                 $fullobj = $dir."/files/".$object;
+                 if ($object != "." && $object != ".." && filetype($fullobj) == "file") {
+                     $uploader = new Uploader();
+                     $file['name'] = $object;
+                     $file['infoliopath'] = $fullobj;
+                     //print_object($file);
+                     $assetId = $uploader->doCopyUpload($file, $newUser);
+                 }
+             }
+         }
+         //now update user profile image
 
-            }
+         //now create tabs
+         
+         //now create pages
+
+     } else {
+         notify("The user '{$username}' at " . $newUser->getInstitution()->getName() .' already exists');
+     }
 }

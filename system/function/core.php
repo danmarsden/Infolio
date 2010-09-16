@@ -516,3 +516,31 @@ function remove_dir($dir, $content_only=false) {
     }
     return rmdir($dir); // if anything left the result will be false, noo need for && $result
 }
+
+//password function copied from web:
+//http://www.phptoys.com/e107_plugins/content/content.php?content.42
+function generatePassword($length=6,$level=2){
+
+   list($usec, $sec) = explode(' ', microtime());
+   srand((float) $sec + ((float) $usec * 100000));
+
+   $validchars[1] = "0123456789abcdfghjkmnpqrstvwxyz";
+   $validchars[2] = "0123456789abcdfghjkmnpqrstvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+   $validchars[3] = "0123456789_!@#$%&*()-=+/abcdfghjkmnpqrstvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_!@#$%&*()-=+/";
+
+   $password  = "";
+   $counter   = 0;
+
+   while ($counter < $length) {
+     $actChar = substr($validchars[$level], rand(0, strlen($validchars[$level])-1), 1);
+
+     // All character must be different
+     if (!strstr($password, $actChar)) {
+        $password .= $actChar;
+        $counter++;
+     }
+   }
+
+   return $password;
+
+}

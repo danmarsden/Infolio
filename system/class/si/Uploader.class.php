@@ -135,7 +135,7 @@ class Uploader
 		return $extension;
 	}
 	
-	private function doCopyUpload($file, User $user, Page $page=null)
+	function doCopyUpload($file, User $user, Page $page=null)
 	{
 		// Create an object with iFile interface
 		$fileName = basename( $file['name']);
@@ -169,7 +169,13 @@ class Uploader
 		}
 		
 		// Save the file to file system and DB
-		if(move_uploaded_file($file['tmp_name'], $target_path)) {
+		$success = false;
+		if (isset($file['infoliopath']) && copy($file['infoliopath'], $target_path)) {
+            $success = true;
+		} elseif(move_uploaded_file($file['tmp_name'], $target_path)) {
+		    $success = true;
+		} 
+		if($success) {
 		    // Set HREF
 			$tempUploadObject->setHref($fileBit . $newFileNum . $extension);
 
@@ -184,11 +190,6 @@ class Uploader
 			if(method_exists($tempUploadObject, 'assignToCollectionInDb')) {
 				$tempUploadObject->assignToCollectionInDb($user);
 			}
-
-			$success = true;
-		} else {
-		    // echo "There was an error uploading the file, please try again!";
-			$success = false;
 		}
 		
 		Debugger::debug("Saved: {$tempUploadObject->getHref()}, id: {$tempUploadObject->getId()}", "Uploader::doCopyUpload({$file})_1", Debugger::LEVEL_INFO);
