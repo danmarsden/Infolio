@@ -36,6 +36,11 @@ function leap_author($user) {
         <name>".$user->getFullName()."</name>
         <email>".$user->getEmail()."</email>
         <uri>portfolio:artefactinternal</uri>
+        <infolio:usertype>".$user->getPermissionManager()->getUserType()."</infolio:usertype>
+        <infolio:username>".$user->getUserName()."</infolio:username>
+        <infolio:userdesc>".$user->getDescription()."</infolio:userdesc>
+        <infolio:institution>".$user->getInstitution()->getUrl()."</infolio:institution>
+        <infolio:theme>".$user->getTheme()->getName()."</infolio:theme>
     </author>
     ";
 }

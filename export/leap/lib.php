@@ -100,7 +100,28 @@ function export_portfolio($studentUser, $tabIds, $returnfile=false) {
         send_temp_file($zipfilename, 'leapinfolio-export-leap-user'. $studentUser->getId() . '-' . $exporttime . '.zip');
     }
 }
-
+function export_institutions() {
+    $sql = "SELECT * FROM institution";
+    $db = Database::getInstance();
+    $result = $db->query($sql);
+    if (empty($result)) {
+        return '';
+    }
+    $output = '<?xml version="1.0" encoding="UTF-8"?>
+<institutions>
+';
+    while ($row = mysql_fetch_assoc($result)) {
+        $output .= '<institution id="'.$row['id'].'">
+    <name>'.$row['name'].'</name>
+    <url>'.$row['url'].'</url>
+    <asset_id>'.$row['asset_id'].'</asset_id>';
+        $output .= '
+ </institution>';
+    }
+    $output .='
+</institutions>';
+    return $output;
+}
 
 
 
