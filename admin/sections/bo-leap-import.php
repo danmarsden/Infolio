@@ -16,8 +16,6 @@
     <div id="dataFormContainer">
         
                 <form method="post" id="userform" action="../../import.php" dojoType="dijit.form.Form">
-                <input type="hidden" name="userid" id="userid" value="<? if(isset($user)) print $user->getId(); ?>" />
-                <input type="hidden" name="do" id="do" value="12" />
 
                 <h2>LEAP User Import</h2>
                 <table class="dataForm" id="loginTable">
@@ -99,7 +97,8 @@
             </div>
             <div id="siteimport">
             <h2>LEAP Site Import</h2>
-            <form method="post" id="userform" action="../../import.php">
+            <form enctype="multipart/form-data" method="post" id="userform" action="../../import.php">
+            <input type="hidden" name="type" value="site" />
             <table class="dataForm" id="leapimport">
                 <tr>
                     <td class="captionLabel">File</td>

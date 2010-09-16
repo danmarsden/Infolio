@@ -72,6 +72,9 @@ if (!is_dir("staticversion/export/html")) {
 $files = array();
 foreach ($users as $user) {
     //set up Globals
+    if (empty($user)) {
+        continue;
+    }
     $studentTheme = $user->getTheme(); //used as Global by scripts
     // Get user's tabs and assets
     $userTabs = $user->getTabs($tabIds);
@@ -106,6 +109,16 @@ if (!empty($files)) {
     if ($zip->open($zipfilename, ZIPARCHIVE::CREATE)!==TRUE) {
         exit("cannot open <$zipfilename>\n");
     }
+    //now add site level files
+    $insxml = export_institutions();
+    if (!empty($insxml)) {
+        $filename = "data/export/institution.xml";
+        $fp = fopen($filename,"w");
+        fwrite($fp,$insxml);
+        fclose($fp);
+        $zip->addFile($filename, "institution.xml");
+    }
+
     foreach ($files as $file) {
         //hacky way to rename zip files in this new zip
         $newname = str_replace('data/export/', '', $file);
