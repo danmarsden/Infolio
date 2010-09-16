@@ -14,6 +14,7 @@
 */
 
 include_once('model/Template.class.php');
+include_once('function/core.php');
 
 /**
  *  Class to hold Item for template
@@ -538,13 +539,13 @@ class Tab extends DatabaseObject
 	 */
     public static function updateWeights($max=0, $tabs) 
     {
-
+        $user = User::RetrieveBySessionData($_SESSION);
         if (count($tabs) >= 1 && $max == 0) {
             foreach ($tabs as $tab) {
                 if ($tab->getId() != self::ABOUT_ME_TAB_ID) { // don't update ABOUT_ME tab
                     $max++; // tab ordering starts at 1
                     $tab->m_weight = $max;
-                    $tab->m_updatedBy = $this->m_user;
+                    $tab->m_updatedBY = $user;
                     $tab->dbUpdate(); 
                 }
             }
