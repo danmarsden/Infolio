@@ -103,14 +103,21 @@ if ($_POST['type'] =='site') {
                 delete_dir_recursive($newdir);
             }
         } 
-} else {
-    
+} else if ($_POST['type'] === 'user'){
+    $objects = scandir($uploaddir);
+    if (!empty($objects)) {
+        $newUser = $_POST; // new user details
+        // trigger import of this folder
+        leap_restore_user($uploaddir, $newUser);
+
+        // Delete directory as no longer needed.
+        delete_dir_recursive($uploaddir);
+    }
 } 
 
 
 //now delete old directory.
 delete_dir_recursive($uploaddir);
-
 
 //function to restore an individual user leap export
 function leap_restore_user($dir, $user = '') {
@@ -130,19 +137,19 @@ function leap_restore_user($dir, $user = '') {
         error("invalid xml");
     }
     //TODO: clean vars to prevent injection.
-    $usertype = $xml->author->xpath('infolio:usertype');
-    $usertype = (string)$usertype[0];
+    $usertype = isset($user['userType']) ? $user['userType'] : $xml->author->xpath('infolio:usertype');
+    $usertype = is_array($usertype) ? (string)$usertype[0] : $usertype :;
     if (empty($usertype)) {
         $usertype = 'student';
     }
-    $username = $xml->author->xpath('infolio:username');
-    $username = (string)$username[0];
+    $username = isset($user['username']) ? $user['username'] : $xml->author->xpath('infolio:username');
+    $username = is_array($username) ? (string)$username[0] : $user['username'];
 
     $description = $xml->author->xpath('infolio:userdesc');
     $description = (string)$description[0];
     
-    $institution = $xml->author->xpath('infolio:institution');
-    $institution = (string)$institution[0];
+    $institution = isset($user['institution']) ? $user['institution'] : $xml->author->xpath('infolio:institution');
+    $institution = is_array($institution) ? (string)$institution[0] : $user['institution'];
     if (!empty($institution)) {
         //get institution id based on institution url above.
         $sqlUser = "SELECT * from institution WHERE url='$institution'";
@@ -209,3 +216,6 @@ function leap_restore_user($dir, $user = '') {
          notify("The user '{$username}' at " . $newUser->getInstitution()->getName() .' already exists');
      }
 }
+
+// redirect back to correct page
+header('Location: ' . $adminUser->getInstitution()->getUrl() . '/' . DIR_WS_ADMIN . '?do=' . SECTION_LEAPIMPORT );

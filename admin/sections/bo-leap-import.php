@@ -11,12 +11,12 @@
 */
 
 
-     ?>   
+     ?>
     <script type="text/javascript" src="/admin/_scripts/bo-user-form.js"></script>
     <div id="dataFormContainer">
         
-                <form method="post" id="userform" action="../../import.php" dojoType="dijit.form.Form">
-
+                <form method="post" id="userform" action="../../import.php" dojoType="dijit.form.Form" enctype="multipart/form-data">
+                <input type="hidden" name="type" value="user" />
                 <h2>LEAP User Import</h2>
                 <table class="dataForm" id="loginTable">
                     <tr>
@@ -84,6 +84,23 @@
                             </select> <?php echo TEXT_FIELD_REQUIRED?>
                         </td>
                     </tr>
+					<tr>
+						<td class="captionLabel">Institution</td>
+						<td>
+                            <select dojoType="dijit.form.FilteringSelect"
+                                name="institution_id"
+                                id="institution_id"
+                                <option></option>
+                                <?
+                                    $institutions = Institution::RetrieveAll();
+                                    foreach($institutions as $institution)
+                                    {
+                                        ?><option value="<? print $institution->getId(); ?>"><? print $institution->getName(); ?></option><?
+                                    }
+                                ?>
+                            </select>
+						</td>
+					</tr>
                     <tr>
                         <td class="captionLabel">File</td>
                         <td><input type="file" name="leapimport"/></td>
