@@ -544,3 +544,75 @@ function generatePassword($length=6,$level=2){
    return $password;
 
 }
+
+// functionality for using $_SESSION to report back to user
+
+/**
+ * Create a session, by initialising the $_SESSION array.
+ */
+function ensure_session() {
+    if (empty($_SESSION)) {
+        if (!session_id()) {
+            @session_start();
+        }
+        $_SESSION = array(
+            'messages' => array()
+        );
+    }
+}
+
+/**
+ * Adds a message that indicates something was successful
+ *
+ * @param string $message The message to add
+ * @param boolean $escape Whether to HTML escape the message
+ */
+function add_ok_msg($message) {
+    ensure_session();
+    $_SESSION['messages'][] = array('type' => 'ok', 'msg' => $message);
+}
+
+/**
+ * Adds a message that indicates an informational message
+ *
+ * @param string $message The message to add
+ * @param boolean $escape Whether to HTML escape the message
+ */
+function add_info_msg($message) {
+    ensure_session();
+    $_SESSION['messages'][] = array('type' => 'info', 'msg' => $message);
+}
+
+/**
+ * Adds a message that indicates a failure to do something
+ *
+ * @param string $message The message to add
+ * @param boolean $escape Whether to HTML escape the message
+ */
+function add_error_msg($message) {
+    ensure_session();
+    $_SESSION['messages'][] = array('type' => 'error', 'msg' => $message);
+}
+
+/**
+ * Builds HTML that represents all of the messages and returns it.
+ *
+ * This is designed to let smarty templates hook in any session messages.
+ *
+ * Calling this function will destroy the session messages that were
+ * rendered, so they do not inadvertently get displayed again.
+ *
+ * @return string The HTML representing all of the session messages.
+ */
+function render_messages() {
+    $result = '<div id="messages">';
+    if (isset($_SESSION['messages'])) {
+        foreach ($_SESSION['messages'] as $data) {
+            $result .= '<div class="' . $data['type'] . '">';
+            $result .= $data['msg'] . '</div>';
+        }
+        $_SESSION['messages'] = array();
+    }
+    $result .= '</div>';
+    return $result;
+}

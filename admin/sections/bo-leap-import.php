@@ -12,6 +12,8 @@
 
 
      ?>
+
+    <?php print render_messages(); ?>
     <script type="text/javascript" src="/admin/_scripts/bo-user-form.js"></script>
     <div id="dataFormContainer">
         
