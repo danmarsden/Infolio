@@ -138,7 +138,7 @@ function leap_restore_user($dir, $user = '') {
     }
     //TODO: clean vars to prevent injection.
     $usertype = isset($user['userType']) ? $user['userType'] : $xml->author->xpath('infolio:usertype');
-    $usertype = is_array($usertype) ? (string)$usertype[0] : $usertype :;
+    $usertype = is_array($usertype) ? (string)$usertype[0] : $usertype;
     if (empty($usertype)) {
         $usertype = 'student';
     }
