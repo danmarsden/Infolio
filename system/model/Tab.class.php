@@ -228,7 +228,7 @@ class Tab extends DatabaseObject
     public function setUpdatedBy(User $user)
 	{
 		$this->checkfilled();
-		$this->m_updatedBy = $user;
+		$this->m_updatedBy = $user->getId();
     }
 
 	public function setDescription($text)
@@ -604,7 +604,7 @@ class Tab extends DatabaseObject
         foreach ($weights as $w => $t) {
             $tab = Tab::GetTabById($t);
             $tab->m_weight = (int)$w;
-            $tab->m_updatedBy = $this->m_user;
+            $tab->m_updatedBy = $this->m_user->getId();
             $tab->dbUpdate(); 
         }
     }
