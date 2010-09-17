@@ -233,10 +233,18 @@ function leap_restore_user($dir, $user = '') {
                  $artefacts[$entryid] = $entry;
              }
          }
-         foreach ($tabs as $tab) {
-             $tab = Tab::CreateNewTab((string)$tab->title[0], $newUser);
+         foreach ($tabs as $tabxml) {
+             $tab = Tab::CreateNewTab((string)$tabxml->title[0], $newUser);
              $tab->Save($newUser);
              //TODO: create pages attached to this tab
+             foreach ($tabxml->link as $link) {
+                 $viewid = (string)$link->attributes()->href;
+                 $view = $views[$viewid];
+                 //TODO: create each view (page and each page block on each page)
+                 
+                 //remove from array as this has now been created.
+                 //unset($views[$viewid]);
+             }
          }
          //TODO: update user profile image
 
