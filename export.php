@@ -51,13 +51,23 @@ for($i=0; $i<$_POST['tab_count']; $i++)
     }
 }
 $users = array();
+$usertabsarray = array();
+$usertabidarray = array();
 if (!empty($_POST['siteexport'])) {
     //get list of all users.
     $sql = "SELECT id FROM user";
     $db = Database::getInstance();
     $result = $db->query($sql);
     while ($row = mysql_fetch_assoc($result)) {
-        $users[] = User::RetrieveById($row['id'], $adminUser);
+        $usr = User::RetrieveById($row['id'], $adminUser);
+        if (!empty($usr)) {
+            $users[] = $usr;
+            $tabs = $usr->getTabs();
+            $usertabsarray[$usr->getId()] = $tabs;
+            foreach ($tabs as $tab) {
+                $usertabidarray[$usr->getId()][] = $tab->getId();
+            }
+        }
     }
     
 } elseif (isset($_POST['user_id']) && is_numeric($_POST['user_id'])) {
@@ -77,7 +87,12 @@ foreach ($users as $user) {
     }
     $studentTheme = $user->getTheme(); //used as Global by scripts
     // Get user's tabs and assets
-    $userTabs = $user->getTabs($tabIds);
+    if (isset($usertabsarray[$user->getId()])) {
+        $userTabs = $usertabsarray[$user->getId()];
+        $tabIds = $usertabidarray[$user->getId()];
+    } else {
+        $userTabs = $user->getTabs($tabIds);
+    }
 
     $userAssetCollection = $user->getAssetCollection();//Asset::RetrieveUsersAssets($studentUser);
     $userAssets = $userAssetCollection->getAssets();
