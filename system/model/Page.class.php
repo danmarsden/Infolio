@@ -418,7 +418,7 @@ class Page extends SimplePage
 	 * Gets the weight for a new block that will float above all the others
 	 * @return Int
 	 */
-	private function getNewBlockWeight()
+	function getNewBlockWeight()
 	{
 		if(!isset($this->m_blocks)) {
 			$this->getBlocks();

@@ -205,21 +205,7 @@ function leap_restore_user($dir, $user = '') {
          //now update theme:
          $sqlUser = "UPDATE user SET colour='$theme' WHERE ID={$newUser->getId()}";
          $result = $db->query($sqlUser);
-         //now upload files
-         if (is_dir($dir.'/files')) {
-             $objects = scandir($dir.'/files');
-             foreach ($objects as $object) {
-                 $fullobj = $dir."/files/".$object;
-                 if ($object != "." && $object != ".." && filetype($fullobj) == "file") {
-                     $uploader = new Uploader();
-                     $file['name'] = $object;
-                     $file['infoliopath'] = $fullobj;
-                     //print_object($file);
-                     $assetId = $uploader->doCopyUpload($file, $newUser);
-                 }
-             }
-         }
-         
+
          $tabs = array();
          $views = array();
          $artefacts = array();
@@ -233,15 +219,57 @@ function leap_restore_user($dir, $user = '') {
                  $artefacts[$entryid] = $entry;
              }
          }
+         //now upload files
+         $savedfiles = array();
+         foreach ($artefacts as $artefact) {
+             $arid = (string)$artefact->id;
+             $title = (string)$artefact->title;
+             $link = $dir . (string)$artefact->link->attributes()->href;
+             if (is_file($link)) {
+                 $uploader = new Uploader();
+                 $file['name'] = $title;
+                 $file['infoliopath'] = $link;
+                 $assetId = $uploader->doCopyUpload($file, $newUser);
+                 $savedfiles[$arid] = $assetId;
+             }
+         }
+
          foreach ($tabs as $tabxml) {
              $tab = Tab::CreateNewTab((string)$tabxml->title[0], $newUser);
              $tab->Save($newUser);
              //TODO: create pages attached to this tab
              foreach ($tabxml->link as $link) {
                  $viewid = (string)$link->attributes()->href;
-                 $view = $views[$viewid];
                  //TODO: create each view (page and each page block on each page)
-                 
+                 $viewxml = $views[$viewid]->xpath('infolio:view');
+                 $title = $views[$viewid]->title;
+                 //create page now.
+                 $page = new Page();
+                 $page->setUser($newUser);
+                 $page->setTab(new Tab($tab->getId()));
+                 $page->setEnabled(true);
+                 $page->setTitle($title);
+                 $page->Save($newUser);
+
+                 foreach ($viewxml as $i) {
+                     $blocks = $i->xpath('infolio:blockinstance');
+                     foreach ($blocks as $block) {
+                         //create block now.
+                         $newBlock = PageBlock::CreateNew($title, $page, $newUser);
+                         $newBlock->setWeight($page->getNewBlockWeight());
+                         
+                         $templateid = $block->xpath('infolio:layout');
+                         $newBlock->setLayoutTemplateId((string)$templateid[0]);
+                         
+                         //TODO: now get words to put in block
+                         //$words = $block->xpath('infolio:words0');
+                         //$newblock->setWordBlocks($wordBlocks);
+                         
+                         //TODO: now get pictures to put in block
+                         
+                         $newBlock->Save($newUser);
+                     }
+                 }
                  //remove from array as this has now been created.
                  //unset($views[$viewid]);
              }
