@@ -219,11 +219,26 @@ function leap_restore_user($dir, $user = '') {
                  }
              }
          }
-         //now update user profile image
-
-         //now create tabs
          
-         //now create pages
+         $tabs = array();
+         $views = array();
+         $artefacts = array();
+         foreach ($xml->entry as $entry) {
+             $entryid = (string) $entry->id[0];
+             if (strpos($entryid, 'portfolio:collection')===0) {
+                 $tabs[$entryid] = $entry;
+             } elseif (strpos($entryid, 'portfolio:view')===0) {
+                 $views[$entryid] = $entry;
+             } elseif (strpos($entryid, 'portfolio:artefact')===0) {
+                 $artefacts[$entryid] = $entry;
+             }
+         }
+         foreach ($tabs as $tab) {
+             $tab = Tab::CreateNewTab((string)$tab->title[0], $newUser);
+             $tab->Save($newUser);
+             //TODO: create pages attached to this tab
+         }
+         //TODO: update user profile image
 
      } else {
          add_error_msg("The user '{$username}' at " . $newUser->getInstitution()->getName() .' already exists');
