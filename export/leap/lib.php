@@ -42,12 +42,14 @@ function export_portfolio($studentUser, $tabIds, $returnfile=false) {
 
             //now do actual pages.
             foreach($tabPages as $aPage) {
+                //TODO: optimise leap_blocks and export_pages - they both use the same sql query
                 $entry->title = $aPage->getTitle();
                 $entry->id = "portfolio:view".$aPage->getId();
                 $entry->contenttype = 'html';
                 $entry->content = leap_blocks($aPage, $studentUser);
                 $entry->leaptype = 'selection';
                $leapxml .= leap_entry($entry);
+               $leapxml .= export_pages($aPage, $studentUser);
                $leapxml .= leap_entryfooter();
             }
         }
@@ -123,7 +125,23 @@ function export_institutions() {
     return $output;
 }
 
-
+function export_pages($page, $studentUser) {
+    $output = '<infolio:view infolio:type="portfolio">'; 
+    $sql = "SELECT * FROM block WHERE page_id='".$page->getId()."' AND user_id='". $studentUser->getId()."'";
+    $db = Database::getInstance();
+    $result = $db->query($sql);
+    while ($row = mysql_fetch_assoc($result)) {
+        $output .= '<infolio:blockinstance infolio:blocktitle="'.$row['title'].'">';
+        $output .= '<infolio:words0>'.$row['words0'].'</infolio:words0>';
+        $output .= '<infolio:words1>'.$row['words1'].'</infolio:words1>';
+        $output .= '<infolio:picture0>'.$row['picture0'].'</infolio:picture0>';
+        $output .= '<infolio:picture1>'.$row['picture1'].'</infolio:picture1>';
+        $output .= '<infolio:layout>'.$row['block_layout_id'].'</infolio:layout>';
+        $output .= '</infolio:blockinstance>';
+    }
+    $output .= "</infolio:view>";
+    return $output;
+}
 
 /**
  * Function to check if a directory exists and optionally create it. (copied from Moodle)
