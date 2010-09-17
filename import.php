@@ -265,7 +265,7 @@ function leap_restore_user($dir, $user = '') {
                          //$words = $block->xpath('infolio:words0');
                          //$newblock->setWordBlocks($wordBlocks);
                          
-                         //TODO: now get pictures to put in block
+                         //TODO: now get pictures to put in block - use $savedfiles to get new id
                          
                          $newBlock->Save($newUser);
                      }
