@@ -381,7 +381,7 @@ class Tab extends DatabaseObject
 			
 			'template_id' => isset($this->m_template)? $this->m_template->getId() : 'null',
             'updated_time' => Date::formatForDatabase($this->m_updatedTime),
-			'updated_by' => $this->m_updatedBy->getId()
+			'updated_by' => $this->m_updatedBy
 		);
 
 		// Add tab icon if there is one
