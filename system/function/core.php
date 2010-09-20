@@ -613,8 +613,8 @@ function render_messages() {
     $result = '<div id="messages">';
     if (isset($_SESSION['messages'])) {
         foreach ($_SESSION['messages'] as $data) {
-            $result .= '<div class="' . $data['type'] . '">';
-            $result .= $data['msg'] . '</div>';
+            $result .= '<div class="' . $data['type'] . '"><p>';
+            $result .= $data['msg'] . '</p></div>';
         }
         $_SESSION['messages'] = array();
     }

@@ -46,6 +46,7 @@ $zip->extractTo($uploaddir);
 
 //if this is a site export, unzip each item into it's own dir and run import
 if ($_POST['type'] =='site') {
+
     //handle Institutions xml first
     if (file_exists($uploaddir.'/institution.xml')) {
         $options =
@@ -75,12 +76,14 @@ if ($_POST['type'] =='site') {
                 // Write to DB
                 $db = Database::getInstance();
                 $db->perform('institution', $data);
+            } else {
+                add_error_msg("The institution {$institution->name[0]} already exists");
             }
-            
         }
     } else {
-        add_info_msg('no institution to add');
+        add_info_msg('no valid institution.xml to load institutions from');
     }
+
     //TODO: in future handle any other site level files here - like site groups or site data.
     
     $objects = scandir($uploaddir);
@@ -108,7 +111,7 @@ if ($_POST['type'] =='site') {
             } 
         }
     } else {
-        add_info_msg('no users to add');
+        add_info_msg('no valid user files available in import zip');
     }
 
 } else if ($_POST['type'] === 'user'){
@@ -301,8 +304,6 @@ function leap_restore_user($dir, $user = '') {
              $newUser->setProfilePictureId($savedfiles["portfolio:artefact".$profilepic]);
              $newUser->Save($adminUser);
          }
-
-
 
      } else {
          add_error_msg("The user '{$username}' at " . $newUser->getInstitution()->getName() .' already exists');
