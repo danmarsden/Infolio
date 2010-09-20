@@ -247,6 +247,11 @@ function leap_restore_user($dir, $user = '') {
                      //add tag to asset.
                      $asset->addTag($t, $newUser);
                  }
+                 //now check for favourite
+                 $fav = $artefact->xpath('infolio:favourite');
+                 if (isset($fav[0]) && (string)$fav[0] == 'true') {
+                     $asset->setFavourite(true, $newUser);
+                 }
              }
          }
 

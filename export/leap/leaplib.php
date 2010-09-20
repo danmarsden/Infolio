@@ -117,7 +117,7 @@ function leap_entryfooter() {
     </entry>';
 }
 
-function leap_resource($resource) {
+function leap_resource($resource, $user) {
     $output = "
     <rdf:type rdf:resource=\"leap2:resource\" />
 <category scheme=\"categories:resource_type#\" term=\"Offline\" />
@@ -141,6 +141,14 @@ function leap_resource($resource) {
             $output .= "<infolio:tag>".$row['name']."</infolio:tag>";
         }
         $output .= "</infolio:tags>";
+    }
+    //now check for favorites
+    $sql = "SELECT * FROM favourite_assets WHERE asset_id ='". $resource->id."' AND user_id='".$user->getId()."'";
+    $db = Database::getInstance();
+    $result = $db->query($sql);
+    $row = mysql_fetch_assoc($result);
+    if (!empty($row)) {
+        $output .= "<infolio:favourite>true</infolio:favourite>";
     }
     return $output;
 }
