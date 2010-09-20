@@ -231,8 +231,10 @@ function leap_restore_user($dir, $user = '') {
                  $file['infoliopath'] = $dir . '/'.$link;
                  $assetId = $uploader->doCopyUpload($file, $newUser);
                  $savedfiles[$arid] = $assetId;
-                 //TODO: now update title
-
+                 //now update title
+                 $asset = Asset::RetrieveById($assetId, $newUser);
+	             $asset->setTitle($title);
+	             $asset->Save($newUser);
              }
          }
 
@@ -273,7 +275,6 @@ function leap_restore_user($dir, $user = '') {
                          $newBlock->setWordBlocks($words);
                          
                          //now get pictures to put in block - use $savedfiles to get new id
-                         $pictures = array();
                          $pic0 = $block->xpath('infolio:picture0');
                          $picid = (int)$pic0[0];
                          if (isset($savedfiles["portfolio:artefact".$picid])) {
@@ -293,7 +294,15 @@ function leap_restore_user($dir, $user = '') {
                  //unset($views[$viewid]);
              }
          }
-         //TODO: update user profile image
+         //update user profile image
+         $profilepic = $xml->author->xpath('infolio:profilepic');
+         $profilepic = isset($profilepic[0]) ? (string)$profilepic[0] : '';
+         if (isset($savedfiles["portfolio:artefact".$profilepic])) {
+             $newUser->setProfilePictureId($savedfiles["portfolio:artefact".$profilepic]);
+             $newUser->Save($adminUser);
+         }
+
+
 
      } else {
          add_error_msg("The user '{$username}' at " . $newUser->getInstitution()->getName() .' already exists');

@@ -41,6 +41,7 @@ function leap_author($user) {
         <infolio:userdesc>".$user->getDescription()."</infolio:userdesc>
         <infolio:institution>".$user->getInstitution()->getUrl()."</infolio:institution>
         <infolio:theme>".$user->getTheme()->getName()."</infolio:theme>
+        <infolio:profilepic>".$user->getProfilePictureId()."</infolio:profilepic>
     </author>
     ";
 }
