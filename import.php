@@ -238,16 +238,25 @@ function leap_restore_user($dir, $user = '') {
                  $asset = Asset::RetrieveById($assetId, $newUser);
 	             $asset->setTitle($title);
 	             $asset->Save($newUser);
+	             //now check for tags
+	             $tags = $artefact->xpath('infolio:tags');
+	             $tags = $tags[0]->xpath('infolio:tag');
+	             foreach ($tags as $tag) {
+                     //create new tag or get it.
+                     $t = Tag::CreateOrRetrieveByName((string)$tag, $newUser->getInstitution(), $adminUser);
+                     //add tag to asset.
+                     $asset->addTag($t, $newUser);
+                 }
              }
          }
 
          foreach ($tabs as $tabxml) {
              $tab = Tab::CreateNewTab((string)$tabxml->title[0], $newUser);
              $tab->Save($newUser);
-             //TODO: create pages attached to this tab
+             // create pages attached to this tab
              foreach ($tabxml->link as $link) {
                  $viewid = (string)$link->attributes()->href;
-                 //TODO: create each view (page and each page block on each page)
+                 //create each view (page and each page block on each page)
                  $viewxml = $views[$viewid]->xpath('infolio:view');
                  $title = $views[$viewid]->title;
                  //create page now.

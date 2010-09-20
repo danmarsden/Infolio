@@ -124,12 +124,23 @@ function leap_resource($resource) {
 <mahara:artefactplugin mahara:type=\"image\" mahara:plugin=\"file\"/>
 <link rel=\"enclosure\" type=\"$resource->contenttype\" href=\"files/$resource->url\" />";
     
-    //TODO - attach links to resources -db query against blocks to find all items with image 1 or 2 set to this id.
+    //attach links to resources -db query against blocks to find all items with image 1 or 2 set to this id.
     $sql = "SELECT * FROM block WHERE picture0='". $resource->id."' OR picture1='". $resource->id."'";
     $db = Database::getInstance();
     $result = $db->query($sql);
     while ($row = mysql_fetch_assoc($result)) {
         $output .= "<link rel=\"leap2:is_part_of\" href=\"portfolio:view".$row['id']."\"/>";
+    }
+    //now attach tags to this resource
+    $sql = "SELECT name FROM tags, tags_assets WHERE tags_assets.tag_id = tags.id AND tags_assets.asset_id='". $resource->id."'";
+    $db = Database::getInstance();
+    $result = $db->query($sql);
+    if ($result) {
+        $output .= "<infolio:tags>";
+        while ($row = mysql_fetch_assoc($result)) {
+            $output .= "<infolio:tag>".$row['name']."</infolio:tag>";
+        }
+        $output .= "</infolio:tags>";
     }
     return $output;
 }
