@@ -225,12 +225,6 @@ class Tab extends DatabaseObject
 		$this->m_enabled = $enabled;
     }
 
-    public function setUpdatedBy(User $user)
-	{
-		$this->checkfilled();
-		$this->m_updatedBy = $user->getId();
-    }
-
 	public function setDescription($text)
 	{
 		$this->checkFilled();
@@ -408,18 +402,27 @@ class Tab extends DatabaseObject
 	{
 		$db = Database::getInstance();
 
-		$this->m_enabled = false;
+        $this->m_enabled = false;
+        $this->m_weight = 0;
 		$this->Save($authUser);
+
+        Tab::readjustWeights($this->m_owner); // update all the other Tab weights so they order better
 
 		Logger::Write("Deleted tab '{$this->getName()}' (id:{$this->getId()})", Logger::TYPE_DELETE, $authUser);
 	}
 
 	public function Restore($authUser)
-	{
+    {
+
 		$this->checkFilled();
 		// Check not enabled
 		if (!$this->m_enabled) {
-			$this->m_enabled = true;
+            // restore with a new weight
+            if(isset($this->m_owner)) {
+                $max = Tab::getMaxWeight((int)$this->m_owner->getId());
+                $this->m_weight = ++$max;
+            }
+            $this->m_enabled = true;
 			$this->Save($authUser);
 
 			Logger::Write("Tab '{$this->getName()}' (id:{$this->getId()}) restored", Logger::TYPE_INFO, $authUser);
@@ -537,21 +540,70 @@ class Tab extends DatabaseObject
      *  NB: this function is to ensure existing tabs are inline with the new tab ordering weights
      *
 	 */
-    public static function updateWeights($max=0, $tabs) 
+    public static function updateWeights($max=0, &$weights) 
     {
         $user = User::RetrieveBySessionData($_SESSION);
-        if (count($tabs) >= 1 && $max == 0) {
-            foreach ($tabs as $tab) {
-                if ($tab->getId() != self::ABOUT_ME_TAB_ID) { // don't update ABOUT_ME tab
-                    $max++; // tab ordering starts at 1
-                    $tab->m_weight = $max;
-                    $tab->m_updatedBY = $user;
-                    $tab->dbUpdate(); 
-                }
+        $newWeight = 0;
+        foreach ($weights as $weight => $key) {
+            if ($key != self::ABOUT_ME_TAB_ID) { // double-checking:  don't update ABOUT_ME tab
+                $tab = Tab::GetTabById($key);
+                $tab->m_weight = $newWeight;
+                $weights[$key] = $newWeight;
+                $tab->save($user); 
+                $newWeight++;
             }
         }
+        $max = $newWeight - 1;
+        
+        return $max;
+    }
 
-        // return the new max weight after updating
+    public static function getWeights($user)
+    {
+    
+		$db = Database::getInstance();
+        $sql = "SELECT id from tab WHERE user_id={$user->getId()}" .
+                " AND enabled = 1" .
+                " AND id != " . self::ABOUT_ME_TAB_ID .
+                " ORDER BY weight";
+
+        $result = $db->query($sql);
+
+        $weights = array();
+        while( $row = $db->fetchArray($result, MYSQL_ASSOC) ) {
+            $weights[] = (int)$row['id'];
+        }
+
+        return $weights;
+    }
+
+    public static function readjustWeights($userid)
+    {
+        $user = new User((int)$userid);
+        $weights = Tab::getWeights($user);
+
+        $newWeight = 0;
+        foreach ($weights as $weight => $id) {
+            if ($id != self::ABOUT_ME_TAB_ID) { // double-checking:  don't update ABOUT_ME tab
+                $tab = Tab::GetTabById($id);
+                $tab->m_weight = $newWeight;
+                $tab->save($user); 
+                $newWeight++;
+            }
+        }
+    }
+
+    public static function getMaxWeight($userid)
+    {
+
+        $db = Database::getInstance();
+        // retrieve the current max weight
+        $maxsql = "SELECT MAX(weight) AS max FROM tab WHERE user_id = {$userid}";
+        $result = $db->query($maxsql);
+        while( $row = $db->fetchArray($result, MYSQL_ASSOC) ) {
+            $max = (int)$row['max'];
+        }
+    
         return $max;
     }
 
@@ -562,50 +614,46 @@ class Tab extends DatabaseObject
 	 */
     public function setWeight($direction=null) 
     {
-        
-        $db = Database::getInstance();
-        $tabs = Tab::RetrieveTabsByUser($this->m_user);
+        $db         = Database::getInstance();
+        $weights    = Tab::getWeights($this->m_user);
+        $tabs       = Tab::RetrieveTabsByUser($this->m_user);
+        $max        = Tab::getMaxWeight((int)$this->m_user->getId());
+        $authuser = User::RetrieveBySessionData($_SESSION);
 
-        // retrieve the current max weight
-        $maxsql     = "SELECT MAX(weight) AS max FROM tab WHERE user_id = {$this->m_user->getId()}";
-        $result = $db->query($maxsql);
-        while( $row = $db->fetchArray($result, MYSQL_ASSOC) ) {
-            $max = (int)$row['max'];
+        // if the max is 0 and we have more than one tab
+        // update them incase they are all 0
+        if (count($weights) > 1 && $max == 0) {
+            $max = Tab::updateWeights($max, $weights);
         }
 
-        $max = Tab::updateWeights($max, $tabs); // update initial weights in case they are all 0
-
         // if there is no direction just set the initial weight
+        // this is a new Tab
         if (!$direction) {
             $this->m_weight = $max + 1;
             return;
         }
 
-        // tabs current values
+        // current weight
         $oldweight = (int)$this->m_weight;
-        $id = (int)$this->getID();
+        $id = (int)$this->getId();
 
-        $weights = array();
-        foreach ($tabs as $tab) {
-            if ($tab->getId() != self::ABOUT_ME_TAB_ID) { // don't update ABOUT_ME tab weight
-                $weights[(int)$tab->m_weight] = $tab->getId();
+        if ($direction == 'move-up' && $oldweight > 0) {
+            $neworder = array_merge(array_slice($weights, 0, $oldweight - 1),
+                                    array($id, $weights[$oldweight-1]),
+                                    array_slice($weights, $oldweight+1));
+        }
+        else if ($direction == 'move-down' && ($oldweight + 1 < count($weights))) {
+            $neworder = array_merge(array_slice($weights, 0, $oldweight),
+                                    array($weights[$oldweight+1], $id),
+                                    array_slice($weights, $oldweight+2));
+        }
+
+        if (isset($neworder)) {
+            foreach ($neworder as $k => $v) {
+                $tab = Tab::GetTabById($v);
+                $tab->m_weight = $k;
+                $tab->Save($authuser);
             }
-        }
-
-        if ($direction == 'move-up' && $oldweight > 1) {
-            $weights[$oldweight] = $weights[$oldweight-1];
-            $weights[$oldweight-1] = $id;
-        }
-        else if ($direction == 'move-down' && $oldweight < $max) {
-            $weights[$oldweight] = $weights[$oldweight+1];
-            $weights[$oldweight+1] = $id;
-        }
-
-        foreach ($weights as $w => $t) {
-            $tab = Tab::GetTabById($t);
-            $tab->m_weight = (int)$w;
-            $tab->m_updatedBy = $this->m_user->getId();
-            $tab->dbUpdate(); 
         }
     }
 

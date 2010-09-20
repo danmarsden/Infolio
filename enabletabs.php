@@ -51,9 +51,12 @@ for($i=1; $i<$_POST['tab_count']; $i++)
     if(isset($_POST[$tabLabel])) {
         $keys = explode('_', $_POST[$tabLabel]);
         if ($tab = Tab::GetTabById((int)$keys[1])) {
-            $enabled = $keys[0] === 'enabled' ? 1 : 0;
-            $tab->setEnabled($enabled);
-            $tab->save($adminUser);
+            $enabled = $keys[0] === 'enabled' ? true : false;
+            if ($enabled) {
+                $tab->Restore($adminUser);
+            } else {
+                $tab->Delete($adminUser);
+            }
 		}
 		else {
 			die("You have sent a bad tab id");
