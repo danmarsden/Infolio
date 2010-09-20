@@ -1,6 +1,6 @@
 <?php
 /**
- * export.php - Creates a LEAP export of a user's infolio
+ * lib.php - Creates a LEAP export of a user's infolio
  * See http://wiki.cetis.ac.uk/LEAP2A_specification
  *
  * LICENSE: This is an Open Source Project
@@ -61,7 +61,7 @@ function export_portfolio($studentUser, $tabIds, $returnfile=false) {
             $dstPath = "$exportdir/files/{$asset->getType()}_{$asset->getHref()}";
             copy($srcPath, $dstPath);
             $res->contenttype = $asset->getType();
-            $res->url = $asset->getHref();
+            $res->url = $asset->getType().'_'.$asset->getHref();
             $res->id  = $asset->getId();
             $resource = leap_resource($res);
             $entry->content = '';

@@ -16,7 +16,7 @@ include_once("model/User.class.php");
 include_once("function/shared.php");
 include_once("function/core.php");
 
-$uploaddir = 'data/import';
+$uploaddir = DIR_FS_ROOT.'data/import';
 
 // Check user is logged in before letting them do stuff (except logging in)
 $adminUser = require_admin();
@@ -224,13 +224,15 @@ function leap_restore_user($dir, $user = '') {
          foreach ($artefacts as $artefact) {
              $arid = (string)$artefact->id;
              $title = (string)$artefact->title;
-             $link = $dir . (string)$artefact->link->attributes()->href;
-             if (is_file($link)) {
+             $link = (string)$artefact->link->attributes()->href;
+             if (file_exists($dir . '/'.$link)) { //doesn't work for permission
                  $uploader = new Uploader();
-                 $file['name'] = $title;
-                 $file['infoliopath'] = $link;
+                 $file['name'] = str_replace('files/', '',$link);
+                 $file['infoliopath'] = $dir . '/'.$link;
                  $assetId = $uploader->doCopyUpload($file, $newUser);
                  $savedfiles[$arid] = $assetId;
+                 //TODO: now update title
+
              }
          }
 
@@ -261,12 +263,29 @@ function leap_restore_user($dir, $user = '') {
                          $templateid = $block->xpath('infolio:layout');
                          $newBlock->setLayoutTemplateId((string)$templateid[0]);
                          
-                         //TODO: now get words to put in block
-                         //$words = $block->xpath('infolio:words0');
-                         //$newblock->setWordBlocks($wordBlocks);
+                         //now get words to put in block
+                         $words = array();
+                         $word0 = $block->xpath('infolio:words0');
+                         $words[0] = (string)$word0[0];
+                         $word1 = $block->xpath('infolio:words1');
+                         $words[1] = (string)$word1[0]; 
+
+                         $newBlock->setWordBlocks($words);
                          
-                         //TODO: now get pictures to put in block - use $savedfiles to get new id
-                         
+                         //now get pictures to put in block - use $savedfiles to get new id
+                         $pictures = array();
+                         $pic0 = $block->xpath('infolio:picture0');
+                         $picid = (int)$pic0[0];
+                         if (isset($savedfiles["portfolio:artefact".$picid])) {
+                             $newBlock->setPicture(0, $savedfiles["portfolio:artefact".$picid]);
+                         }
+
+                         $pic1 = $block->xpath('infolio:picture1');
+                         $picid = (int)$pic1[0];
+                         if (isset($savedfiles["portfolio:artefact".$picid])) {
+                             $newBlock->setPicture(0, $savedfiles["portfolio:artefact".$picid]);
+                         }
+
                          $newBlock->Save($newUser);
                      }
                  }
