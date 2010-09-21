@@ -23,15 +23,15 @@ function leap_header($user, $export_time) {
     <id>".$_SERVER['SERVER_NAME']."export/".$user->getId()."/$export_time</id>
     <title>Infolio LEAP2A Export for ".$user->getFullName().", ".date("F j, Y, g:i a", $export_time)."</title>
     <updated>".date(DATE_RFC3339, $export_time)."</updated>
-    <generator uri=\"http://www.in-folio.org.uk/\" version=\"2008122400\">Infolio</generator>".leap_author($user); 
+    <generator uri=\"http://www.in-folio.org.uk/\" version=\"2008122400\">Infolio</generator>"; 
 
 }
 function leap_footer() {
     return "
 </feed>";
 }
-function leap_author($user) {
-    return "
+function leap_author($user, $password=false) {
+    $ouput =  "
     <author>
         <name>".$user->getFullName()."</name>
         <email>".$user->getEmail()."</email>
@@ -42,8 +42,12 @@ function leap_author($user) {
         <infolio:institution>".$user->getInstitution()->getUrl()."</infolio:institution>
         <infolio:theme>".$user->getTheme()->getName()."</infolio:theme>
         <infolio:profilepic>".$user->getProfilePictureId()."</infolio:profilepic>
-    </author>
-    ";
+";
+if ($password) {
+    $output .= "        <infolio:password>".$user->getPermissionManager()->getPassword."</infolio:password>
+";
+$output .= "    </author>";
+    return $output;
 }
 function leap_entry($entry) {
     $output = "

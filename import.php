@@ -184,8 +184,15 @@ function leap_restore_user($dir, $user = '') {
     $theme = isset($theme[0]) ? (string)$theme[0] : '';
 
     $name = explode(', ',$xml->author->name[0]);
-
-    $password = generatePassword(); //TODO: think about e-mailing the user their password?
+    
+    $passxml = $xml->author->xpath('infolio:password');
+     if (isset($user['password'])) {
+         $password = $user['password'];
+     } elseif (!empty($passxml[0])) {
+         $password = (string)$passxml[0];
+     } else {
+        $password = generatePassword(); //TODO: think about e-mailing the user their password?
+     }
 
     //TODO: check for SQL injection here. (and in ajax.dispatcher where this is used)
      try {
