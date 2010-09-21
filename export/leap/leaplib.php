@@ -31,7 +31,7 @@ function leap_footer() {
 </feed>";
 }
 function leap_author($user, $password=false) {
-    $ouput =  "
+    $output =  "
     <author>
         <name>".$user->getFullName()."</name>
         <email>".$user->getEmail()."</email>
@@ -44,8 +44,25 @@ function leap_author($user, $password=false) {
         <infolio:profilepic>".$user->getProfilePictureId()."</infolio:profilepic>
 ";
 if ($password) {
-    $output .= "        <infolio:password>".$user->getPermissionManager()->getPassword."</infolio:password>
+    $output .= "        <infolio:password>".$user->getPermissionManager()->getPassword()."</infolio:password>
 ";
+    //now add picture password stuff
+    $sql = "SELECT * FROM graphical_passwords WHERE user_id ='".$user->getId()."'";
+    $db = Database::getInstance();
+    $result = $db->query($sql);
+    $row = mysql_fetch_assoc($result);
+    if (!empty($row)) {
+        $output .= "<infolio:gfxpass pic='".$row['picture_asset_id']."' accuracy='".$row['click_accuracy']."' clicknumber='".$row['click_number_of']."' >";
+        $sql = "SELECT * FROM grapical_password_coords WHERE graphical_passwordss_id = '".$row['id']."'";
+        $result2 = $db->query($sql);
+        if ($result2) {
+            while ($row2 = mysql_fetch_assoc($result2)) {
+                $output .= $row['x'].":".$row['y'].",";
+            }
+        }
+        $output .= "</infolio:gfxpass>";
+    }
+}
 $output .= "    </author>";
     return $output;
 }
