@@ -11,7 +11,7 @@
 */
 
 
-function export_portfolio($studentUser, $tabIds, $returnfile=false) {
+function export_portfolio($studentUser, $tabIds, $returnfile=false, $password=false) {
     global $userTabs, $userAssetCollection, $userAssets, $tabId, $pageId;
     $includeOriginalAssets = true;
     $exporttime = time();
@@ -25,6 +25,7 @@ function export_portfolio($studentUser, $tabIds, $returnfile=false) {
     
     //get content for leap xml
     $leapxml = leap_header($studentUser, $exporttime);
+    $leapxml .= leap_author($studentUser, $password);
     foreach ($userTabs as $aTab)  {
         $tabId = $aTab->getId();
         $aTab->setViewer($studentUser);
@@ -63,7 +64,7 @@ function export_portfolio($studentUser, $tabIds, $returnfile=false) {
             $res->contenttype = $asset->getType();
             $res->url = $asset->getType().'_'.$asset->getHref();
             $res->id  = $asset->getId();
-            $resource = leap_resource($res);
+            $resource = leap_resource($res, $studentUser);
             $entry->content = '';
             $entry->title = $asset->getTitle();
             $entry->id = "portfolio:artefact".$asset->getId();

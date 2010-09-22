@@ -113,7 +113,7 @@ foreach ($users as $user) {
         if (empty($_POST['siteexport'])) {
             export_portfolio($user, $tabIds);
         } else {
-            $files[] = export_portfolio($user, $tabIds, true);
+            $files[] = export_portfolio($user, $tabIds, true, true);
         }
     }
 }

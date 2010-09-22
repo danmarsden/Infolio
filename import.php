@@ -184,8 +184,15 @@ function leap_restore_user($dir, $user = '') {
     $theme = isset($theme[0]) ? (string)$theme[0] : '';
 
     $name = explode(', ',$xml->author->name[0]);
-
-    $password = generatePassword(); //TODO: think about e-mailing the user their password?
+    
+    $passxml = $xml->author->xpath('infolio:password');
+    if (isset($user['password'])) {
+        $password = $user['password'];
+    } elseif (!empty($passxml[0])) {
+        $password = (string)$passxml[0];
+    } else {
+       $password = generatePassword(); //TODO: think about e-mailing the user their password?
+    }
 
     //TODO: check for SQL injection here. (and in ajax.dispatcher where this is used)
      try {
@@ -238,16 +245,30 @@ function leap_restore_user($dir, $user = '') {
                  $asset = Asset::RetrieveById($assetId, $newUser);
 	             $asset->setTitle($title);
 	             $asset->Save($newUser);
+	             //now check for tags
+	             $tags = $artefact->xpath('infolio:tags');
+	             $tags = $tags[0]->xpath('infolio:tag');
+	             foreach ($tags as $tag) {
+                     //create new tag or get it.
+                     $t = Tag::CreateOrRetrieveByName((string)$tag, $newUser->getInstitution(), $adminUser);
+                     //add tag to asset.
+                     $asset->addTag($t, $newUser);
+                 }
+                 //now check for favourite
+                 $fav = $artefact->xpath('infolio:favourite');
+                 if (isset($fav[0]) && (string)$fav[0] == 'true') {
+                     $asset->setFavourite(true, $newUser);
+                 }
              }
          }
 
          foreach ($tabs as $tabxml) {
              $tab = Tab::CreateNewTab((string)$tabxml->title[0], $newUser);
              $tab->Save($newUser);
-             //TODO: create pages attached to this tab
+             // create pages attached to this tab
              foreach ($tabxml->link as $link) {
                  $viewid = (string)$link->attributes()->href;
-                 //TODO: create each view (page and each page block on each page)
+                 //create each view (page and each page block on each page)
                  $viewxml = $views[$viewid]->xpath('infolio:view');
                  $title = $views[$viewid]->title;
                  //create page now.
