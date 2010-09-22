@@ -121,6 +121,7 @@ class Uploader
                         '<input type="text" name="filename-text" id="filename-text" />' . // empty text box for displaying chosen file name
                         '<div id="swfupload-container"></div>' . // container for _flash/swfupload.swf browse button
                         '<input type="image" id="upload-btn" value="Upload" src="/_images/si/upload-btn.gif" /></div>' . // upload button
+                        '<input type="hidden" name="returnurl" id="returnurl" value="'.$actionPath.'" />' .
                         '<div id="upload-progressbar-container">'. // container for progressbar when implemented
                             '<div id="upload-progressbar">'.
                             '</div>'.
