@@ -1,12 +1,13 @@
 <!-- swfupload -->
 <script type="text/javascript" src="/_scripts/jquery/jquery-1.4.2.min.js"></script>
 <script type="text/javascript" src="/_scripts/swfupload/swfupload.js"></script>
+<script type="text/javascript" src="/_scripts/fileprogress.js"></script>
 <script type="text/javascript">
 var swfu;
 window.onload = function () {
     var settings_object = {
 				flash_url : "/_flash/swfupload.swf",
-				upload_url: "swfupload.php",
+				upload_url: "/swfupload.php",
 				post_params: {"PHPSESSID" : ""},
 				file_size_limit : "100 MB",
 				file_types : "*.*",
@@ -25,110 +26,191 @@ window.onload = function () {
 				button_placeholder_id: "spanButtonPlaceHolder",
 
         // Callback functions
-        file_queued_handler: fileQueued,
-        upload_progress_handler: uploadProgress,
-        upload_error_handler: uploadError,
-        upload_success_handler: uploadSuccess,
-        upload_complete_handler: uploadComplete
+                file_queued_handler : fileQueued,
+                file_queue_error_handler : fileQueueError,
+                file_dialog_complete_handler : fileDialogComplete,
+                upload_start_handler : uploadStart,
+                upload_progress_handler : uploadProgress,
+                upload_error_handler : uploadError,
+                upload_success_handler : uploadSuccess,
+                upload_complete_handler : uploadComplete,
+                queue_complete_handler : queueComplete	// Queue plugin event
     };
     swfu = new SWFUpload(settings_object);
 };
 
-/**
- * This function places the name of the file in the empty text box we created earlier.
- * This serves no actual functional purpose. It's just a visual effect.
- */
+/* **********************
+   Event Handlers
+   These are my custom event handlers to make my
+   web application behave the way I went when SWFUpload
+   completes different tasks.  These aren't part of the SWFUpload
+   package.  They are part of my application.  Without these none
+   of the actions SWFUpload makes will show up in my application.
+   ********************** */
 function fileQueued(file) {
-    console.log(file.name);
-    $('filename-text').attr("value", file.name);
-}
-
-/**
- * This function tells SWFUpload to start uploading the queued files.
- */
-function uploadFile(form, e) {
     try {
-        swfu.startUpload();
+        var progress = new FileProgress(file, this.customSettings.progressTarget);
+        progress.setStatus("Pending...");
+        progress.toggleCancel(true, this);
+
     } catch (ex) {
+        this.debug(ex);
     }
-    return false;
+
 }
 
-/**
- * This function reads progress information.
- * It reveals the progress bar and expands the inner div to reflect upload progress.
- */
+function fileQueueError(file, errorCode, message) {
+    try {
+        if (errorCode === SWFUpload.QUEUE_ERROR.QUEUE_LIMIT_EXCEEDED) {
+            alert("You have attempted to queue too many files.\n" + (message === 0 ? "You have reached the upload limit." : "You may select " + (message > 1 ? "up to " + message + " files." : "one file.")));
+            return;
+        }
+
+        var progress = new FileProgress(file, this.customSettings.progressTarget);
+        progress.setError();
+        progress.toggleCancel(false);
+
+        switch (errorCode) {
+        case SWFUpload.QUEUE_ERROR.FILE_EXCEEDS_SIZE_LIMIT:
+            progress.setStatus("File is too big.");
+            this.debug("Error Code: File too big, File name: " + file.name + ", File size: " + file.size + ", Message: " + message);
+            break;
+        case SWFUpload.QUEUE_ERROR.ZERO_BYTE_FILE:
+            progress.setStatus("Cannot upload Zero Byte files.");
+            this.debug("Error Code: Zero byte file, File name: " + file.name + ", File size: " + file.size + ", Message: " + message);
+            break;
+        case SWFUpload.QUEUE_ERROR.INVALID_FILETYPE:
+            progress.setStatus("Invalid File Type.");
+            this.debug("Error Code: Invalid File Type, File name: " + file.name + ", File size: " + file.size + ", Message: " + message);
+            break;
+        default:
+            if (file !== null) {
+                progress.setStatus("Unhandled Error");
+            }
+            this.debug("Error Code: " + errorCode + ", File name: " + file.name + ", File size: " + file.size + ", Message: " + message);
+            break;
+        }
+    } catch (ex) {
+        this.debug(ex);
+    }
+}
+
+function fileDialogComplete(numFilesSelected, numFilesQueued) {
+    try {
+        if (numFilesSelected > 0) {
+            document.getElementById(this.customSettings.cancelButtonId).disabled = false;
+        }
+
+        /* I want auto start the upload and I can do that here */
+        this.startUpload();
+    } catch (ex)  {
+        this.debug(ex);
+    }
+}
+
+function uploadStart(file) {
+    try {
+        /* I don't want to do any file validation or anything,  I'll just update the UI and
+        return true to indicate that the upload should start.
+        It's important to update the UI here because in Linux no uploadProgress events are called. The best
+        we can do is say we are uploading.
+         */
+        var progress = new FileProgress(file, this.customSettings.progressTarget);
+        progress.setStatus("Uploading...");
+        progress.toggleCancel(true, this);
+    }
+    catch (ex) {}
+
+    return true;
+}
+
 function uploadProgress(file, bytesLoaded, bytesTotal) {
     try {
         var percent = Math.ceil((bytesLoaded / bytesTotal) * 100);
-        $('upload-progressbar-container').css({display:'block'});
-        $('upload-progressbar').css({width:percent+'%'});
-    } catch (e) {
+
+        var progress = new FileProgress(file, this.customSettings.progressTarget);
+        progress.setProgress(percent);
+        progress.setStatus("Uploading...");
+    } catch (ex) {
+        this.debug(ex);
     }
 }
 
-/**
- * This function is huge.
- */
+function uploadSuccess(file, serverData) {
+    try {
+        var progress = new FileProgress(file, this.customSettings.progressTarget);
+        progress.setComplete();
+        progress.setStatus("Complete.");
+        progress.toggleCancel(false);
+
+    } catch (ex) {
+        this.debug(ex);
+    }
+}
+
 function uploadError(file, errorCode, message) {
-}
-
-/**
- * This function handles data that is returned from the PHP script.
- * That data is just whatever the PHP script echos to the page (no JSON or XML).
- * This function expects an ID representing the new file and places it
- * in the hidden field in the form.
- * It also sets the custom 'upload_successful' parameter to true for use later.
- */
-function uploadSuccess(file, serverData, receivedResponse) {
     try {
-        if (serverData === " ") {
-            this.customSettings.upload_successful = false;
-        } else {
-            this.customSettings.upload_successful = true;
-            $('hidFileID').attr("value", serverData);
+        var progress = new FileProgress(file, this.customSettings.progressTarget);
+        progress.setError();
+        progress.toggleCancel(false);
+
+        switch (errorCode) {
+        case SWFUpload.UPLOAD_ERROR.HTTP_ERROR:
+            progress.setStatus("Upload Error: " + message);
+            this.debug("Error Code: HTTP Error, File name: " + file.name + ", Message: " + message);
+            break;
+        case SWFUpload.UPLOAD_ERROR.UPLOAD_FAILED:
+            progress.setStatus("Upload Failed.");
+            this.debug("Error Code: Upload Failed, File name: " + file.name + ", File size: " + file.size + ", Message: " + message);
+            break;
+        case SWFUpload.UPLOAD_ERROR.IO_ERROR:
+            progress.setStatus("Server (IO) Error");
+            this.debug("Error Code: IO Error, File name: " + file.name + ", Message: " + message);
+            break;
+        case SWFUpload.UPLOAD_ERROR.SECURITY_ERROR:
+            progress.setStatus("Security Error");
+            this.debug("Error Code: Security Error, File name: " + file.name + ", Message: " + message);
+            break;
+        case SWFUpload.UPLOAD_ERROR.UPLOAD_LIMIT_EXCEEDED:
+            progress.setStatus("Upload limit exceeded.");
+            this.debug("Error Code: Upload Limit Exceeded, File name: " + file.name + ", File size: " + file.size + ", Message: " + message);
+            break;
+        case SWFUpload.UPLOAD_ERROR.FILE_VALIDATION_FAILED:
+            progress.setStatus("Failed Validation.  Upload skipped.");
+            this.debug("Error Code: File Validation Failed, File name: " + file.name + ", File size: " + file.size + ", Message: " + message);
+            break;
+        case SWFUpload.UPLOAD_ERROR.FILE_CANCELLED:
+            // If there aren't any files left (they were all cancelled) disable the cancel button
+            if (this.getStats().files_queued === 0) {
+                document.getElementById(this.customSettings.cancelButtonId).disabled = true;
+            }
+            progress.setStatus("Cancelled");
+            progress.setCancelled();
+            break;
+        case SWFUpload.UPLOAD_ERROR.UPLOAD_STOPPED:
+            progress.setStatus("Stopped");
+            break;
+        default:
+            progress.setStatus("Unhandled Error: " + errorCode);
+            this.debug("Error Code: " + errorCode + ", File name: " + file.name + ", File size: " + file.size + ", Message: " + message);
+            break;
         }
-    } catch (e) {
+    } catch (ex) {
+        this.debug(ex);
     }
 }
 
-/**
- * If the upload was completed successfully, this function calls the function
- * that submits the entire form via AJAX.
- * If the upload was unsuccessful, this function alerts an error message.
- */
 function uploadComplete(file) {
-    try {
-        if (this.customSettings.upload_successful) {
-            var form = $('create-file');
-            submitForm(form); // Not described here.
-            // The above function is not described here.
-            // It is a function that receives a form element as input
-            // and constructs POST data from all the user input found on that form.
-            // It then submit that data via AJAX and calls fileUploaded();
-        } else {
-            alert('There was a problem with the upload.');
-        }
-    } catch (e) {
+    if (this.getStats().files_queued === 0) {
+        document.getElementById(this.customSettings.cancelButtonId).disabled = true;
     }
 }
 
-/**
- * This file decides what do to after the entire form has been submitted.
- * It expects a JSON object with a 'message' and 'status' value.
- * The message value is always displayed to the user.
- * If the server returns a successful status, the upload and processing of form
- * data is complete and the user is redirected to another page.
- * If the server returns an unsuccessful status, the form submit action
- * is reconfigured to try submitted the form again rather than try the entire upload.
- */
-function fileUploaded(json) {
-    alert(json.message);
-    if (json.status == 1) {
-        window.location = 'upload_successful.php';
-    } else {
-        form.setAttribute('onsubmit','submitForm(this);return false;');
-    }
+// This event comes from the Queue Plugin
+function queueComplete(numFilesUploaded) {
+    var status = document.getElementById("divStatus");
+    status.innerHTML = numFilesUploaded + " file" + (numFilesUploaded === 1 ? "" : "s") + " uploaded.";
 }
+
 
 </script>
