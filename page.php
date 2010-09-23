@@ -22,6 +22,7 @@ include_once('page.inc.php');
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 	<? print $page->htmlHead(); ?>
 	<? include('_includes/head.inc.php'); ?>
+    <? include('_includes/swfupload.inc.php'); ?>
 </head>
 
 <body class="<? print $studentTheme->getBodyClass(); ?>" id="home">

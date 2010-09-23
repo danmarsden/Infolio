@@ -5,20 +5,24 @@
 var swfu;
 window.onload = function () {
     var settings_object = {
-        // Basic settings
-        flash_url: '/_flash/swfupload.swf',
-        upload_url: 'swfupload.php',
-        file_post_name: 'Filedata', /* officially recommended to leave this as 'Filedata' */
-        file_size_limit: '300 MB',
+				flash_url : "/_flash/swfupload.swf",
+				upload_url: "swfupload.php",
+				post_params: {"PHPSESSID" : ""},
+				file_size_limit : "100 MB",
+				file_types : "*.*",
+				file_types_description : "All Files",
+				file_upload_limit : 300,
+				custom_settings : {
+					progressTarget : "fsUploadProgress",
+					cancelButtonId : "btnCancel"
+				},
+				debug: false,
 
-        // Button settings
-        button_placeholder_id: 'swfupload-container',
-        button_image_url: '/_images/si/browseBtn.png',
-
-        // Custom settings
-        custom_settings: {
-            upload_successful: false
-        },
+				// Button settings
+				button_image_url: "/_images/si/browseBtn.png",
+				button_width: "75",
+				button_height: "29",
+				button_placeholder_id: "spanButtonPlaceHolder",
 
         // Callback functions
         file_queued_handler: fileQueued,
