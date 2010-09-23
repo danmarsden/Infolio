@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  *
  * LICENSE: This is an Open Source Project
@@ -16,7 +16,13 @@ include_once("function/core.php");
 // Check user is logged in before letting them do stuff (except logging in)
 $adminUser = require_admin();
 
-// redirect back to correct page
-header('Location: ' . $_POST['returnurl']);
+$uploaddir = DIR_FS_ROOT.'/data/';
+$uploadfile = $uploaddir . basename($_FILES['Filedata']['name']);
 
-?>
+if (move_uploaded_file($_FILES['Filedata']['tmp_name'], $uploadfile)) {
+    //don't need to do anything
+    exit;
+} else {
+    //return error to SWFUpload.
+    header("HTTP/1.1 500 Internal Server Error");
+}

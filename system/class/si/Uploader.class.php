@@ -123,6 +123,7 @@ class Uploader
 			</div>
 			<div>
 				<span id="spanButtonPlaceHolder"></span>
+                <input id="btnCancel" type="button" value="Cancel All Uploads" onclick="swfu.cancelQueue();" disabled="disabled" style="margin-left: 2px; font-size: 8pt; height: 29px;" />
 			</div>
 
 	</form>';
