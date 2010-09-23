@@ -14,7 +14,7 @@ window.onload = function () {
         // Button settings
         button_placeholder_id: 'swfupload-container',
         button_image_url: '/_images/si/browseBtn.png',
-        button_width: '100',
+        button_width: '50',
         button_height: '28',
 
         // Custom settings

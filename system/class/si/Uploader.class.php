@@ -116,9 +116,9 @@ class Uploader
 
         /* SWFUpload form  */
         $html .= '<br /><br />'; // adding some space between the existing form and this (temporary)
-        $html .= '<form id="upload-image-frm" enctype="multipart/form-data" action="swfupload.php" method="post" onsubmit="return uploadFile(this, event);>' .
-			            '<div class="fileinputs"><h3><label for="txtFile">' .$this->m_title. '</label></h3>' .
-                        '<input type="text" name="filename-text" id="filename-text" />' . // empty text box for displaying chosen file name
+        $html = '<form id="upload-image-frm" enctype="multipart/form-data" action="swfupload.php" method="post" onsubmit="return uploadFile(this, event);>' .
+			            '<h3><label for="filename-text">' .$this->m_title. '</label></h3><div class="fileinputs">' .
+                        '<input type="file" name="filename-text" id="filename-text" />' . // empty text box for displaying chosen file name
                         '<div id="swfupload-container"></div>' . // container for _flash/swfupload.swf browse button
                         '<input type="image" id="upload-btn" value="Upload" src="/_images/si/upload-btn.gif" /></div>' . // upload button
                         '<input type="hidden" name="returnurl" id="returnurl" value="'.$actionPath.'" />' .
