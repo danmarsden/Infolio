@@ -8,6 +8,7 @@ window.onload = function () {
     var settings_object = {
 				flash_url : "/_flash/swfupload.swf",
 				upload_url: "/swfupload.php",
+                file_post_name : "Filedata", 
 				post_params: {"PHPSESSID" : ""},
 				file_size_limit : "100 MB",
 				file_types : "*.*",
