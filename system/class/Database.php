@@ -69,7 +69,18 @@ class Database
 			echo "Error :: " . $e->getMessage();
 		}
 	}
-	
+
+    function table_exists($tableName)
+    {
+      $sql ='SHOW TABLES WHERE Tables_in_' . DB_DATABASE . ' = \'' . $tableName . '\'';
+      $rs = mysql_query($sql);
+
+      if(!mysql_fetch_array($rs)) {
+          return FALSE;
+      } else {
+          return TRUE;
+      }
+    }
 	/**
 	 * Get number of rows on a query
 	 * @return $count Integer number of rows

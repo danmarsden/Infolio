@@ -104,7 +104,14 @@ function showForm()
 						<td class="captionLabel">Short name for URL</td>
 						<td><input dojoType="dijit.form.ValidationTextBox" type="text" name="url" id="url" value="<? if(isset($institution))print $institution->getUrl(); ?>" required="true" regExp="[\w\d_\-]+" invalidMessage="Can't be empty and must only contain letters, numbers and _ or -" /></td>
 					</tr>
-				</table>			
+                    <tr>
+                        <td class="captionLabel">Tab Sharing</td>
+                        <td><select name="share" id="share">
+                            <option value="0">Disabled</option>
+                            <option value="1" <? if(isset($institution) && $institution->allowSharing())print 'selected' ?>>Enabled</option>
+                        </select></td>
+                    </tr>
+				</table>
 			</form>	
 		</div>		
 	</div>

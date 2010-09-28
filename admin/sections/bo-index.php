@@ -1,4 +1,6 @@
 <?php
+//do upgrade stuff
+check_upgrade();
 // Get this user's institution
 $institution = $adminUser->getInstitution(); ?>
 <style>

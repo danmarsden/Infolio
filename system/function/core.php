@@ -621,3 +621,39 @@ function render_messages() {
     $result .= '</div>';
     return $result;
 }
+
+function get_config($name) {
+    global $db;
+        if ($db->table_exists('config')) { //check to make sure config table exists first.
+            $sqlUser = "SELECT * from config WHERE name='".$name."'";
+            $result = $db->query($sqlUser);
+            $row = mysql_fetch_assoc($result);
+            return $row['value'];
+        } else {
+            return 0;
+        }
+}
+//set config var in config table. - used to store In-folio version and other site config options.
+function set_config($name, $value) {
+    global $db;
+    $data = array(
+                  'name' => (string)$name,
+                  'value' => (string)$value
+                  );
+    $existing = get_config($name);
+    if (isset($existing)) {
+        $db->perform('config', $data, Database::UPDATE);
+    } elseif($existing <> $value) {
+        $db->perform('config', $data);
+    }
+}
+
+//check if upgrade is needed - if so, trigger it.
+function check_upgrade() {
+    require(DIR_FS_ROOT."version.php");
+    $oldversion = get_config('version');
+    if ($version > $oldversion) {
+        require(DIR_FS_ROOT."db/upgrade.php");
+        db_main_upgrade($oldversion);
+    }
+}

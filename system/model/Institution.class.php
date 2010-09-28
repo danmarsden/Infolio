@@ -22,6 +22,7 @@ class Institution extends DatabaseObject
 	private $m_name;
 	private $m_url;
 	private $m_urlOldValue;
+    private $m_share;
 	
 	/* ** Accessors ** */
 
@@ -63,6 +64,14 @@ class Institution extends DatabaseObject
 		return DIR_FS_DATA . $instPath . '-asset';
 	}
 
+	public function allowSharing()
+	{
+		$this->checkFilled();
+		return $this->m_share;
+	}
+	public function setSharing($value){
+        $this->m_share = $value;
+    }
 	public function getName()
 	{
 		$this->checkFilled();
@@ -233,6 +242,7 @@ class Institution extends DatabaseObject
 			'asset_id' => $this->m_assetId,
 			'name' => $this->m_name,
 			'url' => $this->m_url,
+            'share' => $this->m_share,
 			'created_by' => $this->m_createdBy->getId(),
 			'updated_by' => $this->m_updatedBy->getId(),
 			'created_time' => Date::formatForDatabase($this->m_createdTime),
@@ -289,7 +299,8 @@ class Institution extends DatabaseObject
 		$data = array(
 			'asset_id' => $this->m_assetId,
 			'name' => $this->m_name,
-			'url' => $this->m_url
+			'url' => $this->m_url,
+            'share' => $this->m_share
 		);
 		$db = Database::getInstance();
 		$db->perform('institution', $data, Database::UPDATE, "id={$this->m_id}");
@@ -305,6 +316,7 @@ class Institution extends DatabaseObject
 		$institution->m_name = $hashArray['name'];
 		$institution->m_url = $hashArray['url'];
 		$institution->m_filled = true;
+        $institution->m_share = $hashArray['share'];
 		return $institution;
 	}
 }

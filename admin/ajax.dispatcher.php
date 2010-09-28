@@ -286,6 +286,7 @@ function institutionOperations($operation, $adminUser, $requestData)
 			$newInstitution = new Institution();
 			$newInstitution->setName($requestData['name']);
 			$newInstitution->setUrl($requestData['url']);
+            $newInstitution->setSharing($requestData['share']);
 			$newInstitution->CreateFolders();
 			$newInstitution->Save($adminUser);
 			print $newInstitution->getId();
@@ -293,6 +294,7 @@ function institutionOperations($operation, $adminUser, $requestData)
 		case 'update':
 			$institution = Institution::RetrieveById($requestData["id"]);
 			$institution->setName($requestData['name']);
+            $institution->setSharing($requestData['share']);
 			if(!$institution->setUrl($requestData['url'])){
 				print("Please try another URL");
 			}
