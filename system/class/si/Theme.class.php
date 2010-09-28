@@ -179,7 +179,7 @@ class Theme
 	{
 		$htmlString = '<div id="nav-tabs" class="'. $this->getName() .'">' .
 		'<p id="new-tab"><a href="tab?a=' . EventDispatcher::ACTION_NEW_TAB . '"><img alt="New tab" src="/_images/si/new-tab.gif"/></a></p>'.
-		'<p id="prev-tab"><a class="prev" title="previous tab"></a></p>' . $contents . '<p id="next-tab"><a class="next" title="next tab"></a></p></div>';
+		'<p id="prev-tab"><a class="prev" title="Previous tab"></a></p>' . $contents . '<p id="next-tab"><a class="next" title="Next tab"></a></p></div>';
 		return $htmlString;
 	}
 	
