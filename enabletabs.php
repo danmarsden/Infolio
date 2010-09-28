@@ -44,6 +44,10 @@ if(!isset($studentUser)) {
 	die("No user with that id (or no user_id provided)");
 }
 
+if (isset($_POST['share']) && is_numeric($_POST['share'])) {
+    $studentUser->setShare($_POST['share']);
+    $studentUser->save($adminUser);
+}
 // Input: tab_id[0 -> (tab_count-1)]
 for($i=1; $i<$_POST['tab_count']; $i++)
 {

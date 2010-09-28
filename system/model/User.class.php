@@ -699,7 +699,7 @@ class User extends DatabaseObject
 		$user->m_lastName = $hashArray['lastName'];
 		$user->m_email = $hashArray['email'];
 		$user->m_description = $hashArray['description'];
-        $user->share = $hashArray['share'];
+        $user->m_share = $hashArray['share'];
 		$user->m_institution = new Institution($hashArray['institution_id']);
 		$user->m_enabled = $hashArray['enabled'];
 		$user->setAuditFieldsFromHashArray($hashArray);
@@ -875,16 +875,20 @@ class User extends DatabaseObject
         //if institution allows sharing show this
         $sharing =$this->m_institution->allowSharing();
         if (!empty($sharing)) {
-            //TODO:first check if sharing is already set in user record
-            if ($this->m_share) {
-                $selected = 'selected';
+            //first check if sharing is already set in user record (hacky way to do this)
+            $selected0 ='';
+            $selected1 ='';
+            if ($this->m_share==='1') {
+                $selected1 = 'selected';
+            } elseif ($this->m_share ==='0') {
+                $selected0 = 'selected';
             } elseif ($sharing==2) {
-                $selected = 'selected';
+                $selected1 = 'selected';
             }
             $html .= '<h2>Tab Sharing</h2>
 			      	  <select name="share" id="share">
-                             <option value="0">Disabled</option>
-                            <option value="1" '.$selected.'>Enabled</option>
+                             <option value="0" '.$selected0.'>Disabled</option>
+                            <option value="1" '.$selected1.'>Enabled</option>
                       </select><br/><br/>';
         }
 		$html .= '<input type="submit" value="Update Tabs" />';
