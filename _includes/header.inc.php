@@ -35,13 +35,13 @@ switch($page->getName())
 		break;
 }
 
-$accessibilityMenu = new Menu( array(	Link::CreateImageLink($studentTheme->Icon('small-text', 'Smaller text'), $page->PathWithQueryString(array('fs'=>Theme::SIZE_SMALL)), Image::SIZE_ORIGINAL, array('class'=>'bSmall')),
-										Link::CreateImageLink($studentTheme->Icon('med-text', 'Medium text'), $page->PathWithQueryString(array('fs'=>Theme::SIZE_MEDIUM)), Image::SIZE_ORIGINAL, array('class'=>'bMedium')),
-										Link::CreateImageLink($studentTheme->Icon('large-text', 'Bigger text'), $page->PathWithQueryString(array('fs'=>Theme::SIZE_BIG)), Image::SIZE_ORIGINAL, array('class'=>'bBig')),
-										Link::CreateImageLink($studentTheme->Icon('invert-text', 'Swap colours'), $page->PathWithQueryString(array('a'=>EventDispatcher::ACTION_COLOUR_SWAP)), Image::SIZE_ORIGINAL, array('class'=>'bSwap')) ),
+$accessibilityMenu = new Menu( array(	Link::CreateImageLink($studentTheme->Icon('small-text', 'Smaller text'), $page->PathWithQueryString(array('fs'=>Theme::SIZE_SMALL)), Image::SIZE_ORIGINAL, array('class'=>'bSmall','alt'=>'Smaller text')),
+										Link::CreateImageLink($studentTheme->Icon('med-text', 'Medium text'), $page->PathWithQueryString(array('fs'=>Theme::SIZE_MEDIUM)), Image::SIZE_ORIGINAL, array('class'=>'bMedium','alt'=>'Medium text')),
+										Link::CreateImageLink($studentTheme->Icon('large-text', 'Bigger text'), $page->PathWithQueryString(array('fs'=>Theme::SIZE_BIG)), Image::SIZE_ORIGINAL, array('class'=>'bBig','alt'=>'Larger text')),
+										Link::CreateImageLink($studentTheme->Icon('invert-text', 'Swap colours'), $page->PathWithQueryString(array('a'=>EventDispatcher::ACTION_COLOUR_SWAP)), Image::SIZE_ORIGINAL, array('class'=>'bSwap','alt'=>'Swap colours')) ),
 								'nav-access' );
 
-$toolMenu = new Menu( array(	Link::CreateImageLink($studentTheme->Icon('help', 'Help'), $helpHref, Image::SIZE_ORIGINAL, array('class'=>'bHelp'))
+$toolMenu = new Menu( array(	Link::CreateImageLink($studentTheme->Icon('help', 'Help'), $helpHref, Image::SIZE_ORIGINAL, array('class'=>'bHelp','alt'=>'Help'))
 								), 'nav-tools' );
 
 // Get menu and set selected tab
@@ -50,8 +50,8 @@ if( isset($studentUser) ) {
 
 	$tabsMenu->setAsActiveLink( $page->getSectionName() );
 
-	$toolMenu->addLink( Link::CreateImageLink($studentTheme->Icon('logout', 'Logout'), 'login.php?log=out', Image::SIZE_ORIGINAL) );
-	$toolMenu->addLink( Link::CreateImageLink($studentTheme->Icon('settings', 'Settings'), 'settings.php', Image::SIZE_ORIGINAL, array('class'=>'bSettings')) );
+	$toolMenu->addLink( Link::CreateImageLink($studentTheme->Icon('logout', 'Logout'), 'login.php?log=out', Image::SIZE_ORIGINAL, array('alt'=>'Logout')) );
+	$toolMenu->addLink( Link::CreateImageLink($studentTheme->Icon('settings', 'Settings'), 'settings.php', Image::SIZE_ORIGINAL, array('class'=>'bSettings','alt'=>'Settings')) );
 }
 
 ?><div id="wrap-head"><?

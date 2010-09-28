@@ -734,7 +734,7 @@ class Tab extends DatabaseObject
 				// Link for editting tab icon
 				$this->m_icon->addClass('edit');
 				$this->m_icon->setTitle('Choose a new tab icon');
-				$iconLink = Link::CreateImageLink($this->m_icon, $page->PathWithQueryString( array('a'=>TabEventDispatcher::ACTION_EDIT_ICON) ), Image::SIZE_TAB_ICON);
+				$iconLink = Link::CreateImageLink($this->m_icon, $page->PathWithQueryString( array('a'=>TabEventDispatcher::ACTION_EDIT_ICON) ), Image::SIZE_TAB_ICON, array('alt'=>'Choose tab icon'));
 
 				// HTML for edit form
 				$html = "<form action=\"{$page->PathWithQueryString( array('mode'=>Page::MODE_SHOW) )}\" method=\"post\" class=\"page_update\">" .
