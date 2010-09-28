@@ -4,6 +4,15 @@
 <script type="text/javascript" src="/_scripts/fileprogress.js"></script>
 <script type="text/javascript">
 var swfu;
+
+function hideHtmlUploader() {
+    var swfuploader = document.getElementById('swf-uploader');
+    var htmluploader = document.getElementById('html-uploader');
+
+    htmluploader.style.visibility = "hidden";
+    swfuploader.style.visibility = "";
+}
+
 window.onload = function () {
     var settings_object = {
 				flash_url : "/_flash/swfupload.swf",
@@ -18,7 +27,7 @@ window.onload = function () {
 					progressTarget : "fsUploadProgress",
 					cancelButtonId : "btnCancel"
                 },
-                post_params : {
+                post_params: {
                     userid: "<?php echo $_SESSION['userID']; ?>"
                 },
 				debug: true,
@@ -41,6 +50,7 @@ window.onload = function () {
                 queue_complete_handler : queueComplete	// Queue plugin event
     };
     swfu = new SWFUpload(settings_object);
+    hideHtmlUploader();
 };
 
 /* **********************

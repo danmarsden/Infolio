@@ -106,16 +106,16 @@ class Uploader
 	
 	public function HtmlUploadForm($fileUploadId, $actionPath)
 	{
-		$html = '<form id="upload-image-frm" enctype="multipart/form-data" action="' . $actionPath . '" method="post">' .
+		$html = '<div id="html-uploader"><form id="upload-image-frm" enctype="multipart/form-data" action="' . $actionPath . '" method="post">' .
 			'<h3><label for="txtFile">' .$this->m_title. '</label></h3>' .
 			//'<input type="hidden" name="MAX_FILE_SIZE" value="' . $this->m_fileSizeLimit . '" />' .
 			'<input id="txtFile" type="hidden" name="a" value="' .EventDispatcher::ACTION_UPLOAD. '" />' .
 			'<div class="fileinputs"><input name="' . $fileUploadId . '" type="file" /></div> ' .
 			'<input type="image" id="upload-btn" value="Upload" src="/_images/si/upload-btn.gif" />' .
-            '</form>';
+            '</form></div>';
 
         /* SWFUpload form  */
-        $html = '<form id="upload-image-frm" action="/swfupload.php" method="post" enctype="multipart/form-data">
+        $html .= '<div id="swf-uploader" style="visibility: hidden;"><form id="upload-image-frm" action="/swfupload.php" method="post" enctype="multipart/form-data">
                     <h3><label for="txtFile">'.$this->m_title.'</label></h3>
                     <div class="fileinputs">
                     <div class="fieldset flash" id="fsUploadProgress">
@@ -125,7 +125,7 @@ class Uploader
                         <div style="visibility: hidden;"><input id="btnCancel" type="button" value="Cancel All Uploads" onclick="swfu.cancelQueue();" disabled="disabled" style="margin-left: 2px; font-size: 8pt; height: 29px;" /></div>
                     </div>
                     </div>
-                </form>';
+                </form></div>';
 
 		return $html;
 		
