@@ -148,7 +148,7 @@ class Theme
 		foreach ($this->m_colourOptions as $colourOption) {
 			$htmlClass = $colourOption;
 			if( $colourOption == $this->m_colour ) $htmlClass .= ' active';
-			$htmlString .=	'<li class="' . $htmlClass . '"><a href="?colour='. $colourOption .'"><span>' . str_replace  ('_'  ,' ' , $colourOption) . '</span></a></li>';
+			$htmlString .=	'<li class="' . $htmlClass . '"><a href="?colour='. $colourOption .'" alt="Colour choice '.str_replace('_' ,' ', $colourOption).'"><span>' . str_replace  ('_'  ,' ' , $colourOption) . '</span></a></li>';
 		}
 						
 		$htmlString .=	'</ul>';
@@ -178,8 +178,8 @@ class Theme
 	public function ScrollingTabs($contents)
 	{
 		$htmlString = '<div id="nav-tabs" class="'. $this->getName() .'">' .
-		'<p id="new-tab"><a href="tab?a=' . EventDispatcher::ACTION_NEW_TAB . '"><img alt="New tab" src="/_images/si/new-tab.gif"/></a></p>'.
-		'<p id="prev-tab"><a class="prev" title="Previous tab"></a></p>' . $contents . '<p id="next-tab"><a class="next" title="Next tab"></a></p></div>';
+		'<p id="new-tab"><a href="tab?a=' . EventDispatcher::ACTION_NEW_TAB . '" alt="New tab"><img alt="New tab" src="/_images/si/new-tab.gif"/></a></p>'.
+		'<p id="prev-tab"><a id="prevBtn" class="prev" alt="Previous" title="Previous tab"></a></p>' . $contents . '<p id="next-tab"><a id="nextBtn" class="next" alt="Next" title="Next tab"></a></p></div>';
 		return $htmlString;
 	}
 	

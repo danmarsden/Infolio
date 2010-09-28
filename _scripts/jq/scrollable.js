@@ -42,7 +42,9 @@
 			loop: false
 		}; 
 
-		
+        $('previousBtn').attr('alt','Previous');
+        $('nextBtn').attr('alt','Next');
+
 		this.opts = $.extend(opts, config);  
 		this.opts.horizontal = !opts.vertical;
 		
