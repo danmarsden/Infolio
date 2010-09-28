@@ -169,7 +169,7 @@ function onEnterShowPage($_page)
 
 	$editMenu = new Menu( array(Link::CreateIconLink('Edit',
 										$page->PathWithQueryString(array('mode'=>Page::MODE_EDIT), false),
-										$studentTheme->Icon('edit-page'), array('title' => "Edit {$page->getTitle()}"))
+										$studentTheme->Icon('edit-page'), array('title' => "Edit {$page->getTitle()}",'alt' => 'Edit'))
 								));
 	$editMenu->setClass('inline-list');
 
@@ -194,7 +194,7 @@ function onEnterEditPage($_page, $editPictureId = null, $assetFilter=AssetCollec
 	}
 
 	// Create menus
-	$editMenu = new Menu( array( Link::CreateIconLink('Finish', $page->PathWithQueryString( array('mode'=>Page::MODE_SHOW)), $studentTheme->Icon('stop-abort'), array('title'=>"Finish editing {$page->getTitle()}"))));
+	$editMenu = new Menu( array( Link::CreateIconLink('Finish', $page->PathWithQueryString( array('mode'=>Page::MODE_SHOW)), $studentTheme->Icon('stop-abort'), array('title'=>"Finish editing {$page->getTitle()}", 'alt' => 'Finish Editing'))));
 	$editMenu->setClass('inline-list');
 	
 	// Create menu for changing picture

@@ -30,8 +30,8 @@ else { ?>
 	<h1>eFolio</h1>
 <? } ?>
 </div><!-- /#wrap-profile -->
-<a id="my-tabs" href="managetabs.php">My tabs</a>
-<a id="my-collection" href="collection.php">My collection</a>
+<a id="my-tabs" href="managetabs.php" title="My Tabs" >My tabs</a>
+<a id="my-collection" href="collection.php" title="My Collection" >My collection</a>
 <?
 // Scrolling tabs
 if( isset($studentUser) ) {
