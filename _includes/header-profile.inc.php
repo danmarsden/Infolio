@@ -30,7 +30,7 @@ else { ?>
 	<h1>eFolio</h1>
 <? } ?>
 </div><!-- /#wrap-profile -->
-<a id="my-collection" href="managetabs.php">My tabs</a>
+<a id="my-tabs" href="managetabs.php">My tabs</a>
 <a id="my-collection" href="collection.php">My collection</a>
 <?
 // Scrolling tabs
