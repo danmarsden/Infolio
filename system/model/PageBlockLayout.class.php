@@ -123,8 +123,8 @@ class PageBlockLayout
 		$editMenu = $blockContent->EditMenu($page, $blockNumber, $theme);
 		
 		// Edit options - up and down links
-		$upLink = Link::CreateIconLink('Up', $page->PathWithQueryString( array('blockup'=>$blockContent->getId()), true ), $theme->Icon('up-arrow'), array('class'=>'btnUp bl' . $blockContent->getId(), 'title'=>"Move block {$blockNumber} up"));
-		$downLink = Link::CreateIconLink('Down', $page->PathWithQueryString( array('blockdown'=>$blockContent->getId()), true ), $theme->Icon('down-arrow'), array('class'=>'btnDown bl' . $blockContent->getId(), 'title'=>"Move block {$blockNumber} down"));
+		$upLink = Link::CreateIconLink('Up', $page->PathWithQueryString( array('blockup'=>$blockContent->getId()), true ), $theme->Icon('up-arrow'), array('class'=>'btnUp bl' . $blockContent->getId(), 'title'=>"Move block {$blockNumber} up", 'alt' => 'Move block up'));
+		$downLink = Link::CreateIconLink('Down', $page->PathWithQueryString( array('blockdown'=>$blockContent->getId()), true ), $theme->Icon('down-arrow'), array('class'=>'btnDown bl' . $blockContent->getId(), 'title'=>"Move block {$blockNumber} down", 'alt' => 'Move block down'));
 
 		// Work out which links to show based on position of block (ie. top can't go more up)
 		// Elements hidden by CSS
