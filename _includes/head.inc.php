@@ -5,6 +5,7 @@
 <!-- JQuery CSS -->
 <link href="/_scripts/jq/scrollable.css" rel="stylesheet" type="text/css" />
 <link href="/_scripts/jq/impromtu.css" rel="stylesheet" type="text/css" />
+<link href="/_styles/swfupload.css" rel="stylesheet" type="text/css" />
 <!-- Stop scrollbar flickr -->
 <script type="text/javascript">
 document.write("<style>#nav-tabs li {visibility: hidden;}</style>");

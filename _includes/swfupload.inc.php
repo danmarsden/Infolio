@@ -17,13 +17,16 @@ window.onload = function () {
 				custom_settings : {
 					progressTarget : "fsUploadProgress",
 					cancelButtonId : "btnCancel"
-				},
+                },
+                post_params : {
+                    userid: "<?php echo $_SESSION['userID']; ?>"
+                },
 				debug: false,
 
 				// Button settings
 				button_image_url: "/_images/si/browseBtn.png",
-				button_width: "75",
-				button_height: "29",
+				button_width: "100",
+				button_height: "28",
 				button_placeholder_id: "spanButtonPlaceHolder",
 
         // Callback functions

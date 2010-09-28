@@ -8,18 +8,30 @@
  * @license    http://creativecommons.org/licenses/by-nc-sa/2.0/uk/
 */
 
+// This file can take a long time to run, so needed to expand the timeout
+set_time_limit(360);
+
 include_once("system/initialise.php");
+include_once("system/class/si/Uploader.class.php");
 include_once("model/User.class.php");
 include_once("function/shared.php");
 include_once("function/core.php");
 
+$uploaddir = DIR_FS_ROOT.'data/import';
+$uploader = new Uploader();
+
 // Check user is logged in before letting them do stuff (except logging in)
-$adminUser = require_admin();
+if (isset($_POST['userid'])) {
+$user = new User($_POST['userid']);
+} else {
+    error('invalid user id passed.');
+}
 
-$uploaddir = DIR_FS_ROOT.'/data/';
-$uploadfile = $uploaddir . basename($_FILES['Filedata']['name']);
+if (isset($_FILES['Filedata'])) {
+    $file = $_FILES['Filedata'];
+}
 
-if (move_uploaded_file($_FILES['Filedata']['tmp_name'], $uploadfile)) {
+if ($assetId = $uploader->doCopyUpload($file, $user)) {
     //don't need to do anything
     exit;
 } else {
