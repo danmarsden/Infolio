@@ -504,22 +504,22 @@ class Tab extends DatabaseObject
                     // both up and down arrows
                     if ($index != 1 && $index != (count($tabs)-1)) {
                         $tabMenu = new Menu (array(
-                            Link::CreateIconLink('Up', $page->PathWithQueryString(array('mode'=>EventDispatcher::ACTION_MOVE_UP,'t'=>$tab->getId() )), $theme->Icon('up-arrow')),
-                            Link::CreateIconLink('Down', $page->PathWithQueryString(array('mode'=>EventDispatcher::ACTION_MOVE_DOWN,'t'=>$tab->getId())), $theme->Icon('down-arrow')),
+                            Link::CreateIconLink('Up', $page->PathWithQueryString(array('mode'=>EventDispatcher::ACTION_MOVE_UP,'t'=>$tab->getId() )), $theme->Icon('up-arrow'), array('alt' => 'Up')),
+                            Link::CreateIconLink('Down', $page->PathWithQueryString(array('mode'=>EventDispatcher::ACTION_MOVE_DOWN,'t'=>$tab->getId())), $theme->Icon('down-arrow'), array('alt' => 'Down')),
                         ));
                         $tabMenu->setClass('inline-list');
                         $html .= '<li class="manage-tab">' . $tab->m_name . $tabMenu->Html() . '</li>';
                     // down arrow only
                     } else if ($index == 1) {
                         $tabMenu = new Menu (array(
-                            Link::CreateIconLink('Down', $page->PathWithQueryString(array('mode'=>EventDispatcher::ACTION_MOVE_DOWN,'t'=>$tab->getId())), $theme->Icon('down-arrow')),
+                            Link::CreateIconLink('Down', $page->PathWithQueryString(array('mode'=>EventDispatcher::ACTION_MOVE_DOWN,'t'=>$tab->getId())), $theme->Icon('down-arrow'), array('alt' => 'Down')),
                         ));
                         $tabMenu->setClass('inline-list');
                         $html .= '<li class="manage-tab">' . $tab->m_name . $tabMenu->Html() . '</li>';
                     // up arrow only
                     } else if ($index == count($tabs)-1) {
                         $tabMenu = new Menu (array(
-                            Link::CreateIconLink('Up', $page->PathWithQueryString(array('mode'=>EventDispatcher::ACTION_MOVE_UP,'t'=>$tab->getId())), $theme->Icon('up-arrow')),
+                            Link::CreateIconLink('Up', $page->PathWithQueryString(array('mode'=>EventDispatcher::ACTION_MOVE_UP,'t'=>$tab->getId())), $theme->Icon('up-arrow'), array('alt' =>'Up')),
                         ));
                         $tabMenu->setClass('inline-list');
                         $html .= '<li class="manage-tab">' . $tab->m_name . $tabMenu->Html() . '</li>';
