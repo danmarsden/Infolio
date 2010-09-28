@@ -699,7 +699,6 @@ class User extends DatabaseObject
 		$user->m_lastName = $hashArray['lastName'];
 		$user->m_email = $hashArray['email'];
 		$user->m_description = $hashArray['description'];
-        $user->m_share = $hashArray['share'];
 		$user->m_institution = new Institution($hashArray['institution_id']);
 		$user->m_enabled = $hashArray['enabled'];
 		$user->setAuditFieldsFromHashArray($hashArray);
@@ -710,6 +709,17 @@ class User extends DatabaseObject
 		$user->m_theme = $theme;
 		$user->m_permissionManager = $permissionManager;
 		$user->m_filled = true;
+        //first check this users institutions share settings
+        $inshare = $user->m_institution->allowSharing();
+        if (empty($inshare)) {
+            $user->m_share = 0;
+        } elseif ($inshare == '2' && $hashArray['share'] !== '0') {
+            $user->m_share = 1;
+        } else {
+            $user->m_share = $hashArray['share'];
+        }
+
+        
 		return $user;
 	}
 	
@@ -875,14 +885,14 @@ class User extends DatabaseObject
         //if institution allows sharing show this
         $sharing =$this->m_institution->allowSharing();
         if (!empty($sharing)) {
-            //first check if sharing is already set in user record (hacky way to do this)
+            //first check if sharing is already set in user record (hacky way to do this
             $selected0 ='';
             $selected1 ='';
             if ($this->m_share==='1') {
                 $selected1 = 'selected';
             } elseif ($this->m_share ==='0') {
                 $selected0 = 'selected';
-            } elseif ($sharing==2) {
+            } elseif ($sharing=='2') {
                 $selected1 = 'selected';
             }
             $html .= '<h2>Tab Sharing</h2>

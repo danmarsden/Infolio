@@ -12,8 +12,12 @@
  * @link       NA
  * @since      NA
 */
-
 include_once('settings.inc.php');
+
+if(!isset($studentUser->m_tabs)) {
+    $studentUser->fetchAndSetTabs();
+}
+
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -46,14 +50,44 @@ include_once('settings.inc.php');
 		</div>
 		</div>
 		<? print $studentTheme->BoxEnd(); ?>
+<?php
+        $allowsharing = $studentUser->getShare();
+        if (!empty($allowsharing)) {
+?>
 
+        <?php print $studentTheme->BoxBegin('<h2 id="btnShowHide"> Sharing</h2>'); ?>
+        <p>Select the tabs that you would like to share with other users on this site.</p>
+<?php
+        $html = '<input type="hidden" name="tab_count" value="' . (count($studentUser->m_tabs)-1) . '" />';
+        $html .= '<ul style="list-style:none;">';
+        $tabCount = 0;
+        foreach($studentUser->m_tabs as $aTab) {
+            if($aTab->getId() != 1) {
+                $html .= '<li><label for="tabids"><input type="checkbox" id="tabids" name="tab_id' . $tabCount . '" value="' .$aTab->getId(). '" /> ' .$aTab->getName().  '</label></li>';
+                $tabCount++;
+            }
+        }
+        $html .= "</ul>";
+        echo $html;
+?>
+        <input type="submit" value="Save Shared Tabs" />
+        <h3>Public access URL</h3>
+        <p>This URL allows public access to your shared tabs:<br/>
+        <?php
+            $hash = 
+            $url = curURL().'/'.$studentUser->getInstitution()->getURL().'/public/'.$studentUser->getID().'/'.md5(mt_rand());
+                echo "<a href='$url'>$url</a></p>";
+        ?>
+        <input type="submit" value="Reset URL" />
+        <p>Resetting this URL will prevent anyone using the old URL from accessing your shared tabs</p>
+        <?php print $studentTheme->BoxEnd(); ?>
+<?php
+        } //end check for displaying sharing options
+?>
         <? print $studentTheme->BoxBegin('<h2 id="btnShowHide"> Export</h2>'); ?>
         <form method="post" action="../export.php"><ul style="list-style:none;"><p>Select the tabs that you would like to include in the export.</p>
          </ul>
-<?php 
-        if(!isset($studentUser->m_tabs)) {
-            $studentUser->fetchAndSetTabs();
-        }
+<?php
         $html = '<input type="hidden" name="tab_count" value="' . (count($studentUser->m_tabs)-1) . '" />';
         $html .= '<ul style="list-style:none;">';
         $tabCount = 0;

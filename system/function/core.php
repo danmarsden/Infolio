@@ -661,3 +661,15 @@ function check_upgrade() {
         db_main_upgrade($oldversion);
     }
 }
+
+function curURL() {
+ $curURL = 'http';
+ if (isset($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] == "on") {$curURL .= "s";}
+ $curURL .= "://";
+ if ($_SERVER["SERVER_PORT"] != "80") {
+  $curURL .= $_SERVER["SERVER_NAME"].":".$_SERVER["SERVER_PORT"];
+ } else {
+  $curURL .= $_SERVER["SERVER_NAME"];
+ }
+ return $curURL;
+}

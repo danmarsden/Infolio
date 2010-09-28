@@ -23,8 +23,7 @@ function db_main_upgrade($oldversion) {
         }
     }
     if ($result && $oldversion < 2010092701) {
-        echo "get here!!!";
-        //add new config table.
+        //add new share column to institution table
         $sql = "ALTER TABLE institution ADD column share int";
         $result = $db->query($sql);
         if ($result) {
@@ -32,11 +31,27 @@ function db_main_upgrade($oldversion) {
         }
     }
     if ($result && $oldversion < 2010092702) {
-        //add new config table.
+        //add new share column to user table.
         $sql = "ALTER TABLE user ADD column share int";
         $db->query($sql);
         if ($result) {
             set_config('version', '2010092702');
+        }
+    }
+    if ($result && $oldversion < 2010092703) {
+        //add new share column to tab table.
+        $sql = "ALTER TABLE tab ADD column share int";
+        $db->query($sql);
+        if ($result) {
+            set_config('version', '2010092703');
+        }
+    }
+    if ($result && $oldversion < 2010092704) {
+        //add new sharehash column to user table.
+        $sql = "ALTER TABLE user ADD column sharehash varchar(40)";
+        $db->query($sql);
+        if ($result) {
+            set_config('version', '2010092704');
         }
     }
 }
