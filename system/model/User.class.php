@@ -37,6 +37,7 @@ class User extends DatabaseObject
 	private $m_lastName;
 	private $m_email;
 	private $m_description;
+    private $m_share;
 	
 	protected $m_profilePicture;
 	
@@ -188,6 +189,17 @@ class User extends DatabaseObject
 	{
 		$this->checkFilled();
 		$this->m_firstName = $value;
+	}
+
+	public function getShare()
+	{
+		$this->checkFilled();
+		return $this->m_share;
+	}
+	public function setShare($value)
+	{
+		$this->checkFilled();
+		$this->m_share = $value;
 	}
 
 	/**
@@ -687,6 +699,7 @@ class User extends DatabaseObject
 		$user->m_lastName = $hashArray['lastName'];
 		$user->m_email = $hashArray['email'];
 		$user->m_description = $hashArray['description'];
+        $user->share = $hashArray['share'];
 		$user->m_institution = new Institution($hashArray['institution_id']);
 		$user->m_enabled = $hashArray['enabled'];
 		$user->setAuditFieldsFromHashArray($hashArray);
@@ -778,7 +791,8 @@ class User extends DatabaseObject
 			'updated_by' => $this->m_updatedBy->getId(),
 			'created_time' => Date::formatForDatabase($this->m_createdTime),
 			'created_by' => $this->m_createdBy->getId(),
-			'profile_picture_id' => $this->getProfilePictureId()
+			'profile_picture_id' => $this->getProfilePictureId(),
+            'share' => $this->m_share
 		);
 		
 		// Add permission data to table, if it exists
@@ -809,7 +823,8 @@ class User extends DatabaseObject
 				'enabled' => $this->m_enabled,
 				'updated_time' => Date::formatForDatabase($this->m_updatedTime),
 				'updated_by' => $this->m_updatedBy->getId(),
-				'profile_picture_id' => $this->getProfilePictureId()
+				'profile_picture_id' => $this->getProfilePictureId(),
+                'share' => $this->m_share
 		);
 		
 		// Add permission data to table, if it exists
@@ -857,6 +872,21 @@ class User extends DatabaseObject
         $html .= '</table>';
         $html .= '<br/>';
 		$html .= '<input type="hidden" name="user_id" value="' . $this->getId() . '" />';
+        //if institution allows sharing show this
+        $sharing =$this->m_institution->allowSharing();
+        if (!empty($sharing)) {
+            //TODO:first check if sharing is already set in user record
+            if ($this->m_share) {
+                $selected = 'selected';
+            } elseif ($sharing==2) {
+                $selected = 'selected';
+            }
+            $html .= '<h2>Tab Sharing</h2>
+			      	  <select name="share" id="share">
+                             <option value="0">Disabled</option>
+                            <option value="1" '.$selected.'>Enabled</option>
+                      </select><br/><br/>';
+        }
 		$html .= '<input type="submit" value="Update Tabs" />';
 		$html .= '</form>';
 

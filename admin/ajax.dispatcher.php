@@ -436,6 +436,7 @@ function userOperations($operation, $adminUser)
 				$_GET['lastName'],
 				$_GET['email'],
 				$_GET['description'],
+                $_GET['share'],
 				$permissionManager,
 				new Institution($institutionId));
 
@@ -456,6 +457,7 @@ function userOperations($operation, $adminUser)
 			$user->setLastName($_GET['lastName']);
 			$user->setEmail($_GET['email']);
 			$user->setDescription($_GET['description']);
+            $user->setShare($_GET['share']);
 			//$user->setUsername();
 			if(isset($_GET['userType']) && $_GET['userType'] != '0') {
 				try {

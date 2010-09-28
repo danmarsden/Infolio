@@ -108,7 +108,8 @@ function showForm()
                         <td class="captionLabel">Tab Sharing</td>
                         <td><select name="share" id="share">
                             <option value="0">Disabled</option>
-                            <option value="1" <? if(isset($institution) && $institution->allowSharing())print 'selected' ?>>Enabled</option>
+                            <option value="1" <? if(isset($institution) && $institution->allowSharing()=='1')print 'selected' ?>>Enabled - Users disabled by default</option>
+                            <option value="2" <? if(isset($institution) && $institution->allowSharing()=='2')print 'selected' ?>>Enabled - Users enabled by default</option>
                         </select></td>
                     </tr>
 				</table>

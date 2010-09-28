@@ -636,14 +636,18 @@ function get_config($name) {
 //set config var in config table. - used to store In-folio version and other site config options.
 function set_config($name, $value) {
     global $db;
-    $data = array(
+
+    $existing = get_config($name);
+    if (isset($existing)) {
+        $data = array(
+                  'value' => (string)$value
+                  );
+        $db->perform('config', $data, Database::UPDATE, "name='$name'");
+    } elseif($existing <> $value) {
+        $data = array(
                   'name' => (string)$name,
                   'value' => (string)$value
                   );
-    $existing = get_config($name);
-    if (isset($existing)) {
-        $db->perform('config', $data, Database::UPDATE);
-    } elseif($existing <> $value) {
         $db->perform('config', $data);
     }
 }
