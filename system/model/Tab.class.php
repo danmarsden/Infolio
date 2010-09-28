@@ -406,7 +406,7 @@ class Tab extends DatabaseObject
         $this->m_weight = 0;
 		$this->Save($authUser);
 
-        Tab::readjustWeights($this->m_owner); // update all the other Tab weights so they order better
+        Tab::readjustWeights($this->m_owner->getId()); // update all the other Tab weights so they order better
 
 		Logger::Write("Deleted tab '{$this->getName()}' (id:{$this->getId()})", Logger::TYPE_DELETE, $authUser);
 	}
