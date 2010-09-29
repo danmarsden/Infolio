@@ -27,8 +27,8 @@ div.fieldset span.legend {
 div.flash {
     width: 375px;
     margin: 10px 5px;
-    border-color: #999999;
-    float: left;
+    border:none;
+    clear:both;
     -moz-border-radius : 5px;
     -webkit-border-radius : 5px;
 }
@@ -124,14 +124,18 @@ a.progressCancel:hover {
     background-position: 0px 0px;
 }
 
+#swf-uploader h3 {
+	float:left;
+}
+
 /* -- SWFUpload Object Styles ------------------------------- */
 .swfupload {
     vertical-align: top;
     height:28px;
 }
 .fileUploadButton {
-   float: right;
-   margin-left: 5px;
-   margin-top: 12px;
+   float: left;
+   margin-left: 15px;
+   margin-top: 0;
 }
 
