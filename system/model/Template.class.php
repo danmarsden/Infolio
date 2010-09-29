@@ -185,8 +185,9 @@ class Template extends DatabaseObject
 		$template->m_locked = false;
 
 		// Set up template's main tab
-		$template->m_tab = Tab::CreateNewTab($title, null);
+        $template->m_tab = Tab::CreateNewTab($title, null);
 		$template->m_tab->setTemplate($template);
+        $template->m_tab->setTemplateWeight();
 		return $template;
 	}
 

@@ -874,7 +874,7 @@ class User extends DatabaseObject
      */
     public function HtmlManageTabs() {
 
-        $this->fetchAndSetTabs(null, false);
+        $this->fetchAndSetTabs(null, false, false);
 
         $html  = '<form method="post" action="/enabletabs.php">';
 		$html .= '<input type="hidden" name="tab_count" value="' . count($this->m_tabs) . '" />';
@@ -1105,10 +1105,10 @@ class User extends DatabaseObject
 	 * Fetches the tab info for this user from the DB and sets this classes tab related member data
 	 * @return 
 	 */
-	function fetchAndSetTabs($tabIds = null, $enabled=true)
+	function fetchAndSetTabs($tabIds = null, $enabled=true, $incltemplate=true)
     {
 		// Populate $m_tabs with an array of Tab objects
-		$this->m_tabs = Tab::RetrieveTabsByUser($this, $enabled);
+		$this->m_tabs = Tab::RetrieveTabsByUser($this, $enabled, $incltemplate);
 
 		// If specified only show the given tabIds (required for static version)
 		if(isset($tabIds)) {

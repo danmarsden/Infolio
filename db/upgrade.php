@@ -54,4 +54,14 @@ function db_main_upgrade($oldversion) {
             set_config('version', '2010092704');
         }
     }
+    if ($result && $oldversion < 2010092900) {
+        // Update template tabs to have a weight of -1
+        // This puts them between the About-me tab and the users tabs.
+        // Template tabs are not sortable
+        $sql = "UPDATE tab SET weight = '-1' WHERE template_id != 0";
+        $db->query($sql);
+        if ($result) {
+            set_config('version', '2010092900');
+        }
+    }
 }

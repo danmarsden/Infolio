@@ -100,18 +100,21 @@ class Tab extends DatabaseObject
 		return $tabArray;
 	}
 	
-	public static function RetrieveTabsByUser(User $user, $enabled=true)
+	public static function RetrieveTabsByUser(User $user, $enabled=true, $incltemplate=true)
     {
         $enabledstr = '';
         if ($enabled) {
             $enabledstr = ' AND enabled=1';
         }
+        $templatestr = ' OR template_id=0';
+        if ($incltemplate) {
+			$templatestr = " OR (template_id = 0 OR template_id IN (SELECT template_id FROM template_viewers WHERE user_id={$user->getId()} OR group_id IN (SELECT group_id FROM group_members WHERE user_id={$user->getId()})))";
+        }
 		$db = Database::getInstance();
-        $sql = "SELECT * from tab WHERE user_id={$user->getId()}"
-                . $enabledstr .
-				' OR template_id=0' .
-				" OR template_id IN (SELECT template_id FROM template_viewers WHERE user_id={$user->getId()} OR group_id IN (SELECT group_id FROM group_members WHERE user_id={$user->getId()}))" .
-				' ORDER BY weight';
+        $sql = "SELECT * from tab WHERE user_id={$user->getId()}" .
+                $enabledstr .
+                $templatestr .
+                ' ORDER BY weight';
 		Debugger::debug($sql, 'Tab::GetTabsByUser_1', Debugger::LEVEL_SQL);
 
 		$result = $db->query($sql);
@@ -130,7 +133,7 @@ class Tab extends DatabaseObject
 			}
 
 			$tab->getIcon()->setTitle('Tab ' . ($tabIndex + 1));
-			$tab->getLink()->addHtmlProperty('title', "View tab {$tab->getName()}");
+			$tab->getLink()->addHtmlProperty('title', "View tab");
 
 			$tabArray[$row['slug']] = $tab;
 			$tabIndex++;
@@ -509,7 +512,7 @@ class Tab extends DatabaseObject
     public static function manageTabsContent(User $user, Theme $theme, SimplePage $page) 
     {
 
-        $tabs = Tab::retrieveTabsByUser($user);
+        $tabs = Tab::retrieveTabsByUser($user, true, false);
         $index = 1; // to display the up/down arrows
         $html = '<ol id="manage-tab-weights">';
         if ($tabs) {
@@ -630,7 +633,7 @@ class Tab extends DatabaseObject
     {
         $db         = Database::getInstance();
         $weights    = Tab::getWeights($this->m_user);
-        $tabs       = Tab::RetrieveTabsByUser($this->m_user);
+        $tabs       = Tab::RetrieveTabsByUser($this->m_user, true, false);
         $max        = Tab::getMaxWeight((int)$this->m_user->getId());
         $authuser = User::RetrieveBySessionData($_SESSION);
 
@@ -669,6 +672,13 @@ class Tab extends DatabaseObject
                 $tab->Save($authuser);
             }
         }
+    }
+
+    // function for setting Template weights to -1 when created
+    public function setTemplateWeight() {
+        $authuser = User::RetrieveBySessionData($_SESSION);
+        $this->m_weight = -1;
+        $tab->Save($authuser);
     }
 
 	/* ** Display opperations ** */
@@ -710,14 +720,14 @@ class Tab extends DatabaseObject
 			// Create tab menu
 			// Set up menus
 			$tabMenu = new Menu( array(
-								Link::CreateIconLink('Add', "page-0?tab={$this->getId()}", $theme->Icon('add-page2'), array('title' => 'Add'))
+								Link::CreateIconLink('Add', "page-0?tab={$this->getId()}", $theme->Icon('add-page2'))
 								) );
 			$tabMenu->setClass('inline-list');
 			
 			// Templated tabs can not be editted or deleted
 			if(!isset($this->m_template)) {
-				$tabMenu->addLink( Link::CreateIconLink('Edit', $page->PathWithQueryString(array('mode'=>Page::MODE_EDIT)), $theme->Icon('edit'), array('title' => 'Edit')) );
-				$tabMenu->addLink( Link::CreateIconLink('Delete', $page->PathWithQueryString( array('a'=>EventDispatcher::ACTION_DELETE) ), $theme->Icon('delete'), array('title' => 'Delete')) );
+				$tabMenu->addLink( Link::CreateIconLink('Edit', $page->PathWithQueryString(array('mode'=>Page::MODE_EDIT)), $theme->Icon('edit')) );
+				$tabMenu->addLink( Link::CreateIconLink('Delete', $page->PathWithQueryString( array('a'=>EventDispatcher::ACTION_DELETE) ), $theme->Icon('delete')) );
 			}
 
 			$html = '<div class="blank"><p>You can:</p>' . $tabMenu->Html() . '</div>';
@@ -748,7 +758,7 @@ class Tab extends DatabaseObject
 				// Link for editting tab icon
 				$this->m_icon->addClass('edit');
 				$this->m_icon->setTitle('Choose a new tab icon');
-				$iconLink = Link::CreateImageLink($this->m_icon, $page->PathWithQueryString( array('a'=>TabEventDispatcher::ACTION_EDIT_ICON) ), Image::SIZE_TAB_ICON, array('alt'=>'Choose tab icon'));
+				$iconLink = Link::CreateImageLink($this->m_icon, $page->PathWithQueryString( array('a'=>TabEventDispatcher::ACTION_EDIT_ICON) ), Image::SIZE_TAB_ICON);
 
 				// HTML for edit form
 				$html = "<form action=\"{$page->PathWithQueryString( array('mode'=>Page::MODE_SHOW) )}\" method=\"post\" class=\"page_update\">" .
