@@ -267,10 +267,17 @@ font-size:1.2em;
 	margin-right:10px;
 	}
 
+    #shared-tabs {
+	float:right;
+	display:block;
+	padding: 60px 80px 0 0;
+	margin-right:10px;
+	}
+
 	/* 5a Data Tables */
 	table {width:500px;}
 	td, th{border:1px solid #ccc;}
-	
+
 	/* 5b Forms */
 
 	textarea {

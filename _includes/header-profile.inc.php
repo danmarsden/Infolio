@@ -32,7 +32,13 @@ else { ?>
 </div><!-- /#wrap-profile -->
 <a id="my-tabs" href="managetabs.php" title="My Tabs" >My tabs</a>
 <a id="my-collection" href="collection.php" title="My Collection" >My collection</a>
+<?php
+$sharing = $studentUser->getInstitution()->allowSharing();
+if (!empty($sharing)) {
+?>
+<a id="shared-tabs" href="sharedtabs.php" title="Shared Tabs" >Shared Tabs</a>
 <?
+}
 // Scrolling tabs
 if( isset($studentUser) ) {
 	print $studentTheme->ScrollingTabs( $tabsMenu->Html() );

@@ -78,7 +78,7 @@ if(!isset($studentUser->m_tabs)) {
                     }
                 }
                 $studentUser->fetchAndSetTabs(); //used to reset user->m_tabs;
-
+//TODO: add notification to UI about change.
             }
 ?>
 <a name="sharing"/>
@@ -115,6 +115,7 @@ if(!isset($studentUser->m_tabs)) {
                 $hash = newsharehash();
                 $studentUser->setShareHash($hash);
                 $studentUser->save($studentUser);
+                //TODO: add notification to UI about change.
             }
             $url = curURL().'/'.$studentUser->getInstitution()->getURL().'/public/'.$studentUser->getID().'/'.$hash;
                 echo "<a href='$url'>$url</a></p>";
