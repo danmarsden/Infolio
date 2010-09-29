@@ -81,10 +81,10 @@ if(!isset($studentUser->m_tabs)) {
 
             }
 ?>
-
+<a name="sharing"/>
         <?php print $studentTheme->BoxBegin('<h2 id="btnShowHide"> Sharing</h2>'); ?>
         <p>Select the tabs that you would like to share with other users on this site.</p>
-       <form action="/<?php echo $studentUser->getInstitution()->getURL(); ?>/settings.php" method="POST">
+       <form action="/<?php echo $studentUser->getInstitution()->getURL(); ?>/settings.php#sharing" method="POST">
  <?php
 
         $html = '<input type="hidden" name="tab_count" value="' . (count($studentUser->m_tabs)-1) . '" />';
@@ -119,7 +119,7 @@ if(!isset($studentUser->m_tabs)) {
             $url = curURL().'/'.$studentUser->getInstitution()->getURL().'/public/'.$studentUser->getID().'/'.$hash;
                 echo "<a href='$url'>$url</a></p>";
         ?>
-        <form action="/<?php echo $studentUser->getInstitution()->getURL(); ?>/settings.php" method="POST">
+        <form action="/<?php echo $studentUser->getInstitution()->getURL(); ?>/settings.php#sharing" method="POST">
         <input type="hidden" name="resethash" value="true"/>
         <input type="submit" value="Reset URL" />
         </form>
