@@ -133,7 +133,7 @@ class Tab extends DatabaseObject
 			}
 
 			$tab->getIcon()->setTitle('Tab ' . ($tabIndex + 1));
-			$tab->getLink()->addHtmlProperty('title', "View tab {$tab->getName()}");
+			$tab->getLink()->addHtmlProperty('title', "View tab");
 
 			$tabArray[$row['slug']] = $tab;
 			$tabIndex++;
@@ -521,22 +521,22 @@ class Tab extends DatabaseObject
                     // both up and down arrows
                     if ($index != 1 && $index != (count($tabs)-1)) {
                         $tabMenu = new Menu (array(
-                            Link::CreateIconLink('Up', $page->PathWithQueryString(array('mode'=>EventDispatcher::ACTION_MOVE_UP,'t'=>$tab->getId() )), $theme->Icon('up-arrow'), array('alt' => 'Move tab up')),
-                            Link::CreateIconLink('Down', $page->PathWithQueryString(array('mode'=>EventDispatcher::ACTION_MOVE_DOWN,'t'=>$tab->getId())), $theme->Icon('down-arrow'), array('alt' => 'Move tab down')),
+                            Link::CreateIconLink('Up', $page->PathWithQueryString(array('mode'=>EventDispatcher::ACTION_MOVE_UP,'t'=>$tab->getId() )), $theme->Icon('up-arrow'), array('title' => 'Move tab up')),
+                            Link::CreateIconLink('Down', $page->PathWithQueryString(array('mode'=>EventDispatcher::ACTION_MOVE_DOWN,'t'=>$tab->getId())), $theme->Icon('down-arrow'), array('title' => 'Move tab down')),
                         ));
                         $tabMenu->setClass('inline-list');
                         $html .= '<li class="manage-tab">' . $tab->m_name . $tabMenu->Html() . '</li>';
                     // down arrow only
                     } else if ($index == 1) {
                         $tabMenu = new Menu (array(
-                            Link::CreateIconLink('Down', $page->PathWithQueryString(array('mode'=>EventDispatcher::ACTION_MOVE_DOWN,'t'=>$tab->getId())), $theme->Icon('down-arrow'), array('alt' => 'Move tab down')),
+                            Link::CreateIconLink('Down', $page->PathWithQueryString(array('mode'=>EventDispatcher::ACTION_MOVE_DOWN,'t'=>$tab->getId())), $theme->Icon('down-arrow'), array('title' => 'Move tab down')),
                         ));
                         $tabMenu->setClass('inline-list');
                         $html .= '<li class="manage-tab">' . $tab->m_name . $tabMenu->Html() . '</li>';
                     // up arrow only
                     } else if ($index == count($tabs)-1) {
                         $tabMenu = new Menu (array(
-                            Link::CreateIconLink('Up', $page->PathWithQueryString(array('mode'=>EventDispatcher::ACTION_MOVE_UP,'t'=>$tab->getId())), $theme->Icon('up-arrow'), array('alt' =>'Move tab up')),
+                            Link::CreateIconLink('Up', $page->PathWithQueryString(array('mode'=>EventDispatcher::ACTION_MOVE_UP,'t'=>$tab->getId())), $theme->Icon('up-arrow'), array('title' =>'Move tab up')),
                         ));
                         $tabMenu->setClass('inline-list');
                         $html .= '<li class="manage-tab">' . $tab->m_name . $tabMenu->Html() . '</li>';
@@ -720,14 +720,14 @@ class Tab extends DatabaseObject
 			// Create tab menu
 			// Set up menus
 			$tabMenu = new Menu( array(
-								Link::CreateIconLink('Add', "page-0?tab={$this->getId()}", $theme->Icon('add-page2'), array('alt' => 'Add'))
+								Link::CreateIconLink('Add', "page-0?tab={$this->getId()}", $theme->Icon('add-page2'))
 								) );
 			$tabMenu->setClass('inline-list');
 			
 			// Templated tabs can not be editted or deleted
 			if(!isset($this->m_template)) {
-				$tabMenu->addLink( Link::CreateIconLink('Edit', $page->PathWithQueryString(array('mode'=>Page::MODE_EDIT)), $theme->Icon('edit'), array('alt' => 'Edit')) );
-				$tabMenu->addLink( Link::CreateIconLink('Delete', $page->PathWithQueryString( array('a'=>EventDispatcher::ACTION_DELETE) ), $theme->Icon('delete'), array('alt' => 'Delete')) );
+				$tabMenu->addLink( Link::CreateIconLink('Edit', $page->PathWithQueryString(array('mode'=>Page::MODE_EDIT)), $theme->Icon('edit')) );
+				$tabMenu->addLink( Link::CreateIconLink('Delete', $page->PathWithQueryString( array('a'=>EventDispatcher::ACTION_DELETE) ), $theme->Icon('delete')) );
 			}
 
 			$html = '<div class="blank"><p>You can:</p>' . $tabMenu->Html() . '</div>';
@@ -758,7 +758,7 @@ class Tab extends DatabaseObject
 				// Link for editting tab icon
 				$this->m_icon->addClass('edit');
 				$this->m_icon->setTitle('Choose a new tab icon');
-				$iconLink = Link::CreateImageLink($this->m_icon, $page->PathWithQueryString( array('a'=>TabEventDispatcher::ACTION_EDIT_ICON) ), Image::SIZE_TAB_ICON, array('alt'=>'Choose tab icon'));
+				$iconLink = Link::CreateImageLink($this->m_icon, $page->PathWithQueryString( array('a'=>TabEventDispatcher::ACTION_EDIT_ICON) ), Image::SIZE_TAB_ICON);
 
 				// HTML for edit form
 				$html = "<form action=\"{$page->PathWithQueryString( array('mode'=>Page::MODE_SHOW) )}\" method=\"post\" class=\"page_update\">" .
