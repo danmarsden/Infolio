@@ -13,7 +13,7 @@
 div.fieldset {
     border:  1px solid #afe14c;
     margin: 10px 0;
-    padding: 20px 10px;
+    padding: 15px;
 }
 div.fieldset span.legend {
     position: relative;
@@ -27,16 +27,10 @@ div.fieldset span.legend {
 div.flash {
     width: 375px;
     margin: 10px 5px;
-    border-color: #000;
-
-    -moz-border-radius-topleft : 5px;
-    -webkit-border-top-left-radius : 5px;
-    -moz-border-radius-topright : 5px;
-    -webkit-border-top-right-radius : 5px;
-    -moz-border-radius-bottomleft : 5px;
-    -webkit-border-bottom-left-radius : 5px;
-    -moz-border-radius-bottomright : 5px;
-    -webkit-border-bottom-right-radius : 5px;
+    border-color: #999999;
+    float: left;
+    -moz-border-radius : 5px;
+    -webkit-border-radius : 5px;
 }
 
 #btnSubmit { margin: 0 0 0 0; }
@@ -47,10 +41,10 @@ div.flash {
 }
 
 .progressContainer {
-    margin: 5px;
+    margin: 0;
     padding: 4px;
-    border: solid 1px #E8E8E8;
-    background-color: #F7F7F7;
+    border: none;
+    background-color: transparent;
     overflow: hidden;
 }
 
@@ -63,14 +57,14 @@ div.flash {
 
 /* Current */
 .green {
-    border: solid 1px #DDF0DD;
-    background-color: #EBFFEB;
+    border: none;
+    background-color: transparent;
 }
 
 /* Complete */
 .blue {
-    border: solid 1px #CEE2F2;
-    background-color: #F0F5FF;
+    border: none;
+    background-color: transparent;
 }
 
 .progressName {
@@ -134,5 +128,10 @@ a.progressCancel:hover {
 .swfupload {
     vertical-align: top;
     height:28px;
+}
+.fileUploadButton {
+   float: right;
+   margin-left: 5px;
+   margin-top: 12px;
 }
 

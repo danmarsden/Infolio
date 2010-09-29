@@ -118,11 +118,11 @@ class Uploader
         $html .= '<div id="swf-uploader" style="visibility: hidden;"><form id="upload-image-frm" action="/swfupload.php" method="post" enctype="multipart/form-data">
                     <h3><label for="txtFile">'.$this->m_title.'</label></h3>
                     <div class="fileinputs">
-                    <div class="fieldset flash" id="fsUploadProgress">
-                    </div>
-                    <div>
+                    <div class="fileUploadButton">
                         <span id="spanButtonPlaceHolder"></span>
                         <div style="visibility: hidden;"><input id="btnCancel" type="button" value="Cancel All Uploads" onclick="swfu.cancelQueue();" disabled="disabled" style="margin-left: 2px; font-size: 8pt; height: 29px;" /></div>
+                    </div>					
+                    <div class="fieldset flash" id="fsUploadProgress">
                     </div>
                     </div>
                 </form></div>';
