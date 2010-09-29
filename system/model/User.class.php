@@ -850,7 +850,7 @@ class User extends DatabaseObject
                 'share' => $this->m_share,
                 'sharehash' => $this->m_share_hash
 		);
-		
+
 		// Add permission data to table, if it exists
 		if(isset($this->m_permissionManager)) {
 			$data = array_merge($data, $this->m_permissionManager->getAllAsHashArray());
