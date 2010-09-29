@@ -82,7 +82,7 @@ if(!isset($studentUser->m_tabs)) {
             }
 ?>
 <a name="sharing"/>
-        <?php print $studentTheme->BoxBegin('<h2 id="btnShowHide"> Sharing</h2>'); ?>
+        <?php print $studentTheme->BoxBegin('<h2 id="btnShowHide"><img src="/_images/si/icons/sharing.gif" width="35" height="35" alt="Sharing" /> Sharing</h2>'); ?>
         <p>Select the tabs that you would like to share with other users on this site.</p>
        <form action="/<?php echo $studentUser->getInstitution()->getURL(); ?>/settings.php#sharing" method="POST">
  <?php
@@ -129,7 +129,7 @@ if(!isset($studentUser->m_tabs)) {
 <?php
         } //end check for displaying sharing options
 ?>
-        <? print $studentTheme->BoxBegin('<h2 id="btnShowHide"> Export</h2>'); ?>
+        <? print $studentTheme->BoxBegin('<h2 id="btnShowHide"><img src="/_images/si/icons/export.gif" width="35" height="35" alt="Export" /> Export</h2>'); ?>
         <form method="post" action="../export.php"><ul style="list-style:none;"><p>Select the tabs that you would like to include in the export.</p>
          </ul>
 <?php
