@@ -19,7 +19,6 @@ include_once("function/core.php");
 
 $uploaddir = DIR_FS_ROOT.'data/import';
 $uploader = new Uploader();
-error_log('userid: '.$_POST['userid']);
 
 // Check user is logged in before letting them do stuff (except logging in)
 if (isset($_POST['userid'])) {
@@ -27,7 +26,6 @@ $user = new User($_POST['userid']);
 } else {
     error('invalid user id passed.');
 }
-error_log('filedata: '.$_FILES['Filedata']);
 if (isset($_FILES['Filedata'])) {
     $file = $_FILES['Filedata'];
 }
