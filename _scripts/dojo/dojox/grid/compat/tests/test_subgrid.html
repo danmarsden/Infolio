@@ -45,7 +45,7 @@
 			var row = data[this.grid.dataRow % data.length];
 			switch (this.index) {
 				case 0:
-					return row[0]; //'<img src="images/sample/' + row[0] + '" width="109" height="75">';
+					return row[0]; //'<img src="images/sample/' + row[0] + '" width="109" height="75" alt="">';
 				case 1:
 					return (100000000 + this.grid.dataRow).toString().slice(1);
 				case 2:
@@ -85,7 +85,7 @@
 		function getCheck(inRowIndex) { 
 			var image = (detailRows[inRowIndex] ? 'open.gif' : 'closed.gif');
 			var show = (detailRows[inRowIndex] ? 'false' : 'true')
-			return '<img height="11" width="11" src="images/' + image + '" onclick="toggleDetail(' + inRowIndex + ', ' + show + ')">';
+			return '<img alt="" height="11" width="11" src="images/' + image + '" onclick="toggleDetail(' + inRowIndex + ', ' + show + ')">';
 		}
 		
 		// provide html for the Detail cell in the master grid		

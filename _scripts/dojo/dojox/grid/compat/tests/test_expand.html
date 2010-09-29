@@ -90,7 +90,7 @@
 				this.grid.expandedRows = [ ];
 			var image = (this.grid.expandedRows[inRowIndex] ? 'open.gif' : 'closed.gif');
 			var show = (this.grid.expandedRows[inRowIndex] ? 'false' : 'true')
-			return '<img src="images/' + image + '" onclick="toggle(' + inRowIndex + ', ' + show + ')" height="11" width="11">';
+			return '<img src="images/' + image + '" onclick="toggle(' + inRowIndex + ', ' + show + ')" height="11" width="11" alt="">';
 		}
 
 	dojo.addOnLoad(function() {

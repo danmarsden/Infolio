@@ -518,22 +518,22 @@ class Tab extends DatabaseObject
                     // both up and down arrows
                     if ($index != 1 && $index != (count($tabs)-1)) {
                         $tabMenu = new Menu (array(
-                            Link::CreateIconLink('Up', $page->PathWithQueryString(array('mode'=>EventDispatcher::ACTION_MOVE_UP,'t'=>$tab->getId() )), $theme->Icon('up-arrow'), array('alt' => 'Move tab up')),
-                            Link::CreateIconLink('Down', $page->PathWithQueryString(array('mode'=>EventDispatcher::ACTION_MOVE_DOWN,'t'=>$tab->getId())), $theme->Icon('down-arrow'), array('alt' => 'Move tab down')),
+                            Link::CreateIconLink('Up', $page->PathWithQueryString(array('mode'=>EventDispatcher::ACTION_MOVE_UP,'t'=>$tab->getId() )), $theme->Icon('up-arrow'), array('title' => 'Move tab up')),
+                            Link::CreateIconLink('Down', $page->PathWithQueryString(array('mode'=>EventDispatcher::ACTION_MOVE_DOWN,'t'=>$tab->getId())), $theme->Icon('down-arrow'), array('title' => 'Move tab down')),
                         ));
                         $tabMenu->setClass('inline-list');
                         $html .= '<li class="manage-tab">' . $tab->m_name . $tabMenu->Html() . '</li>';
                     // down arrow only
                     } else if ($index == 1) {
                         $tabMenu = new Menu (array(
-                            Link::CreateIconLink('Down', $page->PathWithQueryString(array('mode'=>EventDispatcher::ACTION_MOVE_DOWN,'t'=>$tab->getId())), $theme->Icon('down-arrow'), array('alt' => 'Move tab down')),
+                            Link::CreateIconLink('Down', $page->PathWithQueryString(array('mode'=>EventDispatcher::ACTION_MOVE_DOWN,'t'=>$tab->getId())), $theme->Icon('down-arrow'), array('title' => 'Move tab down')),
                         ));
                         $tabMenu->setClass('inline-list');
                         $html .= '<li class="manage-tab">' . $tab->m_name . $tabMenu->Html() . '</li>';
                     // up arrow only
                     } else if ($index == count($tabs)-1) {
                         $tabMenu = new Menu (array(
-                            Link::CreateIconLink('Up', $page->PathWithQueryString(array('mode'=>EventDispatcher::ACTION_MOVE_UP,'t'=>$tab->getId())), $theme->Icon('up-arrow'), array('alt' =>'Move tab up')),
+                            Link::CreateIconLink('Up', $page->PathWithQueryString(array('mode'=>EventDispatcher::ACTION_MOVE_UP,'t'=>$tab->getId())), $theme->Icon('up-arrow'), array('title' =>'Move tab up')),
                         ));
                         $tabMenu->setClass('inline-list');
                         $html .= '<li class="manage-tab">' . $tab->m_name . $tabMenu->Html() . '</li>';
@@ -710,14 +710,14 @@ class Tab extends DatabaseObject
 			// Create tab menu
 			// Set up menus
 			$tabMenu = new Menu( array(
-								Link::CreateIconLink('Add', "page-0?tab={$this->getId()}", $theme->Icon('add-page2'), array('alt' => 'Add'))
+								Link::CreateIconLink('Add', "page-0?tab={$this->getId()}", $theme->Icon('add-page2'), array('title' => 'Add'))
 								) );
 			$tabMenu->setClass('inline-list');
 			
 			// Templated tabs can not be editted or deleted
 			if(!isset($this->m_template)) {
-				$tabMenu->addLink( Link::CreateIconLink('Edit', $page->PathWithQueryString(array('mode'=>Page::MODE_EDIT)), $theme->Icon('edit'), array('alt' => 'Edit')) );
-				$tabMenu->addLink( Link::CreateIconLink('Delete', $page->PathWithQueryString( array('a'=>EventDispatcher::ACTION_DELETE) ), $theme->Icon('delete'), array('alt' => 'Delete')) );
+				$tabMenu->addLink( Link::CreateIconLink('Edit', $page->PathWithQueryString(array('mode'=>Page::MODE_EDIT)), $theme->Icon('edit'), array('title' => 'Edit')) );
+				$tabMenu->addLink( Link::CreateIconLink('Delete', $page->PathWithQueryString( array('a'=>EventDispatcher::ACTION_DELETE) ), $theme->Icon('delete'), array('title' => 'Delete')) );
 			}
 
 			$html = '<div class="blank"><p>You can:</p>' . $tabMenu->Html() . '</div>';
@@ -819,9 +819,9 @@ class Tab extends DatabaseObject
 	public function SortMenuIfSortable(SimplePage $page, Theme $theme)
 	{
 		if($this->getNumPages() > 1) {
-			$sortMenu = new Menu( array(	Link::CreateIconLink('Newest first', $page->PathWithQueryString(array('sort'=>'new')), $theme->Icon('sort-newest'), array('title'=>'Sort pages newest first', 'alt' => 'Sort pages newest first')),
-									Link::CreateIconLink('Oldest first', $page->PathWithQueryString(array('sort'=>'old')), $theme->Icon('sort-oldest'), array('title'=>'Sort pages oldest first', 'alt' => 'Sort pages oldest first')),
-									Link::CreateIconLink('A-Z', $page->PathWithQueryString(array('sort'=>'a-z')), $theme->Icon('sort-az'), array('title'=>'Sort pages A to Z', 'alt' => 'Sort pages A to Z'))),
+			$sortMenu = new Menu( array(	Link::CreateIconLink('Newest first', $page->PathWithQueryString(array('sort'=>'new')), $theme->Icon('sort-newest'), array('title'=>'Sort pages newest first')),
+									Link::CreateIconLink('Oldest first', $page->PathWithQueryString(array('sort'=>'old')), $theme->Icon('sort-oldest'), array('title'=>'Sort pages oldest first')),
+									Link::CreateIconLink('A-Z', $page->PathWithQueryString(array('sort'=>'a-z')), $theme->Icon('sort-az'), array('title'=>'Sort pages A to Z'))),
 									'menu_tabs', 'Sort');
 			$sortMenu->setClass('inline-list');
 			return $sortMenu;

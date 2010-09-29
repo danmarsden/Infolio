@@ -525,10 +525,10 @@ class Page extends SimplePage
 		if($this->getNumBlocks() < 1) {
 			$pageMenu = new Menu( array(
 				Link::CreateIconLink('Edit', $this->PathWithQueryString(array('mode'=>Page::MODE_EDIT)), $theme->Icon('edit'))
-			), array('alt' => 'Edit'));
+			), array('title' => 'Edit'));
 		
 		if($this->isNotTemplateControlled()) {
-			$pageMenu->addLink( Link::CreateIconLink('Delete', $this->PathWithQueryString( array('a'=>EventDispatcher::ACTION_DELETE) ), $theme->Icon('delete'), array('alt' => 'Delete')) );
+			$pageMenu->addLink( Link::CreateIconLink('Delete', $this->PathWithQueryString( array('a'=>EventDispatcher::ACTION_DELETE) ), $theme->Icon('delete'), array('title' => 'Delete')) );
 		}
 		
 

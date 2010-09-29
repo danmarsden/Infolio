@@ -225,15 +225,15 @@ class AssetCollection
 			
 			if(!isset($filterQueryParams)) $filterQueryParams = array();
 			$filterMenu = new Menu( array(
-										Link::CreateIconLink('All', $page->PathWithQueryString( array_merge(array('f'=>AssetCollection::FILTER_ALL), $filterQueryParams) ), $theme->Icon('show-all'), array('alt' => 'Filter All')),
-										Link::CreateIconLink('Today', $page->PathWithQueryString( array_merge(array('f'=>AssetCollection::FILTER_TODAY), $filterQueryParams) ), $theme->Icon('today'), array('alt' => 'Filter Today')),
-										Link::CreateIconLink('Days', $page->PathWithQueryString( array_merge(array('f'=>AssetCollection::FILTER_DAYS), $filterQueryParams) ), $theme->Icon('days-old'), array('alt' => 'Filter Days')),
-										Link::CreateIconLink('Week', $page->PathWithQueryString( array_merge(array('f'=>AssetCollection::FILTER_WEEK), $filterQueryParams) ), $theme->Icon('weeks-old'), array('alt' => 'Filter Week')),
-										Link::CreateIconLink('Month', $page->PathWithQueryString( array_merge(array('f'=>AssetCollection::FILTER_MONTH), $filterQueryParams) ), $theme->Icon('months-old'), array('alt' => 'Filter Months'))
+										Link::CreateIconLink('All', $page->PathWithQueryString( array_merge(array('f'=>AssetCollection::FILTER_ALL), $filterQueryParams) ), $theme->Icon('show-all'), array('title' => 'Filter All')),
+										Link::CreateIconLink('Today', $page->PathWithQueryString( array_merge(array('f'=>AssetCollection::FILTER_TODAY), $filterQueryParams) ), $theme->Icon('today'), array('title' => 'Filter Today')),
+										Link::CreateIconLink('Days', $page->PathWithQueryString( array_merge(array('f'=>AssetCollection::FILTER_DAYS), $filterQueryParams) ), $theme->Icon('days-old'), array('title' => 'Filter Days')),
+										Link::CreateIconLink('Week', $page->PathWithQueryString( array_merge(array('f'=>AssetCollection::FILTER_WEEK), $filterQueryParams) ), $theme->Icon('weeks-old'), array('title' => 'Filter Week')),
+										Link::CreateIconLink('Month', $page->PathWithQueryString( array_merge(array('f'=>AssetCollection::FILTER_MONTH), $filterQueryParams) ), $theme->Icon('months-old'), array('title' => 'Filter Months'))
 									), 'filters1', 'Show');
 			$filterMenu->setClass('inline-list');
 			$filterMenu2 = new Menu( array(
-										Link::CreateIconLink('Favourites', $page->PathWithQueryString( array_merge(array('f'=>AssetCollection::FILTER_FAVOURITES), $filterQueryParams) ), $theme->Icon('tag-as-fave2'), array('alt' => 'Filter Favourites'))
+										Link::CreateIconLink('Favourites', $page->PathWithQueryString( array_merge(array('f'=>AssetCollection::FILTER_FAVOURITES), $filterQueryParams) ), $theme->Icon('tag-as-fave2'), array('title' => 'Filter Favourites'))
 									), 'filters2');
 			$filterMenu2->setClass('inline-list');
 
@@ -276,9 +276,9 @@ class AssetCollection
 			//$html .= '<div class="box-text">' . $this->m_selectedAsset->HtmlDescription();
 
 			$assetOptions = new Menu(null, 'image-tools');
-			$assetOptions->addLink( Link::CreateIconLink('Delete', $page->PathWithQueryString(array('a'=>CollectionEventDispatcher::ACTION_DELETE_ASSET, 'c'=>$this->m_selectedAsset->getId())), $theme->Icon('delete', 'Delete'), array('alt' => 'Delete')) );
+			$assetOptions->addLink( Link::CreateIconLink('Delete', $page->PathWithQueryString(array('a'=>CollectionEventDispatcher::ACTION_DELETE_ASSET, 'c'=>$this->m_selectedAsset->getId())), $theme->Icon('delete', 'Delete'), array('title' => 'Delete')) );
 			if($this->m_mode==self::MODE_SHOW && !$this->m_selectedAsset->isPublic()) {
-				$assetOptions->addLink( Link::CreateIconLink('Edit', $page->PathWithQueryString(array('a'=>CollectionEventDispatcher::ACTION_EDIT_ASSET, 'c'=>$this->m_selectedAsset->getId())), $theme->Icon('edit', 'Edit'), array('alt' => 'Edit')) );
+				$assetOptions->addLink( Link::CreateIconLink('Edit', $page->PathWithQueryString(array('a'=>CollectionEventDispatcher::ACTION_EDIT_ASSET, 'c'=>$this->m_selectedAsset->getId())), $theme->Icon('edit', 'Edit'), array('title' => 'Edit')) );
 			}
 
 			$html .= '<div class="box-text">';

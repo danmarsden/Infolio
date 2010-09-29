@@ -448,8 +448,8 @@ class PageBlock extends DatabaseObject
 	public function EditMenu(Page $page, $blockNumber, Theme $theme)
 	{
 		$menu = new Menu( array(
-				Link::CreateIconLink('Edit', $page->PathWithQueryString( array('blockedit'=>$this->getId()), true, 'b'.$this->getId()), $theme->Icon('edit2'), array('class'=>'btnEdit', 'title'=>"Edit block {$blockNumber}", 'alt' => 'Edit')),
-					Link::CreateIconLink('Delete', $page->PathWithQueryString( array('blockdelete'=>$this->getId()) ), $theme->Icon('delete-block'), array('class'=>'btnDelete', 'title'=>"Delete block {$blockNumber}", 'alt' => 'Delete Block')),
+				Link::CreateIconLink('Edit', $page->PathWithQueryString( array('blockedit'=>$this->getId()), true, 'b'.$this->getId()), $theme->Icon('edit2'), array('class'=>'btnEdit', 'title'=>"Edit block {$blockNumber}")),
+					Link::CreateIconLink('Delete', $page->PathWithQueryString( array('blockdelete'=>$this->getId()) ), $theme->Icon('delete-block'), array('class'=>'btnDelete', 'title'=>"Delete block {$blockNumber}")),
 							));
 		$menu->setClass('inline-list');
 		return $menu;
