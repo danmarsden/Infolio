@@ -436,7 +436,6 @@ function userOperations($operation, $adminUser)
 				$_GET['lastName'],
 				$_GET['email'],
 				$_GET['description'],
-                $_GET['share'],
 				$permissionManager,
 				new Institution($institutionId));
 

@@ -139,9 +139,12 @@ function showGrid()
 
 function showForm(){
 	global $do, $adminUser, $userType;
-	if(isset($_GET['id'])) {
+	$share = 0;
+    if(isset($_GET['id'])) {
 		$user = User::RetrieveById($_GET['id'], $adminUser);
-	}
+        $share = $user->getShare();
+    }
+
 	?>
 	<style type="text/css">
 	div#dlgPhotos {
@@ -160,6 +163,7 @@ function showForm(){
 				<input type="hidden" name="do" id="do" value="<? echo $_GET["do"]?>" />
 				<input type="hidden" name="a" id="a" value="User" />
 				<input type="hidden" name="operation" id="operation" value="<? print ((isset($user)) ? 'Update' : 'Insert') ?>" />
+                <input type="hidden" name="share" id="share" value="<?php print $share; ?>" />
 
 				<div dojoType="dijit.Toolbar" style="clear:both;">
 					<div dojoType="dijit.form.Button" onclick="doSave" showLabel="true">Save</div>
