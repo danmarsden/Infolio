@@ -270,6 +270,7 @@ font-size:1.2em;
     #shared-tabs {
 	float:right;
 	display:block;
+	background:url(/_images/si/shared-tabs.gif) right top no-repeat;	
 	padding: 60px 80px 0 0;
 	margin-right:10px;
 	}

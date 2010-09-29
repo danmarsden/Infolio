@@ -30,13 +30,13 @@ else { ?>
 	<h1>eFolio</h1>
 <? } ?>
 </div><!-- /#wrap-profile -->
-<a id="my-tabs" href="managetabs.php" title="My Tabs" >My tabs</a>
-<a id="my-collection" href="collection.php" title="My Collection" >My collection</a>
+<a id="my-tabs" href="managetabs.php" title="My tabs" >My tabs</a>
+<a id="my-collection" href="collection.php" title="My collection" >My collection</a>
 <?php
 $sharing = $studentUser->getInstitution()->allowSharing();
 if (!empty($sharing)) {
 ?>
-<a id="shared-tabs" href="sharedtabs.php" title="Shared Tabs" >Shared Tabs</a>
+<a id="shared-tabs" href="sharedtabs.php" title="Shared tabs" >Shared tabs</a>
 <?
 }
 // Scrolling tabs
