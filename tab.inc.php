@@ -118,7 +118,8 @@ function onNewTab()
 	Debugger::debug('Event caught', 'tab.inc.php::onNewTab', Debugger::LEVEL_INFO);
 	global $studentUser;
 
-	$tab = Tab::CreateNewTab('New_tab', $studentUser);
+    $tab = Tab::CreateNewTab('New_tab', $studentUser);
+    $tab->setWeight();
 	$tab->Save($studentUser);
 
 	// Redirect (stops refresh causing duplicate new tabs)

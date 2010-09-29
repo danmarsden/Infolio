@@ -264,6 +264,7 @@ function leap_restore_user($dir, $user = '') {
 
          foreach ($tabs as $tabxml) {
              $tab = Tab::CreateNewTab((string)$tabxml->title[0], $newUser);
+             $tab->setWeight();
              $tab->Save($newUser);
              // create pages attached to this tab
              foreach ($tabxml->link as $link) {

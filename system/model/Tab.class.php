@@ -54,7 +54,6 @@ class Tab extends DatabaseObject
 		$tab = new Tab(null);
 		$tab->m_user = $user;
 		$tab->setNameAndSlug($name);
-		$tab->setWeight();
 		$tab->m_enabled = true;
 		
 		return $tab;
