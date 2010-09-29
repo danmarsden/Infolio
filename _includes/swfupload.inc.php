@@ -30,7 +30,7 @@ window.onload = function () {
                 post_params: {
                     userid: "<?php echo $_SESSION['userID']; ?>"
                 },
-				debug: true,
+				debug: false,
 
 				// Button settings
 				button_image_url: "/_images/si/browseBtn.png",

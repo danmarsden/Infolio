@@ -100,18 +100,21 @@ class Tab extends DatabaseObject
 		return $tabArray;
 	}
 	
-	public static function RetrieveTabsByUser(User $user, $enabled=true)
+	public static function RetrieveTabsByUser(User $user, $enabled=true, $incltemplate=true)
     {
         $enabledstr = '';
         if ($enabled) {
             $enabledstr = ' AND enabled=1';
         }
+        $templatestr = ' OR template_id=0';
+        if ($incltemplate) {
+			$templatestr = " OR (template_id = 0 OR template_id IN (SELECT template_id FROM template_viewers WHERE user_id={$user->getId()} OR group_id IN (SELECT group_id FROM group_members WHERE user_id={$user->getId()})))";
+        }
 		$db = Database::getInstance();
-        $sql = "SELECT * from tab WHERE user_id={$user->getId()}"
-                . $enabledstr .
-				' OR template_id=0' .
-				" OR template_id IN (SELECT template_id FROM template_viewers WHERE user_id={$user->getId()} OR group_id IN (SELECT group_id FROM group_members WHERE user_id={$user->getId()}))" .
-				' ORDER BY weight';
+        $sql = "SELECT * from tab WHERE user_id={$user->getId()}" .
+                $enabledstr .
+                $templatestr .
+                ' ORDER BY weight';
 		Debugger::debug($sql, 'Tab::GetTabsByUser_1', Debugger::LEVEL_SQL);
 
 		$result = $db->query($sql);
@@ -509,7 +512,7 @@ class Tab extends DatabaseObject
     public static function manageTabsContent(User $user, Theme $theme, SimplePage $page) 
     {
 
-        $tabs = Tab::retrieveTabsByUser($user);
+        $tabs = Tab::retrieveTabsByUser($user, true, false);
         $index = 1; // to display the up/down arrows
         $html = '<ol id="manage-tab-weights">';
         if ($tabs) {
@@ -630,7 +633,7 @@ class Tab extends DatabaseObject
     {
         $db         = Database::getInstance();
         $weights    = Tab::getWeights($this->m_user);
-        $tabs       = Tab::RetrieveTabsByUser($this->m_user);
+        $tabs       = Tab::RetrieveTabsByUser($this->m_user, true, false);
         $max        = Tab::getMaxWeight((int)$this->m_user->getId());
         $authuser = User::RetrieveBySessionData($_SESSION);
 

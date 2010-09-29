@@ -46,7 +46,6 @@ class ManageTabsEventDispatcher extends EventDispatcher
 		// Get input
         $tab = Safe::GetArrayIndexValueWithDefault($this->m_allVars, 't', null);
 
-        //var_dump($this);
 		// Tab move action - onTabMove
         if(($mode == self::ACTION_MOVE_UP || $mode == self::ACTION_MOVE_DOWN) && isset($this->mf_onMoveTabHandler)) {
 			// Call handler
