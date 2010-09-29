@@ -674,6 +674,13 @@ class Tab extends DatabaseObject
         }
     }
 
+    // function for setting Template weights to -1 when created
+    public function setTemplateWeight() {
+        $authuser = User::RetrieveBySessionData($_SESSION);
+        $this->m_weight = -1;
+        $tab->Save($authuser);
+    }
+
 	/* ** Display opperations ** */
 	
 	/**
