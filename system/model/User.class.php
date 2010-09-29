@@ -1048,7 +1048,7 @@ class User extends DatabaseObject
 		$imgHtml = $this->m_profilePicture->Html(Image::SIZE_BOX);
 
 		$changeImgPath = $page->PathWithQueryString(array('a'=>HomePageEventDispatcher::ACTION_CHANGE_USER_IMAGE));
-		$changeImgLink = Link::CreateIconLink('Change picture', $changeImgPath, $theme->Icon('change-picture', 'Change picture'), array('title' => 'Change picture'));
+		$changeImgLink = Link::CreateIconLink('Change picture', $changeImgPath, $theme->Icon('change-picture'), array('title' => 'Change picture'));
 
 		
 
@@ -1060,7 +1060,7 @@ class User extends DatabaseObject
 			$html .= str_replace("\n", '<br />', $this->getDescription());
 
 			$changeTextPath = $page->PathWithQueryString(array('a'=>HomePageEventDispatcher::ACTION_CHANGE_USER_DESCRIPTION));
-			$changeTextLink = Link::CreateIconLink('Change description', $changeTextPath, $theme->Icon('edit', 'Change description'), array('title' => 'Change description'));
+			$changeTextLink = Link::CreateIconLink('Change description', $changeTextPath, $theme->Icon('edit'), array('title' => 'Change description'));
 
 			$html .= "<p>&nbsp;</p><p>{$changeTextLink->Html()}</p>";
 		}
