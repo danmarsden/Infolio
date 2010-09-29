@@ -94,7 +94,6 @@ if(!isset($studentUser->m_tabs)) {
             if($aTab->getId() != 1) {
                 $checked = '';
                 if ($aTab->getShare() =='1') {
-                    echo "checkthis";
                     $checked = 'checked="checked"';
                 }
                 $html .= '<li><label for="tabids"><input type="checkbox" id="tabids" name="tab_id' . $tabCount . '" value="' .$aTab->getId(). '" '.$checked.' /> ' .$aTab->getName().  '</label></li>';
