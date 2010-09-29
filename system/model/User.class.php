@@ -38,6 +38,7 @@ class User extends DatabaseObject
 	private $m_email;
 	private $m_description;
     private $m_share;
+    private $m_share_hash;
 	
 	protected $m_profilePicture;
 	
@@ -200,6 +201,17 @@ class User extends DatabaseObject
 	{
 		$this->checkFilled();
 		$this->m_share = $value;
+	}
+
+	public function getShareHash()
+	{
+		$this->checkFilled();
+		return $this->m_share_hash;
+	}
+	public function setShareHash($value)
+	{
+		$this->checkFilled();
+		$this->m_share_hash = $value;
 	}
 
 	/**
@@ -718,7 +730,7 @@ class User extends DatabaseObject
         } else {
             $user->m_share = $hashArray['share'];
         }
-
+        $user->m_share_hash = $hashArray['sharehash'];
         
 		return $user;
 	}
@@ -802,7 +814,8 @@ class User extends DatabaseObject
 			'created_time' => Date::formatForDatabase($this->m_createdTime),
 			'created_by' => $this->m_createdBy->getId(),
 			'profile_picture_id' => $this->getProfilePictureId(),
-            'share' => $this->m_share
+            'share' => $this->m_share,
+            'sharehash' => $this->m_share_hash
 		);
 		
 		// Add permission data to table, if it exists
@@ -834,7 +847,8 @@ class User extends DatabaseObject
 				'updated_time' => Date::formatForDatabase($this->m_updatedTime),
 				'updated_by' => $this->m_updatedBy->getId(),
 				'profile_picture_id' => $this->getProfilePictureId(),
-                'share' => $this->m_share
+                'share' => $this->m_share,
+                'sharehash' => $this->m_share_hash
 		);
 		
 		// Add permission data to table, if it exists

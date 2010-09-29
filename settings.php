@@ -53,32 +53,77 @@ if(!isset($studentUser->m_tabs)) {
 <?php
         $allowsharing = $studentUser->getShare();
         if (!empty($allowsharing)) {
+            //check for submitted changes to tabs.
+            if (!empty($_POST['sharedtabs'])) {
+                $tabcount = (int)$_POST['tab_count'];
+                $i = 0;
+                $selectedtabs = array();
+                While($i < $tabcount) {
+                    if (isset($_POST["tab_id".$i])) {
+                        $selectedtabs[] = (int)$_POST["tab_id".$i];
+                        $tab = Tab::GetTabById((int)$_POST["tab_id".$i]);
+                        $tab->setShare('1');
+                        $tab->save($studentUser);
+                    }
+                    $i++;
+                }
+                //now get list of all selected tabs for this user and reset any that aren't shared anymore
+                $sql = "SELECT ID FROM tab WHERE user_id='".$studentUser->getID()."' AND share=1";
+                $query = $db->query($sql);
+                while ($row = $db->fetchArray($query)) {
+                    if (!in_array($row['ID'], $selectedtabs)) {
+                        $tab = Tab::GetTabById($row['ID']);
+                        $tab->setShare('0');
+                        $tab->save($studentUser);
+                    }
+                }
+                $studentUser->fetchAndSetTabs(); //used to reset user->m_tabs;
+
+            }
 ?>
 
         <?php print $studentTheme->BoxBegin('<h2 id="btnShowHide"> Sharing</h2>'); ?>
         <p>Select the tabs that you would like to share with other users on this site.</p>
-<?php
+       <form action="/<?php echo $studentUser->getInstitution()->getURL(); ?>/settings.php" method="POST">
+ <?php
+
         $html = '<input type="hidden" name="tab_count" value="' . (count($studentUser->m_tabs)-1) . '" />';
         $html .= '<ul style="list-style:none;">';
         $tabCount = 0;
         foreach($studentUser->m_tabs as $aTab) {
             if($aTab->getId() != 1) {
-                $html .= '<li><label for="tabids"><input type="checkbox" id="tabids" name="tab_id' . $tabCount . '" value="' .$aTab->getId(). '" /> ' .$aTab->getName().  '</label></li>';
+                $checked = '';
+                if ($aTab->getShare() =='1') {
+                    echo "checkthis";
+                    $checked = 'checked="checked"';
+                }
+                $html .= '<li><label for="tabids"><input type="checkbox" id="tabids" name="tab_id' . $tabCount . '" value="' .$aTab->getId(). '" '.$checked.' /> ' .$aTab->getName().  '</label></li>';
                 $tabCount++;
             }
         }
         $html .= "</ul>";
         echo $html;
 ?>
+        <input type="hidden" name="sharedtabs" value="true"/>
         <input type="submit" value="Save Shared Tabs" />
+        </form>
         <h3>Public access URL</h3>
         <p>This URL allows public access to your shared tabs:<br/>
         <?php
-            $hash = 
-            $url = curURL().'/'.$studentUser->getInstitution()->getURL().'/public/'.$studentUser->getID().'/'.md5(mt_rand());
+            $hash = $studentUser->getShareHash();
+            if (empty($hash) or !empty($_POST['resethash'])) {
+                //need to create hash and save it.
+                $hash = newsharehash();
+                $studentUser->setShareHash($hash);
+                $studentUser->save($studentUser);
+            }
+            $url = curURL().'/'.$studentUser->getInstitution()->getURL().'/public/'.$studentUser->getID().'/'.$hash;
                 echo "<a href='$url'>$url</a></p>";
         ?>
+        <form action="/<?php echo $studentUser->getInstitution()->getURL(); ?>/settings.php" method="POST">
+        <input type="hidden" name="resethash" value="true"/>
         <input type="submit" value="Reset URL" />
+        </form>
         <p>Resetting this URL will prevent anyone using the old URL from accessing your shared tabs</p>
         <?php print $studentTheme->BoxEnd(); ?>
 <?php

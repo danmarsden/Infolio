@@ -673,3 +673,8 @@ function curURL() {
  }
  return $curURL;
 }
+
+//used to generate random hash
+function newsharehash() {
+    return md5(mt_rand());
+}
