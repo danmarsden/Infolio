@@ -5,6 +5,7 @@
 <script type="text/javascript">
 var swfu;
 
+// swfuploader is hidden unless JS is enabled on the browser
 function hideHtmlUploader() {
     var swfuploader = document.getElementById('swf-uploader');
     var htmluploader = document.getElementById('html-uploader');
@@ -14,53 +15,49 @@ function hideHtmlUploader() {
 }
 
 window.onload = function () {
-    var settings_object = {
-				flash_url : "/_flash/swfupload.swf",
-				upload_url: "/swfupload.php",
-                file_post_name : "Filedata", 
-				post_params: {"PHPSESSID" : ""},
-				file_size_limit : "100 MB",
-				file_types : "*.*",
-				file_types_description : "All Files",
-				file_upload_limit : 300,
-				custom_settings : {
-					progressTarget : "fsUploadProgress",
-					cancelButtonId : "btnCancel"
-                },
-                post_params: {
-                    userid: "<?php echo $_SESSION['userID']; ?>"
-                },
-				debug: false,
+    hideHtmlUploader();
 
-				// Button settings
-				button_image_url: "/_images/si/browseBtn.png",
-				button_width: "100",
-				button_height: "28",
-				button_placeholder_id: "spanButtonPlaceHolder",
+    var settings_object = {
+        flash_url : "/_flash/swfupload.swf",
+        upload_url: "/swfupload.php",
+        file_post_name : "Filedata", 
+        post_params: {"PHPSESSID" : ""},
+        file_size_limit : "100 MB",
+        file_types : "*.avi; *.mp4; *.mpeg; *.mpg; *.flv; *.mov; *.wmv; *.mp3; *.wav; *.bmp; *.jpg; *.png; *.gif; *.jpeg",
+        file_types_description : "Web image, video and audio files",
+        file_upload_limit : 300,
+        custom_settings : {
+            progressTarget : "fsUploadProgress",
+            cancelButtonId : "btnCancel"
+        },
+
+        // we need to keep track of the current user
+        post_params: {
+            userid: "<?php echo $_SESSION['userID']; ?>"
+        },
+        debug: false,
+
+        // Button settings
+        button_image_url: "/_images/si/browseBtn.png",
+        button_width: "100",
+        button_height: "28",
+        button_placeholder_id: "spanButtonPlaceHolder",
 
         // Callback functions
-                file_queued_handler : fileQueued,
-                file_queue_error_handler : fileQueueError,
-                file_dialog_complete_handler : fileDialogComplete,
-                upload_start_handler : uploadStart,
-                upload_progress_handler : uploadProgress,
-                upload_error_handler : uploadError,
-                upload_success_handler : uploadSuccess,
-                upload_complete_handler : uploadComplete,
-                queue_complete_handler : queueComplete	// Queue plugin event
+        file_queued_handler : fileQueued,
+        file_queue_error_handler : fileQueueError,
+        file_dialog_complete_handler : fileDialogComplete,
+        upload_start_handler : uploadStart,
+        upload_progress_handler : uploadProgress,
+        upload_error_handler : uploadError,
+        upload_success_handler : uploadSuccess,
+        upload_complete_handler : uploadComplete,
+        queue_complete_handler : queueComplete	// Queue plugin event
     };
     swfu = new SWFUpload(settings_object);
-    hideHtmlUploader();
 };
 
-/* **********************
-   Event Handlers
-   These are my custom event handlers to make my
-   web application behave the way I went when SWFUpload
-   completes different tasks.  These aren't part of the SWFUpload
-   package.  They are part of my application.  Without these none
-   of the actions SWFUpload makes will show up in my application.
-   ********************** */
+/* Event Handlers */
 function fileQueued(file) {
     try {
         var progress = new FileProgress(file, this.customSettings.progressTarget);
@@ -115,7 +112,6 @@ function fileDialogComplete(numFilesSelected, numFilesQueued) {
             document.getElementById(this.customSettings.cancelButtonId).disabled = false;
         }
 
-        /* I want auto start the upload and I can do that here */
         this.startUpload();
     } catch (ex)  {
         this.debug(ex);
@@ -124,11 +120,6 @@ function fileDialogComplete(numFilesSelected, numFilesQueued) {
 
 function uploadStart(file) {
     try {
-        /* I don't want to do any file validation or anything,  I'll just update the UI and
-        return true to indicate that the upload should start.
-        It's important to update the UI here because in Linux no uploadProgress events are called. The best
-        we can do is say we are uploading.
-         */
         var progress = new FileProgress(file, this.customSettings.progressTarget);
         progress.setStatus("Uploading...");
         progress.toggleCancel(true, this);
