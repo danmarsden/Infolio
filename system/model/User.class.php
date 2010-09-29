@@ -801,7 +801,12 @@ class User extends DatabaseObject
 	{
 		$this->m_createdBy = $this->m_updatedBy;
 		$this->m_createdTime = $this->m_updatedTime;
-
+        $inshare = $this->m_institution->allowSharing();
+        if (empty($inshare) or $inshare == '1') {
+            $share = 0;
+        } elseif ($inshare == '2') {
+            $share = 1;
+        }
 		$data=array(
 			'firstName' => $this->getFirstName(),
 			'lastName' => $this->getLastName(),
@@ -814,7 +819,7 @@ class User extends DatabaseObject
 			'created_time' => Date::formatForDatabase($this->m_createdTime),
 			'created_by' => $this->m_createdBy->getId(),
 			'profile_picture_id' => $this->getProfilePictureId(),
-            'share' => $this->m_share,
+            'share' => $share,
             'sharehash' => $this->m_share_hash
 		);
 		
