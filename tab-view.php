@@ -45,9 +45,13 @@ $sql2 = "SELECT * FROM tab WHERE enabled=1 AND share=1 AND user_id=".$userid;
 $result2 = $db->query($sql2);
 $tabidvalid = false;
 While($row2 = $db->fetchArray($result2)) {
-    $tabs[] = "<a title=\"View tab\" href='/".$tabUser->m_institution->getUrl()."/viewtab/".$userid.'/'.$row2['ID']."/'>".
+    $active = '';
+    if ($row2['ID']==$tabid) {
+        $active = 'class="active"';
+    }
+    $tabs[] = "<li $active><a title=\"View tab\" href='/".$tabUser->m_institution->getUrl()."/viewtab/".$userid.'/'.$row2['ID']."/'>".
               '<img src="/images/size_tabicon/0/" width="55" height="55" alt="Tab 2"  title="Tab 2"  />'.
-              $row2['name']."</a>";
+              $row2['name']."</a></li>";
     if ($row2['ID']==$tabid) {
         $tabidvalid = true;
     }
@@ -97,7 +101,7 @@ if (!empty($pageviewid)) {
  <ul class="items">
         <?php
             foreach ($tabs as $tb) {
-               echo "<li>$tb</li>";
+               echo $tb;
             }
         ?>
      </ul>
