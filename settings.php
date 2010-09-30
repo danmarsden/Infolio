@@ -91,6 +91,15 @@ if(!isset($studentUser->m_tabs)) {
         $html .= '<ul style="list-style:none;">';
         $tabCount = 0;
         foreach($studentUser->m_tabs as $aTab) {
+            //check if this tab is a template - if so ignore it.
+            $templateid = 0;
+            $template =$aTab->getTemplate();
+            if (!empty($template)) {
+                $templateid = $template->getTitle();
+                if (!empty($templateid)) {
+                    continue;
+                }
+            }
             if($aTab->getId() != 1) {
                 $checked = '';
                 if ($aTab->getShare() =='1') {
