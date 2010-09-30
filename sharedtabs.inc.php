@@ -41,8 +41,10 @@ $eventD->DispatchEvents();
 //function to display a list of users with shared tabs
 //allows pagination and limit of tabs to show.
 function display_shared_tabs($page, $count, $tablimit) {
-    //first get this users insitution share status
+    //first get this users institution share status
     global $studentUser, $db;
+    //TODO: this could be optimised and less SQL used to obtain data.
+
     $userarray = array();
     $inshare = $studentUser->m_institution->allowSharing();
     if (empty($inshare)) {
@@ -64,13 +66,24 @@ function display_shared_tabs($page, $count, $tablimit) {
             $userarray[$row['ID']]->tabs[$row2['ID']] = $row2;
         }
     }
-    echo "<div>";
+
+    echo "<table class='shareduserstable'>";
     foreach ($userarray as $usr) {
-        echo $usr->user['firstName']. ' '. $usr->user['lastName'].' Tabs: ';
-        foreach ($usr->tabs as $tb) {
-            echo $tb['name']. " | ";
+        echo "<tr>";
+        if (empty($usr->user['profile_picture_id'])) {
+            $imageurl = '/_images/bo/icon/student.png';
+        } else {
+            $imagesql = "SELECT title, href, type FROM assets WHERE id = ".$usr->user['profile_picture_id'];
+            $imgresult = $db->query($imagesql);
+            if ($imgrow = $db->fetchArray($imgresult)) {
+                $imageurl = '/data/'.$studentUser->m_institution->getUrl()."-asset/".$imgrow['type']."/".$imgrow['href'];
+            }
         }
-        echo "<br/>";
+        echo "<td><img src='$imageurl' class='sharedusericon'/></td><td>".$usr->user['firstName']. ' '. $usr->user['lastName'].'</td><td><ul>';
+        foreach ($usr->tabs as $tb) {
+            echo "<li><a href='/".$studentUser->m_institution->getUrl()."/viewtab/".$usr->user['ID'].'/'.$tb['ID']."'>".$tb['name']."</a></li>";
+        }
+        echo '</ul></tr>';
     }
-    echo "</div><br/><br/>";
+    echo "</table><br/><br/>";
 }
