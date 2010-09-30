@@ -12,12 +12,14 @@ include_once('_includes/ui.inc.php');
 include_once('system/class/si/SimplePage.class.php');
 include_once('system/model/User.class.php');
 include_once('system/model/Tab.class.php');
+include_once('system/model/Page.class.php');
 
 $page = new SimplePage();
 $userid = (int)Safe::GetArrayIndexValueWithDefault($_GET, 'user_id', '');
 $institution = Safe::StringForDatabase(Safe::GetArrayIndexValueWithDefault($_GET, 'institution', ''));
 $tabid = (int)Safe::GetArrayIndexValueWithDefault($_GET, 'tab', '');
 $sharehash = Safe::StringForDatabase(Safe::GetArrayIndexValueWithDefault($_GET, 'sharehash', ''));
+$pageid = Safe::StringForDatabase(Safe::GetArrayIndexValueWithDefault($_GET, 'page', ''));
 
 if (empty($userid) or empty($institution)) {
     error("invalid request");
@@ -43,7 +45,7 @@ $sql2 = "SELECT * FROM tab WHERE enabled=1 AND share=1 AND user_id=".$userid;
 $result2 = $db->query($sql2);
 $tabidvalid = false;
 While($row2 = $db->fetchArray($result2)) {
-    $tabs[] = "<a href='/".$tabUser->m_institution->getUrl()."/viewtab/".$userid.'/'.$row2['ID']."'>".$row2['name']."</a>";
+    $tabs[] = "<a href='/".$tabUser->m_institution->getUrl()."/viewtab/".$userid.'/'.$row2['ID']."/'>".$row2['name']."</a>";
     if ($row2['ID']==$tabid) {
         $tabidvalid = true;
     }
@@ -56,6 +58,7 @@ if (!$tabidvalid) { //make sure a valid tabid is passed.
 }
 if (!empty($tabid)) {
     $tab =Tab::GetTabById($tabid);
+    $tab->setViewer($tabUser);
 }
 
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
@@ -88,13 +91,11 @@ if (!empty($tabid)) {
 
 		     // Message
 		     print $studentTheme->BoxIf($tab->HtmlMessage($page, $studentTheme), $tab->HtmlMessageTitle());
-
 		     if($tab->getNumPages() > 0) { ?>
 		<div class="rb">
 			<div class="bt"><div></div></div>
 			<? print $tab->HtmlPageListing($tabUser); ?>
 			<div class="clear"></div>
-			<? print $studentTheme->HtmlMenu($sortMenu, Theme::LEFT); ?>
 			<div class="bb"><div></div></div>
 		</div>
 <?php

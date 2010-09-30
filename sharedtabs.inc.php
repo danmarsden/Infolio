@@ -81,7 +81,7 @@ function display_shared_tabs($page, $count, $tablimit) {
         }
         echo "<td><img src='$imageurl' class='sharedusericon'/></td><td>".$usr->user['firstName']. ' '. $usr->user['lastName'].'</td><td><ul>';
         foreach ($usr->tabs as $tb) {
-            echo "<li><a href='/".$studentUser->m_institution->getUrl()."/viewtab/".$usr->user['ID'].'/'.$tb['ID']."'>".$tb['name']."</a></li>";
+            echo "<li><a href='/".$studentUser->m_institution->getUrl()."/viewtab/".$usr->user['ID'].'/'.$tb['ID']."/'>".$tb['name']."</a></li>";
         }
         echo '</ul></tr>';
     }
