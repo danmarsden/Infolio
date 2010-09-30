@@ -59,9 +59,9 @@ if(!isset($studentUser->m_tabs)) {
                 $i = 0;
                 $selectedtabs = array();
                 While($i < $tabcount) {
-                    if (isset($_POST["tab_id".$i])) {
-                        $selectedtabs[] = (int)$_POST["tab_id".$i];
-                        $tab = Tab::GetTabById((int)$_POST["tab_id".$i]);
+                    if (isset($_POST["tab_id_".$i])) {
+                        $selectedtabs[] = (int)$_POST["tab_id_".$i];
+                        $tab = Tab::GetTabById((int)$_POST["tab_id_".$i]);
                         $tab->setShare('1');
                         $tab->save($studentUser);
                     }
@@ -84,7 +84,7 @@ if(!isset($studentUser->m_tabs)) {
 <a name="sharing"/>
         <?php print $studentTheme->BoxBegin('<h2 id="btnShowHide"><img src="/_images/si/icons/sharing.gif" width="35" height="35" alt="" /> Sharing</h2>'); ?>
         <p>Select the tabs that you would like to share with other users on this site.</p>
-       <form action="/<?php echo $studentUser->getInstitution()->getURL(); ?>/settings.php#sharing" method="POST">
+       <form action="/<?php echo $studentUser->getInstitution()->getURL(); ?>/settings.php#sharing" method="post">
  <?php
 
         $html = '<input type="hidden" name="tab_count" value="' . (count($studentUser->m_tabs)-1) . '" />';
@@ -105,7 +105,7 @@ if(!isset($studentUser->m_tabs)) {
                 if ($aTab->getShare() =='1') {
                     $checked = 'checked="checked"';
                 }
-                $html .= '<li><label for="tabids"><input type="checkbox" id="tabids" name="tab_id' . $tabCount . '" value="' .$aTab->getId(). '" '.$checked.' /> ' .$aTab->getName().  '</label></li>';
+                $html .= '<li><label for="tab_id_' . $tabCount . '"><input type="checkbox" id="tab_id_' . $tabCount . '" name="tab_id_' . $tabCount . '" value="' .$aTab->getId(). '" '.$checked.' /> ' .$aTab->getName().  '</label></li>';
                 $tabCount++;
             }
         }
@@ -129,7 +129,7 @@ if(!isset($studentUser->m_tabs)) {
             $url = curURL().'/'.$studentUser->getInstitution()->getURL().'/public/'.$studentUser->getID().'/'.$hash;
                 echo "<a href='$url'>$url</a></p>";
         ?>
-        <form action="/<?php echo $studentUser->getInstitution()->getURL(); ?>/settings.php#sharing" method="POST">
+        <form action="/<?php echo $studentUser->getInstitution()->getURL(); ?>/settings.php#sharing" method="post">
         <input type="hidden" name="resethash" value="true"/>
         <input type="submit" value="Reset URL" />
         </form>
@@ -139,25 +139,25 @@ if(!isset($studentUser->m_tabs)) {
         } //end check for displaying sharing options
 ?>
         <? print $studentTheme->BoxBegin('<h2 id="btnShowHide"><img src="/_images/si/icons/export.gif" width="35" height="35" alt="" /> Export</h2>'); ?>
-        <form method="post" action="../export.php"><ul style="list-style:none;"><p>Select the tabs that you would like to include in the export.</p>
-         </ul>
+        <p>Select the tabs that you would like to include in the export.</p>
+        <form method="post" action="../export.php">
 <?php
         $html = '<input type="hidden" name="tab_count" value="' . (count($studentUser->m_tabs)-1) . '" />';
         $html .= '<ul style="list-style:none;">';
         $tabCount = 0;
         foreach($studentUser->m_tabs as $aTab) {
             if($aTab->getId() != 1) {
-                $html .= '<li><label for="tabids"><input type="checkbox" id="tabids" name="tab_id' . $tabCount . '" value="' .$aTab->getId(). '" checked="checked" /> ' .$aTab->getName().  '</label></li>';
+                $html .= '<li><label for="tab_id' . $tabCount.'"><input type="checkbox" id="tab_id' . $tabCount . '" name="tab_id' . $tabCount . '" value="' .$aTab->getId(). '" checked="checked" /> ' .$aTab->getName().  '</label></li>';
                 $tabCount++;
             }
         }
         $html .= "</ul>";
         echo $html;
 ?>
-        <h3>Choose an export format</h3><div class="element"><div><input type="radio" class="radio" id="export_formate091" name="format" tabindex="1" value="html"  checked="checked">
+        <h3>Choose an export format</h3><div class="element"><div><input type="radio" class="radio" id="export_formate091" name="format" tabindex="1" value="html"  checked="checked"/>
 
         <label for="export_formate091">Standalone HTML Website</label><div class="radio-description">Creates a self-contained website with your portfolio data. You cannot import this again, but it's readable in a standard web browser.</div></div><div>
-        <input type="radio" class="radio" id="export_format442a" name="format" tabindex="1" value="leap"> <label for=\"export_format442a\">LEAP2A</label><div class=\"radio-description\">Gives you an export in the LEAP2A standard format. You can use this to import your data into other LEAP2A compliant systems, although the export is hard for humans to read.</div></div></div>
+        <input type="radio" class="radio" id="export_format442a" name="format" tabindex="1" value="leap"/> <label for="export_format442a">LEAP2A</label><div class="radio-description">Gives you an export in the LEAP2A standard format. You can use this to import your data into other LEAP2A compliant systems, although the export is hard for humans to read.</div></div></div>
         <input type="hidden" name="user_id" value="<?php echo $studentUser->getId();?>" />
         <input type="submit" value="Generate new export file" />
         </form>
