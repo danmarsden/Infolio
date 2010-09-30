@@ -131,8 +131,7 @@ if (!empty($pageviewid)) {
          // Picture choose
 		 if( isset($pictureChooseHtml) ) { print $studentTheme->SolidBox($pictureChooseHtml); }
 
-		 // Message
-		 print $studentTheme->BoxIf($tab->HtmlMessage($page, $studentTheme), $tab->HtmlMessageTitle());
+
 		 if($tab->getNumPages() > 0) { ?>
 		<div class="rb">
 			<div class="bt"><div></div></div>
@@ -141,7 +140,9 @@ if (!empty($pageviewid)) {
 			<div class="bb"><div></div></div>
 		</div>
 <?php
-        }
+        } else {
+             echo "<h2>This tab is empty</h2>";
+         }
     } //end printing of tab stuff
 
 ?>
