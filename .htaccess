@@ -47,4 +47,6 @@ RewriteRule ^([\w\-\_]+)/$ index.php?institution=$1 [NC,QSA,L]
 RewriteRule ^([\w\-\_]+)/swfupload.php swfupload.php?institution=$1 [NC,QSA,L]
 RewriteRule ^([\w\-\_]+)/public/([\w\-\_\'!]+)/([\w\-\_\'!]+)/([\w\-\_\'!]+) tab-view.php?institution=$1&user_id=$2&sharehash=$3&page=$4 [NC,QSA,L]
 RewriteRule ^([\w\-\_]+)/viewtab/([\w\-\_\'!]+)/([\w\-\_\'!]+)/([\w\-\_\'!]+) tab-view.php?institution=$1&user_id=$2&tab=$3&page=$4 [NC,QSA,L]
+RewriteRule ^([\w\-\_]+)/viewtab/([\w\-\_\'!]+)/([\w\-\_\'!]+) tab-view.php?institution=$1&user_id=$2&tab=$3 [NC,QSA,L]
+
 RewriteRule ^([\w\-\_]+)$ /$1/ [NC,QSA,L,R]

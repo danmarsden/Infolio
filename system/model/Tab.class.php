@@ -21,7 +21,8 @@ include_once('function/core.php');
  */
 class Tab extends DatabaseObject
 {
-	private $m_name;
+	public  $m_id;
+    private $m_name;
 	private $m_slug;
 	private $m_description;
 	private $m_enabled;
@@ -173,7 +174,8 @@ class Tab extends DatabaseObject
 			$tab->m_icon = Image::GetPlaceHolder();
 		}
 		
-		$tab->m_name = $hashArray['name'];
+		$tab->m_id = $hashArray['ID'];
+        $tab->m_name = $hashArray['name'];
 		$tab->m_slug = $hashArray['slug'];
 		$tab->m_enabled = $hashArray['enabled'];
 		$tab->setLinkFromName();
