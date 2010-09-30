@@ -50,12 +50,14 @@ function display_shared_tabs($page, $count, $tablimit) {
     if (empty($inshare)) {
         error('This Institution doesn\'t allow Tab Sharing');
     } elseif ($inshare == '1') {
-        $sql = "SELECT * FROM user WHERE share ='1' LIMIT ".$page.','.$count;
+        $sql = "SELECT * FROM user WHERE share ='1'";
         //catch explicitly set users.
     } elseif ($inshare == '2') {
         //catch null and 1 settings
-        $sql = "SELECT * FROM user WHERE share <>'0' LIMIT ".$page.','.$count;
+        $sql = "SELECT * FROM user WHERE share <>'0'";
     }
+    $sql .= "AND institution_id='".$studentUser->m_institution->getId()."' AND enabled='1' LIMIT ".$page.','.$count;
+
     $result = $db->query($sql);
     While($row = $db->fetchArray($result)) {
         $userarray[$row['ID']]->user = $row;
@@ -81,7 +83,7 @@ function display_shared_tabs($page, $count, $tablimit) {
         }
         echo "<td><img src='$imageurl' class='sharedusericon'/></td><td>".$usr->user['firstName']. ' '. $usr->user['lastName'].'</td><td><ul>';
         foreach ($usr->tabs as $tb) {
-            echo "<li><a href='/".$studentUser->m_institution->getUrl()."/viewtab/".$usr->user['ID'].'/'.$tb['ID']."/'>".$tb['name']."</a></li>";
+            echo "<li><a href='/".$studentUser->m_institution->getUrl()."/viewtab/".$usr->user['ID'].'/'.$tb['ID']."/' target='_blank'>".$tb['name']."</a></li>";
         }
         echo '</ul></tr>';
     }
