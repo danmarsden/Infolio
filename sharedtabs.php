@@ -21,7 +21,6 @@ include_once('sharedtabs.inc.php');
 <body class="<? print $studentTheme->getBodyClass(); ?>" id="home">
 <? include('_includes/header.inc.php'); ?>
 <div id="wrap-main">
-	<? include('_includes/header-profile.inc.php'); ?>
 	<div id="wrap-content">
 	<div id="wrap-content-inner">
 		<? print $page->HtmlTitle(); ?>

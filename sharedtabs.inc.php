@@ -41,19 +41,23 @@ $eventD->DispatchEvents();
 //function to display a list of users with shared tabs
 //allows pagination and limit of tabs to show.
 function display_shared_tabs($page, $count, $tablimit) {
-    //first get this users insitution share status
+    //first get this users institution share status
     global $studentUser, $db;
+    //TODO: this could be optimised and less SQL used to obtain data.
+
     $userarray = array();
     $inshare = $studentUser->m_institution->allowSharing();
     if (empty($inshare)) {
         error('This Institution doesn\'t allow Tab Sharing');
     } elseif ($inshare == '1') {
-        $sql = "SELECT * FROM user WHERE share ='1' LIMIT ".$page.','.$count;
+        $sql = "SELECT * FROM user WHERE share ='1'";
         //catch explicitly set users.
     } elseif ($inshare == '2') {
         //catch null and 1 settings
-        $sql = "SELECT * FROM user WHERE share <>'0' LIMIT ".$page.','.$count;
+        $sql = "SELECT * FROM user WHERE share <>'0'";
     }
+    $sql .= "AND institution_id='".$studentUser->m_institution->getId()."' AND enabled='1' LIMIT ".$page.','.$count;
+
     $result = $db->query($sql);
     While($row = $db->fetchArray($result)) {
         $userarray[$row['ID']]->user = $row;
@@ -64,13 +68,24 @@ function display_shared_tabs($page, $count, $tablimit) {
             $userarray[$row['ID']]->tabs[$row2['ID']] = $row2;
         }
     }
-    echo "<div>";
+
+    echo "<table class='shareduserstable'>";
     foreach ($userarray as $usr) {
-        echo $usr->user['firstName']. ' '. $usr->user['lastName'].' Tabs: ';
-        foreach ($usr->tabs as $tb) {
-            echo $tb['name']. " | ";
+        echo "<tr>";
+        if (empty($usr->user['profile_picture_id'])) {
+            $imageurl = '/_images/bo/icon/student.png';
+        } else {
+            $imagesql = "SELECT title, href, type FROM assets WHERE id = ".$usr->user['profile_picture_id'];
+            $imgresult = $db->query($imagesql);
+            if ($imgrow = $db->fetchArray($imgresult)) {
+                $imageurl = '/data/'.$studentUser->m_institution->getUrl()."-asset/".$imgrow['type']."/".$imgrow['href'];
+            }
         }
-        echo "<br/>";
+        echo "<td><img src='$imageurl' class='sharedusericon'/></td><td>".$usr->user['firstName']. ' '. $usr->user['lastName'].'</td><td><ul>';
+        foreach ($usr->tabs as $tb) {
+            echo "<li><a href='/".$studentUser->m_institution->getUrl()."/viewtab/".$usr->user['ID'].'/'.$tb['ID']."/' target='_blank'>".$tb['name']."</a></li>";
+        }
+        echo '</ul></tr>';
     }
-    echo "</div><br/><br/>";
+    echo "</table><br/><br/>";
 }
