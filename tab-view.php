@@ -49,7 +49,13 @@ While($row2 = $db->fetchArray($result2)) {
     if ($row2['ID']==$tabid) {
         $active = 'class="active"';
     }
-    $tabs[] = "<li $active><a title=\"View tab\" href='/".$tabUser->m_institution->getUrl()."/viewtab/".$userid.'/'.$row2['ID']."/'>".
+    if (empty($sharehash)) {
+        $taburl = "/".$tabUser->m_institution->getUrl()."/viewtab/".$userid.'/'.$row2['ID']."/";
+    } else {
+        $taburl = "/".$tabUser->m_institution->getUrl()."/public/".$userid.'/'.$sharehash.'/'.$row2['ID']."/";
+    }
+
+    $tabs[] = "<li $active><a title=\"View tab\" href='$taburl'>".
               '<img src="/images/size_tabicon/0/" width="55" height="55" alt="Tab 2"  title="Tab 2"  />'.
               $row2['name']."</a></li>";
     if ($row2['ID']==$tabid) {
