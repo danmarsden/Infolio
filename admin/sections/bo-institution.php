@@ -124,7 +124,8 @@ function showForm()
 						<td><input dojoType="dijit.form.ValidationTextBox" type="text" name="commentapi" id="commentapi" value="<? if(isset($institution))print $institution->getCommentApi(); ?>" </td>
 					</tr>
 				</table>
-			</form>	
+			</form>
+            <p>To enable comments you must set up an account at http://intensedebate.com/ (you can use the same API key for each institution or separate api keys to allow flexibility)</p>
 		</div>		
 	</div>
 	<?
