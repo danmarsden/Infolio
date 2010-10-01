@@ -41,10 +41,15 @@ function FileProgress(file, targetID) {
 		progressStatus.className = "progressBarStatus";
 		progressStatus.innerHTML = "&nbsp;";
 
+        var progressStatusText = document.createElement("p");
+		progressStatusText.className = "progressBarStatusText";
+		progressStatusText.innerHTML = "&nbsp;";
+
 		this.fileProgressElement.appendChild(progressCancel);
 		this.fileProgressElement.appendChild(progressText);
 		this.fileProgressElement.appendChild(progressStatus);
 		this.fileProgressElement.appendChild(progressBar);
+		this.fileProgressElement.appendChild(progressStatusText);
 
 		this.fileProgressWrapper.appendChild(this.fileProgressElement);
 
@@ -76,6 +81,9 @@ FileProgress.prototype.reset = function () {
 	this.fileProgressElement.childNodes[3].className = "progressBarInProgress";
 	this.fileProgressElement.childNodes[3].style.width = "0%";
 
+    this.fileProgressElement.childNodes[4].innerHTML = "&nbsp;";
+	this.fileProgressElement.childNodes[4].className = "progressBarStatusText";
+
 	this.appear();
 };
 
@@ -83,6 +91,7 @@ FileProgress.prototype.setProgress = function (percentage) {
 	this.fileProgressElement.className = "progressContainer green";
 	this.fileProgressElement.childNodes[3].className = "progressBarInProgress";
 	this.fileProgressElement.childNodes[3].style.width = percentage + "%";
+	this.fileProgressElement.childNodes[4].innerHTML = "<b>" + percentage + "%</b>";
 
 	this.appear();
 };
