@@ -124,7 +124,20 @@ if (!empty($pageviewid)) {
 
 		print $studentTheme->SolidBox('<h2 id="attachments">Attachments</h2>'.
               $pageview->HtmlAttachments());
-
+        //now display comments stuff if enabled.
+        $comment = $tabUser->m_institution->getComment();
+        $commentapi = $tabUser->m_institution->getCommentApi();
+        if ($comment == '1' && !empty($commentapi)) { //if comments enabled
+        ?>
+                <script>
+                var idcomments_acct = '<? print $commentapi; ?>';
+                var idcomments_post_id = '<? print $pageview->getId(); ?>';
+                var idcomments_post_url;
+                </script>
+                <span id="IDCommentsPostTitle" style="display:none"></span>
+                <script type='text/javascript' src='http://www.intensedebate.com/js/genericCommentWrapperV2.js'></script>
+<?php
+        }
     } elseif (!empty($tab)) {    //print tab stuff
 		 print $tab->HtmlTitle($page);
 
@@ -146,6 +159,7 @@ if (!empty($pageviewid)) {
     } //end printing of tab stuff
 
 ?>
+
 
 		<? include('_includes/footer.inc.php'); ?>
 	</div><!-- /#wrap-content-inner -->

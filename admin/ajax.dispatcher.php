@@ -287,6 +287,8 @@ function institutionOperations($operation, $adminUser, $requestData)
 			$newInstitution->setName($requestData['name']);
 			$newInstitution->setUrl($requestData['url']);
             $newInstitution->setSharing($requestData['share']);
+            $newInstitution->setComment($requestData['comment']);
+            $newInstitution->setCommentApi($requestData['commentapi']);
 			$newInstitution->CreateFolders();
 			$newInstitution->Save($adminUser);
 			print $newInstitution->getId();
@@ -295,6 +297,8 @@ function institutionOperations($operation, $adminUser, $requestData)
 			$institution = Institution::RetrieveById($requestData["id"]);
 			$institution->setName($requestData['name']);
             $institution->setSharing($requestData['share']);
+            $institution->setComment($requestData['comment']);
+            $institution->setCommentApi($requestData['commentapi']);
 			if(!$institution->setUrl($requestData['url'])){
 				print("Please try another URL");
 			}

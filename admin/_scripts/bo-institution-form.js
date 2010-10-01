@@ -36,6 +36,8 @@ function doSubmit()
 				url: dijit.byId("url").value,
 				id: dojo.byId("id").value,
                 share: dojo.byId("share").value,
+                comment: dojo.byId("comment").value,
+                commentapi: dojo.byId("commentapi").value,
 				operation: (dojo.byId("id").value!="") ? 'update' : 'insert'	//check if it's insertion or alteration
 			},
 			timeout:2000,

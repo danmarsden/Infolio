@@ -59,9 +59,23 @@ include_once('page.inc.php');
 			$page->HtmlAttachments() .
 			$uploader->HtmlUploadForm('fAttach', $page->PathWithQueryString()) .
 			'<img id="loaderImg" class="hideme" src="/_images/ajax-loader.gif" width="32" height="32" alt="Loading" style="float: right;" />'
-		);?>
+		);
+        //now display comments stuff if enabled.
+        $comment = $studentUser->m_institution->getComment();
+        $commentapi = $studentUser->m_institution->getCommentApi();
+        if ($comment == '1' && !empty($commentapi)) { //if comments enabled
+        ?>
+ <script>
+var idcomments_acct = '<? print $commentapi; ?>';
+var idcomments_post_id = '<? print $page->getId(); ?>';
+var idcomments_post_url;
+</script>
+<span id="IDCommentsPostTitle" style="display:none"></span>
+<script type='text/javascript' src='http://www.intensedebate.com/js/genericCommentWrapperV2.js'></script>
 
-		<? // Paging menu (pages in the parent tab)
+		<?
+        }
+        // Paging menu (pages in the parent tab)
 		print $studentTheme->HtmlMenu($pagingMenu, Theme::LEFT); ?>
 
 		<? include('_includes/footer.inc.php'); ?>

@@ -23,6 +23,8 @@ class Institution extends DatabaseObject
 	private $m_url;
 	private $m_urlOldValue;
     private $m_share;
+    private $m_comment;
+    private $m_commentApi;
 	
 	/* ** Accessors ** */
 
@@ -72,6 +74,23 @@ class Institution extends DatabaseObject
 	public function setSharing($value){
         $this->m_share = $value;
     }
+	public function getComment()
+	{
+		$this->checkFilled();
+		return $this->m_comment;
+	}
+	public function setComment($value){
+        $this->m_comment = $value;
+    }
+    public function getCommentApi()
+    {
+        $this->checkFilled();
+        return $this->m_commentApi;
+    }
+    public function setCommentApi($value){
+        $this->m_commentApi = $value;
+    }
+
 	public function getName()
 	{
 		$this->checkFilled();
@@ -243,6 +262,8 @@ class Institution extends DatabaseObject
 			'name' => $this->m_name,
 			'url' => $this->m_url,
             'share' => $this->m_share,
+            'comment' => $this->m_comment,
+            'commentapi' => $this->m_commentApi,
 			'created_by' => $this->m_createdBy->getId(),
 			'updated_by' => $this->m_updatedBy->getId(),
 			'created_time' => Date::formatForDatabase($this->m_createdTime),
@@ -300,7 +321,9 @@ class Institution extends DatabaseObject
 			'asset_id' => $this->m_assetId,
 			'name' => $this->m_name,
 			'url' => $this->m_url,
-            'share' => $this->m_share
+            'share' => $this->m_share,
+            'comment' => $this->m_comment,
+            'commentapi' => $this->m_commentApi
 		);
 		$db = Database::getInstance();
 		$db->perform('institution', $data, Database::UPDATE, "id={$this->m_id}");
@@ -317,6 +340,8 @@ class Institution extends DatabaseObject
 		$institution->m_url = $hashArray['url'];
 		$institution->m_filled = true;
         $institution->m_share = $hashArray['share'];
+        $institution->m_comment = $hashArray['comment'];
+        $institution->m_commentApi = $hashArray['commentapi'];
 		return $institution;
 	}
 }

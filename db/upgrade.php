@@ -64,4 +64,20 @@ function db_main_upgrade($oldversion) {
             set_config('version', '2010092900');
         }
     }
+    if ($result && $oldversion < 2010100100) {
+        //add new share column to institution table
+        $sql = "ALTER TABLE institution ADD column comment int";
+        $result = $db->query($sql);
+        if ($result) {
+            set_config('version', '2010100100');
+        }
+    }
+    if ($result && $oldversion < 2010100101) {
+        //add new share column to institution table
+        $sql = "ALTER TABLE institution ADD column commentapi varchar(100)";
+        $result = $db->query($sql);
+        if ($result) {
+            set_config('version', '2010100101');
+        }
+    }
 }

@@ -112,6 +112,17 @@ function showForm()
                             <option value="2" <? if(isset($institution) && $institution->allowSharing()=='2')print 'selected' ?>>Enabled - Users enabled by default</option>
                         </select></td>
                     </tr>
+                    <tr>
+                        <td class="captionLabel">Allow Comments</td>
+                        <td><select name="comment" id="comment">
+                            <option value="0">Disabled</option>
+                            <option value="1" <? if(isset($institution) && $institution->getComment()=='1')print 'selected' ?>>Enabled</option>
+                        </select></td>
+                    </tr>
+      				<tr>
+						<td class="captionLabel">Comment/Intensedebate API Key</td>
+						<td><input dojoType="dijit.form.ValidationTextBox" type="text" name="commentapi" id="commentapi" value="<? if(isset($institution))print $institution->getCommentApi(); ?>" </td>
+					</tr>
 				</table>
 			</form>	
 		</div>		
