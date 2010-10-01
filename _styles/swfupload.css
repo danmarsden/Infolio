@@ -131,7 +131,7 @@ a.progressCancel:hover {
 /* -- SWFUpload Object Styles ------------------------------- */
 .swfupload {
     vertical-align: top;
-    height:28px;
+    height:31px;
 }
 .fileUploadButton {
    float: left;
