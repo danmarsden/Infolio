@@ -8,6 +8,10 @@
 */
 
 include_once('sharedtabs.inc.php');
+$pagenum = (int)Safe::GetArrayIndexValueWithDefault($_GET, 'page', '');
+$count = 10;
+$tablimit = 10;
+
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -26,10 +30,7 @@ include_once('sharedtabs.inc.php');
 		<? print $page->HtmlTitle(); ?>
 		<? if(isset($pageMessage)) print "<p>{$pageMessage}</p>"; ?>
         <?php
-            $page = 0;
-            $count = 10;
-            $tablimit = 5;
-        print display_shared_tabs($page, $count, $tablimit);
+            print display_shared_tabs($pagenum, $count, $tablimit);
         ?>
 
 		<? include('_includes/footer.inc.php'); ?>

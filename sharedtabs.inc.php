@@ -44,20 +44,41 @@ function display_shared_tabs($page, $count, $tablimit) {
     //first get this users institution share status
     global $studentUser, $db;
     //TODO: this could be optimised and less SQL used to obtain data.
-
+    $page = (int)$page;
+    $count = (int)$count;
+    $tablimit = (int)$tablimit;
+    $where = '';
     $userarray = array();
+    $numusers = 0; //number of users in db with sharing enabled.
     $inshare = $studentUser->m_institution->allowSharing();
     if (empty($inshare)) {
         error('This Institution doesn\'t allow Tab Sharing');
     } elseif ($inshare == '1') {
-        $sql = "SELECT * FROM user WHERE share ='1'";
+        $where = "share ='1'";
         //catch explicitly set users.
     } elseif ($inshare == '2') {
         //catch null and 1 settings
-        $sql = "SELECT * FROM user WHERE share <>'0'";
+        $where = "share <>'0'";
     }
-    $sql .= "AND institution_id='".$studentUser->m_institution->getId()."' AND enabled='1' LIMIT ".$page.','.$count;
-
+    $where .= " AND institution_id='".$studentUser->m_institution->getId()."' AND enabled='1' ";
+    //get count of users
+    $sqlcount = "SELECT count(ID) FROM user WHERE ".$where;
+    $resultcount = $db->query($sqlcount);
+    if ($rowc =  $db->fetchArray($resultcount)) {
+        if ($rowc[0] === 0) {
+            error("no shared tabs found");
+        }
+        $numusers = (int)$rowc[0];
+        if ($count > $numusers) {
+            $page = 0; //reset page to display records if someone tries to change url.
+        }
+   }
+    $sqlpage = 0;
+    if (!empty($page)) {
+        $sqlpage = $page -1;
+    }
+    $where .= "LIMIT ".$sqlpage.','.$count;
+    $sql = "SELECT * FROM user WHERE ".$where;
     $result = $db->query($sql);
     While($row = $db->fetchArray($result)) {
         $userarray[$row['ID']]->user = $row;
@@ -87,5 +108,24 @@ function display_shared_tabs($page, $count, $tablimit) {
         }
         echo '</ul></tr>';
     }
-    echo "</table><br/><br/>";
+    echo "</table>";
+    if ($numusers > $count) {
+        //pagination required.
+        echo "<div class='pagination'>";
+        $i = 1;
+        $lastpage = ceil($numusers/$count);
+        while ($i <= $lastpage) {
+            if ($page==$i) {
+                echo $i;
+            } else {
+                echo "<a href='sharedtabs.php?page=".$i."'>".$i."</a>";
+            }
+            if ($i <> $lastpage) {
+                echo " | ";
+            }
+            $i++;
+        }
+        echo "</div>";
+    }
+    echo "<br/><br/>";
 }
