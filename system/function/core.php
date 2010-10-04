@@ -407,6 +407,110 @@ function require_admin() {
 }
 
 /**
+ * Import users
+ *
+ * @param array $format csv keys
+ * @param mixed $data The user data to be imported
+ * @param User $adminUser currently signed in admin user
+ *
+ **/
+function import_users($format, $data, $adminUser) {
+
+    $db = Database::getInstance();
+    $mandatoryfields = array(
+        'firstname',
+        'lastname',
+        'email',
+        'username'
+    );
+
+    $i = 0;
+    foreach ($data as $key => $record) {
+        $i++;
+
+        $userdata = array();
+        $missing = false;
+
+        // ensure required fields set per user
+        foreach ($mandatoryfields as $field) {
+            if (isset($record[$format[$field]]) && !empty($record[$format[$field]])) {
+                $userdata[$field] = $record[$format[$field]];
+            } else {
+                add_error_msg("Required field '$field' missing in CSV file for user at line $i.");
+                $missing = true;
+            }
+        }
+
+        // if missing mandatory fields carry on to the next user
+        if ($missing) {
+            continue;
+        }
+
+        // sort out remaining non-mandatory fields
+        $userdata['description'] = (!empty($record[$format['description']])) ? $record[$format['description']] : '';
+        $userdata['password']    = (!empty($record[$format['password']])) ? $record[$format['password']] : generatePassword();
+        $userdata['usertype']    = (!empty($record[$format['usertype']])) ? $record[$format['usertype']] : 'student';
+
+        if (!empty($record[$format['institution']])) {
+            //get institution id based on institution url above.
+            $sqlUser = "SELECT * from institution WHERE url='".$record[$format['institution']]."'";
+            $result = $db->query($sqlUser);
+            $row = mysql_fetch_assoc($result);
+            if (empty($row)) {
+                add_info_message("Couldn't find institution '".$record[$format['institution']]."' for user at $i - using default instead");
+                $institutionId = 1;
+            } else {
+                $institutionId = $row['id'];
+            }
+        } else {
+            $institutionId = 1;
+        }
+
+        //TODO: check for SQL injection here. (and in ajax.dispatcher where this is used)
+        try {
+             $permissionManager = PermissionManager::Create(
+                 $userdata['username'],
+                 $userdata['password'],
+                 $userdata['usertype'],
+                 $adminUser
+             );
+        }
+         catch(Exception $e) {
+             die($e->getMessage());
+         }
+
+        $institution = new Institution($institutionId);
+        $user = User::CreateNewUser(
+            $userdata['firstname'],
+            $userdata['lastname'],
+            $userdata['email'],
+            $userdata['description'],
+             $permissionManager,
+             $institution
+         );
+
+        if($user->isUnique()) {
+            $user->Save($adminUser);
+
+            // add for reporting to admin
+            $addedusers[$user->getId()]['fullname'] = $userdata['firstname'] . ' ' . $userdata['lastname'];
+            $addedusers[$user->getId()]['institution'] = $institution->getUrl();
+        } else {
+            add_error_msg("User '" . $userdata['firstname'] . " " . $userdata['lastname'] . "' already existed.");
+        }
+    }
+
+    // user reporting
+    if (isset($addedusers) && !empty($addedusers)) {
+        $addedstr = "Added users:<br />";
+        foreach ($addedusers as $key => $value) {
+            $addedstr .= "\t\t ".$value['fullname']." to ".$value['institution']."<br />";
+        }
+        add_info_msg($addedstr);
+    }
+}
+
+/**
  * Dump a given object's information in a PRE block.
  *
  * Mostly just used for debugging.
@@ -615,6 +719,7 @@ function render_messages() {
         foreach ($_SESSION['messages'] as $data) {
             $result .= '<div class="' . $data['type'] . '"><p>';
             $result .= $data['msg'] . '</p></div>';
+            error_log($data['msg']); // write to standard error log for good measure
         }
         $_SESSION['messages'] = array();
     }

@@ -36,3 +36,15 @@ div.error {
     padding: 0;
 }
 
+ul.fieldslist li {
+    float: left;
+    width: 25%;
+}
+
+table.bulk-user {
+    width: 50%;
+    float: left;
+    padding: 0.5em;
+    margin: 0.5em;
+    margin-top: 1em;
+}

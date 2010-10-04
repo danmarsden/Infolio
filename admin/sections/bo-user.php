@@ -13,6 +13,8 @@
  * @since      NA
  */
 
+require_once('system/function/core.php');
+
 //controller
 if($a=="edit" || $a=="add" || $a=="delete") {
 	showForm();
@@ -30,8 +32,9 @@ else {
 function showGrid()
 {
 	global $do, $adminUser, $jsFramework;
-	$jsFramework->jqueryTableSorter();
-	?>
+    $jsFramework->jqueryTableSorter();
+    print render_messages();
+?>
 	<script type="text/javascript" src="/admin/_scripts/bo-user-grid.js"></script>
 	<form action="." method="get">
 	<input type="hidden" name="do" value="<? print $do; ?>" />
@@ -133,7 +136,38 @@ function showGrid()
 			<option  value="40">40</option>
 		</select>
 	</div>
-	</form>
+    </form>
+
+    <!-- Bulk user import -->
+    <h2>Bulk User Import</h2>
+    <p>You may use this facility to upload new users via a CSV file.</p>
+    <p>The first row of your CSV file should specify the format of your CSV data. For example, it should look like this:</p>
+    <p style="color: #980000;">username,password,email,firstname,lastname,institution</p>
+    <p>This row must include the username, email, firstname and lastname fields.</p>
+    <p>Your CSV file may include any other profile fields as you require. The full list of fields is:</p>
+    <ul class="fieldslist">
+        <li>username</li>
+        <li>firstname</li>
+        <li>lastname</li>
+        <li>email</li>
+        <li>institution (shortname for URL)</li>
+        <li>description</li>
+        <li>usertype</li>
+        <li>password</li>
+    </ul>
+    <form id="bulk-user-import-form" enctype="multipart/form-data" action="/bulkupload.php" method="post">
+        <table class="bulk-user">
+            <tr>
+                <td><strong><label for="bulk-user-file">CSV File:</label></strong></td>
+                <td><input type="file" name="bulk-user-file" id="bulk-user-file" /></td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td><input type="submit" value="Upload users" name="upload" /></td>
+            </tr>
+        </table>
+        <input type="hidden" name="adminuser" value="<?php echo $adminUser->getId(); ?>" />
+    </form>
 <?
 }
 
