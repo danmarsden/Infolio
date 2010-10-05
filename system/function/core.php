@@ -434,7 +434,16 @@ function import_users($format, $data, $adminUser) {
         // ensure required fields set per user
         foreach ($mandatoryfields as $field) {
             if (isset($record[$format[$field]]) && !empty($record[$format[$field]])) {
-                $userdata[$field] = $record[$format[$field]];
+                if ($field === 'email') {
+                    if (validate_email($record[$format[$field]])) {
+                        $userdata[$field] = validate_email($record[$format[$field]]);
+                    } else {
+                        add_error_msg("Required field '$field' not a valid format in CSV file for user at line $i.");
+                        $missing = true;
+                    }
+                } else {
+                    $userdata[$field] = $record[$format[$field]];
+                }
             } else {
                 add_error_msg("Required field '$field' missing in CSV file for user at line $i.");
                 $missing = true;
@@ -508,6 +517,23 @@ function import_users($format, $data, $adminUser) {
         }
         add_info_msg($addedstr);
     }
+}
+
+/**
+ * Validate a users email address
+ *
+ * @param string $email
+ * @return boolean
+ */
+function validate_email($address) {
+
+    return (ereg('^[-!#$%&\'*+\\/0-9=?A-Z^_`a-z{|}~]+'.
+                 '(\.[-!#$%&\'*+\\/0-9=?A-Z^_`a-z{|}~]+)*'.
+                  '@'.
+                  '[-!#$%&\'*+\\/0-9=?A-Z^_`a-z{|}~]+\.'.
+                  '[-!#$%&\'*+\\./0-9=?A-Z^_`a-z{|}~]+$',
+                  $address));
+
 }
 
 /**
