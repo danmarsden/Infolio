@@ -160,7 +160,11 @@ class Database
 	{
 		// Check all data is safe for DB
 		foreach($data as $dataKey=>$dataItem) {
-			$data[$dataKey] = Safe::StringForDatabase($dataItem);
+            if (is_object($dataItem)) { //this shouldn't be cleaned or included in insert 
+                unset($data[$dataKey]);
+            } else {
+			    $data[$dataKey] = Safe::StringForDatabase($dataItem);
+            }
 		}
 		reset($data); //put array's internal pointer to the first element
 
