@@ -85,8 +85,13 @@ function display_shared_tabs($page, $count, $tablimit) {
         //now get tabs
         $sql2 = "SELECT * FROM tab WHERE enabled=1 AND share=1 AND user_id=".$row['ID'].' LIMIT '.$tablimit;
         $result2 = $db->query($sql2);
-        While($row2 = $db->fetchArray($result2)) {
-            $userarray[$row['ID']]->tabs[$row2['ID']] = $row2;
+        $numrows = mysql_num_rows($result2);
+        if (empty($numrows)) {
+            unset($userarray[$row['ID']]);
+        } else {
+            While($row2 = $db->fetchArray($result2)) {
+                $userarray[$row['ID']]->tabs[$row2['ID']] = $row2;
+            }
         }
     }
 
