@@ -466,7 +466,7 @@ function import_users($format, $data, $adminUser) {
             $result = $db->query($sqlUser);
             $row = mysql_fetch_assoc($result);
             if (empty($row)) {
-                add_info_message("Couldn't find institution '".$record[$format['institution']]."' for user at $i - using default instead");
+                add_info_msg("Couldn't find institution '".$record[$format['institution']]."' for user at $i - using default instead");
                 $institutionId = 1;
             } else {
                 $institutionId = $row['id'];
