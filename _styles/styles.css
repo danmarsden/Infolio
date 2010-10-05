@@ -36,15 +36,48 @@ div.error {
     padding: 0;
 }
 
-ul.fieldslist li {
-    float: left;
-    width: 25%;
-}
-
-table.bulk-user {
+/* Bulk user upload styles */
+table#bulkuser {
     width: 50%;
     float: left;
     padding: 0.5em;
     margin: 0.5em;
     margin-top: 1em;
+}
+ul.fieldslist {
+    padding-bottom: 0.5em;
+}
+
+ul.fieldslist li {
+    float: left;
+    width: 25%;
+}
+
+div#bulkuserdesc {
+    font-size: 1em;
+    line-height: 1.5em;
+    margin-left: 0.5em;
+}
+
+.clearer {
+  clear: both;
+  margin: 0;
+  padding: 0;
+  height: 15px;
+  border: none;
+  background: transparent;
+  display: block;
+}
+
+span.required {
+    padding: 0px;
+    margin: 0px;
+    color: #980000;
+}
+
+#bulkuserdesc code {
+    background:none repeat scroll 0 0 #F0F0F6;
+    border:1px dashed #DDDDDD;
+    color: #3D3D3D;
+    padding:3px;
 }

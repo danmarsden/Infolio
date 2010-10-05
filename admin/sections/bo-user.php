@@ -139,26 +139,31 @@ function showGrid()
     </form>
 
     <!-- Bulk user import -->
-    <h2>Bulk User Import</h2>
+    <h1>Bulk User Import</h1>
+    <div id="bulkuserdesc">
     <p>You may use this facility to upload new users via a CSV file.</p>
-    <p>The first row of your CSV file should specify the format of your CSV data. For example, it should look like this:</p>
-    <p style="color: #980000;">username,password,email,firstname,lastname,institution</p>
-    <p>This row must include the username, email, firstname and lastname fields.</p>
+    <p>The first row of your CSV file should specify the format of your CSV data.  This row must include the <span class="required">required</span> fields username, email, firstname and lastname fields.</p>
+    <h2>Required field names:</h2>
+    <code>username, email, firstname, lastname</code>
+    <h2>Optional field names:</h2>
+    <code>institution, description, usertype, password</code>
     <p>Your CSV file may include any other profile fields as you require. The full list of fields is:</p>
-    <ul class="fieldslist">
-        <li>username</li>
-        <li>firstname</li>
-        <li>lastname</li>
-        <li>email</li>
-        <li>institution (shortname for URL)</li>
-        <li>description</li>
-        <li>usertype</li>
-        <li>password</li>
-    </ul>
+    <div class="extrainfo"><strong>Extra notes:</strong>
+        <ul>
+            <li>The <code>institution</code> field/value should be the 'Shortname for URL' of the existing Institution.<br />If no value is set then the main institution will be used.</li>
+            <li>If the <code>usertype</code> field/value is not used then the default role of 'student' will be used.</li>
+            <li>If the <code>password</code> field/value is not used then a password will be generated for the user.</li>
+        </ul>
+    </div>
+    <h2>Example:</h2>
+        <code>username,firstname,lastname,email,institution,password,description,usertype</code>
+        <br />
+        <code>user1,User,One,user1@email.com,rix,user1password,User One is a student.,student</code>
+    </div>
     <form id="bulk-user-import-form" enctype="multipart/form-data" action="/bulkupload.php" method="post">
-        <table class="bulk-user">
+        <table id="bulkuser">
             <tr>
-                <td><strong><label for="bulk-user-file">CSV File:</label></strong></td>
+                <td style="float: right;"><strong><label for="bulk-user-file">CSV File:</label></strong></td>
                 <td><input type="file" name="bulk-user-file" id="bulk-user-file" /></td>
             </tr>
             <tr>
