@@ -208,6 +208,9 @@ function uploadComplete(file) {
     if (this.getStats().files_queued === 0) {
         document.getElementById(this.customSettings.cancelButtonId).disabled = true;
     }
+    // redirect back to the collection.php page so that the
+    // user can see their newly added file
+    window.location.href = 'collection.php';
 }
 
 // This event comes from the Queue Plugin
