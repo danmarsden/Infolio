@@ -339,9 +339,15 @@ class Institution extends DatabaseObject
 		$institution->m_name = $hashArray['name'];
 		$institution->m_url = $hashArray['url'];
 		$institution->m_filled = true;
-        $institution->m_share = $hashArray['share'];
-        $institution->m_comment = $hashArray['comment'];
-        $institution->m_commentApi = $hashArray['commentapi'];
+        if (isset($hashArray['share'])) { //tidy up - don't set if field doesn't exist yet
+            $institution->m_share = $hashArray['share'];
+        }
+        if (isset($hashArray['comment'])) {
+            $institution->m_comment = $hashArray['comment'];
+        }
+        if (isset($hashArray['commentapi'])) {
+            $institution->m_commentApi = $hashArray['commentapi'];
+        }
 		return $institution;
 	}
 }
