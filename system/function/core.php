@@ -436,7 +436,7 @@ function import_users($format, $data, $adminUser) {
             if (isset($record[$format[$field]]) && !empty($record[$format[$field]])) {
                 if ($field === 'email') {
                     if (validate_email($record[$format[$field]])) {
-                        $userdata[$field] = validate_email($record[$format[$field]]);
+                        $userdata[$field] = $record[$format[$field]];
                     } else {
                         add_error_msg("Required field '$field' not a valid format in CSV file for user at line $i.");
                         $missing = true;
