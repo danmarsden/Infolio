@@ -40,7 +40,7 @@ $tabUser  = User::RetrieveById($userid);
 $studentTheme = $tabUser->getTheme();
 
 //check this user can share tabs:
-$usershare =$studentUser->GetShare();
+$usershare =$tabUser->GetShare();
 if (empty($usershare)) {
     error("this user doesn't allow Sharing");
 }
@@ -146,13 +146,16 @@ if (!empty($pageviewid)) {
 <?php
         }
     } elseif (!empty($tab)) {    //print tab stuff
+
 		 print $tab->HtmlTitle($page);
 
          // Picture choose
 		 if( isset($pictureChooseHtml) ) { print $studentTheme->SolidBox($pictureChooseHtml); }
 
-
-		 if($tab->getNumPages() > 0) { ?>
+         if($tab->getId() == Tab::ABOUT_ME_TAB_ID) {
+             $studentDetails = $tabUser->HtmlUserDetails($page, $studentTheme, false, true);
+             print $studentTheme->Box($studentDetails, "<h2>{$tabUser->getFirstName()} {$tabUser->getLastName()}</h2>");
+         } elseif($tab->getNumPages() > 0) { ?>
 		<div class="rb">
 			<div class="bt"><div></div></div>
 			<? print $tab->HtmlPageListing($tabUser); ?>

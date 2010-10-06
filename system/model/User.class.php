@@ -1042,26 +1042,30 @@ class User extends DatabaseObject
 	 * Produces HTML with details about this user to display on profile page
 	 * @return String HTML of user's main details
 	 */
-	public function HtmlUserDetails(SimplePage $page, Theme $theme, $edit=false)
+	public function HtmlUserDetails(SimplePage $page, Theme $theme, $edit=false, $readonly=false)
 	{
 		$imgHtml = $this->m_profilePicture->Html(Image::SIZE_BOX);
 
-		$changeImgPath = $page->PathWithQueryString(array('a'=>HomePageEventDispatcher::ACTION_CHANGE_USER_IMAGE));
-		$changeImgLink = Link::CreateIconLink('Change picture', $changeImgPath, $theme->Icon('change-picture'), array('title' => 'Change picture'));
-
-		
-
-		$html =	'<div class="box-image">' . $imgHtml .
+		if (!$readonly) {
+            $changeImgPath = $page->PathWithQueryString(array('a'=>HomePageEventDispatcher::ACTION_CHANGE_USER_IMAGE));
+		    $changeImgLink = Link::CreateIconLink('Change picture', $changeImgPath, $theme->Icon('change-picture'), array('title' => 'Change picture'));
+		    $html =	'<div class="box-image">' . $imgHtml .
 						"<p class=\"box-admin\">{$changeImgLink->Html()}</p>" .
 						'</div>' .
 						'<div class="box-text">';
+        } else {
+            $html =	'<div class="box-image">' . $imgHtml .
+                        '</div>' .
+                        '<div class="box-text">';
+        }
 		if(!$edit) {
 			$html .= str_replace("\n", '<br />', $this->getDescription());
+            if (!$readonly) {
+			    $changeTextPath = $page->PathWithQueryString(array('a'=>HomePageEventDispatcher::ACTION_CHANGE_USER_DESCRIPTION));
+			    $changeTextLink = Link::CreateIconLink('Change description', $changeTextPath, $theme->Icon('edit'), array('title' => 'Change description'));
 
-			$changeTextPath = $page->PathWithQueryString(array('a'=>HomePageEventDispatcher::ACTION_CHANGE_USER_DESCRIPTION));
-			$changeTextLink = Link::CreateIconLink('Change description', $changeTextPath, $theme->Icon('edit'), array('title' => 'Change description'));
-
-			$html .= "<p>&nbsp;</p><p>{$changeTextLink->Html()}</p>";
+			    $html .= "<p>&nbsp;</p><p>{$changeTextLink->Html()}</p>";
+            }
 		}
 		else {
 			$html .= '<form action=".">';
