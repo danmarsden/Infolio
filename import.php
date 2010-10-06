@@ -84,6 +84,49 @@ if ($_POST['type'] =='site') {
         add_info_msg('no valid institution.xml to load institutions from');
     }
 
+    if (file_exists($uploaddir.'/group.xml')) {
+        $options =
+            LIBXML_COMPACT |    // Reported to greatly speed XML parsing
+            LIBXML_NONET        // Disable network access - security check
+            ;
+        if (!$xml = simplexml_load_file($uploaddir.'/group.xml', 'SimpleXMLElement', $options)) {
+            error("invalid group xml", $returnurl);
+        }
+        foreach ($xml->group as $group) {
+            $insurl = (string)$group->institution[0];
+            $sql = "SELECT g.*, i.url FROM groups g, institution i WHERE url='$insurl' AND i.id=g.institution_id AND g.title='".(string)$group->title[0]."'";
+            $result = $db->query($sql);
+            $row = mysql_fetch_assoc($result);
+            if (empty($row)) {
+                //need to create this group
+                //first get id for this institution
+                $sql = "SELECT id from institution WHERE url='$insurl'";
+                $result2 = $db->query($sql);
+                $row2 = mysql_fetch_assoc($result2);
+                if (empty($row2)) {
+                    add_error_msg("The group {$group->title[0]} could not be created");
+                } else {
+                    $data = array(
+                              'title' => (string)$group->title[0],
+                              'description' => (string)$group->description[0],
+                              'institution_id' => $row2['id'],
+                              'created_by' => $adminUser->getId(),
+                              'updated_by' => $adminUser->getId(),
+                              'created_time' => Date::formatForDatabase(time()),
+                              'updated_time' => Date::formatForDatabase(time())
+                          );
+                    // Write to DB
+                    $db = Database::getInstance();
+                    $db->perform('groups', $data);
+                }
+            } else {
+                add_error_msg("The group {$group->title[0]} already exists");
+            }
+        }
+    } else {
+        add_info_msg('no valid group.xml to load groups from');
+    }
+
     //TODO: in future handle any other site level files here - like site groups or site data.
     
     $objects = scandir($uploaddir);

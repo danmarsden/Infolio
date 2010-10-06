@@ -134,6 +134,15 @@ if (!empty($files)) {
         $zip->addFile($filename, "institution.xml");
     }
 
+    $groupxml = export_groups();
+    if (!empty($groupxml)) {
+        $filename = "data/export/group.xml";
+        $fp = fopen($filename,"w");
+        fwrite($fp,$groupxml);
+        fclose($fp);
+        $zip->addFile($filename, "group.xml");
+    }
+
     foreach ($files as $file) {
         //hacky way to rename zip files in this new zip
         $newname = str_replace('data/export/', '', $file);

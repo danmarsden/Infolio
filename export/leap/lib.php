@@ -30,6 +30,7 @@ function export_portfolio($studentUser, $tabIds, $returnfile=false, $password=fa
         $tabId = $aTab->getId();
         $aTab->setViewer($studentUser);
         if($tabId != 1 && (!isset($tabIds) || in_array($tabId, $tabIds))) {
+            $entry = new stdClass();
             $entry->title = $aTab->getName();
             $entry->contenttype = 'html';
             $entry->id = "portfolio:collection".$aTab->getId();
@@ -61,10 +62,12 @@ function export_portfolio($studentUser, $tabIds, $returnfile=false, $password=fa
             $srcPath = $asset->getSystemFolder() . $asset->getHref();
             $dstPath = "$exportdir/files/{$asset->getType()}_{$asset->getHref()}";
             copy($srcPath, $dstPath);
+            $res = new stdClass();
             $res->contenttype = $asset->getType();
             $res->url = $asset->getType().'_'.$asset->getHref();
             $res->id  = $asset->getId();
             $resource = leap_resource($res, $studentUser);
+            $entry = new stdClass();
             $entry->content = '';
             $entry->title = $asset->getTitle();
             $entry->id = "portfolio:artefact".$asset->getId();
@@ -123,6 +126,29 @@ function export_institutions() {
     }
     $output .='
 </institutions>';
+    return $output;
+}
+
+function export_groups() {
+    $sql = "SELECT g.*, i.url FROM groups g, institution i WHERE g.institution_id=i.id";
+    $db = Database::getInstance();
+    $result = $db->query($sql);
+    if (empty($result)) {
+        return '';
+    }
+    $output = '<?xml version="1.0" encoding="UTF-8"?>
+<groups>
+';
+    while ($row = mysql_fetch_assoc($result)) {
+        $output .= '<group id="'.$row['id'].'">
+    <title>'.$row['title'].'</title>
+    <description>'.$row['description'].'</description>
+    <institution>'.$row['url'].'</institution>';
+        $output .= '
+ </group>';
+    }
+    $output .='
+</groups>';
     return $output;
 }
 
