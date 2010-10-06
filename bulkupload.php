@@ -24,7 +24,12 @@ $allowedkeys = array(
 $adminUser = User::RetrieveById($_POST['adminuser']);
 $returnurl = $adminUser->getInstitution()->getUrl() . '/' . DIR_WS_ADMIN . '?do=' . SECTION_USER;
 
-    if (!empty($_FILES['bulk-user-file']['tmp_name']) && file_exists($_FILES['bulk-user-file']['tmp_name'])) {
+if ($_FILES['bulk-user-file']['error'] != UPLOAD_ERR_OK) {
+    file_upload_error_message($_FILES['bulk-user-file']);
+    header('Location: ' . $returnurl);
+    exit;
+} else {
+    if (file_exists($_FILES['bulk-user-file']['tmp_name'])) {
         if (($handle = fopen($_FILES['bulk-user-file']['tmp_name'], 'r')) !== false) {
             $data = array();
             $format = array();
@@ -72,10 +77,11 @@ $returnurl = $adminUser->getInstitution()->getUrl() . '/' . DIR_WS_ADMIN . '?do=
             fclose($handle);
         }
     } else {
-        add_error_msg('could not open file: '.$file);
+        add_error_msg('could not open file: '.$_FILES['bulk-user-upload']['name']);
         header('Location: '. $returnurl);
         exit;
     }
+
     $formatkeylookup = array_flip($format);
 
     if ($i == 1) {
@@ -91,11 +97,11 @@ $returnurl = $adminUser->getInstitution()->getUrl() . '/' . DIR_WS_ADMIN . '?do=
         header('Location: '. $returnurl);
         exit;
     }
+    // Everything good: import the users
+    import_users($formatkeylookup, $data, $adminUser);
 
-// Everything good: import the users
-import_users($formatkeylookup, $data, $adminUser);
-
-// redirect back to correct page at end of script
-header('Location: '. $returnurl);
-exit;
+    // redirect back to correct page at end of script
+    header('Location: '. $returnurl);
+    exit;
+}
 ?>

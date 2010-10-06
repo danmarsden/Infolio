@@ -432,10 +432,10 @@ function import_users($format, $data, $adminUser) {
         $missing = false;
 
         // ensure required fields set per user
-        foreach ($mandatoryfields as $field) {
+        foreach ($mandatoryfields as $key => $field) {
             if (isset($record[$format[$field]]) && !empty($record[$format[$field]])) {
                 if ($field === 'email') {
-                    if (validate_email($record[$format[$field]])) {
+                    if (validate_email($record[$format[$field]]) == 1) {
                         $userdata[$field] = $record[$format[$field]];
                     } else {
                         add_error_msg("Required field '$field' not a valid format in CSV file for user at line $i.");
@@ -456,11 +456,11 @@ function import_users($format, $data, $adminUser) {
         }
 
         // sort out remaining non-mandatory fields
-        $userdata['description'] = (!empty($record[$format['description']])) ? $record[$format['description']] : '';
-        $userdata['password']    = (!empty($record[$format['password']])) ? $record[$format['password']] : generatePassword();
-        $userdata['usertype']    = (!empty($record[$format['usertype']])) ? $record[$format['usertype']] : 'student';
+        $userdata['description'] = (isset($format['description']) && !empty($record[$format['description']])) ? $record[$format['description']] : '';
+        $userdata['password']    = (isset($format['password']) && !empty($record[$format['password']])) ? $record[$format['password']] : generatePassword();
+        $userdata['usertype']    = (isset($format['usertype']) && !empty($record[$format['usertype']])) ? $record[$format['usertype']] : 'student';
 
-        if (!empty($record[$format['institution']])) {
+        if (isset($format['institution']) && !empty($record[$format['institution']])) {
             //get institution id based on institution url above.
             $sqlUser = "SELECT * from institution WHERE url='".$record[$format['institution']]."'";
             $result = $db->query($sqlUser);
@@ -527,12 +527,10 @@ function import_users($format, $data, $adminUser) {
  */
 function validate_email($address) {
 
-    return (ereg('^[-!#$%&\'*+\\/0-9=?A-Z^_`a-z{|}~]+'.
-                 '(\.[-!#$%&\'*+\\/0-9=?A-Z^_`a-z{|}~]+)*'.
-                  '@'.
-                  '[-!#$%&\'*+\\/0-9=?A-Z^_`a-z{|}~]+\.'.
-                  '[-!#$%&\'*+\\./0-9=?A-Z^_`a-z{|}~]+$',
-                  $address));
+    $pattern = '/^([a-z0-9])(([-a-z0-9._])*([a-z0-9]))*\@([a-z0-9])' .
+                '(([a-z0-9-])*([a-z0-9]))+' . '(\.([a-z0-9])([-a-z0-9_-])?([a-z0-9])+)+$/i';
+
+    return (preg_match($pattern, $address));
 
 }
 
@@ -745,7 +743,6 @@ function render_messages() {
         foreach ($_SESSION['messages'] as $data) {
             $result .= '<div class="' . $data['type'] . '"><p>';
             $result .= $data['msg'] . '</p></div>';
-            error_log($data['msg']); // write to standard error log for good measure
         }
         $_SESSION['messages'] = array();
     }
@@ -809,3 +806,36 @@ function curURL() {
 function newsharehash() {
     return md5(mt_rand());
 }
+
+function file_upload_error_message($tmpfile) {
+    switch($tmpfile['error']) {
+        // Error cases
+        case UPLOAD_ERR_INI_SIZE:
+            add_error_msg("Can't upload file: Too big [{$tempfile['size']}] (system limit)");
+            break;
+        case UPLOAD_ERR_FORM_SIZE:
+            add_error_msg("Can't upload file: Too big [{$tempFile['size']}] (form limit)");
+            break;
+        case UPLOAD_ERR_PARTIAL:
+            add_error_msg("Didn't finish uploading file. Try again.");
+            break;
+        case UPLOAD_ERR_NO_FILE:
+            add_error_msg("Missing upload file. Try again.");
+            break;
+        case UPLOAD_ERR_NO_TMP_DIR:
+            add_error_msg("Can't upload file. No tmp directory.");
+            Logger::Write('Upload error: No tmp directory', Logger::TYPE_ERROR, $user);
+            break;
+        case UPLOAD_ERR_CANT_WRITE:
+            add_error_msg("Can't write upload file.");
+            Logger::Write('Upload error: Can not write file', Logger::TYPE_ERROR, $user);
+            break;
+        case UPLOAD_ERR_EXTENSION:
+            add_error_msg("Can't upload this type of file");
+            break;
+        default:
+            add_error_msg("Unknown upload error.");
+            break;
+    }
+}
+
