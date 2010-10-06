@@ -328,7 +328,7 @@ function switchPasswordOperations($operation, $adminUser, $requestData)
 	// All switchPassword ops on a user
 	$userId = Safe::GetArrayIndexValueWithDefault($requestData, 'user_id', 0);
 	if(isValidNumberInRange($userId, 1)) {
-		$user = User::RetrieveById($userId, $adminUser);
+		$user = User::RetrieveById($userId);
 	}
 	else {
 		die('Bad user id');
@@ -455,7 +455,7 @@ function userOperations($operation, $adminUser)
 			break;
 
 		case 'update':
-			$user = User::RetrieveById($_GET["userid"], $adminUser);
+			$user = User::RetrieveById($_GET["userid"]);
 			$user->setFirstName($_GET['firstName']);
 			$user->setLastName($_GET['lastName']);
 			$user->setEmail($_GET['email']);
@@ -477,7 +477,7 @@ function userOperations($operation, $adminUser)
 			break;
 
 		case 'delete':
-			$user = User::RetrieveById($_GET['id'], $adminUser);
+			$user = User::RetrieveById($_GET['id']);
 			$userId = $user->getId();
 			$user->Delete($adminUser);
 			print $userId;

@@ -401,10 +401,9 @@ class User extends DatabaseObject
 	/**
 	 * Gets a User object with the specified ID
 	 * @param integer $id A user id
-	 * @param User $authUser A user with enough rights to get this user's data
 	 * @return User The requested user, or null if none exist with these details
 	 */
-	public static function RetrieveById($id, $authUser)
+	public static function RetrieveById($id)
 	{
 		//TODO: Check $authUser can do this
 		return self::_getUserById($id);

@@ -36,7 +36,7 @@ $result = $db->query($sql);
 if (!$row = $db->fetchArray($result)) {
     error("no user found");
 }
-$tabUser  = User::RetrieveById($userid, array());
+$tabUser  = User::RetrieveById($userid);
 $studentTheme = $tabUser->getTheme();
 
 //get all of this students shared tabs:

@@ -59,7 +59,7 @@ if (!empty($_POST['siteexport'])) {
     $db = Database::getInstance();
     $result = $db->query($sql);
     while ($row = mysql_fetch_assoc($result)) {
-        $usr = User::RetrieveById($row['id'], $adminUser);
+        $usr = User::RetrieveById($row['id']);
         if (!empty($usr)) {
             $users[] = $usr;
             $tabs = $usr->getTabs();
@@ -71,7 +71,7 @@ if (!empty($_POST['siteexport'])) {
     }
     
 } elseif (isset($_POST['user_id']) && is_numeric($_POST['user_id'])) {
-    $users[0] = User::RetrieveById($_POST['user_id'], $adminUser);
+    $users[0] = User::RetrieveById($_POST['user_id']);
 } else {
     die("No user with that id (or no user_id provided)");
 }

@@ -27,7 +27,7 @@ if($studentUserId == null) {
 	die("Missing input.");
 }
 
-$studentUser = User::RetrieveById($studentUserId, $adminUser);
+$studentUser = User::RetrieveById($studentUserId);
 if($studentUser == null) {
 	die ("Bad user");
 }
