@@ -37,7 +37,7 @@ $studentUser = null;
 if(isset($_POST['user_id']) && is_numeric($_POST['user_id']) )
 {
 	$userId = $_POST['user_id'];
-	$studentUser = User::RetrieveById($userId, $adminUser);
+	$studentUser = User::RetrieveById($userId);
 }
 
 if(!isset($studentUser)) {

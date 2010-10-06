@@ -180,7 +180,7 @@ function showForm(){
 	global $do, $adminUser, $userType;
 	$share = 0;
     if(isset($_GET['id'])) {
-		$user = User::RetrieveById($_GET['id'], $adminUser);
+		$user = User::RetrieveById($_GET['id']);
         $share = $user->getShare();
     }
 
