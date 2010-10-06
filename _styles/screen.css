@@ -274,6 +274,20 @@ font-size:1.2em;
 	padding: 60px 80px 0 0;
 	margin-right:10px;
 	}
+    #manage-tab-weights li.manage-tab {
+	font-size: 1.3em;
+	}
+    #manage-tab-weights ul li {
+	font-size: 0.8em;
+	}
+    #manage-tab-weights ul li a img {
+	margin-top:7px;	
+	margin-bottom:6px;
+	}
+    #manage-tab-weights .inline-list li {
+	margin-right:20px;
+	margin-left:0;
+	}
 
 	/* 5a Data Tables */
 	table {width:500px;}
@@ -417,6 +431,10 @@ div#loader {
 	float:left;
 	width: 42%;
  } 
+.box-head h2 img {
+	margin-right: 5px;
+	margin-bottom: -8px;
+}
  
  /* set the lower-left corner image */ 
 .box-content {
