@@ -165,7 +165,7 @@ font-size:1.2em;
       float:left;
       display:block;
       background:url(/_images/si/red/right_both.gif) no-repeat right top;
-      padding:0px 15px 4px 6px;
+      padding:0px 15px 6px 6px;
       text-decoration:none;
 	  color:#000;
       }
@@ -180,7 +180,7 @@ font-size:1.2em;
       }
     #home li.active a {
       background-position:100% -150px;
-      padding-bottom:5px;
+      padding-bottom:6px;
       color:#fff;
       }
  
@@ -1078,10 +1078,10 @@ body.orange.inv .rb .box-head,
 body.orange.inv .rb .box-head h2 {background-image:url(/_images/si/orange_inv/box-red-bk.gif)}
 
 /* Theme: Red invert */
-body.red.inv #wrap-content {background: #c30;}
-body.red.inv p#site-name {color: #c30;}
+body.red.inv #wrap-content {background: #CC3300;}
+body.red.inv p#site-name {color: #FC681E;}
 body.red.inv .box-admin,
-body.red.inv #upload-image-frm{border-color :#c30;}
+body.red.inv #upload-image-frm{border-color :#FC681E;}
 body.red.inv #nav-tabs li {background-image:url(/_images/si/red_inv/left_both.gif);}
 body.red.inv #nav-tabs li a {background-image:url(/_images/si/red_inv/right_both.gif)}
 body.red.inv .box,
@@ -1091,8 +1091,27 @@ body.red.inv .box-head h2 {background-image:url(/_images/si/red_inv/box.png)}
 body.red.inv .yb,
 body.red.inv #save-btn {background:#333}
 body.red.inv .box-head h2,
-body.red.inv .box-head a{color:#fff}
+body.red.inv .box-head a{color:#000}
 body.red.inv #save-btn,
 body.red.inv .yb form p {color:#fff}
 body.red.inv .bt {background-image:url(/_images/si/red_inv/yellow-box.gif)}
-body.red.inv .rb .bt {background:url(/_images/si/red_inv/red-box.gif) 100% 0 no-repeat;}
+body.red.inv .bt div {background-image:url(/_images/si/red_inv/yellow-box.gif)}
+body.red.inv .bb {background-image:url(/_images/si/red_inv/yellow-box.gif)}
+body.red.inv .bb div {background-image:url(/_images/si/red_inv/yellow-box.gif)}
+body.red.inv .gb {background-image:url(/_images/si/red_inv/grey-box.gif)}
+body.red.inv .yb .gb{background-image:url(/_images/si/red_inv/grey-box-yellow.gif)}
+body.red.inv .rb .gb{background-image:url(/_images/si/red_inv/grey-box-red-bk.png)}
+body.red.inv .grey-bi  {background-image:url(/_images/si/red_inv/grey-box.gif)}
+body.red.inv .yb .grey-bi {background-image:url(/_images/si/red_inv/grey-box-yellow.gif)}
+body.red.inv .rb .grey-bi {background-image:url(/_images/si/red_inv/grey-box-red-bk.png)}
+body.red.inv .rb {background:#D64703}
+body.red.inv .rb .bt {background-image:url(/_images/si/red_inv/red-box.gif)}
+body.red.inv .rb .bt div {background-image:url(/_images/si/red_inv/red-box.gif)}
+body.red.inv .rb .bb {background-image:url(/_images/si/red_inv/red-box.gif)}
+body.red.inv .rb .bb div {background-image:url(/_images/si/red_inv/red-box.gif)}
+body.red.inv .rb .box,
+body.red.inv .rb .box-content,
+body.red.inv .rb .box-head,
+body.red.inv .rb .box-head h2 {background-image:url(/_images/si/red_inv/box-red-bk.gif)}
+body.red.inv #collection-scroller a.prev { background:url(/_images/si/red_inv/left-arrow.gif); }
+body.red.inv #collection-scroller a.next { background:url(/_images/si/red_inv/right-arrow.gif); }
