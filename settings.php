@@ -53,28 +53,36 @@ if(!isset($studentUser->m_tabs)) {
 <?php
         $allowsharing = $studentUser->getShare();
         if (!empty($allowsharing)) {
+            $sharedtabs = array();
+            $sql = "SELECT * from tab_shared WHERE userid=".$studentUser->getId();
+            $query = $db->query($sql);
+            while ($row = $db->fetchArray($query)) {
+                $sharedtabs[$row['tabid']] = $row['tabid'];
+            }
             //check for submitted changes to tabs.
             if (!empty($_POST['sharedtabs'])) {
                 $tabcount = (int)$_POST['tab_count'];
                 $i = 0;
                 $selectedtabs = array();
                 While($i < $tabcount) {
+                    echo $i;
                     if (isset($_POST["tab_id_".$i])) {
                         $selectedtabs[] = (int)$_POST["tab_id_".$i];
-                        $tab = Tab::GetTabById((int)$_POST["tab_id_".$i]);
-                        $tab->setShare('1');
-                        $tab->save($studentUser);
+                        if (!isset($sharedtabs[(int)$_POST["tab_id_".$i]])) {
+                            //need to save this tab.
+                            $sql = "INSERT INTO tab_shared VALUES (".$studentUser->getID().", ".(int)$_POST["tab_id_".$i].") ";
+                            $query = $db->query($sql);
+                        }
                     }
                     $i++;
                 }
+
                 //now get list of all selected tabs for this user and reset any that aren't shared anymore
-                $sql = "SELECT ID FROM tab WHERE user_id='".$studentUser->getID()."' AND share=1";
-                $query = $db->query($sql);
-                while ($row = $db->fetchArray($query)) {
-                    if (!in_array($row['ID'], $selectedtabs)) {
-                        $tab = Tab::GetTabById($row['ID']);
-                        $tab->setShare('0');
-                        $tab->save($studentUser);
+                foreach ($sharedtabs as $sharedtab) {
+                    if (!in_array($sharedtab, $selectedtabs)) {
+                        //need to remove this tab.
+                        $sql = "DELETE FROM tab_shared WHERE userid =".$studentUser->getID()." AND tabid=".$sharedtab;
+                        $query = $db->query($sql);
                     }
                 }
                 $studentUser->fetchAndSetTabs(); //used to reset user->m_tabs;
@@ -86,28 +94,26 @@ if(!isset($studentUser->m_tabs)) {
         <p>Select the tabs that you would like to share with other users on this site.</p>
        <form action="/<?php echo $studentUser->getInstitution()->getURL(); ?>/settings.php#sharing" method="post">
  <?php
-
-        $html = '<input type="hidden" name="tab_count" value="' . (count($studentUser->m_tabs)-1) . '" />';
+        $html = '<input type="hidden" name="tab_count" value="' . (count($studentUser->m_tabs)) . '" />';
         $html .= '<ul style="list-style:none;">';
         $tabCount = 0;
         foreach($studentUser->m_tabs as $aTab) {
-            //check if this tab is a template - if so ignore it.
-            $templateid = 0;
-            $template =$aTab->getTemplate();
-            if (!empty($template)) {
-                $templateid = $template->getTitle();
-                if (!empty($templateid)) {
-                    continue;
-                }
-            }
-            if($aTab->getId() != 1) {
+                $tabid = $aTab->getID();
+
                 $checked = '';
-                if ($aTab->getShare() =='1') {
-                    $checked = 'checked="checked"';
+                if (!empty($_POST['sharedtabs'])) {
+                    //use $selectedtabs
+                    if (in_array($tabid, $selectedtabs)) {
+                        $checked = 'checked="checked"';
+                    }
+                } else {
+                    if (isset($sharedtabs[$tabid])) {
+                        $checked = 'checked="checked"';
+                    }
                 }
                 $html .= '<li><label for="tab_id_' . $tabCount . '"><input type="checkbox" id="tab_id_' . $tabCount . '" name="tab_id_' . $tabCount . '" value="' .$aTab->getId(). '" '.$checked.' /> ' .$aTab->getName().  '</label></li>';
                 $tabCount++;
-            }
+
         }
         $html .= "</ul>";
         echo $html;

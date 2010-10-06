@@ -16,5 +16,5 @@
  * @license
  */
 
-$version = 2010100101;  // YYYYMMDD   = date of the last version bump
+$version = 2010100102;  // YYYYMMDD   = date of the last version bump
                         //         XX = daily increments

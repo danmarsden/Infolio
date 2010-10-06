@@ -38,14 +38,6 @@ function db_main_upgrade($oldversion) {
             set_config('version', '2010092702');
         }
     }
-    if ($result && $oldversion < 2010092703) {
-        //add new share column to tab table.
-        $sql = "ALTER TABLE tab ADD column share int";
-        $db->query($sql);
-        if ($result) {
-            set_config('version', '2010092703');
-        }
-    }
     if ($result && $oldversion < 2010092704) {
         //add new sharehash column to user table.
         $sql = "ALTER TABLE user ADD column sharehash varchar(40)";
@@ -78,6 +70,14 @@ function db_main_upgrade($oldversion) {
         $result = $db->query($sql);
         if ($result) {
             set_config('version', '2010100101');
+        }
+    }
+    if ($result && $oldversion < 2010100102) {
+        //add new share column to institution table
+        $sql = "CREATE TABLE tab_shared (userid int(11), tabid int(11), PRIMARY KEY (userid, tabid))";
+        $result = $db->query($sql);
+        if ($result) {
+            set_config('version', '2010100102');
         }
     }
 }

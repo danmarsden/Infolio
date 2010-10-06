@@ -35,7 +35,6 @@ class Tab extends DatabaseObject
 	private $m_owner;
 	private $m_viewer;
 	private $m_weight;
-    private $m_share;
 	
 	private $m_pageSortSql;
 	
@@ -186,7 +185,6 @@ class Tab extends DatabaseObject
 		$tab->m_user = new User($hashArray['user_id']);
 		$tab->m_owner = new User($hashArray['owner']);
 		$tab->m_weight = $hashArray['weight'];
-        $tab->m_share = $hashArray['share'];
 		
 		$tab->m_filled = true;
 		return $tab;
@@ -217,17 +215,6 @@ class Tab extends DatabaseObject
 	{
 		$this->checkFilled();
 		return $this->m_name;
-	}
-
-	public function setShare($value)
-	{
-		$this->checkfilled();
-		$this->m_share = $value;
-	}
-	public function getShare()
-	{
-		$this->checkFilled();
-		return $this->m_share;
 	}
 
 	public function getenabled()
@@ -366,8 +353,7 @@ class Tab extends DatabaseObject
 			'updated_by' => $this->m_updatedBy->getId(),
 			'created_time' => Date::formatForDatabase($this->m_createdTime),
 			'created_by' => $this->m_createdBy->getId(),
-			'weight' => $this->m_weight,
-            'share' => $this->m_share
+			'weight' => $this->m_weight
 		);
 		$db = Database::getInstance();
 		$db->perform('tab', $data, Database::INSERT);
@@ -393,8 +379,7 @@ class Tab extends DatabaseObject
 			
 			'template_id' => isset($this->m_template)? $this->m_template->getId() : 'null',
             'updated_time' => Date::formatForDatabase($this->m_updatedTime),
-			'updated_by' => $this->m_updatedBy,
-            'share' => $this->m_share
+			'updated_by' => $this->m_updatedBy
 		);
 
 		// Add tab icon if there is one

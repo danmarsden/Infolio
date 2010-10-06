@@ -54,17 +54,18 @@ function display_shared_tabs($page, $count, $tablimit) {
     if (empty($inshare)) {
         error('This Institution doesn\'t allow Tab Sharing');
     } elseif ($inshare == '1') {
-        $where = "share ='1'";
+        $where = "u.share ='1'";
         //catch explicitly set users.
     } elseif ($inshare == '2') {
         //catch null and 1 settings
-        $where = "share <>'0'";
+        $where = "u.share <>'0'";
     }
-    $where .= " AND institution_id='".$studentUser->m_institution->getId()."' AND enabled='1' ";
+    $where .= " AND u.institution_id='".$studentUser->m_institution->getId()."' AND u.enabled='1' ";
     //get count of users
-    $sqlcount = "SELECT count(ID) FROM user WHERE ".$where;
+    $sqlcount = "SELECT count(DISTINCT u.ID) FROM user u, tab t, tab_shared ts WHERE ".$where;
+    $sqlcount .= " AND t.ID=ts.tabid AND t.enabled=1 AND ts.userid=u.id";
     $resultcount = $db->query($sqlcount);
-    if ($rowc =  $db->fetchArray($resultcount)) {
+    if ($rowc =  mysql_fetch_array($resultcount,MYSQL_NUM)) {
         if ($rowc[0] === 0) {
             error("no shared tabs found");
         }
@@ -77,14 +78,17 @@ function display_shared_tabs($page, $count, $tablimit) {
     if (!empty($page)) {
         $sqlpage = $page -1;
     }
-    $where .= "LIMIT ".$sqlpage.','.$count;
-    $sql = "SELECT * FROM user WHERE ".$where;
+    //TODO: need to optimise the following SQL - should be able to do this with one sql call instead of one per user.
+
+    $sql = "SELECT DISTINCT u.ID, u.* FROM user u, tab t, tab_shared ts WHERE ".$where;
+    $sql .= " AND t.ID=ts.tabid AND t.enabled=1 AND ts.userid=u.id";
+    $sql .= " LIMIT ".$sqlpage.','.$count;
     $result = $db->query($sql);
     While($row = $db->fetchArray($result)) {
         $userarray[$row['ID']] = new stdClass();
         $userarray[$row['ID']]->user = $row;
         //now get tabs
-        $sql2 = "SELECT * FROM tab WHERE enabled=1 AND share=1 AND user_id=".$row['ID'].' LIMIT '.$tablimit;
+        $sql2 = "SELECT * FROM tab t, tab_shared ts WHERE t.ID=ts.tabid AND t.enabled=1 AND ts.userid=".$row['ID'].' LIMIT '.$tablimit;
         $result2 = $db->query($sql2);
         $numrows = mysql_num_rows($result2);
         if (empty($numrows)) {

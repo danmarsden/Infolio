@@ -39,9 +39,16 @@ if (!$row = $db->fetchArray($result)) {
 $tabUser  = User::RetrieveById($userid);
 $studentTheme = $tabUser->getTheme();
 
+//check this user can share tabs:
+$usershare =$studentUser->GetShare();
+if (empty($usershare)) {
+    error("this user doesn't allow Sharing");
+}
+
+
 //get all of this students shared tabs:
 $tabs = array();
-$sql2 = "SELECT * FROM tab WHERE enabled=1 AND share=1 AND user_id=".$userid;
+$sql2 = "SELECT t.* FROM tab t, tab_shared ts WHERE t.ID=ts.tabid AND t.enabled=1 AND ts.userid=".$userid;
 $result2 = $db->query($sql2);
 $tabidvalid = false;
 While($row2 = $db->fetchArray($result2)) {
