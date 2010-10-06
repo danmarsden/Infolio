@@ -222,7 +222,20 @@ class Group extends DatabaseObject
 			return $group;
 		}
 	}
-	
+
+    //get group using title and institution id
+	public static function RetrieveGroupByTitle($title, $institution)
+	{
+		$db = Database::getInstance();
+		$sql = "SELECT * FROM groups WHERE title='{$title}' AND institution_id={$institution}";
+        echo $sql;
+		$result = $db->query($sql);
+		if ($row = $db->fetchArray($result)) {
+			$group = self::createFromHashArray($row);
+			return $group;
+		}
+	}
+
 	/**
 	 * 
 	 * @return 

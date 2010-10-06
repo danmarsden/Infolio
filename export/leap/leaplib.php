@@ -60,10 +60,21 @@ if ($password) {
                 $output .= $row['x'].":".$row['y'].",";
             }
         }
-        $output .= "</infolio:gfxpass>";
+        $output .= "</infolio:gfxpass>
+";
     }
 }
-$output .= "    </author>";
+//now add any group info
+    $output .= "<infolio:groups>";
+    $sql = "SELECT g.title FROM groups g, group_members gm WHERE g.id=gm.group_id AND user_id='".$user->getId()."'";
+    $result = $db->query($sql);
+    While ($row = mysql_fetch_assoc($result)) {
+        $output .= (string)$row['title'].",";
+    }
+    $output .= "</infolio:groups>
+";
+
+    $output .= "    </author>";
     return $output;
 }
 function leap_entry($entry) {

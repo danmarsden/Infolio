@@ -13,6 +13,7 @@ set_time_limit(360);
 
 include_once("system/initialise.php");
 include_once("model/User.class.php");
+include_once("model/Group.class.php");
 include_once("function/shared.php");
 include_once("function/core.php");
 
@@ -255,6 +256,7 @@ function leap_restore_user($dir, $user = '') {
 
      if($newUser->isUnique()) {
          $newUser->Save($adminUser);
+
          //now update theme:
          $sqlUser = "UPDATE user SET colour='$theme' WHERE ID={$newUser->getId()}";
          $result = $db->query($sqlUser);
@@ -368,6 +370,19 @@ function leap_restore_user($dir, $user = '') {
          if (isset($savedfiles["portfolio:artefact".$profilepic])) {
              $newUser->setProfilePictureId($savedfiles["portfolio:artefact".$profilepic]);
              $newUser->Save($adminUser);
+         }
+
+         //update groups
+         $groups = $xml->author->xpath('infolio:groups');
+         $groups = isset($groups[0]) ? (string)$groups[0] : '';
+         $groups = explode(',', $groups);
+
+         foreach ($groups as $group) {
+             if (!empty($group)) {
+                 $groupobj = Group::RetrieveGroupByTitle($group, $institutionId);
+                 $groupobj->addMember($newUser);
+                 $groupobj->save($adminUser);
+             }
          }
 
      } else {
