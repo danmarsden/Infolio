@@ -144,6 +144,16 @@ function export_groups() {
     <title>'.$row['title'].'</title>
     <description>'.$row['description'].'</description>
     <institution>'.$row['url'].'</institution>';
+    //now get group users
+    $sql = "SELECT u.email FROM group_members g, user u WHERE g.user_id=u.ID AND g.group_id=".$row['id'];
+    $resultmembers = $db->query($sql);
+    if (!empty($resultmembers)) {
+        $output .= "<members>";
+        While ($rowm = mysql_fetch_assoc($resultmembers)) {
+            $output .= $rowm['email'].',';
+        }
+        $output .= "</members>";
+    }
         $output .= '
  </group>';
     }
