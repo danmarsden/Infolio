@@ -263,7 +263,13 @@ class Page extends SimplePage
 	{
 		return $this->m_tab->getTemplate() == null || isset($this->m_user);
 	}
-
+    public function templateControlled() {
+        if (empty($this->m_user)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 	public function isSameEntity(Page $p)
 	{
 		return ( isset($this->m_id) && $p->m_id == $this->m_id  );

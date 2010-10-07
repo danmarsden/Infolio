@@ -56,9 +56,14 @@ function export_portfolio($studentUser, $tabIds, $returnfile=false, $password=fa
                 $entry->contenttype = 'html';
                 $entry->content = leap_blocks($aPage, $studentUser);
                 $entry->leaptype = 'selection';
-               $leapxml .= leap_entry($entry);
-               $leapxml .= export_pages($aPage, $studentUser);
-               $leapxml .= leap_entryfooter();
+                $leapxml .= leap_entry($entry);
+                $leapxml .= export_pages($aPage, $studentUser);
+                $istemplate = $aPage->templateControlled();
+                if ($istemplate) {
+                    $leapxml .= "<infolio:template>true</infolio:template>";
+                }
+
+                $leapxml .= leap_entryfooter();
             }
         }
     }
