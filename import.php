@@ -161,10 +161,10 @@ if ($_POST['type'] =='site') {
                     continue;
                 } else {
                     $institution = Institution::RetrieveById($row2['id']);
-                    $template = Template::CreateNew((string)$template->title[0], (string)$template->description[0], $institution);
-                    $template->setLocked((string)$template->locked[0]);
+                    $templateobj = Template::CreateNew((string)$template->title[0], (string)$template->description[0], $institution);
+                    $templateobj->setLocked((string)$template->locked[0]);
 
-                    $template->Save($adminUser);
+                    $templateobj->Save($adminUser);
                     //now get new ID for this template
                     $sql = "SELECT t.id, i.url FROM templates t, institution i WHERE i.url='$insurl' AND i.id=t.institution_id AND t.title='".
                              (string)$template->title[0]."' AND t.description='".(string)$template->description[0]."'";
@@ -176,7 +176,7 @@ if ($_POST['type'] =='site') {
                     foreach ($template->xpath('//page') as $p) {
                         $page = new Page();
 				        $page->setTitle((string)$p->title[0]);
-			            $page->setTab( new Tab($template->getTab()->getId()));
+			            $page->setTab( new Tab($templateobj->getTab()->getId()));
 
         				$page->Save($adminUser);
                     }
@@ -197,7 +197,7 @@ if ($_POST['type'] =='site') {
                     $template->AddViewersFromString($groupstring);
 
                     //can't process users as they may not have been generated yet - save for later.
-                    $templateviewerusers[$template->getId()]  = explode(',',(string)$template->viewergroups[0]);
+                    $templateviewerusers[$templateobj->getTab()->getId()]  = explode(',',(string)$template->viewergroups[0]);
                 }
             } else {
                 $templateids[(int)$template->attributes()->id[0]] = $row['id'];
@@ -250,6 +250,24 @@ if ($_POST['type'] =='site') {
                 }
             }
         }
+        if (!empty($templateviewerusers)) {
+            foreach ($templateviewerusers as $tid => $users) {
+                $tab = Tab::GetTabById($tid);
+                $template = $tab->getTemplate();
+                $userstring = '';
+                foreach ($users as $u) {
+                    if (!empty($u)) {
+                        if (!empty($userstring)) {
+                            $userstring .= ",";
+                        }
+                        $user = User::RetrieveByEmail($member, $template->getInstitution()->getId());
+                        $userstring .= $user->getID();
+                    }
+                    $template->AddViewersFromString($userstring);
+                }
+            }
+        }
+
     } else {
         add_info_msg('no valid user files available in import zip');
     }
@@ -357,6 +375,8 @@ function leap_restore_user($dir, $user = '', $templateids = array()) {
          $sqlUser = "UPDATE user SET colour='$theme' WHERE ID={$newUser->getId()}";
          $result = $db->query($sqlUser);
 
+         //TODO: assign this user to the right Templates if set.
+
          $tabs = array();
          $views = array();
          $artefacts = array();
@@ -404,10 +424,17 @@ function leap_restore_user($dir, $user = '', $templateids = array()) {
          }
 
          foreach ($tabs as $tabxml) {
-             //TODO: check if this is a template first
-             $tab = Tab::CreateNewTab((string)$tabxml->title[0], $newUser);
-             $tab->setWeight();
-             $tab->Save($newUser);
+             //check if this is a tempate tab first.
+             $tem = $tabxml->xpath('infolio:template');
+             if (isset($tem[0]) && isset($templateids[(int)$tem[0]])) {
+                 //this is a template tab
+                 $tabs = Tab::getTabsByTemplateId($templateids[(int)$tem[0]]);
+                 $tab = $tabs[0]; //grab the first tab in the array returned
+             } else {
+                 $tab = Tab::CreateNewTab((string)$tabxml->title[0], $newUser);
+                 $tab->setWeight();
+                 $tab->Save($newUser);                 
+             }
              // create pages attached to this tab
              foreach ($tabxml->link as $link) {
                  $viewid = (string)$link->attributes()->href;

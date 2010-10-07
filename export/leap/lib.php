@@ -37,8 +37,14 @@ function export_portfolio($studentUser, $tabIds, $returnfile=false, $password=fa
             $entry->leaptype = 'selection';
             $leapxml .= leap_entry($entry);
             $tabPages = $aTab->getPages();
+            $templatetab = $aTab->getTemplate();
+            $templatetabid = $templatetab->getId();
             foreach($tabPages as $aPage) {
                 $leapxml .= "<link rel=\"has_part\" href=\"portfolio:view".$aPage->getId()."\"/>";
+                if (!empty($templatetabid)) {
+                    $leapxml .= "<infolio:template>".$templatetabid."</infolio:template>";
+                }
+
             }
             $leapxml .= leap_entryfooter();
 
@@ -163,7 +169,7 @@ function export_groups() {
 }
 
 function export_templates() {
-    $sql = "SELECT t.*, i.url FROM templates t, institution i WHERE t.institution_id=i.id AND enabled=1";
+    $sql = "SELECT t.*, i.url FROM templates t, institution i WHERE t.institution_id=i.id AND t.enabled=1";
     $db = Database::getInstance();
     $result = $db->query($sql);
     if (empty($result)) {
