@@ -60,7 +60,7 @@ function export_portfolio($studentUser, $tabIds, $returnfile=false, $password=fa
                 $leapxml .= export_pages($aPage, $studentUser);
                 $istemplate = $aPage->templateControlled();
                 if ($istemplate) {
-                    $leapxml .= "<infolio:template>true</infolio:template>";
+                    $leapxml .= "<infolio:templatepage>true</infolio:templatepage>";
                 }
 
                 $leapxml .= leap_entryfooter();
