@@ -228,7 +228,6 @@ class Group extends DatabaseObject
 	{
 		$db = Database::getInstance();
 		$sql = "SELECT * FROM groups WHERE title='{$title}' AND institution_id={$institution}";
-        echo $sql;
 		$result = $db->query($sql);
 		if ($row = $db->fetchArray($result)) {
 			$group = self::createFromHashArray($row);

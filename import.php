@@ -21,6 +21,9 @@ $uploaddir = DIR_FS_ROOT.'data/import';
 
 // Check user is logged in before letting them do stuff (except logging in)
 $adminUser = require_admin();
+$templateids = array();
+$groupmembers = array();
+$templateviewerusers = array();
 $returnurl = $adminUser->getInstitution()->getUrl() . '/' . DIR_WS_ADMIN . '?do=' . SECTION_LEAPIMPORT;
 if (empty($_FILES['leapimport'])) {
     error("please select a LEAP export file to submit", $returnurl);
@@ -95,22 +98,25 @@ if ($_POST['type'] =='site') {
         }
         foreach ($xml->group as $group) {
             $insurl = (string)$group->institution[0];
+            //get Institution id
+            //first get id for this institution
+            $sql = "SELECT id from institution WHERE url='$insurl'";
+            $result2 = $db->query($sql);
+            $row2 = mysql_fetch_assoc($result2);
+            $insid = $row2['id'];
+            if (empty($insid)) {
+                add_error_msg("The group {$group->title[0]} could not be created as the institution wasn't found");
+                continue;
+            }
+
             $sql = "SELECT g.*, i.url FROM groups g, institution i WHERE url='$insurl' AND i.id=g.institution_id AND g.title='".(string)$group->title[0]."'";
             $result = $db->query($sql);
             $row = mysql_fetch_assoc($result);
             if (empty($row)) {
-                //need to create this group
-                //first get id for this institution
-                $sql = "SELECT id from institution WHERE url='$insurl'";
-                $result2 = $db->query($sql);
-                $row2 = mysql_fetch_assoc($result2);
-                if (empty($row2)) {
-                    add_error_msg("The group {$group->title[0]} could not be created");
-                } else {
                     $data = array(
                               'title' => (string)$group->title[0],
                               'description' => (string)$group->description[0],
-                              'institution_id' => $row2['id'],
+                              'institution_id' => $insid,
                               'created_by' => $adminUser->getId(),
                               'updated_by' => $adminUser->getId(),
                               'created_time' => Date::formatForDatabase(time()),
@@ -119,16 +125,89 @@ if ($_POST['type'] =='site') {
                     // Write to DB
                     $db = Database::getInstance();
                     $db->perform('groups', $data);
-                }
+
             } else {
                 add_error_msg("The group {$group->title[0]} already exists");
             }
+            //save member list for this group for later use:
+            $groupmembers[$insid][(string)$group->title[0]] = (string)$group->members[0];
         }
     } else {
         add_info_msg('no valid group.xml to load groups from');
     }
 
-    //TODO: in future handle any other site level files here - like site groups or site data.
+    if (file_exists($uploaddir.'/template.xml')) {
+        $options =
+            LIBXML_COMPACT |    // Reported to greatly speed XML parsing
+            LIBXML_NONET        // Disable network access - security check
+            ;
+        if (!$xml = simplexml_load_file($uploaddir.'/template.xml', 'SimpleXMLElement', $options)) {
+            error("invalid group xml", $returnurl);
+        }
+        foreach ($xml->template as $template) {
+            $insurl = (string)$template->institution[0];
+            $sql = "SELECT t.*, i.url FROM templates t, institution i WHERE i.url='$insurl' AND i.id=t.institution_id AND t.title='".
+                    (string)$template->title[0]."' AND t.description='".(string)$template->description[0]."'";
+            $result = $db->query($sql);
+            $row = mysql_fetch_assoc($result);
+            if (empty($row)) {
+                //need to create this template
+                //first get id for this institution
+                $sql = "SELECT id from institution WHERE url='$insurl'";
+                $result2 = $db->query($sql);
+                $row2 = mysql_fetch_assoc($result2);
+                if (empty($row2)) {
+                    add_error_msg("The template {$template->title[0]} could not be created");
+                    continue;
+                } else {
+                    $institution = Institution::RetrieveById($row2['id']);
+                    $template = Template::CreateNew((string)$template->title[0], (string)$template->description[0], $institution);
+                    $template->setLocked((string)$template->locked[0]);
+
+                    $template->Save($adminUser);
+                    //now get new ID for this template
+                    $sql = "SELECT t.id, i.url FROM templates t, institution i WHERE i.url='$insurl' AND i.id=t.institution_id AND t.title='".
+                             (string)$template->title[0]."' AND t.description='".(string)$template->description[0]."'";
+                    $result3 = $db->query($sql);
+                    if ($rowtm = mysql_fetch_assoc($result3)) {
+                        $templateids[(int)$template->attributes()->id[0]] = $rowtm['id'];
+                    }
+                    //now process pages within this template
+                    foreach ($template->xpath('//page') as $p) {
+                        $page = new Page();
+				        $page->setTitle((string)$p->title[0]);
+			            $page->setTab( new Tab($template->getTab()->getId()));
+
+        				$page->Save($adminUser);
+                    }
+                    //now process template viewers
+                    //process groups that should be added as viewers to this template
+                    $viewergroups = explode(',',(string)$template->viewergroups[0]);
+                    $groupstring = '';
+                    foreach ($viewergroups as $vg) {
+                        if (!empty($vg)) { //sanity check
+                            echo $vg;
+                            $group = Group::RetrieveGroupByTitle($vg, $institution->getId());
+                            if (!empty($groupstring)) {
+                                $groupstring .= ',';
+                            }
+                            $groupstring .= 'g'.$group->getId();
+                        }
+                    }
+                    $template->AddViewersFromString($groupstring);
+
+                    //can't process users as they may not have been generated yet - save for later.
+                    $templateviewerusers[$template->getId()]  = explode(',',(string)$template->viewergroups[0]);
+                }
+            } else {
+                $templateids[(int)$template->attributes()->id[0]] = $row['id'];
+                add_error_msg("The template {$template->title[0]} already exists");
+            }
+
+        }
+    } else {
+        add_info_msg('no valid template.xml to load groups from');
+    }
     
     $objects = scandir($uploaddir);
     if (!empty($objects)) {
@@ -147,12 +226,29 @@ if ($_POST['type'] =='site') {
                     //delete original zip
                     unlink($uploaddir."/".$object);
                     //now trigger import of this folder
-                    leap_restore_user($newdir);
+                    leap_restore_user($newdir, '', $templateids);
                     
                     //Delete directory as no longer needed.
                     delete_dir_recursive($newdir);
                 }
             } 
+        }
+        //now update group members if needed
+        if (!empty($groupmembers)) {
+            foreach ($groupmembers as $insid => $groups) {
+                $institution = Institution::RetrieveById($insid);
+                foreach ($groups as $g => $members) {
+                    $group = Group::RetrieveGroupByTitle($g, $institution->getId());
+                    $members = explode(',', $members);
+                    foreach ($members as $member) {
+                        if (!empty($member)) {
+                            $user = User::RetrieveByEmail($member, $institution);
+                            $group->addMember($user);
+                        }
+                    }
+                    $group->save($adminUser);
+                }
+            }
         }
     } else {
         add_info_msg('no valid user files available in import zip');
@@ -175,7 +271,7 @@ if ($_POST['type'] =='site') {
 delete_dir_recursive($uploaddir);
 
 //function to restore an individual user leap export
-function leap_restore_user($dir, $user = '') {
+function leap_restore_user($dir, $user = '', $templateids = array()) {
     global $adminUser;
     $db = Database::getInstance();
     //check if valid Leap export dir
@@ -308,6 +404,7 @@ function leap_restore_user($dir, $user = '') {
          }
 
          foreach ($tabs as $tabxml) {
+             //TODO: check if this is a template first
              $tab = Tab::CreateNewTab((string)$tabxml->title[0], $newUser);
              $tab->setWeight();
              $tab->Save($newUser);
@@ -318,6 +415,7 @@ function leap_restore_user($dir, $user = '') {
                  $viewxml = $views[$viewid]->xpath('infolio:view');
                  $title = $views[$viewid]->title;
                  //create page now.
+                 //TODO: check if this is a template page
                  $page = new Page();
                  $page->setUser($newUser);
                  $page->setTab(new Tab($tab->getId()));

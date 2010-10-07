@@ -409,6 +409,18 @@ class User extends DatabaseObject
 		return self::_getUserById($id);
 	}
 	
+    /**
+     * Gets a User object with the specified ID
+     * @param integer $id A user id
+     * @return User The requested user, or null if none exist with these details
+     */
+    public static function RetrieveByEmail($email, $institution)
+    {
+        //TODO: Check $authUser can do this
+        return self::_getUserByEmail($email, $institution);
+    }
+
+
 	/**
 	 * Gets a User object for a logged in user
 	 * @param string $session The session user data
@@ -746,7 +758,18 @@ class User extends DatabaseObject
 			return $user;
 		}
 	}
-	
+
+	private static function _getUserByEmail($email, $institution)
+	{
+		$db = Database::getInstance();
+		$sql = "SELECT * from user WHERE email='{$email}' AND enabled=1 AND institution_id=".$institution->getId();
+        $result = $db->query($sql);
+		if( $row = $db->fetchArray($result, MYSQL_ASSOC) ) {
+			$user = self::createFromHashArray($row);
+			return $user;
+		}
+	}
+
 	/* ** Useful static function ** */
 	
 	/**
