@@ -168,6 +168,29 @@ function export_templates() {
     <description>'.$row['description'].'</description>
     <institution>'.$row['url'].'</institution>
     <locked>'.$row['locked'].'</locked>';
+        //now get group viewers assigned to this template
+        $sql = "SELECT t.*, g.title FROM template_viewers t, groups g WHERE t.group_id= g.id AND t.template_id=".$row['id'];
+        $resultviewers = $db->query($sql);
+        if (!empty($resultviewers)) {
+            $output .= "<viewergroups>";
+            While ($rowgroup = mysql_fetch_assoc($resultviewers)) {
+                $output .= $rowgroup['title'].',';    
+            }
+            $output .= "</viewergroups>";
+
+        }
+        //now get user viewers assigned to this template.
+        $sql = "SELECT u.email FROM template_viewers t, user u WHERE t.user_id= u.ID AND t.template_id=".$row['id'];
+        $resultviewers = $db->query($sql);
+        if (!empty($resultviewers)) {
+            $output .= "<viewerusers>";
+            While ($rowgroup = mysql_fetch_assoc($resultviewers)) {
+                $output .= $rowgroup['email'].',';
+            }
+            $output .= "</viewerusers>";
+
+        }
+
         //now get tab associated with this template
         $sql = "SELECT * from tab WHERE enabled=1 AND template_id=".$row['id'];
         $resulttab = $db->query($sql);
