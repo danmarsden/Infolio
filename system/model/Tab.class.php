@@ -665,7 +665,7 @@ class Tab extends DatabaseObject
     public function setTemplateWeight() {
         $authuser = User::RetrieveBySessionData($_SESSION);
         $this->m_weight = -1;
-        $tab->Save($authuser);
+        $this->Save($authuser);
     }
 
 	/* ** Display opperations ** */
