@@ -152,6 +152,58 @@ function export_groups() {
     return $output;
 }
 
+function export_templates() {
+    $sql = "SELECT t.*, i.url FROM templates t, institution i WHERE t.institution_id=i.id AND enabled=1";
+    $db = Database::getInstance();
+    $result = $db->query($sql);
+    if (empty($result)) {
+        return '';
+    }
+    $output = '<?xml version="1.0" encoding="UTF-8"?>
+<templates>
+';
+    while ($row = mysql_fetch_assoc($result)) {
+        $output .= '<template id="'.$row['id'].'">
+    <title>'.$row['title'].'</title>
+    <description>'.$row['description'].'</description>
+    <institution>'.$row['url'].'</institution>
+    <locked>'.$row['locked'].'</locked>';
+        //now get tab associated with this template
+        $sql = "SELECT * from tab WHERE enabled=1 AND template_id=".$row['id'];
+        $resulttab = $db->query($sql);
+        if (!empty($resulttab)) {
+            $output .= "<tabs>";
+            While ($rowtab = mysql_fetch_assoc($resulttab)) {
+                $output .= '<tab id="'.$rowtab['ID'].'">
+                <name>'.$rowtab['name'].'</name>
+                <description>'.$rowtab['description'].'</description>';
+                //now get pages associated with this tab
+                $sql = "SELECT * from page WHERE enabled=1 AND tab_id=".$rowtab['ID'];
+                $result2 = $db->query($sql);
+                if (!empty($result2)) {
+                    $output .= "<pages>";
+                    While ($row2 = mysql_fetch_assoc($result2)) {
+                        $output .= '<page id="'.$row2['id'].'">
+                        <title>'.$row['title'].'</title>
+                        </page>';
+                    }
+                    $output .= "</pages>";
+                }
+
+                $output .= '</tab>';
+
+            }
+            $output .= "</tabs>";
+        }
+        //now get pages associated with this template
+        $output .= '
+ </template>';
+    }
+    $output .='
+</templates>';
+    return $output;
+}
+
 function export_pages($page, $studentUser) {
     $output = '<infolio:view infolio:type="portfolio">'; 
     $sql = "SELECT * FROM block WHERE page_id='".$page->getId()."' AND user_id='". $studentUser->getId()."'";

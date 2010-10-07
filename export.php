@@ -143,6 +143,15 @@ if (!empty($files)) {
         $zip->addFile($filename, "group.xml");
     }
 
+    $templatexml = export_templates();
+    if (!empty($templatexml)) {
+        $filename = "data/export/template.xml";
+        $fp = fopen($filename,"w");
+        fwrite($fp,$templatexml);
+        fclose($fp);
+        $zip->addFile($filename, "template.xml");
+    }
+
     foreach ($files as $file) {
         //hacky way to rename zip files in this new zip
         $newname = str_replace('data/export/', '', $file);
