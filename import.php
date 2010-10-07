@@ -375,8 +375,6 @@ function leap_restore_user($dir, $user = '', $templateids = array()) {
          $sqlUser = "UPDATE user SET colour='$theme' WHERE ID={$newUser->getId()}";
          $result = $db->query($sqlUser);
 
-         //TODO: assign this user to the right Templates if set.
-
          $tabs = array();
          $views = array();
          $artefacts = array();
@@ -443,13 +441,22 @@ function leap_restore_user($dir, $user = '', $templateids = array()) {
                  $title = $views[$viewid]->title;
                  //create page now.
                  //TODO: check if this is a template page
-                 $page = new Page();
-                 $page->setUser($newUser);
-                 $page->setTab(new Tab($tab->getId()));
-                 $page->setEnabled(true);
-                 $page->setTitle($title);
-                 $page->Save($newUser);
-
+                 $temp = $views[$viewid]->xpath('infolio:templatepage');
+                 if (isset($temp[0])) {
+                     $pages = $tab->getPages();
+                     foreach ($pages as $p) {
+                         if ($p->getTitle() == $title) {
+                             $page = $p;
+                         }
+                     }
+                 } else {
+                     $page = new Page();
+                     $page->setUser($newUser);
+                     $page->setTab(new Tab($tab->getId()));
+                     $page->setEnabled(true);
+                     $page->setTitle($title);
+                     $page->Save($newUser);
+                 }
                  foreach ($viewxml as $i) {
                      $blocks = $i->xpath('infolio:blockinstance');
                      foreach ($blocks as $block) {
