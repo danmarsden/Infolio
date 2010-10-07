@@ -187,7 +187,8 @@ class Template extends DatabaseObject
 		// Set up template's main tab
         $template->m_tab = Tab::CreateNewTab($title, null);
 		$template->m_tab->setTemplate($template);
-        $template->m_tab->setTemplateWeight();
+        //TODO: Temp disabled by Dan to allow template creation - sorry Stacey!
+        //$template->m_tab->setTemplateWeight();
 		return $template;
 	}
 
