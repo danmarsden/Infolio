@@ -729,7 +729,9 @@ class User extends DatabaseObject
         } else {
             $user->m_share = $hashArray['share'];
         }
-        $user->m_share_hash = $hashArray['sharehash'];
+        if (isset($hashArray['sharehash'])) {
+            $user->m_share_hash = $hashArray['sharehash'];
+        }
         
 		return $user;
 	}
