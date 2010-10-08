@@ -196,7 +196,7 @@ if ($_POST['type'] =='site') {
                     $templateobj->AddViewersFromString($groupstring);
 
                     //can't process users as they may not have been generated yet - save for later.
-                    $templateviewerusers[$templateobj->getTab()->getId()]  = explode(',',(string)$template->viewergroups[0]);
+                    $templateviewerusers[$templateobj->getTab()->getId()]  = explode(',',(string)$template->viewerusers[0]);
                 }
             } else {
                 $templateids[(int)$template->attributes()->id[0]] = $row['id'];
@@ -259,7 +259,7 @@ if ($_POST['type'] =='site') {
                         if (!empty($userstring)) {
                             $userstring .= ",";
                         }
-                        $user = User::RetrieveByEmail($member, $template->getInstitution()->getId());
+                        $user = User::RetrieveByEmail($u, $template->getInstitution());
                         $userstring .= $user->getID();
                     }
                     $template->AddViewersFromString($userstring);
@@ -455,6 +455,11 @@ function leap_restore_user($dir, $user = '', $templateids = array()) {
                      $page->setEnabled(true);
                      $page->setTitle($title);
                      $page->Save($newUser);
+                 }
+                 if (empty($page)) {
+                     //TODO: this function above is failing - need to fix
+                     add_error_msg("WARNING: page not found - this is a bug which needs fixing - ignoring this page".$title);
+                     continue;
                  }
                  foreach ($viewxml as $i) {
                      $blocks = $i->xpath('infolio:blockinstance');
