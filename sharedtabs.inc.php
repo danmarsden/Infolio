@@ -41,8 +41,16 @@ $eventD->DispatchEvents();
 //function to display a list of users with shared tabs
 //allows pagination and limit of tabs to show.
 function display_shared_tabs($page, $count, $tablimit) {
+
     //first get this users institution share status
     global $studentUser, $db;
+
+    // user cannot share so shouldn't be on this page
+    $sharing = User::userCanShare($studentUser);
+    if (!$sharing) {
+        return 'You do not have the right permissions to share Tabs';
+    }
+
     //TODO: this could be optimised and less SQL used to obtain data.
     $page = (int)$page;
     $count = (int)$count;
@@ -50,10 +58,9 @@ function display_shared_tabs($page, $count, $tablimit) {
     $where = '';
     $userarray = array();
     $numusers = 0; //number of users in db with sharing enabled.
-    $inshare = $studentUser->m_institution->allowSharing();
-    if (empty($inshare)) {
-        error('This Institution doesn\'t allow Tab Sharing');
-    } elseif ($inshare == '1') {
+
+    $inshare = $studentUser->getInstitution()->allowSharing();
+    if ($inshare == '1') {
         $where = "u.share ='1'";
         //catch explicitly set users.
     } elseif ($inshare == '2') {
@@ -61,13 +68,19 @@ function display_shared_tabs($page, $count, $tablimit) {
         $where = "u.share <>'0'";
     }
     $where .= " AND u.institution_id='".$studentUser->m_institution->getId()."' AND u.enabled='1' ";
+
     //get count of users
-    $sqlcount = "SELECT count(DISTINCT u.ID) FROM user u, tab t, tab_shared ts WHERE ".$where;
-    $sqlcount .= " AND t.ID=ts.tabid AND t.enabled=1 AND ts.userid=u.id";
+    $sqlcount = "SELECT count(DISTINCT u.id)
+                    FROM user u
+                    LEFT JOIN tab_shared ts ON ts.userid = u.id
+                    JOIN tab t ON t.id = ts.tabid
+                    WHERE " .
+                    $where .
+                    "AND t.id = ts.tabid AND t.enabled = 1";
     $resultcount = $db->query($sqlcount);
-    if ($rowc =  mysql_fetch_array($resultcount,MYSQL_NUM)) {
-        if ($rowc[0] === 0) {
-            error("no shared tabs found");
+    if ($rowc =  mysql_fetch_array($resultcount, MYSQL_NUM)) {
+        if ((int)$rowc[0] === 0) {
+            return "No shared tabs were found";
         }
         $numusers = (int)$rowc[0];
         if ($count > $numusers) {

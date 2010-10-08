@@ -25,12 +25,12 @@ $tablimit = 10;
 <body class="<? print $studentTheme->getBodyClass(); ?>" id="home">
 <? include('_includes/header.inc.php'); ?>
 <div id="wrap-main">
+	<? include('_includes/header-profile.inc.php'); ?>
 	<div id="wrap-content">
 	<div id="wrap-content-inner">
 		<? print $page->HtmlTitle(); ?>
-		<? if(isset($pageMessage)) print "<p>{$pageMessage}</p>"; ?>
         <?php
-            print display_shared_tabs($pagenum, $count, $tablimit);
+            print $studentTheme->SolidBox(display_shared_tabs($pagenum, $count, $tablimit));
         ?>
 
 		<? include('_includes/footer.inc.php'); ?>
@@ -38,6 +38,7 @@ $tablimit = 10;
 	</div><!-- /#wrap-content -->
 	<? Debugger::debugPrint(); ?>
 </div><!-- /#wrap-main -->
+<script type="text/javascript" src="_scripts/main.js"></script>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
 <script type="text/javascript" src="/_scripts/jq/scrollable.js"></script>
 <? print $page->getJavaScriptVariables()->HtmlJavaScriptBlock(); ?>
