@@ -501,6 +501,9 @@ function leap_restore_user($dir, $user = '', $templateids = array()) {
          if (isset($savedfiles["portfolio:artefact".$profilepic])) {
              $newUser->setProfilePictureId($savedfiles["portfolio:artefact".$profilepic]);
              $newUser->Save($adminUser);
+             //stupid hack to enable user as the above Save occasionally glitches and changes the enabled value for the user.
+             $sqlfunk = "UPDATE user set enabled=1 WHERE ID=".$newUser->getId();
+             $resultf = $db->query($sqlfunk);
          }
 
          //update groups
