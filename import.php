@@ -362,7 +362,7 @@ function leap_restore_user($dir, $user = '', $templateids = array()) {
      $newUser = User::CreateNewUser(
              $name[1],
              $name[0],
-             $xml->author->email[0],
+             (string)$xml->author->email[0],
              $description,
              $permissionManager,
              new Institution($institutionId));
