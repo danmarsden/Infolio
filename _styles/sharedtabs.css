@@ -1,0 +1,43 @@
+/*
+	Author : Paul Walker
+	Date : 08/11/2010
+	Site : xxxx.com
+	Reset stylesheet
+	
+*/
+h1 {
+	color:#FFFFFF;
+	font-size:2em !important;
+	font-weight:normal;
+	line-height:1em !important;
+	margin-bottom:15px !important;
+}
+.shareduserstable {
+	width:100%;
+}
+.shareduserstable td {
+	border:none;
+	border-bottom:2px dotted #ffffff;
+	padding:5px;
+	vertical-align:middle;
+}
+.shareduserstable .sharedusericon {
+	width:50px;
+	height:70px;
+	border:1px solid #000;
+}
+.shareduserstable .shareduser-image {
+	width:60px;
+}
+.shareduserstable .shareduser-tabs ul {
+	margin:0;
+	padding:0;
+}
+.pagination {
+	padding:10px 5px;
+	text-align:center;
+}
+.pagination a {
+	padding:10px 5px;
+	text-align:center;
+}
