@@ -38,7 +38,9 @@ function export_portfolio($studentUser, $tabIds, $returnfile=false, $password=fa
             $leapxml .= leap_entry($entry);
             $tabPages = $aTab->getPages();
             $templatetab = $aTab->getTemplate();
-            $templatetabid = $templatetab->getId();
+            if (!empty($templatetab)) {
+                $templatetabid = $templatetab->getId();
+            }
             foreach($tabPages as $aPage) {
                 $leapxml .= "<link rel=\"has_part\" href=\"portfolio:view".$aPage->getId()."\"/>";
                 if (!empty($templatetabid)) {
