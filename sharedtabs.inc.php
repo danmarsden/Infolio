@@ -78,6 +78,7 @@ function display_shared_tabs($page, $count, $tablimit) {
     if (!empty($page)) {
         $sqlpage = $page -1;
     }
+    $sqlpage = $sqlpage*$count;
     //TODO: need to optimise the following SQL - should be able to do this with one sql call instead of one per user.
 
     $sql = "SELECT DISTINCT u.ID, u.* FROM user u, tab t, tab_shared ts WHERE ".$where;
