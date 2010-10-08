@@ -161,12 +161,17 @@ class Uploader
 			// This is an attachment
 			$tempUploadObject = Attachment::CreateNew($fileName, $page, $user);
 		}
+        //check that systemfolder exists
+        $sysfolder = $tempUploadObject->getSystemFolder();
+        if (!is_dir($sysfolder)) {
+            mkdir($sysfolder, 0777, true);
+        }
 
 		$extension = '.' . $tempUploadObject->getFileExtension();
 		
 		$fileBit = substr($fileName, 0, strlen($fileName) - (strlen($extension)) );
-		$filePathFirstBit = $tempUploadObject->getSystemFolder() . $fileBit;
-		
+		$filePathFirstBit = $sysfolder . $fileBit;
+
 		Debugger::debug('Uploading *.'  . $extension . '=' . $tempUploadObject->getType(), 'Uploader::doCopyUpload');
 		
 		// Find a unique name to save the file as
