@@ -1173,7 +1173,7 @@ class User extends DatabaseObject
         $userShare   = $user->getShare();
         $instShare   = $user->getInstitution()->allowSharing();
 
-        if ($userShare == 1 && $instShare == 1) {
+        if ($userShare == 1 && $instShare != 0) {
             return true;
         } else {
             return false;
