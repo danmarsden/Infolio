@@ -489,7 +489,9 @@ class Tab extends DatabaseObject
 
 
 	/**
-     * sets up the page for managing tabs
+     * sets up the page for managing tabs order
+     *  - About-Me tab cannot be ordered as this is a shared Tab with other users
+     *  - Template tabs cannot be ordered as this is a shared Tab with other users
      *
 	 * @param User $user
 	 * @param Theme $theme
@@ -498,41 +500,62 @@ class Tab extends DatabaseObject
 	 */
     public static function manageTabsContent(User $user, Theme $theme, SimplePage $page) 
     {
+        $tabs = Tab::RetrieveTabsByUser($user, true, false);
 
-        $tabs = Tab::retrieveTabsByUser($user, true, false);
-        $index = 1; // to display the up/down arrows
-        $html = '<ol id="manage-tab-weights">';
-        if ($tabs) {
-            foreach ($tabs as $tab) {
-                if ($tab->getId() != self::ABOUT_ME_TAB_ID) {
-                    // both up and down arrows
-                    if ($index != 1 && $index != (count($tabs)-1)) {
-                        $tabMenu = new Menu (array(
-                            Link::CreateIconLink('Up', $page->PathWithQueryString(array('mode'=>EventDispatcher::ACTION_MOVE_UP,'t'=>$tab->getId() )), $theme->Icon('up-arrow'), array('title' => 'Move tab up')),
-                            Link::CreateIconLink('Down', $page->PathWithQueryString(array('mode'=>EventDispatcher::ACTION_MOVE_DOWN,'t'=>$tab->getId())), $theme->Icon('down-arrow'), array('title' => 'Move tab down')),
-                        ));
-                        $tabMenu->setClass('inline-list');
-                        $html .= '<li class="manage-tab">' . $tab->m_name . $tabMenu->Html() . '</li>';
-                    // down arrow only
-                    } else if ($index == 1) {
-                        $tabMenu = new Menu (array(
-                            Link::CreateIconLink('Down', $page->PathWithQueryString(array('mode'=>EventDispatcher::ACTION_MOVE_DOWN,'t'=>$tab->getId())), $theme->Icon('down-arrow'), array('title' => 'Move tab down')),
-                        ));
-                        $tabMenu->setClass('inline-list');
-                        $html .= '<li class="manage-tab">' . $tab->m_name . $tabMenu->Html() . '</li>';
-                    // up arrow only
-                    } else if ($index == count($tabs)-1) {
-                        $tabMenu = new Menu (array(
-                            Link::CreateIconLink('Up', $page->PathWithQueryString(array('mode'=>EventDispatcher::ACTION_MOVE_UP,'t'=>$tab->getId())), $theme->Icon('up-arrow'), array('title' =>'Move tab up')),
-                        ));
-                        $tabMenu->setClass('inline-list');
-                        $html .= '<li class="manage-tab">' . $tab->m_name . $tabMenu->Html() . '</li>';
-                    }
-                    $index++;
-                }
-            }
+        // remove the About-me tab from results
+        $about = self::HOME_PAGE_NAME;
+        if (isset($tabs[$about])) {
+            unset($tabs[$about]);
         }
-        $html .= '</ol>';
+
+        print count($tabs);
+
+        if (count($tabs) == 0) {
+            $html = '<div>No available tabs to manage order.  <a href="/tab?a=new-tab">Add one <img src="/_images/si/new-tab.gif" alt="Add new tab"></a></div>';
+        } else if (count($tabs) == 1) {
+            $html = '<div>No enough tabs to manage order.  <a href="/tab?a=new-tab">Add one <img src="/_images/si/new-tab.gif" alt=Add new tab"></a></div>';
+        } else {
+            $html = '<ol id="manage-tab-weights">';
+            $index = 1; // to display the up/down arrows
+            foreach ($tabs as $tab) {
+                if ($index == 1) { // down only
+                    $tabMenu = new Menu (array(
+                        Link::CreateIconLink(
+                            'Down',
+                            $page->PathWithQueryString(array('mode'=>EventDispatcher::ACTION_MOVE_DOWN,'t'=>$tab->getId())),
+                            $theme->Icon('down-arrow'),
+                            array('title' => 'Move tab down')),
+                    ));
+                } else if ($index == count($tabs)) { // up only
+                    $tabMenu = new Menu (array(
+                        Link::CreateIconLink(
+                            'Up',
+                            $page->PathWithQueryString(array('mode'=>EventDispatcher::ACTION_MOVE_UP,'t'=>$tab->getId())),
+                            $theme->Icon('up-arrow'),
+                            array('title' =>'Move tab up')),
+                    ));
+                } else { // both up and down arrows
+                    $tabMenu = new Menu (array(
+                        Link::CreateIconLink(
+                            'Up',
+                            $page->PathWithQueryString(array('mode'=>EventDispatcher::ACTION_MOVE_UP,'t'=>$tab->getId())),
+                            $theme->Icon('up-arrow'),
+                            array('title' => 'Move tab up')
+                        ),
+                        Link::CreateIconLink(
+                            'Down',
+                            $page->PathWithQueryString(array('mode'=>EventDispatcher::ACTION_MOVE_DOWN,'t'=>$tab->getId())),
+                            $theme->Icon('down-arrow'),
+                            array('title' => 'Move tab down')
+                        )
+                    ));
+                }
+                $tabMenu->setClass('inline-list');
+                $html .= '<li class="manage-tab">' . $tab->m_name . $tabMenu->Html() . '</li>';
+                $index++;
+            }
+            $html .= '</ol>';
+        }
 
         return $html;
     }

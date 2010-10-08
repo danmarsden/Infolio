@@ -23,7 +23,6 @@ include_once('managetabs.inc.php');
 	<div id="wrap-content">
 	<div id="wrap-content-inner">
 		<? print $page->HtmlTitle(); ?>
-		<? if(isset($pageMessage)) print "<p>{$pageMessage}</p>"; ?>
         <? print $studentTheme->SolidBox(Tab::manageTabsContent($studentUser, $studentTheme, $page)); ?>
 
 		<? include('_includes/footer.inc.php'); ?>

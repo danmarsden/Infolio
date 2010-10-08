@@ -906,21 +906,23 @@ class User extends DatabaseObject
         $html .= '<thead><tr><th>&nbsp;</th><th>Enabled</th><th>Disabled</th></tr></thead>';
         $html .= '</tbody>';
         $index = 1;
+        $about = Tab::HOME_PAGE_NAME;
+        if (isset($this->m_tabs[$about])) {
+            unset($this->m_tabs[$about]);
+        }
 		foreach($this->m_tabs as $aTab) {
-            if($aTab->getId() != 1) {
-                $enabled = $aTab->getEnabled();
-                $html .= '<tr>';
-                $html .= '<td><label><strong>'.$aTab->getName().'</strong></label></td>';
-                if ($enabled) {
-                    $html .= '<td><input type="radio" name="tab_id'.$index.'" value="enabled_'.$aTab->getId().'" checked=checked /></td>';
-                    $html .= '<td><input type="radio" name="tab_id'.$index.'" value="disabled_'.$aTab->getId().'" /></td>';
-                } else {
-                    $html .= '<td><input type="radio" name="tab_id'.$index.'" value="enabled_'.$aTab->getId().'" /></td>';
-                    $html .= '<td><input type="radio" name="tab_id'.$index.'" value="disabled_'.$aTab->getId().'" checked=checked /></td>';
-                }
-                $html .= '</tr>';
-                $index++;
-			}
+            $enabled = $aTab->getEnabled();
+            $html .= '<tr>';
+            $html .= '<td><label><strong>'.$aTab->getName().'</strong></label></td>';
+            if ($enabled) {
+                $html .= '<td><input type="radio" name="tab_id'.$index.'" value="enabled_'.$aTab->getId().'" checked=checked /></td>';
+                $html .= '<td><input type="radio" name="tab_id'.$index.'" value="disabled_'.$aTab->getId().'" /></td>';
+            } else {
+                $html .= '<td><input type="radio" name="tab_id'.$index.'" value="enabled_'.$aTab->getId().'" /></td>';
+                $html .= '<td><input type="radio" name="tab_id'.$index.'" value="disabled_'.$aTab->getId().'" checked=checked /></td>';
+            }
+            $html .= '</tr>';
+            $index++;
 		}
         $html .= '</table>';
         $html .= '<br/>';
