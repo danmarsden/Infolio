@@ -508,8 +508,6 @@ class Tab extends DatabaseObject
             unset($tabs[$about]);
         }
 
-        print count($tabs);
-
         if (count($tabs) == 0) {
             $html = '<div>No available tabs to manage order.  <a href="/tab?a=new-tab">Add one <img src="/_images/si/new-tab.gif" alt="Add new tab"></a></div>';
         } else if (count($tabs) == 1) {

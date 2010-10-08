@@ -33,8 +33,8 @@ else { ?>
 <a id="my-tabs" href="managetabs.php" title="My tabs" >My tabs</a>
 <a id="my-collection" href="collection.php" title="My collection" >My collection</a>
 <?php
-$sharing = $studentUser->getInstitution()->allowSharing();
-if (!empty($sharing)) {
+$sharing = User::userCanShare($studentUser);
+if ($sharing) {
 ?>
 <a id="shared-tabs" href="sharedtabs.php" title="Shared tabs" >Shared tabs</a>
 <?

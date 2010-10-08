@@ -709,11 +709,12 @@ class User extends DatabaseObject
 	}
 
 	private static function createFromHashArray($hashArray, User &$user=null)
-	{
+    {
+
 		if(!isset($user)) {
 			$user = new User($hashArray['ID']);
-		}
-		
+        }
+
 		$theme = new Theme( $hashArray['colour'], $hashArray['size'] );
 		$profilePicture = Image::RetrieveById($hashArray['profile_picture_id'], $user);
 		$permissionManager = PermissionManager::CreateFromUserRecord($hashArray);
@@ -1159,5 +1160,23 @@ class User extends DatabaseObject
 		// Create menu
 		$this->m_tabMenu = new Menu($linkArray);
 		$this->m_tabMenu->setClass('items');
-	}
+    }
+
+    /**
+     * Check whether a user can share tabs or not
+     *
+     * @param User $user
+     * @return bool
+     */
+    public static function userCanShare(User $user) {
+
+        $userShare   = $user->getShare();
+        $instShare   = $user->getInstitution()->allowSharing();
+
+        if ($userShare == 1 && $instShare == 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
