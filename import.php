@@ -186,7 +186,6 @@ if ($_POST['type'] =='site') {
                     $groupstring = '';
                     foreach ($viewergroups as $vg) {
                         if (!empty($vg)) { //sanity check
-                            echo $vg;
                             $group = Group::RetrieveGroupByTitle($vg, $institution->getId());
                             if (!empty($groupstring)) {
                                 $groupstring .= ',';
@@ -194,7 +193,7 @@ if ($_POST['type'] =='site') {
                             $groupstring .= 'g'.$group->getId();
                         }
                     }
-                    $template->AddViewersFromString($groupstring);
+                    $templateobj->AddViewersFromString($groupstring);
 
                     //can't process users as they may not have been generated yet - save for later.
                     $templateviewerusers[$templateobj->getTab()->getId()]  = explode(',',(string)$template->viewergroups[0]);
