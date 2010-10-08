@@ -24,6 +24,7 @@
 	yellow: #CD3301
 */
 @import url(reset.css); /*import reset style sheet*/
+@import url(sharedtabs.css); /*import reset style sheet*/
 
 /* 1. Body
 --------------------------------------------------------------------------------------- */
