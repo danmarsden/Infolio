@@ -61,9 +61,15 @@ While($row2 = $db->fetchArray($result2)) {
     } else {
         $taburl = "/".$tabUser->m_institution->getUrl()."/public/".$userid.'/'.$sharehash.'/'.$row2['ID']."/";
     }
+    if($row2['ID'] == Tab::ABOUT_ME_TAB_ID) {
+        $fulltabicon = $tabUser->getProfilePicture();
+    } else {
+        $fulltab = Tab::GetTabById($row2['ID']);
+        $fulltabicon = $fulltab->getIcon();
+    }
 
     $tabs[] = "<li $active><a title=\"View tab\" href='$taburl'>".
-              '<img src="/images/size_tabicon/0/" width="55" height="55" alt="Tab 2"  title="Tab 2"  />'.
+              '<img src="'.$fulltabicon->getFullHref('size_tabicon').'" width="55" height="55" alt="Tab 2"  title="Tab 2"  />'.
               $row2['name']."</a></li>";
     if ($row2['ID']==$tabid) {
         $tabidvalid = true;
