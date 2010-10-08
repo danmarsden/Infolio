@@ -65,7 +65,6 @@ if(!isset($studentUser->m_tabs)) {
                 $i = 0;
                 $selectedtabs = array();
                 While($i < $tabcount) {
-                    echo $i;
                     if (isset($_POST["tab_id_".$i])) {
                         $selectedtabs[] = (int)$_POST["tab_id_".$i];
                         if (!isset($sharedtabs[(int)$_POST["tab_id_".$i]])) {
