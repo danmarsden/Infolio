@@ -67,19 +67,14 @@ if ($_POST['type'] =='site') {
             $row = mysql_fetch_assoc($result);
             if (empty($row)) {
                 //need to create this institution
-                $data = array(
-                              'asset_id' => '0',
-                              'name' => (string)$institution->name[0],
-                              'url' => $insurl,
-                              'created_by' => $adminUser->getId(),
-                              'updated_by' => $adminUser->getId(),
-                              'created_time' => Date::formatForDatabase(time()),
-                              'updated_time' => Date::formatForDatabase(time())
-                          );
-
-                // Write to DB
-                $db = Database::getInstance();
-                $db->perform('institution', $data);
+                $newInstitution = new Institution();
+			    $newInstitution->setName((string)$institution->name[0]);
+			    $newInstitution->setUrl($insurl);
+                //$newInstitution->setSharing($requestData['share']);
+                //$newInstitution->setComment($requestData['comment']);
+                //$newInstitution->setCommentApi($requestData['commentapi']);
+			    $newInstitution->CreateFolders();
+			    $newInstitution->Save($adminUser);
             } else {
                 add_error_msg("The institution {$institution->name[0]} already exists");
             }

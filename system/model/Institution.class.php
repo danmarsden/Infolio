@@ -178,6 +178,24 @@ class Institution extends DatabaseObject
 	public function CreateFolders()
 	{
 		copyr(DIR_FS_DATA . 'blank_template-asset', $this->getFullPath());
+        $filepatharray = array('/audio',
+                               '/file',
+                               '/image/page_thumbnail',
+                               '/image/photo_login',
+                               '/image/size_box',
+                               '/image/size_small_box',
+                               '/image/size_tabicon',
+                               '/image/size_thumbnail',
+                               '/upload/size_thumbnail',
+                               '/video/flv',
+                               '/video/size_thumbnail',
+                               '/shared-asset',
+                               '/test-asset');
+        foreach ($filepatharray as $dir) {
+            if (!is_dir($this->getFullPath().$dir)) {
+                mkdir($this->getFullPath().$dir, 0777, true);
+            }
+        }
 	}
 
 	/**
