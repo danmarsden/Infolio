@@ -177,7 +177,7 @@ class Institution extends DatabaseObject
 	 */
 	public function CreateFolders()
 	{
-		copyr(DIR_FS_DATA . 'blank_template-asset', $this->getFullPath());
+		//copyr(DIR_FS_DATA . 'blank_template-asset', $this->getFullPath());
         $filepatharray = array('/audio',
                                '/file',
                                '/image/page_thumbnail',
@@ -191,11 +191,13 @@ class Institution extends DatabaseObject
                                '/video/size_thumbnail',
                                '/shared-asset',
                                '/test-asset');
+        $old = umask(0);
         foreach ($filepatharray as $dir) {
             if (!is_dir($this->getFullPath().$dir)) {
-                mkdir($this->getFullPath().$dir, 0777, true);
+                mkdir($this->getFullPath().$dir, 00777, true);
             }
         }
+        umask($old);
 	}
 
 	/**
