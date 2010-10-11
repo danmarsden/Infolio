@@ -30,6 +30,7 @@ function export_portfolio($studentUser, $tabIds, $returnfile=false, $password=fa
         $tabId = $aTab->getId();
         $aTab->setViewer($studentUser);
         if($tabId != 1 && (!isset($tabIds) || in_array($tabId, $tabIds))) {
+            $templatetabid = '';
             $entry = new stdClass();
             $entry->title = $aTab->getName();
             $entry->contenttype = 'html';
