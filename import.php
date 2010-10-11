@@ -432,7 +432,7 @@ function leap_restore_user($dir, $user = '', $templateids = array()) {
                  $viewid = (string)$link->attributes()->href;
                  //create each view (page and each page block on each page)
                  $viewxml = $views[$viewid]->xpath('infolio:view');
-                 $title = $views[$viewid]->title;
+                 $title = (string)$views[$viewid]->title[0];
                  //create page now.
                  //TODO: check if this is a template page
                  $temp = $views[$viewid]->xpath('infolio:templatepage');
@@ -474,20 +474,18 @@ function leap_restore_user($dir, $user = '', $templateids = array()) {
                          $words[1] = (string)$word1[0]; 
 
                          $newBlock->setWordBlocks($words);
-                         
                          //now get pictures to put in block - use $savedfiles to get new id
                          $pic0 = $block->xpath('infolio:picture0');
                          $picid = (int)$pic0[0];
                          if (isset($savedfiles["portfolio:artefact".$picid])) {
-                             $newBlock->setPicture(0, $savedfiles["portfolio:artefact".$picid]);
+                             $newBlock->setPicture(0, (int)$savedfiles["portfolio:artefact".$picid]);
                          }
 
                          $pic1 = $block->xpath('infolio:picture1');
                          $picid = (int)$pic1[0];
                          if (isset($savedfiles["portfolio:artefact".$picid])) {
-                             $newBlock->setPicture(0, $savedfiles["portfolio:artefact".$picid]);
+                             $newBlock->setPicture(1, (int)$savedfiles["portfolio:artefact".$picid]);
                          }
-
                          $newBlock->Save($newUser);
                      }
                  }

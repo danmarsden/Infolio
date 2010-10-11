@@ -282,6 +282,10 @@ class PageBlock extends DatabaseObject
 			'created_time' => Date::formatForDatabase($this->m_createdTime),
 			'created_by' => $this->m_createdBy->getId()
 		);
+        if (!empty($this->m_pictures)) {
+            $data['picture0'] = $this->getPictureId(0);
+            $data['picture1'] = $this->getPictureId(1);
+        }
 
 		$db = Database::getInstance();
 		$db->perform('block', $data, Database::INSERT);
