@@ -230,7 +230,7 @@ function export_templates() {
                     $output .= "<pages>";
                     While ($row2 = mysql_fetch_assoc($result2)) {
                         $output .= '<page id="'.$row2['id'].'">
-                        <title>'.$row['title'].'</title>
+                        <title>'.$row2['title'].'</title>
                         </page>';
                     }
                     $output .= "</pages>";
