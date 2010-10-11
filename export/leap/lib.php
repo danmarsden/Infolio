@@ -224,7 +224,7 @@ function export_templates() {
                 <name>'.$rowtab['name'].'</name>
                 <description>'.$rowtab['description'].'</description>';
                 //now get pages associated with this tab
-                $sql = "SELECT * from page WHERE enabled=1 AND tab_id=".$rowtab['ID'];
+                $sql = "SELECT * from page WHERE enabled=1 AND user_id =NULL AND tab_id=".$rowtab['ID'];
                 $result2 = $db->query($sql);
                 if (!empty($result2)) {
                     $output .= "<pages>";
