@@ -31,7 +31,10 @@ function leap_footer() {
 </feed>";
 }
 function leap_author($user, $password=false) {
-    $output =  "
+
+$db = Database::getInstance();
+
+$output =  "
     <author>
         <name>".$user->getFullName()."</name>
         <email>".$user->getEmail()."</email>
@@ -48,7 +51,6 @@ if ($password) {
 ";
     //now add picture password stuff
     $sql = "SELECT * FROM graphical_passwords WHERE user_id ='".$user->getId()."'";
-    $db = Database::getInstance();
     $result = $db->query($sql);
     $row = mysql_fetch_assoc($result);
     if (!empty($row)) {
