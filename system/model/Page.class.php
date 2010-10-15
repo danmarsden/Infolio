@@ -591,7 +591,7 @@ class Page extends SimplePage
 		if ($this->m_mode == Page::MODE_EDIT && !$this->m_edittingBlock && $this->isNotTemplateControlled() ) {
 			$html = '<form action="' . $this->PathWithQueryString( array('mode'=>Page::MODE_SHOW) ) . '" method="post" class="page_update">' .
 				'<input type="hidden" name="a" value="' . EventDispatcher::ACTION_SAVE . '" />' .
-				"<input id=\"page_update_name\" type=\"text\" name=\"title\" value=\"{$this->m_title}\" />&nbsp;" .
+				"<input id=\"page_update_name\" type=\"text\" name=\"title\" onfocus=\"this.value=''\" value=\"{$this->m_title}\" />&nbsp;" .
 				"<input type=\"submit\" value=\"Save\" />" .
 				"</form>";
 		}

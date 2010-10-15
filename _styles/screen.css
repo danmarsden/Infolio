@@ -49,6 +49,7 @@ h1,h2,h3,h4,h5,h6,p,ul,dl,ol,blockquote {margin-bottom:15px;}
 p,ul,dl,ol,blockquote,td,th,label,input,select {font-size:1em}
 
 #tTab,
+#pass,
 textarea, 
 input#txtNewTag, 
 input#username, 
@@ -57,7 +58,7 @@ input#password,
 #page_update_name {
    padding:2px;
    margin:0 3px;
-   border:2px solid #000
+   border:2px solid #000 !important;
 }
 
 h1 {font-size:2em; color:#fff; line-height:1em; margin-bottom:15px; font-weight:normal}
