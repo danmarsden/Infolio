@@ -515,8 +515,10 @@ function leap_restore_user($dir, $user = '', $templateids = array()) {
          foreach ($groups as $group) {
              if (!empty($group)) {
                  $groupobj = Group::RetrieveGroupByTitle($group, $institutionId);
-                 $groupobj->addMember($newUser);
-                 $groupobj->save($adminUser);
+                 if (!empty($groupobj)) {
+                     $groupobj->addMember($newUser);
+                     $groupobj->save($adminUser);
+                 }
              }
          }
 
