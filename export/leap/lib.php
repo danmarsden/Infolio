@@ -42,6 +42,10 @@ function export_portfolio($studentUser, $tabIds, $returnfile=false, $password=fa
             if (!empty($templatetab)) {
                 $templatetabid = $templatetab->getId();
             }
+            $icon = $aTab->getIcon();
+            if (!empty($icon)) {
+                $leapxml .= "<infolio:icon>".$icon->getId()."</infolio:icon>";
+            }
             foreach($tabPages as $aPage) {
                 $leapxml .= "<link rel=\"has_part\" href=\"portfolio:view".$aPage->getId()."\"/>";
                 if (!empty($templatetabid)) {

@@ -311,27 +311,27 @@ function leap_restore_user($dir, $user = '', $templateids = array()) {
     $description = $xml->author->xpath('infolio:userdesc');
     $description = isset($description[0]) ? (string)$description[0] : '';
     
-    if (isset($user['institution'])) {
-        $institution = $user['institution'];
+    if (isset($user['institution_id'])) {
+        $institutionId = $user['institution_id'];
     } else {
         $insxml = $xml->author->xpath('infolio:institution');
         $institution = isset($insxml[0]) ? (string)$insxml[0] : '';
+        if (!empty($institution)) {
+            //get institution id based on institution url above.
+            $sqlUser = "SELECT * from institution WHERE url='$institution'";
+            $result = $db->query($sqlUser);
+            $row = mysql_fetch_assoc($result);
+            if (empty($row)) {
+                notify('couldn\'t find insitution for user - using default instead');
+                $institutionId = 1;
+            } else {
+                $institutionId = $row['id'];
+            }
+        } else {
+            $institutionId = 1;
+        }
     }
 
-    if (!empty($institution)) {
-        //get institution id based on institution url above.
-        $sqlUser = "SELECT * from institution WHERE url='$institution'";
-        $result = $db->query($sqlUser);
-        $row = mysql_fetch_assoc($result);
-        if (empty($row)) {
-            notify('couldn\'t find insitution for user - using default instead');
-            $institutionId = 1;
-        } else {
-            $institutionId = $row['id'];
-        }
-    } else {
-        $institutionId = 1;
-    }
     $theme = $xml->author->xpath('infolio:theme');
     $theme = isset($theme[0]) ? (string)$theme[0] : '';
 
@@ -416,6 +416,7 @@ function leap_restore_user($dir, $user = '', $templateids = array()) {
          }
 
          foreach ($tabs as $tabxml) {
+             $icon = $tabxml->xpath('infolio:icon');
              //check if this is a tempate tab first.
              $tem = $tabxml->xpath('infolio:template');
              if (isset($tem[0]) && isset($templateids[(int)$tem[0]])) {
@@ -425,6 +426,12 @@ function leap_restore_user($dir, $user = '', $templateids = array()) {
              } else {
                  $tab = Tab::CreateNewTab((string)$tabxml->title[0], $newUser);
                  $tab->setWeight();
+                 if (!empty($icon)) {
+                    $iconid = (int)$icon[0];
+                     if (isset($savedfiles["portfolio:artefact".$iconid])) {
+                         $tab->setIconById((int)$savedfiles["portfolio:artefact".$iconid]);
+                     }
+                 }
                  $tab->Save($newUser);                 
              }
              // create pages attached to this tab
@@ -443,18 +450,14 @@ function leap_restore_user($dir, $user = '', $templateids = array()) {
                              $page = $p;
                          }
                      }
-                 } else {
+                 }
+                 if (empty($page)) { //template not found so create new page.
                      $page = new Page();
                      $page->setUser($newUser);
                      $page->setTab(new Tab($tab->getId()));
                      $page->setEnabled(true);
                      $page->setTitle($title);
                      $page->Save($newUser);
-                 }
-                 if (empty($page)) {
-                     //TODO: this function above is failing - need to fix
-                     add_error_msg("WARNING: page not found - this is a bug which needs fixing - ignoring this page".$title);
-                     continue;
                  }
                  foreach ($viewxml as $i) {
                      $blocks = $i->xpath('infolio:blockinstance');
@@ -521,6 +524,6 @@ function leap_restore_user($dir, $user = '', $templateids = array()) {
          add_error_msg("The user '{$username}' at " . $newUser->getInstitution()->getName() .' already exists');
      }
 }
-
+add_ok_msg("import finished");
 // redirect back to correct page
 header('Location: '. $returnurl);

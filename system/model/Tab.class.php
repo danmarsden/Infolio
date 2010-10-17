@@ -355,6 +355,12 @@ class Tab extends DatabaseObject
 			'created_by' => $this->m_createdBy->getId(),
 			'weight' => $this->m_weight
 		);
+
+		// Add tab icon if there is one
+		if( isset($this->m_icon) && $this->m_icon->getId() > 0 ) {
+			$data['asset_id'] = $this->m_icon->getId();
+		}
+
 		$db = Database::getInstance();
 		$db->perform('tab', $data, Database::INSERT);
 
