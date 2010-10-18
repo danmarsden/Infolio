@@ -25,6 +25,24 @@ function export_portfolio($studentUser, $tabIds, $returnfile=false) {
     //printTimeElapsed("Set up folders");
 
     copyr(DIR_FS_ROOT . 'staticversion/user-template', $userStaticDir);
+    $filepatharray = array('/audio',
+                           '/file',
+                           '/image/page_thumbnail',
+                           '/image/photo_login',
+                           '/image/size_box',
+                           '/image/size_small_box',
+                           '/image/size_tabicon',
+                           '/image/size_thumbnail',
+                           '/upload/size_thumbnail',
+                           '/video/flv',
+                           '/video/size_thumbnail');
+    $old = umask(0);
+    foreach ($filepatharray as $dir) {
+        if (!is_dir($userStaticDir."/data".$dir)) {
+            mkdir($userStaticDir."/data".$dir, 00777, true);
+        }
+    }
+     umask($old);
 
     //printTimeElapsed('Copied base folders and assets');
 
