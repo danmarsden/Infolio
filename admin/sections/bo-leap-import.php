@@ -19,7 +19,7 @@
         
                 <form method="post" id="userform" action="../../import.php" dojoType="dijit.form.Form" enctype="multipart/form-data">
                 <input type="hidden" name="type" value="user" />
-                <h2>LEAP User Import</h2>
+                <h2>User Import</h2>
                 <table class="dataForm" id="loginTable">
                     <tr>
                         <td class="captionLabel">Username</td>
@@ -115,7 +115,7 @@
                 </form>
             </div>
             <div id="siteimport">
-            <h2>LEAP Site Import</h2>
+            <h2>Site Import</h2>
             <form enctype="multipart/form-data" method="post" id="userform" action="../../import.php">
             <input type="hidden" name="type" value="site" />
             <table class="dataForm" id="leapimport">
