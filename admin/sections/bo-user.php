@@ -152,6 +152,7 @@ function showGrid()
         <ul>
             <li>The <code>institution</code> field/value should be the 'Shortname for URL' of the existing Institution.<br />If no value is set then the main institution will be used.</li>
             <li>If the <code>usertype</code> field/value is not used then the default role of 'student' will be used.</li>
+            <li>Valid values for <code>usertype</code> are: Student, Teacher, Admin and Super Admin</li>
             <li>If the <code>password</code> field/value is not used then a password will be generated for the user.</li>
         </ul>
     </div>
