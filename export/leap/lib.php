@@ -124,8 +124,12 @@ function export_portfolio($studentUser, $tabIds, $returnfile=false, $password=fa
         send_temp_file($zipfilename, 'leapinfolio-export-leap-user'. $studentUser->getId() . '-' . $exporttime . '.zip');
     }
 }
-function export_institutions() {
-    $sql = "SELECT * FROM institution";
+function export_institutions($institutionid) {
+    if (!empty($institutionid)) {
+        $sql = "SELECT * FROM institution WHERE id=".$institutionid;
+    } else {
+        $sql = "SELECT * FROM institution";
+    }
     $db = Database::getInstance();
     $result = $db->query($sql);
     if (empty($result)) {
@@ -147,8 +151,12 @@ function export_institutions() {
     return $output;
 }
 
-function export_groups() {
-    $sql = "SELECT g.*, i.url FROM groups g, institution i WHERE g.institution_id=i.id";
+function export_groups($institutionid) {
+    if (!empty($institutionid)) {
+        $sql = "SELECT g.*, i.url FROM groups g, institution i WHERE g.institution_id=i.id AND i.id=".$institutionid;
+    } else {
+        $sql = "SELECT g.*, i.url FROM groups g, institution i WHERE g.institution_id=i.id";
+    }
     $db = Database::getInstance();
     $result = $db->query($sql);
     if (empty($result)) {
@@ -180,8 +188,12 @@ function export_groups() {
     return $output;
 }
 
-function export_templates() {
-    $sql = "SELECT t.*, i.url FROM templates t, institution i WHERE t.institution_id=i.id AND t.enabled=1";
+function export_templates($institutionid) {
+    if (!empty($institutionid)) {
+        $sql = "SELECT t.*, i.url FROM templates t, institution i WHERE t.institution_id=i.id AND t.enabled=1 AND i.id=".$institutionid;
+    } else {
+        $sql = "SELECT t.*, i.url FROM templates t, institution i WHERE t.institution_id=i.id AND t.enabled=1";
+    }
     $db = Database::getInstance();
     $result = $db->query($sql);
     if (empty($result)) {

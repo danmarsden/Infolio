@@ -53,9 +53,16 @@ for($i=0; $i<$_POST['tab_count']; $i++)
 $users = array();
 $usertabsarray = array();
 $usertabidarray = array();
+$institutionid='';
 if (!empty($_POST['siteexport'])) {
+    //check if insitution is set
+    $insql = '';
+    if (!empty($_POST['inst'])) {
+        $institutionid = (int)$_POST['inst'];
+        $insql = ' WHERE institution_id ='.$institutionid;
+    }
     //get list of all users.
-    $sql = "SELECT id FROM user";
+    $sql = "SELECT id FROM user".$insql;
     $db = Database::getInstance();
     $result = $db->query($sql);
     while ($row = mysql_fetch_assoc($result)) {
@@ -78,7 +85,9 @@ if (!empty($_POST['siteexport'])) {
 if (!is_dir("staticversion/export/html")) {
     mkdir("staticversion/export/html");
 }
-
+if (!is_dir("data/export")) {
+    mkdir("data/export");
+}
 $files = array();
 foreach ($users as $user) {
     //set up Globals
@@ -124,34 +133,35 @@ if (!empty($files)) {
     if ($zip->open($zipfilename, ZIPARCHIVE::CREATE)!==TRUE) {
         exit("cannot open <$zipfilename>\n");
     }
-    //now add site level files
-    $insxml = export_institutions();
-    if (!empty($insxml)) {
-        $filename = "data/export/institution.xml";
-        $fp = fopen($filename,"w");
-        fwrite($fp,$insxml);
-        fclose($fp);
-        $zip->addFile($filename, "institution.xml");
-    }
+    if ($_POST['format'] == 'leap') {
+        //now add site level files
+        $insxml = export_institutions($institutionid);
+        if (!empty($insxml)) {
+            $filename = "data/export/institution.xml";
+            $fp = fopen($filename,"w");
+            fwrite($fp,$insxml);
+            fclose($fp);
+            $zip->addFile($filename, "institution.xml");
+        }
 
-    $groupxml = export_groups();
-    if (!empty($groupxml)) {
-        $filename = "data/export/group.xml";
-        $fp = fopen($filename,"w");
-        fwrite($fp,$groupxml);
-        fclose($fp);
-        $zip->addFile($filename, "group.xml");
-    }
+        $groupxml = export_groups($institutionid);
+        if (!empty($groupxml)) {
+            $filename = "data/export/group.xml";
+            $fp = fopen($filename,"w");
+            fwrite($fp,$groupxml);
+            fclose($fp);
+            $zip->addFile($filename, "group.xml");
+        }
 
-    $templatexml = export_templates();
-    if (!empty($templatexml)) {
-        $filename = "data/export/template.xml";
-        $fp = fopen($filename,"w");
-        fwrite($fp,$templatexml);
-        fclose($fp);
-        $zip->addFile($filename, "template.xml");
+        $templatexml = export_templates($institutionid);
+        if (!empty($templatexml)) {
+            $filename = "data/export/template.xml";
+            $fp = fopen($filename,"w");
+            fwrite($fp,$templatexml);
+            fclose($fp);
+            $zip->addFile($filename, "template.xml");
+        }
     }
-
     foreach ($files as $file) {
         //hacky way to rename zip files in this new zip
         $newname = str_replace('data/export/', '', $file);
