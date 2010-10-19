@@ -8,7 +8,7 @@ include_once("function/core.php");
 
 // Turn on autodetecting of line endings, so mac newlines (\r) will work
 ini_set('auto_detect_line_endings', 1);
-const MAX_LINE_LENGTH = 1024;
+define('MAX_LINE_LENGTH', 1024);
 
 $allowedkeys = array(
     'firstname',
