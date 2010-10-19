@@ -253,6 +253,11 @@ function fixLinks($content)
     $content = preg_replace('/<div class="playbutton2{0,1}">.*?<\/div>/', '', $content); // swf text to speech reader
     $content = preg_replace('/<div class="blank">.*?<\/div>/', '', $content);
 
+    //remove shared tabs link:
+    $content = str_replace('<a id="shared-tabs" href="sharedtabs.php" title="Shared tabs" >Shared tabs</a>','', $content);
+    $content = str_replace('<a id="my-tabs" href="managetabs.php" title="My tabs" >My tabs</a>','', $content);
+
+
     // Fix all image extensions
     foreach($userAssets as $asset)
     {
