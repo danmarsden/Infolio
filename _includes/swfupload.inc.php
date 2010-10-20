@@ -23,6 +23,7 @@ window.onload = function () {
         file_post_name : "Filedata", 
         post_params: {"PHPSESSID" : ""},
         file_size_limit : "100 MB",
+        button_window_mode: SWFUpload.WINDOW_MODE.TRANSPARENT,
         file_upload_limit : "1",
         file_types : "*.avi; *.mp4; *.mpeg; *.mpg; *.flv; *.mov; *.wmv; *.mp3; *.wav; *.bmp; *.jpg; *.png; *.gif; *.jpeg; *.JPG",
         file_types_description : "Web image, video and audio files",
