@@ -436,6 +436,7 @@ function leap_restore_user($dir, $user = '', $templateids = array()) {
              }
              // create pages attached to this tab
              foreach ($tabxml->link as $link) {
+                 $page = '';
                  $viewid = (string)$link->attributes()->href;
                  //create each view (page and each page block on each page)
                  $viewxml = $views[$viewid]->xpath('infolio:view');
