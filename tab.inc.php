@@ -118,12 +118,14 @@ function onNewTab()
 	Debugger::debug('Event caught', 'tab.inc.php::onNewTab', Debugger::LEVEL_INFO);
 	global $studentUser;
 
-    $tab = Tab::CreateNewTab('New_tab', $studentUser);
-    $tab->setWeight();
+        $tab = Tab::CreateNewTab('', $studentUser);
+        $tab->setWeight();
 	$tab->Save($studentUser);
 
+        $redirect = $tab->getLink()->getHref() . '?mode=edit'; 
+
 	// Redirect (stops refresh causing duplicate new tabs)
-	header("Location: {$tab->getLink()->getHref()}");
+        header("Location: $redirect");
 }
 
 function onSaveIcon(Tab $tab, $newIconId)

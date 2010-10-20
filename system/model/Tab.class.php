@@ -45,6 +45,8 @@ class Tab extends DatabaseObject
 	const COLLECTION_PAGE_NAME = 'collection';
 	const MANAGETABS_PAGE_NAME = 'managetabs';
 
+        const DEFAULT_SLUG = 'New_tab';
+
 	const MAX_TITLE_LENGTH = 20;
 
 	/* ** Factory methods ** */
@@ -274,7 +276,12 @@ class Tab extends DatabaseObject
 	 */
 	private function setLinkFromName()
 	{
-		$this->m_link = Link::CreateSectionIconLink($this->m_name, Tab::TAB_LINK . $this->m_slug, "section-{$this->m_slug}", $this->m_icon, Image::SIZE_TAB_ICON);
+                if (empty($this->m_name)) {
+                    $name = "(untitled)";
+                } else {
+                    $name = $this->m_name; 
+                }
+		$this->m_link = Link::CreateSectionIconLink($name, Tab::TAB_LINK . $this->m_slug, "section-{$this->m_slug}", $this->m_icon, Image::SIZE_TAB_ICON);
 	}
 	
 	public function getPages()
@@ -452,9 +459,13 @@ class Tab extends DatabaseObject
 	 */
 	private function setNameAndSlug($name)
 	{
-		// Add hyphens and remove unsafe chars to create a URL safe slug
-		$slug = Safe::UrlQueryVarOutput($name);
-		
+                if (!empty($name)) {
+		    // Add hyphens and remove unsafe chars to create a URL safe slug
+		    $slug = Safe::UrlQueryVarOutput($name);
+                } else {
+                    // use default slug
+                    $slug = Tab::DEFAULT_SLUG;
+                }
 
 		if(isset($this->m_user)) {
 			// Find existing tabs for current user with similar name
@@ -774,12 +785,19 @@ class Tab extends DatabaseObject
 				$this->m_icon->setTitle('Choose a new tab icon');
 				$iconLink = Link::CreateImageLink($this->m_icon, $page->PathWithQueryString( array('a'=>TabEventDispatcher::ACTION_EDIT_ICON) ), Image::SIZE_TAB_ICON);
 
+                                if (empty($this->m_name)) {
+                                    $onfocus = " onfocus=\"if(this.value==this.defaultValue)this.value=''\"";
+                                    $tabname = "Please enter name...";
+                                } else {
+                                    $tabname = $this->m_name;
+                                }
+
 				// HTML for edit form
 				$html = "<form action=\"{$page->PathWithQueryString( array('mode'=>Page::MODE_SHOW) )}\" method=\"post\" class=\"page_update\">" .
 					'<input type="hidden" name="a" value="' . EventDispatcher::ACTION_SAVE . '" />';
 				$html .= $iconLink->Html();
 				$html .= "<input type=\"hidden\" name=\"tab_id\" value=\"{$this->m_id}\" />&nbsp;" .
-					'<label for="tTab">Tab name:</label> <input id="tTab" type="text" name="title" size="' . self::MAX_TITLE_LENGTH .'" maxlength="' . self::MAX_TITLE_LENGTH .'" value="' .$this->m_name .'" />&nbsp;' .
+					'<label for="tTab">Tab name:</label> <input id="tTab" type="text" name="title" size="' . self::MAX_TITLE_LENGTH .'" maxlength="' . self::MAX_TITLE_LENGTH .'" value="' . $tabname .'"' . $onfocus . ' />&nbsp;' .
 					"<input type=\"submit\" value=\"Save\" />" .
 					"</form>";
 				break;
