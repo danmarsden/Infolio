@@ -463,7 +463,8 @@ function leap_restore_user($dir, $user = '', $templateids = array()) {
                      $blocks = $i->xpath('infolio:blockinstance');
                      foreach ($blocks as $block) {
                          //create block now.
-                         $newBlock = PageBlock::CreateNew($title, $page, $newUser);
+                         $blocktitle = $block->xpath('infolio:blocktitle');
+                         $newBlock = PageBlock::CreateNew((string)$blocktitle[0], $page, $newUser);
                          $newBlock->setWeight($page->getNewBlockWeight());
                          
                          $templateid = $block->xpath('infolio:layout');

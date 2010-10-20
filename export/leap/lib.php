@@ -273,7 +273,8 @@ function export_pages($page, $studentUser) {
     $db = Database::getInstance();
     $result = $db->query($sql);
     while ($row = mysql_fetch_assoc($result)) {
-        $output .= '<infolio:blockinstance infolio:blocktitle="'.$row['title'].'">';
+        $output .= '<infolio:blockinstance>';
+        $output .= '<infolio:blocktitle>'.$row['title'].'</infolio:blocktitle>';
         $output .= '<infolio:words0>'.$row['words0'].'</infolio:words0>';
         $output .= '<infolio:words1>'.$row['words1'].'</infolio:words1>';
         $output .= '<infolio:picture0>'.$row['picture0'].'</infolio:picture0>';
