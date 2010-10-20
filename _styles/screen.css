@@ -264,6 +264,9 @@ font-size:1.2em;
 	margin:0 auto;
 	text-align:left;
 	}
+	#wrap-content-inner h1 {
+	padding-top:20px;	
+	}
 	
 	#my-collection {
 	float:right;
@@ -418,6 +421,7 @@ div#loader {
 	-webkit-border-radius: 10px;
 }
 .hideme {
+
 
 	visibility:hidden;
 }
