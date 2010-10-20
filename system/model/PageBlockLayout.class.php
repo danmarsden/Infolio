@@ -167,12 +167,15 @@ class PageBlockLayout
 		// Add word blocks to template
 		$wordBlockNums = $this->getWordBlockNums($html);
 		foreach($wordBlockNums as $blockNum) {
-			$editValue = 'Type here';
 			if( isset($wordBlocks[$blockNum]) ) {
-				$editValue = $wordBlocks[$blockNum];
-			}
+			   $editValue = $wordBlocks[$blockNum];
+                           $onfocus   = "";
+			} else {
+			   $editValue = "Type here";
+                           $onfocus   = " onfocus=\"if(this.value==this.defaultValue)this.value=''\"";
+                        }
 			// Replace marker with form input
-			$formInput = "<textarea name=\"wb{$blockNum}\" rows=\"8\" cols=\"40\">{$editValue}</textarea>";
+			$formInput = "<textarea name=\"wb{$blockNum}\" rows=\"8\" cols=\"40\"{$onfocus}>{$editValue}</textarea>";
 			$html = str_replace( '<words' . $blockNum . '>', $formInput, $html);
 		}
 		
