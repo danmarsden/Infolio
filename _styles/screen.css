@@ -418,6 +418,7 @@ div#loader {
 	-webkit-border-radius: 10px;
 }
 .hideme {
+
 	visibility:hidden;
 }
 
@@ -471,7 +472,9 @@ div#loader {
 	.box img.icon {
 	position: absolute;
 	z-index: 2;
-	padding: 10px;
+	margin: 13px;
+	border:2px solid #000;
+	background:#FFF;
 	}
 
 	.box a.hidden {
