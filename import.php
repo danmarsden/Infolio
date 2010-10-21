@@ -322,7 +322,7 @@ function leap_restore_user($dir, $user = '', $templateids = array()) {
             $result = $db->query($sqlUser);
             $row = mysql_fetch_assoc($result);
             if (empty($row)) {
-                notify('couldn\'t find insitution for user - using default instead');
+                add_info_msg('couldn\'t find insitution for user - using default instead');
                 $institutionId = 1;
             } else {
                 $institutionId = $row['id'];
