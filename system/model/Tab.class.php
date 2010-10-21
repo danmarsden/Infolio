@@ -22,7 +22,7 @@ include_once('function/core.php');
 class Tab extends DatabaseObject
 {
 	public  $m_id;
-    private $m_name;
+        private $m_name;
 	private $m_slug;
 	private $m_description;
 	private $m_enabled;
@@ -45,7 +45,8 @@ class Tab extends DatabaseObject
 	const COLLECTION_PAGE_NAME = 'collection';
 	const MANAGETABS_PAGE_NAME = 'managetabs';
 
-        const DEFAULT_SLUG = 'New_tab';
+        const DEFAULT_NAME = '(untitled)';
+        const DEFAULT_SLUG = 'untitled';
 
 	const MAX_TITLE_LENGTH = 20;
 
@@ -176,7 +177,7 @@ class Tab extends DatabaseObject
 		}
 		
 		$tab->m_id = $hashArray['ID'];
-        $tab->m_name = $hashArray['name'];
+                $tab->m_name = $hashArray['name'];
 		$tab->m_slug = $hashArray['slug'];
 		$tab->m_enabled = $hashArray['enabled'];
 		$tab->setLinkFromName();
@@ -216,7 +217,8 @@ class Tab extends DatabaseObject
 	public function getName()
 	{
 		$this->checkFilled();
-		return $this->m_name;
+                //return 'blah';
+                return $this->sanitisedName();
 	}
 
 	public function getenabled()
@@ -276,11 +278,7 @@ class Tab extends DatabaseObject
 	 */
 	private function setLinkFromName()
 	{
-                if (empty($this->m_name)) {
-                    $name = "(untitled)";
-                } else {
-                    $name = $this->m_name; 
-                }
+                $name = $this->sanitisedName(); 
 		$this->m_link = Link::CreateSectionIconLink($name, Tab::TAB_LINK . $this->m_slug, "section-{$this->m_slug}", $this->m_icon, Image::SIZE_TAB_ICON);
 	}
 	
@@ -566,7 +564,7 @@ class Tab extends DatabaseObject
                     ));
                 }
                 $tabMenu->setClass('inline-list');
-                $html .= '<li class="manage-tab">' . $tab->m_name . $tabMenu->Html() . '</li>';
+                $html .= '<li class="manage-tab">' . $tab->getName() . $tabMenu->Html() . '</li>';
                 $index++;
             }
             $html .= '</ol>';
@@ -884,4 +882,12 @@ class Tab extends DatabaseObject
 			"</tab>\n";
 		return $xml;
 	}
+
+        public function sanitisedName() {
+            if (empty($this->m_name)) {
+                return Tab::DEFAULT_NAME;
+            } else {
+                return $this->m_name;
+            }
+        }
 }
