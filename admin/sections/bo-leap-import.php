@@ -89,6 +89,7 @@
 					<tr>
 						<td class="captionLabel">Institution</td>
 						<td>
+                        <?php if($adminUser->getPermissionManager()->hasRight(PermissionManager::RIGHT_ALL_ADMIN)) { ?>
                             <select dojoType="dijit.form.FilteringSelect"
                                 name="institution_id"
                                 id="institution_id"
@@ -101,6 +102,11 @@
                                     }
                                 ?>
                             </select>
+<?php                          } else {
+                                   echo '<input type="hidden" name="institution_id" value="'.$adminUser->getInstitution()->getId() .'"/>';
+                                   echo $adminUser->getInstitution()->getName();
+                               }
+?>
 						</td>
 					</tr>
                     <tr>
