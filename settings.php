@@ -88,7 +88,7 @@ if(!isset($studentUser->m_tabs)) {
 //TODO: add notification to UI about change.
             }
 ?>
-<a name="sharing"/>
+<a name="sharing"/></a>
         <?php print $studentTheme->BoxBegin('<h2 id="btnShowHide"><img src="/_images/si/icons/sharing.gif" width="35" height="35" alt="" /> Sharing</h2>'); ?>
         <p>Select the tabs that you would like to share with other users on this site.</p>
        <form action="/<?php echo $studentUser->getInstitution()->getURL(); ?>/settings.php#sharing" method="post">
