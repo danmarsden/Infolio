@@ -69,7 +69,7 @@ function onEnterEditTab(Tab $_tab, $_page, $sortMethod)
 	// Set up menus
 	$editMenu = new Menu( array(
 								Link::CreateIconLink('Finish', $page->PathWithQueryString(array('mode'=>Page::MODE_SHOW)), $studentTheme->Icon('stop-abort'), array('title'=>"Finish editing {$tab->getName()} tab",)),
-								Link::CreateIconLink('Add', "page-0?tab={$tab->getId()}", $studentTheme->Icon('add-page'), array('title'=>'Add new page'))
+								Link::CreateIconLink('Add Page', "page-0?tab={$tab->getId()}", $studentTheme->Icon('add-page'), array('title'=>'Add new page'))
 								),
 							'menu_tabs');
 	$editMenu->setClass('inline-list');
@@ -101,14 +101,14 @@ function onEnterShowTab(Tab $_tab, SimplePage $_page, $sortMethod)
 		$sortMenu = $tab->SortMenuIfSortable($page, $studentTheme);
 		if($showAddPage) {
 			$editMenu = new Menu( array(
-								Link::CreateIconLink('Add', "page-0?tab={$tab->getId()}", $studentTheme->Icon('add-page'), array('title'=>'Add new page'))
+								Link::CreateIconLink('Add Page', "page-0?tab={$tab->getId()}", $studentTheme->Icon('add-page'), array('title'=>'Add new page'))
 							));
 			$editMenu->setClass('inline-list');
 		}
 
 		// Template pages can not be editted
 		if($tab->getTemplate() == null) {
-			$editMenu->addLink( Link::CreateIconLink('Edit', $page->PathWithQueryString(array('mode'=>Page::MODE_EDIT)), $studentTheme->Icon('edit-page'), array('title'=>"Edit {$tab->getName()} tab")) );
+			$editMenu->addLink( Link::CreateIconLink('Edit Tab', $page->PathWithQueryString(array('mode'=>Page::MODE_EDIT)), $studentTheme->Icon('edit-page'), array('title'=>"Edit {$tab->getName()} tab")) );
 		}
 	}
 }

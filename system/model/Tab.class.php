@@ -743,7 +743,7 @@ class Tab extends DatabaseObject
 			// Create tab menu
 			// Set up menus
 			$tabMenu = new Menu( array(
-								Link::CreateIconLink('Add', "page-0?tab={$this->getId()}", $theme->Icon('add-page2'))
+								Link::CreateIconLink('Add Page', "page-0?tab={$this->getId()}", $theme->Icon('add-page2'))
 								) );
 			$tabMenu->setClass('inline-list');
 			
