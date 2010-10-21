@@ -9,8 +9,8 @@
  * @copyright  2010 Catalyst IT Ltd
  * @license    http://creativecommons.org/licenses/by-nc-sa/2.0/uk/
 */
-
-        $html = '<form method="post" action="/export.php"><ul style="list-style:none;">';
+        $html = '<h2>Export Institution</h2>';
+        $html .= '<form method="post" action="/export.php"><ul style="list-style:none;">';
         $html .= '<input type="hidden" name="tab_count" value="0" />';
         $html .= '</ul>';
         $html .= "<h3>Choose an export format</h3><div class=\"element\"><div><input type=\"radio\" class=\"radio\" id=\"export_formate091\" name=\"format\" tabindex=\"1\" value=\"html\" checked=\"checked\">"
@@ -22,16 +22,34 @@
 			$adminUser->getInstitution()->getId();
 
 		$institutions = Institution::RetrieveAll();
-		$html.= '<select name="inst">';
+		$html.= '<label for "inst">Select Institution</label><select name="inst">';
         $html.="<option value=''>Export All</option>";
 		foreach($institutions as $institution) {
 			$html.= "<option value=\"{$institution->getId()}\"";
 			if(isset($chosenInstituteId) && $institution->getId() == $chosenInstituteId) $html.= ' selected="selected"';
 			$html.= ">{$institution->getName()}</option>";
 		}
-		$html.= '</select><br/>';
+		$html.= '</select><br/><br/>';
         $html .= '<input type="hidden" name="siteexport" value="true" />';
-        $html .= '<input type="submit" value="Generate new site export" />';
+        $html .= '<input type="submit" value="Generate new institution export" />';
 
         $html .= '</form>';
         echo $html;
+?>
+            <div id="siteimport">
+            <h2>Import Institution</h2>
+            <form enctype="multipart/form-data" method="post" id="userform" action="../../import.php">
+            <input type="hidden" name="type" value="site" />
+            <table class="dataForm" id="leapimport">
+                <tr>
+                    <td class="captionLabel">File</td>
+                    <td><input type="file" name="leapimport"/></td>
+                </tr>
+                <tr>
+                    <td class="captionLabel"></td>
+                    <td><input type="submit" value="Submit" /></td>
+                </tr>
+            </table>
+
+            </form>
+            </div>

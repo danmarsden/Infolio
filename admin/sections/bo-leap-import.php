@@ -114,20 +114,3 @@
                 </table>
                 </form>
             </div>
-            <div id="siteimport">
-            <h2>Site Import</h2>
-            <form enctype="multipart/form-data" method="post" id="userform" action="../../import.php">
-            <input type="hidden" name="type" value="site" />
-            <table class="dataForm" id="leapimport">
-                <tr>
-                    <td class="captionLabel">File</td>
-                    <td><input type="file" name="leapimport"/></td>
-                </tr>
-                <tr>
-                    <td class="captionLabel"></td>
-                    <td><input type="submit" value="Submit" /></td>
-                </tr>
-            </table>
-            
-            </form>
-            </div>
