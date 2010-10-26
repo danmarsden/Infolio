@@ -626,7 +626,7 @@ img.edit {
 	.yb .gb{background:url(/_images/si/red/grey-box-yellow.gif) right top no-repeat;}
 	.rb .gb{background-image:url(/_images/si/red/grey-box-red-bk.png)}
 	.grey-bi  {
-	margin-right:20px;
+	margin-right:10px;
 	background:url(/_images/si/red/grey-box.gif) left top no-repeat;
 	padding:14px 10px;
 	}
@@ -634,6 +634,10 @@ img.edit {
 	.rb .grey-bi {background-image:url(/_images/si/red/grey-box-red-bk.png)}
 	.gb a  {
 	color:#fff;
+	}
+	.grey-bi .inline-list,
+        .grey-bi .inline-list li a {
+	white-space:nowrap;
 	}
 .rb {
 	padding:0;
@@ -690,7 +694,7 @@ ul#image-tools li{margin:0 0 20px 0;}
 .small {width:210px;}
 .tool-box {background : #3D3D3D}
 .inline-list{list-style:none;}
-.inline-list li {margin-left:7px; display:inline;}
+.inline-list li {margin-left:10px; display:inline;}
 .inline-list li.title {font-weight:bold; margin-right: 0.3em;}
 
 /* 8. Theme colours */
