@@ -1061,7 +1061,7 @@ class User extends DatabaseObject
 						'<li><a href="#password" id="btnShowPassword">Change my password</a><br />' .
 						'<div class="hideBit">' . $this->htmlPasswordForm($passwordChanged) . '</div>' .
 						'</li>' .
-						'<li><a href="#">Print a password reminder</a></li>' .
+						//'<li><a href="#">Print a password reminder</a></li>' .
 						'</ul>';
 		return $htmlString;
 	}
