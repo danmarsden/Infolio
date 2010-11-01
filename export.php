@@ -26,8 +26,22 @@ include_once("model/User.class.php");
 include_once("function/shared.php");
 include_once("function/core.php");
 
-// Check user is logged in before letting them do stuff (except logging in)
-$adminUser = require_admin();
+// Make sure they're logged in and can export this user
+session_start();
+if( isset($_SESSION) ) {
+	$studentUser = User::RetrieveBySessionData($_SESSION);
+    // Nullify user if they don't have permission
+    if ($studentUser->getId() <> (int)$_POST['user_id']) {
+    // Check user is logged in before letting them do stuff (except logging in)
+        if(!$studentUser->getPermissionManager()->hasRight(PermissionManager::RIGHT_GENERAL_ADMIN) ) {
+            header("Location: login.php");
+        }
+    }
+} else {
+    header("Location: login.php");
+}
+
+
 
 // Take userID as input.
 // Take tabIds as input, generate for them and then get them if they exist in users tabs
