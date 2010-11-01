@@ -352,8 +352,7 @@ class Zipper extends ZipArchive
             }
             else if
             (is_file($node))  {
-                $fileName = $baseDirName . str_replace($rootPath, '', $node);
-                
+                $fileName = $baseDirName . str_replace($rootPath.'/', '', $node);
                 $this->addFile($node, $fileName);
             }
         }

@@ -333,7 +333,7 @@ class Zipper extends ZipArchive
 
     private function addDir($path, $rootPath, $baseDirName)
     {
-        $zipPath = '/' . $baseDirName . str_replace($rootPath, '', $path);
+        $zipPath = $baseDirName . str_replace($rootPath, '', $path);
 
         $this->addEmptyDir($zipPath);
         $nodes = glob($path . '/*');
@@ -345,7 +345,7 @@ class Zipper extends ZipArchive
             }
             else if
             (is_file($node))  {
-                $fileName = '/' . $baseDirName . str_replace($rootPath, '', $node);
+                $fileName = $baseDirName . str_replace($rootPath, '', $node);
                 $this->addFile($node, $fileName);
             }
         }
