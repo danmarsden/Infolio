@@ -783,12 +783,13 @@ class Tab extends DatabaseObject
 				$this->m_icon->setTitle('Choose a new tab icon');
 				$iconLink = Link::CreateImageLink($this->m_icon, $page->PathWithQueryString( array('a'=>TabEventDispatcher::ACTION_EDIT_ICON) ), Image::SIZE_TAB_ICON);
 
-                                if (empty($this->m_name)) {
-                                    $onfocus = " onfocus=\"if(this.value==this.defaultValue)this.value=''\"";
-                                    $tabname = "Please enter name...";
-                                } else {
-                                    $tabname = $this->m_name;
-                                }
+                $onfocus = '';
+                if (empty($this->m_name)) {
+                    $onfocus = " onfocus=\"if(this.value==this.defaultValue)this.value=''\"";
+                    $tabname = "Please enter name...";
+                } else {
+                    $tabname = $this->m_name;
+                }
 
 				// HTML for edit form
 				$html = "<form action=\"{$page->PathWithQueryString( array('mode'=>Page::MODE_SHOW) )}\" method=\"post\" class=\"page_update\">" .
