@@ -33,13 +33,13 @@ else { ?>
 <a id="my-tabs" href="managetabs.php" title="My tabs" >My tabs</a>
 <a id="my-collection" href="collection.php" title="My collection" >My collection</a>
 <?php
-$sharing = User::userCanShare($studentUser);
-if ($sharing) {
+if( isset($studentUser) ) {
+    $sharing = User::userCanShare($studentUser);
+    if ($sharing) {
 ?>
 <a id="shared-tabs" href="sharedtabs.php" title="Shared tabs" >Shared tabs</a>
 <?
-}
-// Scrolling tabs
-if( isset($studentUser) ) {
+    }
+    // Scrolling tabs
 	print $studentTheme->ScrollingTabs( $tabsMenu->Html() );
 }
