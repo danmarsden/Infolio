@@ -18,3 +18,4 @@
 
 $version = 2010100102;  // YYYYMMDD   = date of the last version bump
                         //         XX = daily increments
+$release = '1.3.0dev';
