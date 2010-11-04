@@ -140,8 +140,8 @@ function export_institutions($institutionid) {
 ';
     while ($row = mysql_fetch_assoc($result)) {
         $output .= '<institution id="'.$row['id'].'">
-    <name>'.$row['name'].'</name>
-    <url>'.$row['url'].'</url>
+    <name>'.cleanforxml($row['name']).'</name>
+    <url>'.cleanforxml($row['url']).'</url>
     <asset_id>'.$row['asset_id'].'</asset_id>';
         $output .= '
  </institution>';
@@ -167,9 +167,9 @@ function export_groups($institutionid) {
 ';
     while ($row = mysql_fetch_assoc($result)) {
         $output .= '<group id="'.$row['id'].'">
-    <title>'.$row['title'].'</title>
-    <description>'.$row['description'].'</description>
-    <institution>'.$row['url'].'</institution>';
+    <title>'.cleanforxml($row['title']).'</title>
+    <description>'.cleanforxml($row['description']).'</description>
+    <institution>'.cleanforxml($row['url']).'</institution>';
     //now get group users
     $sql = "SELECT u.email FROM group_members g, user u WHERE g.user_id=u.ID AND g.group_id=".$row['id'];
     $resultmembers = $db->query($sql);
@@ -204,9 +204,9 @@ function export_templates($institutionid) {
 ';
     while ($row = mysql_fetch_assoc($result)) {
         $output .= '<template id="'.$row['id'].'">
-    <title>'.$row['title'].'</title>
-    <description>'.$row['description'].'</description>
-    <institution>'.$row['url'].'</institution>
+    <title>'.cleanforxml($row['title']).'</title>
+    <description>'.cleanforxml($row['description']).'</description>
+    <institution>'.cleanforxml($row['url']).'</institution>
     <locked>'.$row['locked'].'</locked>';
         //now get group viewers assigned to this template
         $sql = "SELECT t.*, g.title FROM template_viewers t, groups g WHERE t.group_id= g.id AND t.template_id=".$row['id'];
@@ -214,7 +214,7 @@ function export_templates($institutionid) {
         if (!empty($resultviewers)) {
             $output .= "<viewergroups>";
             While ($rowgroup = mysql_fetch_assoc($resultviewers)) {
-                $output .= $rowgroup['title'].',';    
+                $output .= cleanforxml($rowgroup['title']).',';
             }
             $output .= "</viewergroups>";
 
@@ -238,8 +238,8 @@ function export_templates($institutionid) {
             $output .= "<tabs>";
             While ($rowtab = mysql_fetch_assoc($resulttab)) {
                 $output .= '<tab id="'.$rowtab['ID'].'">
-                <name>'.$rowtab['name'].'</name>
-                <description>'.$rowtab['description'].'</description>';
+                <name>'.cleanforxml($rowtab['name']).'</name>
+                <description>'.cleanforxml($rowtab['description']).'</description>';
                 //now get pages associated with this tab
                 $sql = "SELECT * from page WHERE enabled=1 AND user_id IS NULL AND tab_id=".$rowtab['ID'];
                 $result2 = $db->query($sql);
@@ -247,7 +247,7 @@ function export_templates($institutionid) {
                     $output .= "<pages>";
                     While ($row2 = mysql_fetch_assoc($result2)) {
                         $output .= '<page id="'.$row2['id'].'">
-                        <title>'.$row2['title'].'</title>
+                        <title>'.cleanforxml($row2['title']).'</title>
                         </page>';
                     }
                     $output .= "</pages>";
@@ -274,9 +274,9 @@ function export_pages($page, $studentUser) {
     $result = $db->query($sql);
     while ($row = mysql_fetch_assoc($result)) {
         $output .= '<infolio:blockinstance>';
-        $output .= '<infolio:blocktitle>'.$row['title'].'</infolio:blocktitle>';
-        $output .= '<infolio:words0>'.$row['words0'].'</infolio:words0>';
-        $output .= '<infolio:words1>'.$row['words1'].'</infolio:words1>';
+        $output .= '<infolio:blocktitle>'.cleanforxml($row['title']).'</infolio:blocktitle>';
+        $output .= '<infolio:words0>'.cleanforxml($row['words0']).'</infolio:words0>';
+        $output .= '<infolio:words1>'.cleanforxml($row['words1']).'</infolio:words1>';
         $output .= '<infolio:picture0>'.$row['picture0'].'</infolio:picture0>';
         $output .= '<infolio:picture1>'.$row['picture1'].'</infolio:picture1>';
         $output .= '<infolio:layout>'.$row['block_layout_id'].'</infolio:layout>';
@@ -359,4 +359,6 @@ class Zipper extends ZipArchive
     }
 
 }
-
+function cleanforxml($string) {
+    return htmlspecialchars($string);
+}

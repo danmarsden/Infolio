@@ -21,7 +21,7 @@ function leap_header($user, $export_time) {
     xmlns:mahara=\"http://wiki.mahara.org/Developer_Area/Import%2F%2FExport/LEAP_Extensions#\"
 >
     <id>".$_SERVER['SERVER_NAME']."export/".$user->getId()."/$export_time</id>
-    <title>Infolio LEAP2A Export for ".$user->getFullName().", ".date("F j, Y, g:i a", $export_time)."</title>
+    <title>Infolio LEAP2A Export for ".cleanforxml($user->getFullName()).", ".date("F j, Y, g:i a", $export_time)."</title>
     <updated>".date(DATE_RFC3339, $export_time)."</updated>
     <generator uri=\"http://www.in-folio.org.uk/\" version=\"2008122400\">Infolio</generator>"; 
 
@@ -36,14 +36,14 @@ $db = Database::getInstance();
 
 $output =  "
     <author>
-        <name>".$user->getFullName()."</name>
+        <name>".cleanforxml($user->getFullName())."</name>
         <email>".$user->getEmail()."</email>
         <uri>portfolio:artefactinternal</uri>
-        <infolio:usertype>".$user->getPermissionManager()->getUserType()."</infolio:usertype>
-        <infolio:username>".$user->getUserName()."</infolio:username>
-        <infolio:userdesc>".$user->getDescription()."</infolio:userdesc>
-        <infolio:institution>".$user->getInstitution()->getUrl()."</infolio:institution>
-        <infolio:theme>".$user->getTheme()->getName()."</infolio:theme>
+        <infolio:usertype>".cleanforxml($user->getPermissionManager()->getUserType())."</infolio:usertype>
+        <infolio:username>".cleanforxml($user->getUserName())."</infolio:username>
+        <infolio:userdesc>".cleanforxml($user->getDescription())."</infolio:userdesc>
+        <infolio:institution>".cleanforxml($user->getInstitution()->getUrl())."</infolio:institution>
+        <infolio:theme>".cleanforxml($user->getTheme()->getName())."</infolio:theme>
         <infolio:profilepic>".$user->getProfilePictureId()."</infolio:profilepic>
 ";
 if ($password) {
@@ -71,7 +71,7 @@ if ($password) {
     $sql = "SELECT g.title FROM groups g, group_members gm WHERE g.id=gm.group_id AND user_id='".$user->getId()."'";
     $result = $db->query($sql);
     While ($row = mysql_fetch_assoc($result)) {
-        $output .= (string)$row['title'].",";
+        $output .= cleanforxml((string)$row['title'].",");
     }
     $output .= "</infolio:groups>
 ";
@@ -82,27 +82,27 @@ if ($password) {
 function leap_entry($entry) {
     $output = "
     <entry>
-        <title>$entry->title</title>
+        <title>".cleanforxml($entry->title)."</title>
         <id>$entry->id</id>";
     $output .= (!empty($entry->author)) ? "
         <author>
-            <name>$entry->author</name>
+            <name>".cleanforxml($entry->author)."</name>
         </author>" : '';
 
     $output .= (!empty($entry->updated)) ? "
-        <updated>$entry->updated</updated>" : '';
+        <updated>".cleanforxml($entry->updated)."</updated>" : '';
     $output .= (!empty($entry->created)) ? "
-        <published>$entry->created</published>" : '';
+        <published>".cleanforxml($entry->created)."</published>" : '';
     if (!empty($entry->summary)) {
         $output .= '
         <summary';
         if ($entry->summarytype != 'text') {
-            $output .= "type=\"$entry->summarytype\"";
+            $output .= 'type="'.cleanforxml($entry->summarytype). '"';
         }
         if ($entry->summarytype == 'xhtml') {
-            $output .= "<div xmlns=\"http://www.w3.org/1999/xhtml\">".$entry->summary."</div>";
+            $output .= "<div xmlns=\"http://www.w3.org/1999/xhtml\">".cleanforxml($entry->summary)."</div>";
         } else {
-            $output .= $entry->summary;
+            $output .= cleanforxml($entry->summary);
         }
     }
     $output .= "
@@ -132,7 +132,7 @@ function leap_blocks($page, $studentUser) {
     $db = Database::getInstance();
     $result = $db->query($sql);
     while ($row = mysql_fetch_assoc($result)) {
-        $output .= "<p>".$row['words0']."</p>";
+        $output .= "<p>".cleanforxml($row['words0'])."</p>";
         if (!empty($row['picture0'])) {
             $output .= "<a rel=\"leap2:has_part\" href=\"portfolio:artefact".$row['picture0']."\"><img rel=\"leap2:has_part\" href=\"portfolio:artefact".$row['picture0']."\" /></a>";
         }
@@ -172,7 +172,7 @@ function leap_resource($resource, $user) {
     if ($result) {
         $output .= "<infolio:tags>";
         while ($row = mysql_fetch_assoc($result)) {
-            $output .= "<infolio:tag>".$row['name']."</infolio:tag>";
+            $output .= "<infolio:tag>".cleanforxml($row['name'])."</infolio:tag>";
         }
         $output .= "</infolio:tags>";
     }
