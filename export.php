@@ -31,7 +31,7 @@ session_start();
 if( isset($_SESSION) ) {
 	$studentUser = User::RetrieveBySessionData($_SESSION);
     // Nullify user if they don't have permission
-    if ($studentUser->getId() <> (int)$_POST['user_id']) {
+    if (!isset($_POST['user_id']) or $studentUser->getId() <> (int)$_POST['user_id']) {
     // Check user is logged in before letting them do stuff (except logging in)
         if(!$studentUser->getPermissionManager()->hasRight(PermissionManager::RIGHT_GENERAL_ADMIN) ) {
             header("Location: login.php");
