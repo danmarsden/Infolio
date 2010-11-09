@@ -77,12 +77,13 @@ function export_portfolio($studentUser, $tabIds, $returnfile=false, $password=fa
 // Copy all user's assets
     if (!empty($userAssets)) {
         foreach($userAssets as $asset) {
+            $newname = str_replace('&','-',$asset->getHref());
             $srcPath = $asset->getSystemFolder() . $asset->getHref();
-            $dstPath = "$exportdir/files/{$asset->getType()}_{$asset->getHref()}";
+            $dstPath = "$exportdir/files/{$asset->getType()}_{$newname}";
             copy($srcPath, $dstPath);
             $res = new stdClass();
             $res->contenttype = $asset->getType();
-            $res->url = $asset->getType().'_'.$asset->getHref();
+            $res->url = $asset->getType().'_'.$newname;
             $res->id  = $asset->getId();
             $resource = leap_resource($res, $studentUser);
             $entry = new stdClass();
