@@ -321,9 +321,12 @@ font-size:1.2em;
 	}
 
 	div.fileinputs {
-		position: relative;
-		float:left;
-		padding-right: 20px;
+        float:left;
+        height:35px;
+        margin-top:12px;
+        padding-right:0;
+        position:relative;
+        width:100px;
 	}
 
 	div.fakefile {

@@ -126,6 +126,9 @@ a.progressCancel:hover {
 
 #swf-uploader h3 {
 	float:left;
+    line-height:2.1em;
+    margin:0;
+    padding:0;
 }
 
 /* -- SWFUpload Object Styles ------------------------------- */
