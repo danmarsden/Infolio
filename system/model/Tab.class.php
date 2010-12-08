@@ -456,14 +456,24 @@ class Tab extends DatabaseObject
 	 * @param <type> $name
 	 */
 	private function setNameAndSlug($name)
-	{
-                if (!empty($name)) {
-		    // Add hyphens and remove unsafe chars to create a URL safe slug
-		    $slug = Safe::UrlQueryVarOutput($name);
-                } else {
-                    // use default slug
-                    $slug = Tab::DEFAULT_SLUG;
-                }
+    {
+
+        Debugger::debug(htmlentities($name),'Tab::htmlentities');
+        if (!empty($name)) {
+            // ensure new name/slug has at least one alphanumeric character
+            // not completely safe but does eliminate some error in slug naming
+            // as best we can
+            if (preg_match('/^[a-zA-Z0-9_]{1,}$/',$name, $matches)) {
+                // Add hyphens and remove unsafe chars to create a URL safe slug
+                $slug = Safe::UrlQueryVarOutput($name);
+            } else {
+                // use default slug
+                $slug = Tab::DEFAULT_SLUG;
+            }
+        } else {
+            // use default slug
+            $slug = Tab::DEFAULT_SLUG;
+        }
 
 		if(isset($this->m_user)) {
 			// Find existing tabs for current user with similar name
