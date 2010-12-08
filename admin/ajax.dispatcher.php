@@ -281,8 +281,6 @@ function institutionOperations($operation, $adminUser, $requestData)
 {
 	include_once(DIR_FS_MODEL . "Institution.class.php");
 
-        error_log('here: ' . $requestData['limitshare']);
-
 	switch($operation) {
 		case 'insert':
 			$newInstitution = new Institution();
