@@ -80,4 +80,12 @@ function db_main_upgrade($oldversion) {
             set_config('version', '2010100102');
         }
     }
+    if ($result && $oldversion < 2010120801) {
+        //add new share column to institution table
+        $sql = "ALTER TABLE institution ADD column limitshare int(11)";
+        $result = $db->query($sql);
+        if ($result) {
+            set_config('version', '2010120801');
+        }
+    }
 }

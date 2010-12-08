@@ -22,9 +22,10 @@ class Institution extends DatabaseObject
 	private $m_name;
 	private $m_url;
 	private $m_urlOldValue;
-    private $m_share;
-    private $m_comment;
-    private $m_commentApi;
+        private $m_share;
+        private $m_comment;
+        private $m_commentApi;
+        private $m_limitshare;
 	
 	/* ** Accessors ** */
 
@@ -71,6 +72,14 @@ class Institution extends DatabaseObject
 		$this->checkFilled();
 		return $this->m_share;
 	}
+	public function limitShare()
+	{
+		$this->checkFilled();
+		return $this->m_limitshare;
+	}
+        public function setLimitShare($value) {
+                $this->m_limitshare = $value;
+        }
 	public function setSharing($value){
         $this->m_share = $value;
     }
@@ -281,9 +290,10 @@ class Institution extends DatabaseObject
 			'asset_id' => $this->m_assetId,
 			'name' => $this->m_name,
 			'url' => $this->m_url,
-            'share' => $this->m_share,
-            'comment' => $this->m_comment,
-            'commentapi' => $this->m_commentApi,
+                        'share' => $this->m_share,
+                        'comment' => $this->m_comment,
+                        'commentapi' => $this->m_commentApi,
+                        'limitshare' => $this->m_limitshare,
 			'created_by' => $this->m_createdBy->getId(),
 			'updated_by' => $this->m_updatedBy->getId(),
 			'created_time' => Date::formatForDatabase($this->m_createdTime),
@@ -332,6 +342,8 @@ class Institution extends DatabaseObject
 	
 	protected function dbUpdate()
 	{
+
+                //die($this->m_limitshare);
 		// Rename folder if it has been renamed
 		if(isset($this->m_urlOldValue)) {
 			$this->moveDataFolder();
@@ -341,10 +353,14 @@ class Institution extends DatabaseObject
 			'asset_id' => $this->m_assetId,
 			'name' => $this->m_name,
 			'url' => $this->m_url,
-            'share' => $this->m_share,
-            'comment' => $this->m_comment,
-            'commentapi' => $this->m_commentApi
+                        'share' => $this->m_share,
+                        'comment' => $this->m_comment,
+                        'commentapi' => $this->m_commentApi,
+                        'limitshare' => $this->m_limitshare
 		);
+
+                syslog(LOG_DEBUG, 'blah');
+
 		$db = Database::getInstance();
 		$db->perform('institution', $data, Database::UPDATE, "id={$this->m_id}");
 	}
@@ -359,15 +375,18 @@ class Institution extends DatabaseObject
 		$institution->m_name = $hashArray['name'];
 		$institution->m_url = $hashArray['url'];
 		$institution->m_filled = true;
-        if (isset($hashArray['share'])) { //tidy up - don't set if field doesn't exist yet
-            $institution->m_share = $hashArray['share'];
-        }
-        if (isset($hashArray['comment'])) {
-            $institution->m_comment = $hashArray['comment'];
-        }
-        if (isset($hashArray['commentapi'])) {
-            $institution->m_commentApi = $hashArray['commentapi'];
-        }
+                if (isset($hashArray['share'])) { //tidy up - don't set if field doesn't exist yet
+                    $institution->m_share = $hashArray['share'];
+                }
+                if (isset($hashArray['comment'])) {
+                    $institution->m_comment = $hashArray['comment'];
+                }
+                if (isset($hashArray['commentapi'])) {
+                    $institution->m_commentApi = $hashArray['commentapi'];
+                }
+                if (isset($hashArray['limitshare'])) {
+                    $institution->m_limitshare = $hashArray['limitshare'];
+                }
 		return $institution;
 	}
 }

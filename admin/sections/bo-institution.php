@@ -112,6 +112,13 @@ function showForm()
                             <option value="2" <? if(isset($institution) && $institution->allowSharing()=='2')print 'selected' ?>>Enabled - Users enabled by default</option>
                         </select></td>
                     </tr>
+                   <tr>
+                        <td class="captionLabel">Limit Sharing</td>
+                         <td><select name="limitshare" id="limitshare">
+                             <option value="0" <? if(isset($institution) && $institution->limitShare()=='0')print 'selected' ?>>Share with everyone in the institution</option>
+                             <option value="1" <? if(isset($institution) && $institution->limitShare()=='1')print 'selected' ?>>Only share with Teachers and Admins</option>
+                          </select></td>
+                    </tr>
                     <tr>
                         <td class="captionLabel">Allow Comments</td>
                         <td><select name="comment" id="comment">

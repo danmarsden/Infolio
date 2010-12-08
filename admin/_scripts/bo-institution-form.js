@@ -38,6 +38,7 @@ function doSubmit()
                 share: dojo.byId("share").value,
                 comment: dojo.byId("comment").value,
                 commentapi: dojo.byId("commentapi").value,
+                limitshare: dojo.byId("limitshare").value,
 				operation: (dojo.byId("id").value!="") ? 'update' : 'insert'	//check if it's insertion or alteration
 			},
 			timeout:2000,

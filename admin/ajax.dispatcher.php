@@ -281,6 +281,8 @@ function institutionOperations($operation, $adminUser, $requestData)
 {
 	include_once(DIR_FS_MODEL . "Institution.class.php");
 
+        error_log('here: ' . $requestData['limitshare']);
+
 	switch($operation) {
 		case 'insert':
 			$newInstitution = new Institution();
@@ -289,6 +291,7 @@ function institutionOperations($operation, $adminUser, $requestData)
             $newInstitution->setSharing($requestData['share']);
             $newInstitution->setComment($requestData['comment']);
             $newInstitution->setCommentApi($requestData['commentapi']);
+            $newInstitution->setLimitShare($requestData['limitshare']);
 			$newInstitution->CreateFolders();
 			$newInstitution->Save($adminUser);
 			print $newInstitution->getId();
@@ -299,6 +302,7 @@ function institutionOperations($operation, $adminUser, $requestData)
             $institution->setSharing($requestData['share']);
             $institution->setComment($requestData['comment']);
             $institution->setCommentApi($requestData['commentapi']);
+            $institution->setLimitShare($requestData['limitshare']);
 			if(!$institution->setUrl($requestData['url'])){
 				print("Please try another URL");
 			}
