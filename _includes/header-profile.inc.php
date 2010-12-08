@@ -34,7 +34,7 @@ else { ?>
 <a id="my-collection" href="collection.php" title="My collection" >My collection</a>
 <?php
 if( isset($studentUser) ) {
-    $sharing = User::userCanShare($studentUser);
+    $sharing = User::userCanViewShares($studentUser);
     if ($sharing) {
 ?>
 <a id="shared-tabs" href="sharedtabs.php" title="Shared tabs" >Shared tabs</a>

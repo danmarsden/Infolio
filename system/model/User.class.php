@@ -1163,20 +1163,32 @@ class User extends DatabaseObject
     }
 
     /**
-     * Check whether a user can share tabs or not
+     * Check whether a user can view share tabs or not
+     * Looks for reasons to deny
      *
      * @param User $user
      * @return bool
      */
-    public static function userCanShare(User $user) {
+    public static function userCanViewShares(User $user) {
 
-        $userShare   = $user->getShare();
-        $instShare   = $user->getInstitution()->allowSharing();
-
-        if ($userShare == 1 && $instShare != 0) {
-            return true;
-        } else {
+        if ( $user->getShare() != 1 ) {
             return false;
         }
+
+        $institution = $user->getInstitution();
+
+        if ( $institution->allowSharing() == 0 ) {
+             return false;
+        }
+
+        if ( $institution->limitShare() == 1 ) {
+            // Students not allowed to view shares
+            if($user->getPermissionManager()->getUserType() == PermissionManager::USER_STUDENT){
+                return false;
+            }
+        }
+
+        // no reasons left to deny - let them have it
+        return true;
     }
 }

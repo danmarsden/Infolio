@@ -45,10 +45,10 @@ function display_shared_tabs($page, $count, $tablimit) {
     //first get this users institution share status
     global $studentUser, $db;
 
-    // user cannot share so shouldn't be on this page
-    $sharing = User::userCanShare($studentUser);
+    // user cannot view shares so shouldn't be on this page
+    $sharing = User::userCanViewShares($studentUser);
     if (!$sharing) {
-        return 'You do not have the right permissions to share Tabs';
+        return 'You do not have the right permissions to view shared Tabs';
     }
 
     //TODO: this could be optimised and less SQL used to obtain data.
