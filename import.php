@@ -69,7 +69,7 @@ if ($_POST['type'] =='site') {
                 //need to create this institution
                 $newInstitution = new Institution();
 			    $newInstitution->setName((string)$institution->name[0]);
-			    $newInstitution->setUrl($insurl);
+			    $newInstitution->m_url = $insurl;
                 //$newInstitution->setSharing($requestData['share']);
                 //$newInstitution->setComment($requestData['comment']);
                 //$newInstitution->setCommentApi($requestData['commentapi']);

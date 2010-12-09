@@ -20,7 +20,7 @@ class Institution extends DatabaseObject
 	private $m_asset;
 	private $m_assetId;
 	private $m_name;
-	private $m_url;
+	public $m_url; //used as public to allow setting during import correctly.
 	private $m_urlOldValue;
         private $m_share;
         private $m_comment;
@@ -299,11 +299,11 @@ class Institution extends DatabaseObject
 			'created_time' => Date::formatForDatabase($this->m_createdTime),
 			'updated_time' => Date::formatForDatabase($this->m_updatedTime)
 		);
-		
+
 		// Write to DB
 		$db = Database::getInstance();
 		$db->perform('institution', $data);
-		
+
 		// Get institution's new DB ID
 		$sql = "SELECT id from institution WHERE name='{$this->m_name}' ORDER BY id DESC LIMIT 1";
 		$result = $db->query($sql);
