@@ -121,7 +121,7 @@ foreach ($users as $user) {
     if (!empty($_POST['unusedassets'])) {
         $userAssets = $userAssetCollection->getAssets();
     } else { //only include assets that are in use
-        $userAssets = $userAssetCollection->getAssets(FILTER_INUSE, $tabIds);
+        $userAssets = $userAssetCollection->getAssets(AssetCollection::FILTER_INUSE, $tabIds);
     }
 
     if ($_POST['format'] == 'html') {

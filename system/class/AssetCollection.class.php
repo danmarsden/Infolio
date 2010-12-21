@@ -124,7 +124,7 @@ class AssetCollection
 				$tagName = Safe::StringForDatabase(substr($filterType, 4));
 				$filterSql = " assets.id IN (SELECT asset_id FROM tags_assets WHERE tag_id IN (SELECT id FROM tags WHERE name='{$tagName}'))";
 			}
-            elseif($filterType == FILTER_INUSE) {
+            elseif($filterType == self::FILTER_INUSE) {
                 $tabids = implode(',', $tabids);
 
                 $filterSql = " assets.id IN (SELECT asset_id FROM tags_assets WHERE user_id = ".$this->m_user->getId().")";
