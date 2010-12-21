@@ -48,6 +48,7 @@ class AssetCollection
 	const FILTER_WEEK = 'f_week';
 	const FILTER_MONTH = 'f_month';
 	const FILTER_FAVOURITES = 'f_faves';
+    const FILTER_INUSE = 'f_inuse';
 
 	// Mode constants
 	const MODE_EDIT = 0;
@@ -101,7 +102,7 @@ class AssetCollection
 		$this->m_assetTypeFilter = $value;
 	}
 
-	public function getAssets($filterType = self::FILTER_ALL)
+	public function getAssets($filterType = self::FILTER_ALL, $tabids=array())
 	{
 		$filterKey = (isset($this->assetTypeFilter)) ?
 						$filterType . '+' . $this->assetTypeFilter :
@@ -123,6 +124,17 @@ class AssetCollection
 				$tagName = Safe::StringForDatabase(substr($filterType, 4));
 				$filterSql = " assets.id IN (SELECT asset_id FROM tags_assets WHERE tag_id IN (SELECT id FROM tags WHERE name='{$tagName}'))";
 			}
+            elseif($filterType == FILTER_INUSE) {
+                $tabids = implode(',', $tabids);
+
+                $filterSql = " assets.id IN (SELECT asset_id FROM tags_assets WHERE user_id = ".$this->m_user->getId().")";
+                $filterSql .= " OR assets.id IN (SELECT picture_asset_id FROM graphical_passwords WHERE user_id = ".$this->m_user->getId().")";
+                $filterSql .= " OR assets.id IN (SELECT asset_id FROM tab WHERE user_id = ".$this->m_user->getId()." AND ID IN(".$tabids."))";
+                $filterSql .= " OR assets.id IN (SELECT profile_picture_id FROM user WHERE id = ".$this->m_user->getId().")"; //TODO: should be able to get picture id from memory instead of sql.
+                $filterSql .= " OR assets.id IN (SELECT a.id from tab t, page p, block b, assets a WHERE".
+                              " b.page_id = p.id AND p.tab_id = t.ID AND b.user_id = ".$this->m_user->getId().
+                              " AND t.ID IN ($tabids) AND (b.picture0 = a.id OR b.picture1 = a.id))";
+            }
 			else {
 				// Filter doesn't exist
 				throw new Exception("TechDis: '{$filterType}' is not a valid filter type");

@@ -968,7 +968,8 @@ class User extends DatabaseObject
 				$tabCount++;
 			}
 		}
-		$html .= '</ul>';
+		$html .= '</ul><br/>';
+        $html .= '<input type="checkbox" name="unusedassets" value="1"/>Include unused Assets';
         $html .= "<h3>Choose an export format</h3><div class=\"element\"><div><input type=\"radio\" class=\"radio\" id=\"export_formate091\" name=\"format\" tabindex=\"1\" value=\"html\" checked=\"checked\">"
                 ."<label for=\"export_formate091\">Standalone HTML Website</label><div class=\"radio-description\">Creates a self-contained website with your portfolio data. You cannot import this again, but it's readable in a standard web browser.</div></div><div>"
                 ."<input type=\"radio\" class=\"radio\" id=\"export_format442a\" name=\"format\" tabindex=\"1\" value=\"leap\"> <label for=\"export_format442a\">LEAP2A</label><div class=\"radio-description\">Gives you an export in the LEAP2A standard format. You can use this to import your data into other LEAP2A compliant systems, although the export is hard for humans to read.</div></div></div>";

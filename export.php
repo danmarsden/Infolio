@@ -110,7 +110,7 @@ foreach ($users as $user) {
     }
     $studentTheme = $user->getTheme(); //used as Global by scripts
     // Get user's tabs and assets
-    if (isset($usertabsarray[$user->getId()])) {
+    if (isset($usertabsarray[$user->getId()])) { //this is a site export
         $userTabs = $usertabsarray[$user->getId()];
         $tabIds = $usertabidarray[$user->getId()];
     } else {
@@ -118,7 +118,11 @@ foreach ($users as $user) {
     }
 
     $userAssetCollection = $user->getAssetCollection();//Asset::RetrieveUsersAssets($studentUser);
-    $userAssets = $userAssetCollection->getAssets();
+    if (!empty($_POST['unusedassets'])) {
+        $userAssets = $userAssetCollection->getAssets();
+    } else { //only include assets that are in use
+        $userAssets = $userAssetCollection->getAssets(FILTER_INUSE, $tabIds);
+    }
 
     if ($_POST['format'] == 'html') {
         $studentUser = $user; //used as a strange global.
