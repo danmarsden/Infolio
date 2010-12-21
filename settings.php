@@ -156,7 +156,8 @@ if(!isset($studentUser->m_tabs)) {
                 $tabCount++;
             }
         }
-        $html .= "</ul>";
+        $html .= "</ul><br>";
+        $html .= '<input type="checkbox" name="unusedassets" value="1"/> Include unused Assets';
         echo $html;
 ?>
         <h3>Choose an export format</h3><div class="element"><div><input type="radio" class="radio" id="export_formate091" name="format" tabindex="1" value="html"  checked="checked"/>
