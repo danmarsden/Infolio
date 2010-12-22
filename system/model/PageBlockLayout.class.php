@@ -96,9 +96,24 @@ class PageBlockLayout
 		$pictures = $blockContent->getPictures();
 		$html = $this->putImagesInTemplate($html, $pictures, $theme);
 
-		// Add play button
-		$html .= '<div class="playbutton"><object type="application/x-shockwave-flash" data="/_flash/Play.swf?snd=/system/get.sound.php?blockid=' . $blockContent->getId() . '" width="50" height="50" wmode="transparent"><param name="movie" value="/_flash/Play.swf?snd=/system/get.sound.php?blockid=' . $blockContent->getId() . '" /></object></div>';
+                $blockcontentid = $blockContent->getId();
 
+		// Add play button
+                $html .= "
+                    <script type=\"text/javascript\" src=\"/_scripts/swfobject.js\"></script>
+                    <script type=\"text/javascript\">
+                        var params = {};
+                        params.scale = \"noscale\";
+                        params.wmode = \"opaque\";
+                        var attributes = {};
+                        swfobject.embedSWF('/_flash/Play.swf?snd=/system/get.sound.php?blockid=$blockcontentid', 'playbutton', '50', '50', '9', false, false, params, attributes);
+                    </script>
+                    <div id=\"playbutton\">
+                          <a href=\"http://www.adobe.com/go/getflashplayer\">
+                            <img alt=\"Get Adobe Flash player\" src=\"http://www.adobe.com/images/shared/download_buttons/get_flash_player.gif\"/>
+                          </a>
+                    </div>
+";
 		return $html;
 	}
 

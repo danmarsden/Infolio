@@ -1105,7 +1105,21 @@ class User extends DatabaseObject
 		}
 
 		// Add play button
-		$html .= '<p class="playbutton2"><object type="application/x-shockwave-flash" data="/_flash/Play.swf?snd=/system/get.sound.php?blockid=home" width="50" height="50"><param name="movie" value="/_flash/Play.swf?snd=/system/get.sound.php?blockid=home" /></object></p>';
+                $html .= "
+                    <script type=\"text/javascript\" src=\"/_scripts/swfobject.js\"></script>
+                    <script type=\"text/javascript\">
+                        var params = {};
+                        params.scale = \"noscale\";
+                        params.wmode = \"opaque\";
+                        var attributes = {};
+                        swfobject.embedSWF('/_flash/Play.swf?snd=/system/get.sound.php?blockid=home', 'playbutton', '50', '50', '9', false, false, params, attributes);
+                    </script>
+                    <div id=\"playbutton\">
+                          <a href=\"http://www.adobe.com/go/getflashplayer\">
+                            <img alt=\"Get Adobe Flash player\" src=\"http://www.adobe.com/images/shared/download_buttons/get_flash_player.gif\"/>
+                          </a>
+                    </div>
+";
 
 		$html .= '</div>';
 		return $html;
