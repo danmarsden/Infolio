@@ -180,11 +180,17 @@ if(!isset($studentUser->m_tabs)) {
 <script type="text/javascript">
 	$(document).ready( function() {
 		var flashLoaded = false;
+
+                var params = {};
+                params.scale = "noscale";
+                params.wmode = "opaque";
+                var attributes = {};
+
 		// Creates generic show/hide code for marked up content
 		$('.hideBit').hide();
 		$('#btnShowHide').toggle( function(e) {
 			if(!flashLoaded) {
-				swfobject.embedSWF('/_flash/PicturePasswordPicker.swf', 'flvPassword', '700', '560', '9', false, {page:'user'});
+				swfobject.embedSWF('/_flash/PicturePasswordPicker.swf', 'flvPassword', '700', '560', '9', false, {page:'user'}, params, attributes);
 				flashLoaded = true;
 			}
 			$(e.target.parentNode.parentNode).find('.hideBit').show();
