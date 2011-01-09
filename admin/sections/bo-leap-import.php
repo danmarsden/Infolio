@@ -110,7 +110,7 @@
 						</td>
 					</tr>
                     <tr>
-                        <td class="captionLabel">File</td>
+                        <td class="captionLabel">LEAP2A File</td>
                         <td><input type="file" name="leapimport"/></td>
                     </tr>
                     <tr>
