@@ -53,11 +53,11 @@ include_once('page.inc.php');
 		print '<div id="blocks">' .
 				$page->HtmlBlocks($studentTheme, $studentUser) . '</div>'; ?>
 
-		<? // This page's attachments
+        <? // This page's attachments 
 		print $studentTheme->SolidBox(
 			'<h2 id="attachments">Attachments</h2>' .
 			$page->HtmlAttachments() .
-			$uploader->HtmlUploadForm('fAttach', $page->PathWithQueryString()) .
+			$uploader->HtmlUploadForm('fAttach', $page->PathWithQueryString(), $page) .
 			'<img id="loaderImg" class="hideme" src="/_images/ajax-loader.gif" width="32" height="32" alt="Loading" style="float: right;" />'
 		);
         //now display comments stuff if enabled.

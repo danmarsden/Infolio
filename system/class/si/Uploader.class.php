@@ -104,8 +104,15 @@ class Uploader
 		}
 	}
 	
-	public function HtmlUploadForm($fileUploadId, $actionPath)
-	{
+	public function HtmlUploadForm($fileUploadId, $actionPath, Page $page = null)
+    {
+        if ($page) {
+            $returnurl = $page->PathWithQueryString();
+            $pageid = $page->getId();
+        } else {
+            $returnurl = 'collection.php';
+            $pageid = null;
+        }
 		$html = '<div id="html-uploader"><form id="upload-image-frm" enctype="multipart/form-data" action="' . $actionPath . '" method="post">' .
 			'<h3><label for="txtFile">' .$this->m_title. '</label></h3>' .
 			//'<input type="hidden" name="MAX_FILE_SIZE" value="' . $this->m_fileSizeLimit . '" />' .
@@ -125,6 +132,8 @@ class Uploader
                     <div class="fieldset flash" id="fsUploadProgress">
                     </div>
                     </div>
+                    <input type="hidden" id="pageid" name="pageid" value="'.$pageid.'" />
+                    <input type="hidden" id="returnurl" name="returnurl" value="'.$returnurl.'" />
                 </form></div>';
 
 		return $html;
