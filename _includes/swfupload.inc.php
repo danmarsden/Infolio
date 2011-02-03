@@ -121,7 +121,6 @@ function fileDialogComplete(numFilesSelected, numFilesQueued) {
 }
 
 function uploadStart(file) {
-    this.addPostParam('stacey', document.getElementById('stacey').value);
     this.addPostParam('pageid', document.getElementById('pageid').value);
     try {
         var progress = new FileProgress(file, this.customSettings.progressTarget);
