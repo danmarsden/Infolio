@@ -13,7 +13,8 @@ set_time_limit(360);
 
 include_once("system/initialise.php");
 include_once("system/class/si/Uploader.class.php");
-include_once("model/User.class.php");
+include_once("system/model/User.class.php");
+include_once("system/model/Page.class.php");
 include_once("function/shared.php");
 include_once("function/core.php");
 
@@ -30,7 +31,13 @@ if (isset($_FILES['Filedata'])) {
     $file = $_FILES['Filedata'];
 }
 
-if ($assetId = $uploader->doCopyUpload($file, $user)) {
+if (isset($_POST['pageid'])) {
+    $page = Page::GetPageById($_POST['pageid']);
+} else {
+    $page = null;
+}
+
+if ($assetId = $uploader->doCopyUpload($file, $user, $page)) {
     //don't need to do anything
     exit;
 } else {

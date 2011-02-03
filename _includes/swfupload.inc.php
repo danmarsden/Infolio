@@ -25,7 +25,7 @@ window.onload = function () {
         file_size_limit : "100 MB",
         button_window_mode: SWFUpload.WINDOW_MODE.TRANSPARENT,
         file_upload_limit : "1",
-        file_types : "*.avi; *.mp4; *.mpeg; *.mpg; *.flv; *.mov; *.wmv; *.mp3; *.wav; *.bmp; *.jpg; *.png; *.gif; *.jpeg; *.JPG",
+        file_types : "*",
         file_types_description : "Web image, video and audio files",
         custom_settings : {
             progressTarget : "fsUploadProgress",
@@ -33,6 +33,7 @@ window.onload = function () {
         },
 
         // we need to keep track of the current user
+        // and page for attachment vs asset creation
         post_params: {
             userid: "<?php echo $_SESSION['userID']; ?>"
         },
@@ -120,6 +121,8 @@ function fileDialogComplete(numFilesSelected, numFilesQueued) {
 }
 
 function uploadStart(file) {
+    this.addPostParam('stacey', document.getElementById('stacey').value);
+    this.addPostParam('pageid', document.getElementById('pageid').value);
     try {
         var progress = new FileProgress(file, this.customSettings.progressTarget);
         progress.setStatus("Uploading...");
@@ -210,9 +213,10 @@ function uploadComplete(file) {
     if (this.getStats().files_queued === 0) {
         document.getElementById(this.customSettings.cancelButtonId).disabled = true;
     }
-    // redirect back to the collection.php page so that the
+    // redirect back to the page so that the
     // user can see their newly added file
-    window.location.href = 'collection.php';
+    var returnurl = document.getElementById('returnurl').value;
+    window.location.href = returnurl;
 }
 
 // This event comes from the Queue Plugin
