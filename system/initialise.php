@@ -45,3 +45,9 @@ define('SECTION_UPLOADED_ASSET', 9);
 define('SECTION_UPLOAD_MANAGER', 10);
 define('SECTION_SITEEXPORT', 11);
 define('SECTION_LEAPIMPORT', 12);
+
+$allowedExt = 'avi,mp4,mpeg,mpg,flv,mov,wmv,mp3,wav.bmp,jpg,png,gif,jpeg,tif,tiff,pps,pdf,iso,flv';
+$allowedExt .= 'xls,doc,docx,zip,txt,lit,rt,odm,msg,rmvb,mkv,nds,nes,pdp,iwd,p3t,rar,arc,boo,car,alz';
+$allowedExt .= 'odt,ods,odf,docm,dotx,dotm,xlsx,xlsm,xltx,xltm,xlsb,xlam,pptx,pptm,potx,potm,ppam,ppsx,ppsm,sldx,sldm,thmx';
+
+define('EXT_WHITELIST', $allowedExt);

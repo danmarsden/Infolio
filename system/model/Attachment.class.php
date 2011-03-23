@@ -132,11 +132,8 @@ class Attachment extends DatabaseObject implements iFile
         //It is deliberate that a blacklist is not used instead.
 		$extension = Uploader::FindFileExtension($fileName);
 
-		$allowedExt = 'avi,mp4,mpeg,mpg,flv,mov,wmv,mp3,wav.bmp,jpg,png,gif,jpeg,tif,tiff,pps,pdf,iso,flv';
-        $allowedExt .= 'xls,doc,docx,zip,txt,lit,rt,odm,msg,rmvb,mkv,nds,nes,pdp,iwd,p3t,rar,arc,boo,car,alz';
-        $allowedExt .= 'odt,ods,odf,docm,dotx,dotm,xlsx,xlsm,xltx,xltm,xlsb,xlam,pptx,pptm,potx,potm,ppam,ppsx,ppsm,sldx,sldm,thmx';
 
-		if(in_array($extension, explode(',',$allowedExt))) {
+		if(in_array($extension, explode(',',EXT_WHITELIST))) {
 			return true;
 		}
 		else {
