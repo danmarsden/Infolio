@@ -110,12 +110,38 @@ class Attachment extends DatabaseObject implements iFile
 
 	public static function CreateNew($href, Page $page, User $user)
 	{
+        if (!self::checkAllowedType($href)) {
+            Throw new Exception("That is not an allowed file type - try compressing it using something like winzip and upload the new file");
+        };
 		$attachment = new Attachment();
 		$attachment->m_href = $href;
 		$attachment->m_page = $page;
 		$attachment->setFolders($user->getInstitution()->getUrl());
 
 		return $attachment;
+	}
+
+    /**
+	 * Works out the type of an asset based on file extension.
+	 * @param <type> $filename
+	 * @return <type>
+	 */
+	public static function checkAllowedType($fileName)
+	{
+        //In-folio stores files in the webroot so a whitelist must be used to define which files are safe to upload
+        //It is deliberate that a blacklist is not used instead.
+		$extension = Uploader::FindFileExtension($fileName);
+
+		$allowedExt = 'avi,mp4,mpeg,mpg,flv,mov,wmv,mp3,wav.bmp,jpg,png,gif,jpeg,tif,tiff,pps,pdf,iso,flv';
+        $allowedExt .= 'xls,doc,docx,zip,txt,lit,rt,odm,msg,rmvb,mkv,nds,nes,pdp,iwd,p3t,rar,arc,boo,car,alz';
+        $allowedExt .= 'odt,ods,odf,docm,dotx,dotm,xlsx,xlsm,xltx,xltm,xlsb,xlam,pptx,pptm,potx,potm,ppam,ppsx,ppsm,sldx,sldm,thmx';
+
+		if(in_array($extension, explode(',',$allowedExt))) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 	/**
