@@ -25,7 +25,7 @@ window.onload = function () {
         file_size_limit : "100 MB",
         button_window_mode: SWFUpload.WINDOW_MODE.TRANSPARENT,
         file_upload_limit : "1",
-        file_types : "*",
+        file_types : '<?php echo str_replace(',',';*.','*.'.EXT_WHITELIST); ?>',
         file_types_description : "Web image, video and audio files",
         custom_settings : {
             progressTarget : "fsUploadProgress",
