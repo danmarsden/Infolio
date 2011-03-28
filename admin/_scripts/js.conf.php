@@ -1,7 +1,7 @@
 <?php
 // $Id: js.conf.php 554 2009-05-16 23:12:25Z richard $
 ?>var path={
-<?
+<?php
 	include("../../system/conf.php");
 	echo "\"DIR_WS_ADMIN\":'" . DIR_WS_ADMIN . "',\n";
 	echo "\"DIR_WS_ADMIN_LOGIN\":'" . DIR_WS_ADMIN_LOGIN . "',\n";

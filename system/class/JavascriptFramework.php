@@ -65,7 +65,7 @@ class JavascriptFramework{
 			?><script type="text/javascript" src="<?php echo DIR_WS_JAVASCRIPT . $js ?>"></script><?
 		}
 		foreach($csss as $css){
-			?><link rel="stylesheet" href="<?php echo DIR_WS_JAVASCRIPT . $css ?>" type="text/css" media="screen" /><?
+			?><link rel="stylesheet" href="<?php echo DIR_WS_JAVASCRIPT . $css ?>" type="text/css" media="screen" /><?php
 		}
 	}
 }

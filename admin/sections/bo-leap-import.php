@@ -33,7 +33,7 @@ $gid = Safe::get('id');
                             value="<?php print (isset($user)) ? $user->getUsername() : ''; ?>" /> <?php print TEXT_FIELD_REQUIRED; ?>
                             <div id="inlineNotificationUsername" class="inlineNotification"></div></td>
                     </tr>
-                    <?
+                    <?php
                     $passwordMessage = '';
                     $passwordValue = '';
                     $passwordRequired = '';
@@ -94,11 +94,11 @@ $gid = Safe::get('id');
                                 name="institution_id"
                                 id="institution_id"
                                 <option></option>
-                                <?
+                                <?php
                                     $institutions = Institution::RetrieveAll();
                                     foreach($institutions as $institution)
                                     {
-                                        ?><option value="<?php print $institution->getId(); ?>"><?php print $institution->getName(); ?></option><?
+                                        ?><option value="<?php print $institution->getId(); ?>"><?php print $institution->getName(); ?></option><?php
                                     }
                                 ?>
                             </select>

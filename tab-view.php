@@ -110,7 +110,7 @@ if (!empty($pageviewid)) {
 <body class="<?php print $studentTheme->getBodyClass(); ?>" id="home">
 <div id="wrap-main">
 <div id="wrap-profile">
-<?
+<?php
 	print $tabUser->getProfilePicture()->Html(Image::SIZE_TAB_ICON, 'header_pic');
 ?>
 	<p id="site-name"><?php print($tabUser->getFirstName()); ?>'s eFolio</p>

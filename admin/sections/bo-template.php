@@ -1,4 +1,4 @@
-<?
+<?php
 
 include_once('model/Template.class.php');
 include_once('model/Group.class.php');
@@ -21,7 +21,7 @@ else {
 		<script type="text/javascript" src="/admin/_scripts/bo-template-grid.js"></script>	
 		<form action="." method="get">
 		<input type="hidden" name="do" value="<?php print SECTION_TEMPLATE; ?>" />
-		<?
+		<?php
 		// Admin users get to select institution they're acting on
 		$institution = null;
 		if( $adminUser->getPermissionManager()->hasRight(PermissionManager::RIGHT_ALL_ADMIN) ) {
@@ -54,7 +54,7 @@ else {
 				<th>Name</th>
 				<th class="actionTd"><a href="?do=1&a=add&inst=<?php print $chosenInstituteId; ?>">Create</a></th>
 			</tr>
-			<?
+			<?php
 
 			$templates = Template::RetrieveAll($adminUser, $institution);
 			$i=0;
@@ -72,12 +72,12 @@ else {
 						&nbsp;]
 					</td>
 				</tr>			
-				<?
+				<?php
 			}
 			?>
 		</table>
 		</form>
-		<?
+		<?php
 	}
 
 	/**
@@ -232,16 +232,16 @@ else {
 							$users = User::RetrieveUsersWhoCantSeeTemplate($template, $adminUser);
 
 							foreach($users as $user) {
-								?><option id="optionSourceSelect<?php print $user->getId(); ?>" value="u<?php print $user->getId(); ?>" ondblclick="doAddUserToGroup(this)"><?php print $user->getUsername() . ' ( ' . $user->getFirstName() . " " . $user->getLastName() . ' )'; ?></option><?
+								?><option id="optionSourceSelect<?php print $user->getId(); ?>" value="u<?php print $user->getId(); ?>" ondblclick="doAddUserToGroup(this)"><?php print $user->getUsername() . ' ( ' . $user->getFirstName() . " " . $user->getLastName() . ' )'; ?></option><?php
 							}
 						?>
 						</optgroup>
 						<optgroup label="Groups">
-						<?
+						<?php
 							$groups = Group::RetrieveWhoCantSeeTemplate($template, $adminUser);
 
 							foreach($groups as $group) {
-								?><option id="optionSourceSelect<?php print $group->getId(); ?>" value="g<?php print $group->getId(); ?>" ondblclick="doAddUserToGroup(this)"><?php print $group->getTitle(); ?></option><?
+								?><option id="optionSourceSelect<?php print $group->getId(); ?>" value="g<?php print $group->getId(); ?>" ondblclick="doAddUserToGroup(this)"><?php print $group->getTitle(); ?></option><?php
 							}
 						?>
 						</optgroup>
@@ -255,7 +255,7 @@ else {
 					Template viewers
 					<select multiple="multiple" id="targetSelect" style="width:100%;" size="7">
 						<optgroup label="Students">
-						<?
+						<?php
 							$users = User::RetrieveUsersWhoCanSeeTemplate($template, $adminUser);
 
 							foreach($users as $user) {
@@ -264,11 +264,11 @@ else {
 						?>
 						</optgroup>
 						<optgroup label="Groups">
-						<?
+						<?php
 							$groups = Group::RetrieveWhoCanSeeTemplate($template, $adminUser);
 
 							foreach($groups as $group) {
-								?><option id="optionSourceSelect<?php print $group->getId(); ?>" value="g<?php print $group->getId(); ?>" ondblclick="doAddUserToGroup(this)"><?php print $group->getTitle(); ?></option><?
+								?><option id="optionSourceSelect<?php print $group->getId(); ?>" value="g<?php print $group->getId(); ?>" ondblclick="doAddUserToGroup(this)"><?php print $group->getTitle(); ?></option><?php
 							}
 						?>
 						</optgroup>
@@ -278,6 +278,6 @@ else {
 		</div>
 		<?php endif; ?>
 		</div>
-		<?
+		<?php
 	}
 ?>

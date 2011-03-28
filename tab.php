@@ -46,7 +46,7 @@ include_once('tab.inc.php');
 			<div class="clear"></div>
 			<?php print $studentTheme->HtmlMenu($sortMenu, Theme::LEFT); ?>
 			<div class="bb"><div></div></div>
-		</div><?
+		</div><?php
 		} ?>
 		
 		<?php include('_includes/footer.inc.php'); ?>

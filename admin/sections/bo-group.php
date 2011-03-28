@@ -37,7 +37,7 @@ function showGrid(){
 	<form action="." method="get">
 	<input type="hidden" name="do" value="<?php print $do; ?>" />
 
-	<?
+	<?php
 	// Admin users get to select institution they're acting on
 	$institution = null;
 	if( $adminUser->getPermissionManager()->hasRight(PermissionManager::RIGHT_ALL_ADMIN) ) {
@@ -76,7 +76,7 @@ function showGrid(){
 		</tr>
 		</thead>
 		<tbody>
-		<?
+		<?php
 		$groups = Group::RetrieveGroups($adminUser, $institution);
 		$i=0;
 		foreach($groups as $group){
@@ -96,7 +96,7 @@ function showGrid(){
 					&nbsp;]
 				</td>
 			</tr>			
-			<?
+			<?php
 		}
 		?>
 		</tbody>
@@ -121,7 +121,7 @@ function showGrid(){
 		<button dojoType="dijit.form.Button" type="submit" onclick="deleteGroup()">Yes</button>
 		<button dojoType="dijit.form.Button" type="submit" onclick="hideDeleteMsg()">No</button>
 	</div>		
-	<?
+	<?php
 }
 
 /**
@@ -196,7 +196,7 @@ function showForm()
 				<td valign="top" width="47%">
 					Student List
 					<select multiple="multiple" id="sourceSelect" style="width:100%;" size="7">
-						<?
+						<?php
 							$fromInstitution = (isset($ginst)) ?
 									Institution::RetrieveById($ginst) :
 									null;
@@ -222,7 +222,7 @@ function showForm()
 							$users = User::RetrieveUsersInGroup($group, $adminUser);
 
 							foreach($users as $user) {
-								?><option id="target<?php print $user->getId(); ?>" value="<?php print $user->getId(); ?>" ondblclick="doRemoveUserFromGroup(this)"><?php print $user->getUsername() . ' ( ' . $user->getFirstName() . " " . $user->getLastName() . ' )'; ?></option><?
+								?><option id="target<?php print $user->getId(); ?>" value="<?php print $user->getId(); ?>" ondblclick="doRemoveUserFromGroup(this)"><?php print $user->getUsername() . ' ( ' . $user->getFirstName() . " " . $user->getLastName() . ' )'; ?></option><?php
 							}
 						} ?>						
 					</select>
@@ -239,5 +239,5 @@ function showForm()
 	</div>		
 </div></div>	
 </form>
-<?
+<?php
 }

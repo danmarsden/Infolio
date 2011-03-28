@@ -1,4 +1,4 @@
-<?
+<?php
 
 /**
 * Copy a file, or recursively copy a folder and its contents

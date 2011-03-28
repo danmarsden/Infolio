@@ -1,4 +1,4 @@
-<?
+<?php
 
 /**
  * export.php - provides an export of Infolio

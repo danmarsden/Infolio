@@ -1,4 +1,4 @@
-<?
+<?php
 
 /**
  * import.php - import of Infolio Leap file.

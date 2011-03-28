@@ -1,4 +1,4 @@
-<?
+<?php
 
 /**
  * The code behind for index.php

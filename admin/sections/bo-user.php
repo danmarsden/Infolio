@@ -39,7 +39,7 @@ function showGrid()
 	<form action="." method="get">
 	<input type="hidden" name="do" value="<?php print $do; ?>" />
 
-	<?
+	<?php
 	// Admin users get to select institution they're acting on
 	$institution = null;
 	if( $adminUser->getPermissionManager()->hasRight(PermissionManager::RIGHT_ALL_ADMIN) ) {
@@ -78,7 +78,7 @@ function showGrid()
 			</tr>
 		</thead>
 		<tbody>
-		<?
+		<?php
 
 		/*
 		 * Search function not yet available
@@ -174,7 +174,7 @@ function showGrid()
         </table>
         <input type="hidden" name="adminuser" value="<?php echo $adminUser->getId(); ?>" />
     </form>
-<?
+<?php
 }
 
 function showForm(){
@@ -302,7 +302,7 @@ function showForm(){
 							value="<?php print (isset($user)) ? $user->getUsername() : ''; ?>" /> <?php print TEXT_FIELD_REQUIRED; ?>
 							<div id="inlineNotificationUsername" class="inlineNotification"></div></td>
 					</tr>
-					<?
+					<?php
 					$passwordMessage = '';
 					$passwordValue = '';
 					$passwordRequired = '';
@@ -392,5 +392,5 @@ function showForm(){
 			<?php } ?>
 		</div>			
 	</div>
-<?
+<?php
 	}

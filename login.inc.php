@@ -1,4 +1,4 @@
-<?
+<?php
 //include_once('conf.php');
 include_once("system/initialise.php");
 include_once('class/Events/LoginEventDispatcher.class.php');

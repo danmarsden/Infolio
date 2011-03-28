@@ -8,7 +8,7 @@ $uploader = new Uploader('Upload a new asset', UPLOAD_LIMIT);
 <input type="hidden" name="do" value="<?php print $do; ?>" />
 
 <div style="width:25%; float:left;">
-<?
+<?php
 	// Admin users get to select institution they're acting on
 	$institution = null;
 	$institutionQString = '';

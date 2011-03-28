@@ -1,4 +1,4 @@
-<?
+<?php
 
 /**
  * The code behind tabs.php

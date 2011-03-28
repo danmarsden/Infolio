@@ -54,7 +54,7 @@ if( isset($studentUser) ) {
 	$toolMenu->addLink( Link::CreateImageLink($studentTheme->Icon('settings', 'Settings'), 'settings.php', Image::SIZE_ORIGINAL, array('class'=>'bSettings','alt'=>'Settings')) );
 }
 
-?><div id="wrap-head"><?
+?><div id="wrap-head"><?php
 print $accessibilityMenu->Html();
 print $toolMenu->Html();
-?></div><?
+?></div>

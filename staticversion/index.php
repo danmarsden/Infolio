@@ -31,7 +31,7 @@ include_once('staticversion/index.inc.php');
 	<div id="wrap-content">
 	<div id="wrap-content-inner">
 		<h1>About me</h1>
-		<?
+		<?php
 		print $studentTheme->Box($studentDetails, "<h2>{$studentUser->getFirstName()} {$studentUser->getLastName()}</h2>");
 		
 		include('_includes/footer.inc.php'); ?>

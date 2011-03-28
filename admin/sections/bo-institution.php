@@ -45,7 +45,7 @@ function showGrid()
 			<th>Name</th>
 			<th class="actionTd"><a href="?do=<?php print SECTION_INSTITUTION; ?>&a=add">Create</a></th>
 		</tr>
-		<?
+		<?php
 
 		$institutions = Institution::RetrieveAll();
 		$i = 0;
@@ -59,12 +59,12 @@ function showGrid()
 					<a onclick="onDelete(<?php print $institution->getid(); ?>);" onkeyup="onDelete(<?php print $institution->getid(); ?>);">Delete</a>
 				</td>
 			</tr>			
-			<?
+			<?php
 		}
 		?>
 	</table>
 	</form>
-	<?
+	<?php
 }
 
 /**
@@ -136,5 +136,5 @@ function showForm()
             <p>To enable comments you must set up an account at http://intensedebate.com/ (you can use the same API key for each institution or separate api keys to allow flexibility)</p>
 		</div>		
 	</div>
-	<?
+	<?php
 }

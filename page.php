@@ -34,7 +34,7 @@ include_once('page.inc.php');
 	<div id="wrap-content-inner">
 		<?php print $studentTheme->HtmlMenu($editMenu, Theme::RIGHT); ?>
 		<?php print $page->HtmlTitle(); ?>
-		<?
+		<?php
 		if( isset($blockLayoutsMenu) ) {
 			print $studentTheme->SolidBox($blockLayoutsMenu->Html());
 		}
@@ -73,7 +73,7 @@ var idcomments_post_url;
 <span id="IDCommentsPostTitle" style="display:none"></span>
 <script type='text/javascript' src='http://www.intensedebate.com/js/genericCommentWrapperV2.js'></script>
 
-		<?
+		<?php
         }
         // Paging menu (pages in the parent tab)
 		print $studentTheme->HtmlMenu($pagingMenu, Theme::LEFT); ?>

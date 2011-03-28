@@ -1,4 +1,4 @@
-<?
+<?php
 /**
  * init.php
  * initialise all general classes for both front and backend

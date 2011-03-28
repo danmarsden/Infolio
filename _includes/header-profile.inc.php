@@ -16,7 +16,7 @@
 
 
 ?><div id="wrap-profile">
-<?
+<?php
 // Profile summary for logged in user
 if( isset($studentUser) ) {
 	print $studentUser->getProfilePicture()->Html(Image::SIZE_TAB_ICON, 'header_pic');
@@ -38,7 +38,7 @@ if( isset($studentUser) ) {
     if ($sharing) {
 ?>
 <a id="shared-tabs" href="sharedtabs.php" title="Shared tabs" >Shared tabs</a>
-<?
+<?php
     }
     // Scrolling tabs
 	print $studentTheme->ScrollingTabs( $tabsMenu->Html() );

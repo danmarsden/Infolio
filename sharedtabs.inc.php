@@ -1,4 +1,4 @@
-<?
+<?php
 
 /**
  * sharedtabs.inc.php -

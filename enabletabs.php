@@ -1,4 +1,4 @@
-<?
+<?php
 
 /**
  * enabletabs.php - enables and disables users tabs

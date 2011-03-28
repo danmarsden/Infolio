@@ -1,4 +1,4 @@
-<?
+<?php
 	$jsFramework->jqueryTableSorter();
 ?>
 <script type="text/javascript">

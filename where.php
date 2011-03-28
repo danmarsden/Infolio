@@ -1,4 +1,4 @@
-<?
+<?php
 include_once('system/initialise.php');
 include_once('class/si/SimplePage.class.php');
 include_once('model/Image.class.php');
@@ -23,7 +23,7 @@ $institutions = Institution::RetrieveAll()
 <div id="wrap-main">
 	<div id="wrap-content">
 	<div id="wrap-content-inner">
-		<?
+		<?php
         $msg = Safe::get('msg');
 		if(isset($msg)) {
 			print "<p>{$msg}</p>";

@@ -1,4 +1,4 @@
-<?
+<?php
 
 /**
  * html/lib.php - Creates a static html version of a user's infolio

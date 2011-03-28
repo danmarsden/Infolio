@@ -44,7 +44,7 @@ include('staticversion/tab.inc.php');
 			<?php print $tab->HtmlPageListing($studentUser); ?>
 			<div class="clear"></div>
 			<div class="bb"><div></div></div>
-		</div><?
+		</div><?php
 		} ?>
 		
 		<?php include('_includes/footer.inc.php'); ?>

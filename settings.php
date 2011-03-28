@@ -38,7 +38,7 @@ if(!isset($studentUser->m_tabs)) {
 		<h1>Tools and settings</h1>
 		<?php print $studentTheme->Box($studentTheme->HtmlColourOptions(), '<h2><img src="/_images/si/icons/pallete.gif" width="35" height="35" alt="" /> Colour</h2>'); ?>
 		
-		<?
+		<?php
 		// Password options
 		print $studentTheme->Box($studentUser->HtmlPasswordOptions($passwordChanged), '<h2 id="password-sect"><img src="/_images/si/icons/set-password.gif" width="35" height="35" alt="" /> Password</h2>'); ?>
 

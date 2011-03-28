@@ -47,7 +47,7 @@ if($a == 'logout') {
 
 		<div id="popupLoginBox">
 			<div id="popupBoxHeader">
-			<?
+			<?php
 			switch($a) {
 				case 'fp':
 					print 'Retrieve your login details';
@@ -61,7 +61,7 @@ if($a == 'logout') {
 			}
 			?></div>
 			<div id="loginBox">
-			<?
+			<?php
 			switch($a) {
 				case 'fp':
 					?>Please enter your email address
@@ -71,14 +71,14 @@ if($a == 'logout') {
 					<br />
 					<input type="button" onclick="sendPassword();" value="Send" name="a" style="float:right;" />
 					<input type="button" onclick="loginCancelButton();" value="Cancel" name="a" style="float:right;" />
-					</p><?
+					</p><?php
 					break;
 				case 'logout':
 					?>
 					<ul>
 						<li><a href="../login/">Click here to login</a></li>
 						<li><a href="../../">Click here to visit techdis</a></li>
-					</ul><?
+					</ul><?php
 					break;
 				default:
 					?>
@@ -94,7 +94,7 @@ if($a == 'logout') {
 							<p><a href="?a=fp">Forgotten password</a></p>
 							<p style="text-align:right;"><input type="submit" value="Login" name="a" /></p>
 
-					</form><?
+					</form><?php
 					break;
 			}
 			?></div>
