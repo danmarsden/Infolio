@@ -28,8 +28,8 @@ function onEnterPage($_page, $institutionName)
 	global $page, $institution;
 	$page = $_page;
 	$institution = Institution::RetrieveByName($institutionName);
-	
-	if(isset($_GET['log'])) {
+	$log = Safe::get('log');
+	if(!empty($log)) {
 		logout();
 	}
 }

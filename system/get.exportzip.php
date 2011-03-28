@@ -16,7 +16,7 @@
 include_once('initialise.php');
 include_once('class/Date.class.php');
 
-$profileExportFile = DIR_FS_ROOT . 'staticversion/user-' . Safe::GetArrayIndexValueWithDefault($_GET, 'user_id', '') . '.zip';
+$profileExportFile = DIR_FS_ROOT . 'staticversion/user-' . Safe::getWithDefault('user_id', '') . '.zip';
 
 if(file_exists($profileExportFile))
 {

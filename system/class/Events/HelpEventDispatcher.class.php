@@ -46,7 +46,7 @@ class HelpEventDispatcher extends EventDispatcher
 
 		// Enter page event - OnEnterHomePage
 		if( isset($this->mf_onEnterPageHandler) ) {
-			$helpItem = Safe::GetArrayIndexValueWithDefault($_GET, 'section', 0);
+			$helpItem = Safe::getWithDefault('section', 0);
 
 			// Call handler
 			call_user_func($this->mf_onEnterPageHandler, $this->m_page, $helpItem);

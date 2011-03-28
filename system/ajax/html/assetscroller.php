@@ -28,8 +28,8 @@ if(!isset($studentUser)) {
 	die('User is not logged in');
 }
 
-$editBlockId = Safe::GetArrayIndexValueWithDefault($_POST, 'blockId', 0);
-$editPictureId = Safe::GetArrayIndexValueWithDefault($_POST, 'pictureId', 0);
+$editBlockId = Safe::postWithDefault('blockId', 0);
+$editPictureId = Safe::postWithDefault('pictureId', 0);
 
 //$page = new Page();
 $page = new SimplePage('Partial page');

@@ -35,7 +35,8 @@ function onEnterPage($_page, $institutionName)
 		header("Location: /where.php?msg=Problem finding institution. Please choose again.");
 	}
 
-	if(isset($_GET['log'])) {
+    $log = Safe::get('log');
+    if(!empty($log)) {
 		logout();
 	}
 }

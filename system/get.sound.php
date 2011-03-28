@@ -11,7 +11,7 @@ $ignoreInstitutionUrl = true;
 include_once('_includes/login.inc.php');
 
 // Querystring input: blockid
-$blockId = Safe::GetArrayIndexValueWithDefault($_GET, 'blockid', null);
+$blockId = Safe::getWithDefault('blockid', null);
 
 if(is_numeric($blockId)) {
 	$block = PageBlock::RetrieveById($blockId);

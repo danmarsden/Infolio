@@ -45,9 +45,9 @@ if(!isset($adminUser) && $a != 'login' ) {
 switch($a) {
 	/* ** ** ** Login ** ** ** */
 	case 'login':
-		$inpUserName = Safe::Input($_GET["username"]);
-		$inpPassword = Safe::Input($_GET["password"]);
-		$inpInstitution = Safe::Input($_GET["institution"]);
+		$inpUserName = Safe::get('username');
+		$inpPassword = Safe::get('password');
+		$inpInstitution = Safe::get('institution');
 		print login($inpUserName, $inpPassword, $inpInstitution);
 		break;
 
@@ -370,8 +370,7 @@ function templateOperations($operation, $adminUser)
 	include_once(DIR_FS_MODEL . "Template.class.php");
 
 	// Get template id - most operations need this
-	$templateId = Safe::GetArrayIndexValueWithDefault($_POST, 'id', null);
-	if( !is_numeric($templateId) ) $templateId = null;
+	$templateId = Safe::postWithDefault('id', null, PARAM_INT);
 
 	switch($operation){
 		case 'insert':

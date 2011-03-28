@@ -90,8 +90,9 @@ class CollectionEventDispatcher extends EventDispatcher
 		$filter = Safe::GetArrayIndexValueWithDefault($this->m_queryStringVars, 'f', AssetCollection::FILTER_ALL);
 
 		// Get tag filter
-		if(isset($_GET['tag'])) {
-			$filter = "tag={$_GET['tag']}";
+        $tag = Safe::get('tag');
+		if(!empty($tag)) {
+			$filter = "tag={$tag}";
 		}
 
 		// Add favourite event - onFavouriteAdd
@@ -141,8 +142,9 @@ class CollectionEventDispatcher extends EventDispatcher
 		}
 
 		// Remove tag event
-		if(isset($_GET['deltag'])) {
-			call_user_func($this->mf_onTagRemoveHandler, $this->m_page, $assetId, Safe::Input($_GET['deltag']));
+        $deltag = Safe::get('deltag');
+		if(!empty($deltag)) {
+			call_user_func($this->mf_onTagRemoveHandler, $this->m_page, $assetId, $deltag);
 			return true;
 		}
 

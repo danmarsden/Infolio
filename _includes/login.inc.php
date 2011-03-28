@@ -38,7 +38,8 @@ if(!isset($notSecured))
 	}
 	else {
 		// Check the url includes the institution
-		if(!isset($_GET['institution']) && !isset($ignoreInstitutionUrl)) {
+        $ins = Safe::get('institution');
+		if(!isset($ins) && !isset($ignoreInstitutionUrl)) {
 			header('Location: /' . $studentUser->getInstitution()->getUrl() . '/');
 		}
 	}

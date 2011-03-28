@@ -21,7 +21,7 @@ include_once('model/User.class.php');
 $adminUser = BackOffice::RetrieveAndCheckAjaxAdminUser($_SESSION);
 
 // Check provided input
-$studentUserId = Safe::GetArrayIndexValueWithDefault($_GET, 'id', null);
+$studentUserId = Safe::getWithDefault('id', null);
 $includePasscode = isset($_GET['includepass']);
 if($studentUserId == null) {
 	die("Missing input.");

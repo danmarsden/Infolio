@@ -23,7 +23,7 @@ include_once('model/Group.class.php');
 $adminUser = BackOffice::RetrieveAndCheckAjaxAdminUser($_SESSION);
 
 // Check if institution was specified
-$fromInstitution = Safe::GetArrayIndexValueWithDefault($_GET, 'inst', null);
+$fromInstitution = Safe::getWithDefault('inst', null);
 if(isset($fromInstitution)) $fromInstitution = new Institution($fromInstitution);
 
 // Get assets for specific user
@@ -64,7 +64,7 @@ else {
 }
 
 // Print them in chosen format
-$format = Safe::GetArrayIndexValueWithDefault($_GET, 'format', null);
+$format = Safe::getWithDefault('format', null);
 switch($format) {
 	case 'xml':
 		print Asset::createXmlString($assets, Image::SIZE_PHOTO_LOGIN);

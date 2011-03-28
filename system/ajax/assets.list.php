@@ -34,7 +34,7 @@ else {
 }
 
 // Print them in chosen format
-$format = Safe::GetArrayIndexValueWithDefault($_GET, 'format', null);
+$format = Safe::getWithDefault('format', null);
 switch($format) {
 	case 'xml':
 		print Asset::createXmlString($assets, Image::SIZE_BOX);

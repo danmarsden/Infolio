@@ -121,8 +121,10 @@ class TabEventDispatcher extends EventDispatcher
 
 		// ** Edit icon event
 		elseif($this->isAction(self::ACTION_EDIT_ICON)) {
-			$pictureFilter = Safe::GetArrayIndexValueWithDefault($_GET, 'f', AssetCollection::FILTER_ALL);
-			if(isset($_GET['tag'])) $pictureFilter = 'tag=' . Safe::Input($_GET['tag']);
+			$pictureFilter = Safe::getWithDefault('f', AssetCollection::FILTER_ALL);
+
+            $tag = Safe::get('tag');
+			if(isset($tag)) $pictureFilter = 'tag=' . $tag;
 
 			// Call handler
 			call_user_func($this->mf_onEditIconHandler, $tab, $this->m_page, $sortMethod, $pictureFilter);

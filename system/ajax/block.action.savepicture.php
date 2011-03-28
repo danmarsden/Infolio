@@ -28,9 +28,9 @@ if(!isset($studentUser)) {
 }
 
 // Get input
-$blockId = Safe::GetArrayIndexValueWithDefault($_POST, 'block_id', null);
-$picturePlace = Safe::GetArrayIndexValueWithDefault($_POST, 'picture_place', null);
-$pictureId = Safe::GetArrayIndexValueWithDefault($_POST, 'picture_id', null);
+$blockId = Safe::postWithDefault('block_id', null, PARAM_INT);
+$picturePlace = Safe::postWithDefault('picture_place', null, PARAM_INT);
+$pictureId = Safe::postWithDefault('picture_id', null, PARAM_INT);
 
 if( !(isset($blockId) && isset($picturePlace) && isset($pictureId)) ) {
 	die('Missing input');

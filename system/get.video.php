@@ -34,8 +34,8 @@ include_once('model/Video.class.php');
 include_once('model/User.class.php');
 
 // Querystring input: id, size
-$videoId = Safe::GetArrayIndexValueWithDefault($_GET, 'id', null);
-$videoSize = Safe::GetArrayIndexValueWithDefault($_GET, 'size', Image::SIZE_ORIGINAL);
+$videoId = Safe::getWithDefault('id', null, PARAM_INT);
+$videoSize = Safe::getWithDefault('size', Image::SIZE_ORIGINAL);
 
 
 // Check user is logged in before letting them see pics (unless asking for password picture, or picture used for where page)

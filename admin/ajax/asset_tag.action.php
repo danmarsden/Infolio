@@ -23,8 +23,8 @@ include_once('class/si/Safe.class.php');
 $adminUser = BackOffice::RetrieveAndCheckAjaxAdminUser($_SESSION);
 
 // Get the info passed by AJAX request
-$assetId = Safe::GetArrayIndexValueWithDefault($_POST, 'aId', null);
-$newTags = Safe::GetArrayIndexValueWithDefault($_POST, 'tags', null);
+$assetId = Safe::postWithDefault('aId', null, PARAM_INT);
+$newTags = Safe::postWithDefault('tags', null);
 
 $asset = Asset::RetrieveById($assetId, $adminUser);
 

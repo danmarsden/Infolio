@@ -24,8 +24,8 @@ include_once('_includes/login.inc.php');
 
 // Get assets for specific user
 if(isset($studentUser)) {
-	$passwordPictureId = Safe::GetArrayIndexValueWithDefault($_POST, 'pictureId', null);
-	$passwordSpotString = Safe::GetArrayIndexValueWithDefault($_POST, 'spots', null);
+	$passwordPictureId = Safe::postWithDefault('pictureId', null);
+	$passwordSpotString = Safe::postWithDefault('spots', null);
 	$passwordSpots = split(':', $passwordSpotString);
 
 	// Put coords in array

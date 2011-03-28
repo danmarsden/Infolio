@@ -32,9 +32,9 @@ define('CONFUSE_PASSWORD_PICTURE_1', 2875250003);
 define('CONFUSE_PASSWORD_PICTURE_2', 3300453929);
 
 // Get post variables
-$flash_user_name = Safe::GetArrayIndexValueWithDefault($_POST, 'user_name', null);
-$flash_data_type = Safe::GetArrayIndexValueWithDefault($_POST, 'data_type', null);
-$flash_sub_pass = Safe::GetArrayIndexValueWithDefault($_POST, 'sub_pass', null);
+$flash_user_name = Safe::postWithDefault('user_name', null);
+$flash_data_type = Safe::postWithDefault('data_type', null);
+$flash_sub_pass = Safe::postWithDefault('sub_pass', null);
 
 Debugger::debug("Ajax", 'login.php::main_1', Debugger::LEVEL_INFO);
 

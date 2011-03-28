@@ -21,7 +21,7 @@ include_once('model/User.class.php');
 $adminUser = BackOffice::RetrieveAndCheckAjaxAdminUser($_SESSION);
 
 // Check if institution was specified
-$fromInstitution = Safe::GetArrayIndexValueWithDefault($_GET, 'inst', null);
+$fromInstitution = Safe::getWithDefault('inst', null);
 if(isset($fromInstitution)) $fromInstitution = new Institution($fromInstitution);
 
 // Get all users

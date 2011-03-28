@@ -28,9 +28,9 @@ if(!isset($studentUser)) {
 }
 
 // Get input
-$pageId = Safe::GetArrayIndexValueWithDefault($_POST, 'page_id', null);
-$blockId = Safe::GetArrayIndexValueWithDefault($_POST, 'block_id', null);
-$direction = Safe::GetArrayIndexValueWithDefault($_POST, 'dir', null);
+$pageId = Safe::postWithDefault('page_id', null, PARAM_INT);
+$blockId = Safe::postWithDefault('block_id', null, PARAM_INT);
+$direction = Safe::postWithDefault('dir', null);
 
 if( !(isset($pageId) && isset($blockId) && isset($direction)) ) {
 	die('Missing input');

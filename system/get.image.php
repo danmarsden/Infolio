@@ -37,8 +37,8 @@ include_once('model/Image.class.php');
 include_once('model/User.class.php');
 
 // Querystring input: id, size
-$imageId = Safe::GetArrayIndexValueWithDefault($_GET, 'id', null);
-$imageSize = Safe::GetArrayIndexValueWithDefault($_GET, 'size', Image::SIZE_ORIGINAL);
+$imageId = Safe::getWithDefault('id', null, PARAM_INT);
+$imageSize = Safe::getWithDefault('size', Image::SIZE_ORIGINAL);
 
 
 

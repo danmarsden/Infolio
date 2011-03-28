@@ -45,8 +45,9 @@ class LoginEventDispatcher extends EventDispatcher
 	 */
 	public function DispatchEvents()
 	{
-		if(isset($_GET['institution'])) {
-			$institutionName = Safe::Input($_GET['institution']);
+        $ins = Safe::get('institution');
+		if(!empty($ins)) {
+			$institutionName = $ins;
 		}
 		else {
 			// No institute means they must choose where they are from.

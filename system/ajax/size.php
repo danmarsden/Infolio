@@ -21,7 +21,7 @@ include_once('_includes/login.inc.php');
 
 include_once('class/si/Safe.class.php');
 
-$size = Safe::GetArrayIndexValueWithDefault($_POST, 's', null);
+$size = Safe::postWithDefault('s', null);
 
 if( isset($size) ) {
 	$studentTheme = $studentUser->getTheme();

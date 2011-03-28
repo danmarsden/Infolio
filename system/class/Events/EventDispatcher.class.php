@@ -90,9 +90,10 @@ abstract class EventDispatcher
 		// None action events
 		
 		// Size Change event - onSizeChange
-		if( isset($_GET['fs']) && isset($this->mf_onSizeChangeHandler) ) {
+        $fs = Safe::get('fs');
+		if( !empty($fs) && isset($this->mf_onSizeChangeHandler) ) {
 			// Collect user input
-			$fontSize = $_GET['fs'];
+			$fontSize = $fs;
 			
 			// Call handler
 			call_user_func($this->mf_onSizeChangeHandler, $this->m_page, $fontSize);

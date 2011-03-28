@@ -73,8 +73,9 @@ class HomePageEventDispatcher extends EventDispatcher
 		
 		// Change user picture - OnChangeUserPicture
 		if( $this->isAction(self::ACTION_CHANGE_USER_IMAGE) && isset($this->mf_onChangeUserPictureHandler)) {
-			$pictureFilter = Safe::GetArrayIndexValueWithDefault($_GET, 'f', AssetCollection::FILTER_ALL);
-			if(isset($_GET['tag'])) $pictureFilter = 'tag=' . Safe::Input($_GET['tag']);
+			$pictureFilter = Safe::getWithDefault('f', AssetCollection::FILTER_ALL);
+            $tag = Safe::get('tag');
+			if(!empty($tag)) $pictureFilter = 'tag=' . $tag;
 
 			// Call handler
 			call_user_func($this->mf_onChangeUserPictureHandler, $this->m_page, $pictureFilter);

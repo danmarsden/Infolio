@@ -23,13 +23,13 @@ include_once('class/si/Safe.class.php');
 $adminUser = BackOffice::RetrieveAndCheckAjaxAdminUser($_SESSION);
 
 // Get the info passed by AJAX request
-$assetId = Safe::GetArrayIndexValueWithDefault($_POST, 'id', null);
-$assetIds = Safe::GetArrayIndexValueWithDefault($_POST, 'items', null);
-$isPublic = Safe::GetArrayIndexValueWithDefault($_POST, 'view_public', null);
-$newOwnerId = Safe::GetArrayIndexValueWithDefault($_POST, 'newOwner', null);
-$ownerId = Safe::GetArrayIndexValueWithDefault($_POST, 'owner', null);
-$removeAsset = Safe::GetArrayIndexValueWithDefault($_POST, 'removeAsset', null);
-$type = Safe::GetArrayIndexValueWithDefault($_POST, 'type', null);
+$assetId = Safe::postWithDefault('id', null, PARAM_INT);
+$assetIds = Safe::postWithDefault('items', null);
+$isPublic = Safe::postWithDefault('view_public', null);
+$newOwnerId = Safe::postWithDefault('newOwner', null);
+$ownerId = Safe::postWithDefault('owner', null);
+$removeAsset = Safe::postWithDefault('removeAsset', null);
+$type = Safe::postWithDefault('type', null);
 
 // Move an asset to a user or group.
 if(isset($newOwnerId) && isset($assetIds) && isset($type)) {

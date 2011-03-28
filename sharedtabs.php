@@ -8,7 +8,7 @@
 */
 
 include_once('sharedtabs.inc.php');
-$pagenum = (int)Safe::GetArrayIndexValueWithDefault($_GET, 'page', '');
+$pagenum = Safe::getWithDefault('page', 0, PARAM_INT);
 $count = 10;
 $tablimit = 10;
 

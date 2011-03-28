@@ -15,11 +15,11 @@ include_once('system/model/Tab.class.php');
 include_once('system/model/Page.class.php');
 
 $page = new SimplePage();
-$userid = (int)Safe::GetArrayIndexValueWithDefault($_GET, 'user_id', '');
-$institution = Safe::StringForDatabase(Safe::GetArrayIndexValueWithDefault($_GET, 'institution', ''));
-$tabid = (int)Safe::GetArrayIndexValueWithDefault($_GET, 'tab', '');
-$sharehash = Safe::StringForDatabase(Safe::GetArrayIndexValueWithDefault($_GET, 'sharehash', ''));
-$pageviewid = Safe::StringForDatabase(Safe::GetArrayIndexValueWithDefault($_GET, 'page', ''));
+$userid = Safe::getWithDefault('user_id', '', PARAM_INT);
+$institution = Safe::StringForDatabase(Safe::getWithDefault('institution', ''));
+$tabid = Safe::getWithDefault('tab', '', PARAM_INT);
+$sharehash = Safe::StringForDatabase(Safe::getWithDefault('sharehash', ''));
+$pageviewid = Safe::StringForDatabase(Safe::getWithDefault('page', ''));
 
 if (empty($userid) or empty($institution)) {
     error("invalid request");

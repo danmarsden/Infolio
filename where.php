@@ -24,8 +24,8 @@ $institutions = Institution::RetrieveAll()
 	<div id="wrap-content">
 	<div id="wrap-content-inner">
 		<?
-		if(isset($_GET['msg'])) {
-			$msg = Safe::Input($_GET['msg']);
+        $msg = Safe::get('msg');
+		if(isset($msg)) {
 			print "<p>{$msg}</p>";
 		}
 		?>

@@ -133,9 +133,12 @@ class PageEventDispatcher extends EventDispatcher
 		}
 		
 		// ** Block move events (only one)
-		
+		$bup = Safe::get('blockup');
+        $bdn = Safe::get('blockdown');
+        $bdel = Safe::get('blockdelete');
+
 		// Block up event - onBlockUp
-		if( isset($_GET['blockup']) && is_numeric($this->m_queryStringVars['blockup']) ) {
+		if( !empty($bup) && is_numeric($this->m_queryStringVars['blockup']) ) {
 			// Collect user input
 			$blockId = Safe::Input($this->m_queryStringVars['blockup']);
 			
@@ -146,7 +149,7 @@ class PageEventDispatcher extends EventDispatcher
 			return true;
 		}
 		// Block down event - onBlockDown
-		elseif( isset($_GET['blockdown']) && is_numeric($this->m_queryStringVars['blockdown']) ) {
+		elseif( !empty($bdn) && is_numeric($this->m_queryStringVars['blockdown']) ) {
 			// Collect user input
 			$blockId = Safe::Input($this->m_queryStringVars['blockdown']);
 			
@@ -161,8 +164,8 @@ class PageEventDispatcher extends EventDispatcher
 		}
 
 		// ** Delete block event - onBlockDelete
-		elseif( isset($_GET['blockdelete']) /*&& is_numeric($_GET['blockdelete']) && isset($this->mf_onBlockDeleteHandler)*/) {
-			$blockId = $_GET['blockdelete'];
+		elseif( !empty($bdel) /*&& is_numeric($bdel) && isset($this->mf_onBlockDeleteHandler)*/) {
+			$blockId = $bdel;
 			call_user_func($this->mf_onBlockDeleteHandler, $this->m_page, $blockId);
 		}
 
@@ -223,10 +226,10 @@ class PageEventDispatcher extends EventDispatcher
 			call_user_func($this->mf_onAttachmentUploadHandler, $this->m_page);
 			return true;
 		}
-
+        $atdel = Safe::get('attdelete');
 		// Delete attachment - onAttachmentDelete
-		if(isset($_GET['attdelete']) && isset($this->mf_onAttachmentDeleteHandler)) {
-			call_user_func($this->mf_onAttachmentDeleteHandler, $this->m_page, $_GET['attdelete']);
+		if(isset($atdel) && isset($this->mf_onAttachmentDeleteHandler)) {
+			call_user_func($this->mf_onAttachmentDeleteHandler, $this->m_page, $atdel);
 			return true;
 		}
 		
@@ -241,7 +244,8 @@ class PageEventDispatcher extends EventDispatcher
 			$imageIdForEdit = Safe::GetArrayIndexValueWithDefault($this->m_queryStringVars, 'imageedit', null);
 			$blockIdForEdit = Safe::GetArrayIndexValueWithDefault($this->m_queryStringVars, 'blockedit', null);
 			$assetFilter = Safe::GetArrayIndexValueWithDefault($this->m_queryStringVars, 'f', AssetCollection::FILTER_ALL);
-			if(isset($_GET['tag'])) $assetFilter = 'tag=' . Safe::Input($_GET['tag']);
+			$tag = Safe::get('tag');
+            if(isset($tag)) $assetFilter = 'tag=' . $tag;
 
 
 			// Call handler
