@@ -79,7 +79,7 @@ switch($a) {
 				$tab->setDescription(Safe::get('description'));
 				$tab->setTemplateId(Safe::get('templateId'));
 				$tab->setOwnerId($_SESSION["admin"]["id"]);
-				$tab->Save();
+				$tab->Save($adminUser);
 				print $tab->getId();
 				break;			
 			case 'update':
@@ -488,7 +488,8 @@ function userOperations($operation, $adminUser)
 				}
 			}
 			$user->getPermissionManager()->setPassword(Safe::get('password'));
-			$user->getPermissionManager()->getSymbolLogin()->setEnabled(isset(Safe::get('ppEnabled')));
+            $ppen = Safe::get('ppEnabled');
+			$user->getPermissionManager()->getSymbolLogin()->setEnabled(isset($ppen));
 			$user->Save($adminUser);
 			print $user->getId();
 			break;
