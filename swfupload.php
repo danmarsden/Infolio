@@ -21,9 +21,12 @@ include_once("function/core.php");
 $uploaddir = DIR_FS_ROOT.'data/import';
 $uploader = new Uploader();
 
+$puid = Safe::post('userid');
+$ppid = Safe::post('pageid');
+
 // Check user is logged in before letting them do stuff (except logging in)
-if (isset($_POST['userid'])) {
-$user = new User($_POST['userid']);
+if (isset($puid)) {
+$user = new User($puid);
 } else {
     error('invalid user id passed.');
 }
@@ -31,8 +34,8 @@ if (isset($_FILES['Filedata'])) {
     $file = $_FILES['Filedata'];
 }
 
-if (isset($_POST['pageid'])) {
-    $page = Page::GetPageById($_POST['pageid']);
+if (isset($ppid)) {
+    $page = Page::GetPageById($ppid);
 } else {
     $page = null;
 }

@@ -60,16 +60,19 @@ if(!isset($studentUser->m_tabs)) {
                 $sharedtabs[$row['tabid']] = $row['tabid'];
             }
             //check for submitted changes to tabs.
-            if (!empty($_POST['sharedtabs'])) {
-                $tabcount = (int)$_POST['tab_count'];
+            $pst = Safe::post('sharedtabs');
+            $ptc = Safe::post('tab_count', PARAM_INT);
+            if (!empty($pst)) {
+                $tabcount = $ptc;
                 $i = 0;
                 $selectedtabs = array();
                 While($i < $tabcount) {
-                    if (isset($_POST["tab_id_".$i])) {
-                        $selectedtabs[] = (int)$_POST["tab_id_".$i];
-                        if (!isset($sharedtabs[(int)$_POST["tab_id_".$i]])) {
+                    $tid = Safe::post('tab_id_'.$i, PARAM_INT);
+                    if (isset($tid)) {
+                        $selectedtabs[] = $tid;
+                        if (!isset($sharedtabs[$tid])) {
                             //need to save this tab.
-                            $sql = "INSERT INTO tab_shared VALUES (".$studentUser->getID().", ".(int)$_POST["tab_id_".$i].") ";
+                            $sql = "INSERT INTO tab_shared VALUES (".$studentUser->getID().", ".$tid.") ";
                             $query = $db->query($sql);
                         }
                     }
@@ -96,11 +99,13 @@ if(!isset($studentUser->m_tabs)) {
         $html = '<input type="hidden" name="tab_count" value="' . (count($studentUser->m_tabs)) . '" />';
         $html .= '<ul style="list-style:none;">';
         $tabCount = 0;
+        $pst = Safe::post('sharedtabs');
         foreach($studentUser->m_tabs as $aTab) {
                 $tabid = $aTab->getID();
 
                 $checked = '';
-                if (!empty($_POST['sharedtabs'])) {
+
+                if (!empty($pst)) {
                     //use $selectedtabs
                     if (in_array($tabid, $selectedtabs)) {
                         $checked = 'checked="checked"';
@@ -124,7 +129,8 @@ if(!isset($studentUser->m_tabs)) {
         <p>This URL allows public access to your shared tabs:<br/>
         <?php
             $hash = $studentUser->getShareHash();
-            if (empty($hash) or !empty($_POST['resethash'])) {
+            $postreset = Safe::post('resethash');
+            if (empty($hash) or !empty($postreset)) {
                 //need to create hash and save it.
                 $hash = newsharehash();
                 $studentUser->setShareHash($hash);

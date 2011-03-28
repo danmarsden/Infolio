@@ -34,26 +34,29 @@ if(!isset($adminUser) ) {
 
 // Input: user_id
 $studentUser = null;
-if(isset($_POST['user_id']) && is_numeric($_POST['user_id']) )
+$puid = Safe::post('user_id', PARAM_INT);
+if(isset($puid))
 {
-	$userId = $_POST['user_id'];
+	$userId = $puid;
 	$studentUser = User::RetrieveById($userId);
 }
 
 if(!isset($studentUser)) {
 	die("No user with that id (or no user_id provided)");
 }
-
-if (isset($_POST['share']) && is_numeric($_POST['share'])) {
-    $studentUser->setShare($_POST['share']);
+$pshare = Safe::post('share', PARAM_INT);
+if (isset($pshare)) {
+    $studentUser->setShare($pshare);
     $studentUser->save($adminUser);
 }
+$pt = Safe::post('tab_count', PARAM_INT);
 // Input: tab_id[0 -> (tab_count-1)]
-for($i=1; $i<$_POST['tab_count']; $i++)
+for($i=1; $i<$pt; $i++)
 {
     $tabLabel = 'tab_id'.$i;
-    if(isset($_POST[$tabLabel])) {
-        $keys = explode('_', $_POST[$tabLabel]);
+    $ptl = Safe::post($tabLabel);
+    if(isset($ptl)) {
+        $keys = explode('_', $ptl);
         if ($tab = Tab::GetTabById((int)$keys[1])) {
             $enabled = $keys[0] === 'enabled' ? true : false;
             if ($enabled) {

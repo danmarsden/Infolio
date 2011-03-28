@@ -49,7 +49,8 @@ if (!is_dir($uploaddir)) {
 $zip->extractTo($uploaddir);
 
 //if this is a site export, unzip each item into it's own dir and run import
-if ($_POST['type'] =='site') {
+$pt = Safe::post('type');
+if ($pt =='site') {
 
     //handle Institutions xml first
     if (file_exists($uploaddir.'/institution.xml')) {
@@ -266,7 +267,7 @@ if ($_POST['type'] =='site') {
         add_info_msg('no valid user files available in import zip');
     }
 
-} else if ($_POST['type'] === 'user'){
+} else if ($pt === 'user'){
     $objects = scandir($uploaddir);
     if (!empty($objects)) {
         $newUser = $_POST; // new user details

@@ -31,7 +31,8 @@ session_start();
 if( isset($_SESSION) ) {
 	$studentUser = User::RetrieveBySessionData($_SESSION);
     // Nullify user if they don't have permission
-    if (!isset($_POST['user_id']) or $studentUser->getId() <> (int)$_POST['user_id']) {
+    $puid = Safe::post('user_id');
+    if (!isset($puid) or $studentUser->getId() <> (int)$puid) {
     // Check user is logged in before letting them do stuff (except logging in)
         if(!$studentUser->getPermissionManager()->hasRight(PermissionManager::RIGHT_GENERAL_ADMIN) ) {
             header("Location: login.php");
@@ -52,12 +53,14 @@ if (!is_dir("staticversion/export")) {
 }
 // Input: tab_id[0 -> (tab_count-1)]
 $tabIds = array();
-for($i=0; $i<$_POST['tab_count']; $i++)
+$ptc = Safe::post('tab_count', PARAM_INT);
+for($i=0; $i<$ptc; $i++)
 {
     $tabLabel = 'tab_id'.$i;
-    if(isset($_POST[$tabLabel])) {
-        if(is_numeric($_POST[$tabLabel])) {
-            array_push($tabIds, $_POST[$tabLabel]);
+    $ptl = Safe::post($tabLabel);
+    if(isset($ptl)) {
+        if(is_numeric($ptl)) {
+            array_push($tabIds, $ptl);
         }
         else {
             die("You have sent a bad tab id");
@@ -68,11 +71,15 @@ $users = array();
 $usertabsarray = array();
 $usertabidarray = array();
 $institutionid='';
-if (!empty($_POST['siteexport'])) {
+$psi = Safe::post('siteexport');
+$pi = Safe::post('inst', PARAM_INT);
+$puid = Safe::post('user_id', PARAM_INT);
+$pf = Safe::post('format');
+if (!empty($psi)) {
     //check if insitution is set
     $insql = '';
-    if (!empty($_POST['inst'])) {
-        $institutionid = (int)$_POST['inst'];
+    if (!empty($pi)) {
+        $institutionid = $pi;
         $insql = ' WHERE institution_id ='.$institutionid;
     }
     //get list of all users.
@@ -91,8 +98,8 @@ if (!empty($_POST['siteexport'])) {
         }
     }
     
-} elseif (isset($_POST['user_id']) && is_numeric($_POST['user_id'])) {
-    $users[0] = User::RetrieveById($_POST['user_id']);
+} elseif (isset($puid)) {
+    $users[0] = User::RetrieveById($puid);
 } else {
     die("No user with that id (or no user_id provided)");
 }
@@ -118,17 +125,19 @@ foreach ($users as $user) {
     }
 
     $userAssetCollection = $user->getAssetCollection();//Asset::RetrieveUsersAssets($studentUser);
-    if (!empty($_POST['unusedassets'])) {
+    $pua = Safe::post('unusedassets');
+
+    if (!empty($pua)) {
         $userAssets = $userAssetCollection->getAssets();
     } else { //only include assets that are in use
         $userAssets = $userAssetCollection->getAssets(AssetCollection::FILTER_INUSE, $tabIds);
     }
 
-    if ($_POST['format'] == 'html') {
+    if ($pf == 'html') {
         $studentUser = $user; //used as a strange global.
         $collection = $userAssetCollection; //used as a strange global.
         include_once("export/html/lib.php");
-        if (empty($_POST['siteexport'])) {
+        if (empty($psi)) {
             export_portfolio($user, $tabIds);
             header('Location: ' . $adminUser->getInstitution()->getUrl() . '/' . DIR_WS_ADMIN . '?do=' . SECTION_USER . '&a=edit&tab=export&id=' . $user->getId() );
         } else {
@@ -137,7 +146,7 @@ foreach ($users as $user) {
     } else {
         include_once("export/leap/lib.php");
         include_once("export/leap/leaplib.php");
-        if (empty($_POST['siteexport'])) {
+        if (empty($psi)) {
             export_portfolio($user, $tabIds);
         } else {
             $files[] = export_portfolio($user, $tabIds, true, true);
@@ -151,7 +160,7 @@ if (!empty($files)) {
     if ($zip->open($zipfilename, ZIPARCHIVE::CREATE)!==TRUE) {
         exit("cannot open <$zipfilename>\n");
     }
-    if ($_POST['format'] == 'leap') {
+    if ($pf == 'leap') {
         //now add site level files
         $insxml = export_institutions($institutionid);
         if (!empty($insxml)) {
