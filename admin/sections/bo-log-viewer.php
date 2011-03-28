@@ -11,7 +11,7 @@ $(document).ready(
 ); 
 </script>
 
-<? print Logger::HtmlTable('tablesorter', 'myTable'); ?>
+<?php print Logger::HtmlTable('tablesorter', 'myTable'); ?>
 
 <div id="pager" class="pager">
 	<form>

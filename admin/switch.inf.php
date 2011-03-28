@@ -43,8 +43,8 @@ header("Content-Transfer-Encoding: binary");
 
 
 ?><switchinfo>
-	<userid><? print $studentUser->getId(); ?></userid>
+	<userid><?php print $studentUser->getId(); ?></userid>
 	<efoliourl>http://www.clippi.com/system/ajax/flash/</efoliourl>
-	<? if($includePasscode) { ?><passcode><? print $studentUser->getPermissionManager()->getSymbolLogin()->getShapePhotoNumber($studentUser->getId()); ?></passcode>
-	<? } ?><scandelay>4</scandelay>
+	<?php if($includePasscode) { ?><passcode><?php print $studentUser->getPermissionManager()->getSymbolLogin()->getShapePhotoNumber($studentUser->getId()); ?></passcode>
+	<?php } ?><scandelay>4</scandelay>
 </switchinfo>

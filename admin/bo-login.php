@@ -28,7 +28,7 @@ if($a == 'logout') {
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <title>Techdis Administration Area Login Page</title>
-<? include('_includes/head.inc.php'); ?>
+<?php include('_includes/head.inc.php'); ?>
 <script type="text/javascript" src="/admin/_scripts/login.js"></script>
 </head>
 <body>
@@ -83,7 +83,7 @@ if($a == 'logout') {
 				default:
 					?>
 					<form onsubmit="doLogin(); return false;" method="get">
-						<input type="hidden" name="institution" id="institution" value="<? print Safe::get('institution'); ?>" />
+						<input type="hidden" name="institution" id="institution" value="<?php print Safe::get('institution'); ?>" />
 
 							<p>Please enter username and password</p>
 							<div id="errorNotificationContainer"></div>
@@ -105,7 +105,7 @@ if($a == 'logout') {
 		</div>
 		<div id="footer">
 			<div id="footerContent">
-			<? include("module/bo-footer.php");?>
+			<?php include("module/bo-footer.php");?>
 			</div>
 			<div id="bottomCurve">
 				<div style="float:left; width:20px; height:32px; background-image:url(/_images/bo/curve-bottom-left.png);"></div>

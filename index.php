@@ -20,31 +20,31 @@ include_once('index.inc.php');
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-	<? print $page->htmlHead(); ?>
-	<? include('_includes/head.inc.php'); ?>
+	<?php print $page->htmlHead(); ?>
+	<?php include('_includes/head.inc.php'); ?>
 	<link href="/_scripts/jq/scrollable.css" rel="stylesheet" type="text/css" />
 </head>
 
-<body class="<? print $studentTheme->getBodyClass(); ?>" id="home">
-<? include('_includes/header.inc.php'); ?>
+<body class="<?php print $studentTheme->getBodyClass(); ?>" id="home">
+<?php include('_includes/header.inc.php'); ?>
 <div id="wrap-main">
-	<? include('_includes/header-profile.inc.php'); ?>
+	<?php include('_includes/header-profile.inc.php'); ?>
 	<div id="wrap-content">
 	<div id="wrap-content-inner">
 		<h1>About me</h1>
-		<? if( isset($pictureChooseHtml) ) { print $pictureChooseHtml; }
+		<?php if( isset($pictureChooseHtml) ) { print $pictureChooseHtml; }
 		print $studentTheme->Box($studentDetails, "<h2>{$studentUser->getFirstName()} {$studentUser->getLastName()}</h2>");
 		
 		include('_includes/footer.inc.php'); ?>
 	</div><!-- /#wrap-content-inner -->
 	</div><!-- /#wrap-content -->
 </div>
-<? Debugger::debugPrint(); ?>
+<?php Debugger::debugPrint(); ?>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
 <script type="text/javascript" src="/_scripts/jq/scrollable.js"></script>
-<? print $page->getJavaScriptVariables()->HtmlJavaScriptBlock(); ?>
+<?php print $page->getJavaScriptVariables()->HtmlJavaScriptBlock(); ?>
 <script type="text/javascript" src="/_scripts/main.min.js"></script>
 
-<? include('_includes/tracking.inc.php'); ?>
+<?php include('_includes/tracking.inc.php'); ?>
 </body>
 </html>

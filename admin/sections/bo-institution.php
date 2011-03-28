@@ -43,7 +43,7 @@ function showGrid()
 	<table class="dataGridTable" cellspacing="1">
 		<tr>
 			<th>Name</th>
-			<th class="actionTd"><a href="?do=<? print SECTION_INSTITUTION; ?>&a=add">Create</a></th>
+			<th class="actionTd"><a href="?do=<?php print SECTION_INSTITUTION; ?>&a=add">Create</a></th>
 		</tr>
 		<?
 
@@ -52,11 +52,11 @@ function showGrid()
 		foreach($institutions as $institution){
 			$i++;
 			?>
-			<tr id="i<? print($institution->getId()); ?>" class="<? print($i%2==1)?"even":"odd"?>">
-				<td><a href="?do=<? print SECTION_INSTITUTION; ?>&amp;a=edit&amp;id=<? print $institution->getid(); ?>"><? print $institution->getName(); ?></a></td>
+			<tr id="i<?php print($institution->getId()); ?>" class="<?php print($i%2==1)?"even":"odd"?>">
+				<td><a href="?do=<?php print SECTION_INSTITUTION; ?>&amp;a=edit&amp;id=<?php print $institution->getid(); ?>"><?php print $institution->getName(); ?></a></td>
 				<td class="actionTd">
-					<a href="?do=<? print SECTION_INSTITUTION; ?>&amp;a=edit&amp;id=<? print $institution->getid(); ?>">Edit</a>,
-					<a onclick="onDelete(<? print $institution->getid(); ?>);" onkeyup="onDelete(<? print $institution->getid(); ?>);">Delete</a>
+					<a href="?do=<?php print SECTION_INSTITUTION; ?>&amp;a=edit&amp;id=<?php print $institution->getid(); ?>">Edit</a>,
+					<a onclick="onDelete(<?php print $institution->getid(); ?>);" onkeyup="onDelete(<?php print $institution->getid(); ?>);">Delete</a>
 				</td>
 			</tr>			
 			<?
@@ -83,14 +83,14 @@ function showForm()
 	<div class="formContainer" dojoType="dijit.layout.TabContainer" style="height:600px; width:95%;">
 		<div id="dataFormContainer55" dojoType="dijit.layout.ContentPane" title="Institution">
 			<form method="post" id="form" action="." dojoType="dijit.form.Form">
-				<input type="hidden" name="id" id="id" value="<? print (isset($institution)) ? $institution->getId():""?>" />
-				<input type="hidden" name="do" id="do" value="<? print SECTION_INSTITUTION; ?>" />
-				<input type="hidden" name="a" id="a" value="<? print ((isset($institution)) ? 'Update' : 'Insert' ) ?>" />
+				<input type="hidden" name="id" id="id" value="<?php print (isset($institution)) ? $institution->getId():""?>" />
+				<input type="hidden" name="do" id="do" value="<?php print SECTION_INSTITUTION; ?>" />
+				<input type="hidden" name="a" id="a" value="<?php print ((isset($institution)) ? 'Update' : 'Insert' ) ?>" />
 				<div dojoType="dijit.Toolbar" style="clear:both;">
 					<div dojoType="dijit.form.Button" onclick="doSubmit" showLabel="true">Save</div>
-					<? if(isset($gid)){?>
+					<?php if(isset($gid)){?>
 					<div dojoType="dijit.form.Button" onclick="deleteRow(dojo.byId('id').value,'')" showLabel="true">Delete</div>
-					<? } ?>
+					<?php } ?>
 					<div dojoType="dijit.form.Button" onclick="doCancel" showLabel="true">Cancel</div>
 				</div>
 				<table class="dataForm">
@@ -99,37 +99,37 @@ function showForm()
 					</tr>
 					<tr>
 						<td class="captionLabel">Name</td>
-						<td><input dojoType="dijit.form.ValidationTextBox" type="text" name="name" id="name" value="<? if(isset($institution))print $institution->getName(); ?>" required="true" invalidMessage="Can't be empty" /></td>
+						<td><input dojoType="dijit.form.ValidationTextBox" type="text" name="name" id="name" value="<?php if(isset($institution))print $institution->getName(); ?>" required="true" invalidMessage="Can't be empty" /></td>
 					</tr>
 					<tr>
 						<td class="captionLabel">Short name for URL</td>
-						<td><input dojoType="dijit.form.ValidationTextBox" type="text" name="url" id="url" value="<? if(isset($institution))print $institution->getUrl(); ?>" required="true" regExp="[\w\d_\-]+" invalidMessage="Can't be empty and must only contain letters, numbers and _ or -" /></td>
+						<td><input dojoType="dijit.form.ValidationTextBox" type="text" name="url" id="url" value="<?php if(isset($institution))print $institution->getUrl(); ?>" required="true" regExp="[\w\d_\-]+" invalidMessage="Can't be empty and must only contain letters, numbers and _ or -" /></td>
 					</tr>
                     <tr>
                         <td class="captionLabel">Tab Sharing</td>
                         <td><select name="share" id="share">
                             <option value="0">Disabled</option>
-                            <option value="1" <? if(isset($institution) && $institution->allowSharing()=='1')print 'selected' ?>>Enabled - Users disabled by default</option>
-                            <option value="2" <? if(isset($institution) && $institution->allowSharing()=='2')print 'selected' ?>>Enabled - Users enabled by default</option>
+                            <option value="1" <?php if(isset($institution) && $institution->allowSharing()=='1')print 'selected' ?>>Enabled - Users disabled by default</option>
+                            <option value="2" <?php if(isset($institution) && $institution->allowSharing()=='2')print 'selected' ?>>Enabled - Users enabled by default</option>
                         </select></td>
                     </tr>
                    <tr>
                         <td class="captionLabel">Limit Sharing</td>
                          <td><select name="limitshare" id="limitshare">
-                             <option value="0" <? if(isset($institution) && $institution->limitShare()=='0')print 'selected' ?>>Share with everyone in the institution</option>
-                             <option value="1" <? if(isset($institution) && $institution->limitShare()=='1')print 'selected' ?>>Only share with Teachers and Admins</option>
+                             <option value="0" <?php if(isset($institution) && $institution->limitShare()=='0')print 'selected' ?>>Share with everyone in the institution</option>
+                             <option value="1" <?php if(isset($institution) && $institution->limitShare()=='1')print 'selected' ?>>Only share with Teachers and Admins</option>
                           </select></td>
                     </tr>
                     <tr>
                         <td class="captionLabel">Allow Comments</td>
                         <td><select name="comment" id="comment">
                             <option value="0">Disabled</option>
-                            <option value="1" <? if(isset($institution) && $institution->getComment()=='1')print 'selected' ?>>Enabled</option>
+                            <option value="1" <?php if(isset($institution) && $institution->getComment()=='1')print 'selected' ?>>Enabled</option>
                         </select></td>
                     </tr>
       				<tr>
 						<td class="captionLabel">Comment/Intensedebate API Key</td>
-						<td><input dojoType="dijit.form.ValidationTextBox" type="text" name="commentapi" id="commentapi" value="<? if(isset($institution))print $institution->getCommentApi(); ?>" </td>
+						<td><input dojoType="dijit.form.ValidationTextBox" type="text" name="commentapi" id="commentapi" value="<?php if(isset($institution))print $institution->getCommentApi(); ?>" </td>
 					</tr>
 				</table>
 			</form>

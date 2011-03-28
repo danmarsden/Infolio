@@ -24,32 +24,32 @@ if(!isset($studentUser->m_tabs)) {
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-	<? print $page->htmlHead(); ?>
-	<? include('_includes/head.inc.php'); ?>
+	<?php print $page->htmlHead(); ?>
+	<?php include('_includes/head.inc.php'); ?>
 	<link href="/_scripts/jq/scrollable.css" rel="stylesheet" type="text/css" />
 </head>
 
-<body class="<? print $studentTheme->getBodyClass(); ?>">
-<? include('_includes/header.inc.php'); ?>
+<body class="<?php print $studentTheme->getBodyClass(); ?>">
+<?php include('_includes/header.inc.php'); ?>
 <div id="wrap-main">
-	<? include('_includes/header-profile.inc.php'); ?>
+	<?php include('_includes/header-profile.inc.php'); ?>
 	<div id="wrap-content">
 	<div id="wrap-content-inner">
 		<h1>Tools and settings</h1>
-		<? print $studentTheme->Box($studentTheme->HtmlColourOptions(), '<h2><img src="/_images/si/icons/pallete.gif" width="35" height="35" alt="" /> Colour</h2>'); ?>
+		<?php print $studentTheme->Box($studentTheme->HtmlColourOptions(), '<h2><img src="/_images/si/icons/pallete.gif" width="35" height="35" alt="" /> Colour</h2>'); ?>
 		
 		<?
 		// Password options
 		print $studentTheme->Box($studentUser->HtmlPasswordOptions($passwordChanged), '<h2 id="password-sect"><img src="/_images/si/icons/set-password.gif" width="35" height="35" alt="" /> Password</h2>'); ?>
 
-		<? print $studentTheme->BoxBegin('<h2 id="btnShowHide"><img src="/_images/si/icons/pic-pword.gif" width="35" height="35" alt="" /> Change picture password</h2>'); ?>
+		<?php print $studentTheme->BoxBegin('<h2 id="btnShowHide"><img src="/_images/si/icons/pic-pword.gif" width="35" height="35" alt="" /> Change picture password</h2>'); ?>
 		
 		<div class="hideBit">
 		<div id="flvPassword">
 			<p>Password picker loading</p>
 		</div>
 		</div>
-		<? print $studentTheme->BoxEnd(); ?>
+		<?php print $studentTheme->BoxEnd(); ?>
 <?php
         $allowsharing = $studentUser->getShare();
         if (!empty($allowsharing)) {
@@ -149,7 +149,7 @@ if(!isset($studentUser->m_tabs)) {
 <?php
         } //end check for displaying sharing options
 ?>
-        <? print $studentTheme->BoxBegin('<h2 id="btnShowHide"><img src="/_images/si/icons/export.gif" width="35" height="35" alt="" /> Export</h2>'); ?>
+        <?php print $studentTheme->BoxBegin('<h2 id="btnShowHide"><img src="/_images/si/icons/export.gif" width="35" height="35" alt="" /> Export</h2>'); ?>
         <p>Select the tabs that you would like to include in the export.</p>
         <form method="post" action="../export.php">
 <?php
@@ -173,14 +173,14 @@ if(!isset($studentUser->m_tabs)) {
         <input type="hidden" name="user_id" value="<?php echo $studentUser->getId();?>" />
         <input type="submit" value="Generate new export file" />
         </form>
-        <? print $studentTheme->BoxEnd(); ?>
-		<? include('_includes/footer.inc.php'); ?>
+        <?php print $studentTheme->BoxEnd(); ?>
+		<?php include('_includes/footer.inc.php'); ?>
 	</div></div>
-	<? Debugger::debugPrint(); ?>
+	<?php Debugger::debugPrint(); ?>
 </div>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.min.js"></script>
 <script type="text/javascript" src="/_scripts/jq/scrollable.js"></script>
-<? print $page->getJavaScriptVariables()->HtmlJavaScriptBlock(); ?>
+<?php print $page->getJavaScriptVariables()->HtmlJavaScriptBlock(); ?>
 <script type="text/javascript" src="/_scripts/main.min.js"></script>
 <script type="text/javascript" src="/_scripts/swfobject.js"></script>
 <script type="text/javascript">
@@ -216,6 +216,6 @@ if(!isset($studentUser->m_tabs)) {
 	});
 </script>
 
-<? include('_includes/tracking.inc.php'); ?>
+<?php include('_includes/tracking.inc.php'); ?>
 </body>
 </html>

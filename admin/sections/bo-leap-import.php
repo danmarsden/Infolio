@@ -29,8 +29,8 @@ $gid = Safe::get('id');
                             name="username"
                             id="username"
                             required="true"
-                            <? if(isset($gid)){?>disabled="disabled"<? } ?>
-                            value="<? print (isset($user)) ? $user->getUsername() : ''; ?>" /> <? print TEXT_FIELD_REQUIRED; ?>
+                            <?php if(isset($gid)){?>disabled="disabled"<?php } ?>
+                            value="<?php print (isset($user)) ? $user->getUsername() : ''; ?>" /> <?php print TEXT_FIELD_REQUIRED; ?>
                             <div id="inlineNotificationUsername" class="inlineNotification"></div></td>
                     </tr>
                     <?
@@ -59,8 +59,8 @@ $gid = Safe::get('id');
                             type="text"
                             name="password"
                             id="password"
-                            <? print $passwordValue . $passwordRequired; ?>
-                            invalidMessage="Please type a password" /> <? print TEXT_FIELD_REQUIRED; ?>
+                            <?php print $passwordValue . $passwordRequired; ?>
+                            invalidMessage="Please type a password" /> <?php print TEXT_FIELD_REQUIRED; ?>
                             <div id="inlineNotificationPassword" class="inlineNotification"></div></td>
                     </tr>
                     <tr>
@@ -70,11 +70,11 @@ $gid = Safe::get('id');
                             type="text"
                             name="password2"
                             id="password2"
-                            <? print $passwordValue . $passwordRequired;; ?>
+                            <?php print $passwordValue . $passwordRequired;; ?>
                             validator="return theSame(this, dijit.byId('password'));"
-                            invalidMessage="This password must match your first password" /> <? print TEXT_FIELD_REQUIRED; ?></td>
+                            invalidMessage="This password must match your first password" /> <?php print TEXT_FIELD_REQUIRED; ?></td>
                     </tr>
-                    <? print $passwordMessage; ?>
+                    <?php print $passwordMessage; ?>
                     <tr>
                         <td class="captionLabel">User type</td>
                         <td>
@@ -82,7 +82,7 @@ $gid = Safe::get('id');
                                 dojoType="dijit.form.FilteringSelect" 
                                 id="userType" 
                                 name="userType">
-                                <? print PermissionManager::HtmlSelectOptions($user); ?>
+                                <?php print PermissionManager::HtmlSelectOptions($user); ?>
                             </select> <?php echo TEXT_FIELD_REQUIRED?>
                         </td>
                     </tr>
@@ -98,7 +98,7 @@ $gid = Safe::get('id');
                                     $institutions = Institution::RetrieveAll();
                                     foreach($institutions as $institution)
                                     {
-                                        ?><option value="<? print $institution->getId(); ?>"><? print $institution->getName(); ?></option><?
+                                        ?><option value="<?php print $institution->getId(); ?>"><?php print $institution->getName(); ?></option><?
                                     }
                                 ?>
                             </select>

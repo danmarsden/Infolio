@@ -20,7 +20,7 @@ else {
 		?>
 		<script type="text/javascript" src="/admin/_scripts/bo-template-grid.js"></script>	
 		<form action="." method="get">
-		<input type="hidden" name="do" value="<? print SECTION_TEMPLATE; ?>" />
+		<input type="hidden" name="do" value="<?php print SECTION_TEMPLATE; ?>" />
 		<?
 		// Admin users get to select institution they're acting on
 		$institution = null;
@@ -52,7 +52,7 @@ else {
 		<table class="dataGridTable" cellspacing="1">
 			<tr>
 				<th>Name</th>
-				<th class="actionTd"><a href="?do=1&a=add&inst=<? print $chosenInstituteId; ?>">Create</a></th>
+				<th class="actionTd"><a href="?do=1&a=add&inst=<?php print $chosenInstituteId; ?>">Create</a></th>
 			</tr>
 			<?
 
@@ -63,12 +63,12 @@ else {
 				$i++;
 				$editLink = '?do=' . SECTION_TEMPLATE . '&amp;a=edit&amp;id=' . $template->getId();
 				?>
-				<tr id="t<? print $template->getId(); ?>" class="<? print ($i%2==1) ? "even" : "odd"; ?>">
-					<td><a href="<? print $editLink; ?>"><?php print $template->getTitle(); ?></a></td>
+				<tr id="t<?php print $template->getId(); ?>" class="<?php print ($i%2==1) ? "even" : "odd"; ?>">
+					<td><a href="<?php print $editLink; ?>"><?php print $template->getTitle(); ?></a></td>
 					<td class="actionTd">
 						[&nbsp;
-						<a href="<? print $editLink; ?>">Edit</a>
-						<a onclick="doDelete(<? print $template->getId(); ?>);" onkeyup="doDelete(<?php print $template->getId(); ?>);">Delete</a>
+						<a href="<?php print $editLink; ?>">Edit</a>
+						<a onclick="doDelete(<?php print $template->getId(); ?>);" onkeyup="doDelete(<?php print $template->getId(); ?>);">Delete</a>
 						&nbsp;]
 					</td>
 				</tr>			
@@ -120,12 +120,12 @@ else {
 			<input type="hidden" name="a" value="Template" />
 			<input type="hidden" name="do" id="do" value="<?php print SECTION_TEMPLATE; ?>" />
 			<input type="hidden" name="operation" value="<?php echo ((isset($gid)) ? 'update' : 'insert') ?>" />
-			<? if(isset($instField)) print $instField; ?>
+			<?php if(isset($instField)) print $instField; ?>
 			<div dojoType="dijit.Toolbar" style="clear:both;">
 				<div dojoType="dijit.form.Button" onclick="doSubmit" showLabel="true">Save</div>
-				<? if(isset($gid)) { ?>
-					<div dojoType="dijit.form.Button" onclick="doDelete(<? print $gid; ?>)" showLabel="true">Delete</div>
-				<? } ?>
+				<?php if(isset($gid)) { ?>
+					<div dojoType="dijit.form.Button" onclick="doDelete(<?php print $gid; ?>)" showLabel="true">Delete</div>
+				<?php } ?>
 				<div dojoType="dijit.form.Button" onclick="doCancel" showLabel="true">Cancel</div>
 			</div>		
 			<table class="dataForm">
@@ -141,10 +141,10 @@ else {
 					<td><textarea jsId="description" name="description" id="description" dojoType="dijit.form.Textarea" class="dijitTextarea" style="width:90%; height:100px;"><?php if(isset($template)) print $template->getDescription(); ?></textarea></td>
 				</tr>
 				
-				<? if(isset($template)){ ?>
+				<?php if(isset($template)){ ?>
 				<tr>
 					<td class="captionLabel">Tab icon</td>
-					<td style="padding: 2px;"><span dojoType="dojo.data.ItemFileReadStore" jsId="assetData" url="/admin/ajax/assets.list.php<? print $institutionQString; ?>"></span><?
+					<td style="padding: 2px;"><span dojoType="dojo.data.ItemFileReadStore" jsId="assetData" url="/admin/ajax/assets.list.php<?php print $institutionQString; ?>"></span><?
 						print $template->getTab()->getIcon()->Html(Image::SIZE_TAB_ICON, 'edit', 'tabIcon');
 					?></td>
 				</tr>
@@ -168,7 +168,7 @@ else {
 							jsId="templateModel" 
 							id="templateModel" 
 							store="templateDataStore" 
-							rootLabel="Tab: <? print $template->getTab()->getName(); ?>"
+							rootLabel="Tab: <?php print $template->getTab()->getName(); ?>"
 							labelAttr="title"
 							childrenAttrs="items"></div>
 						<div
@@ -181,7 +181,7 @@ else {
 						</div>
 					</td>
 				</tr>
-				<? } ?>
+				<?php } ?>
 			</table>			
 		</form>
 		<div id="code1">
@@ -221,18 +221,18 @@ else {
 		</div>			
 
 		</div>
-		<? if(isset($template)): ?>
+		<?php if(isset($template)): ?>
 		<div id="viewersFormContainer" dojoType="dijit.layout.ContentPane" title="Viewers">	
 			<table><tr>
 				<td valign="top" width="47%">
 					Students and groups
 					<select multiple="multiple" id="sourceSelect" style="width:100%;" size="7">
 						<optgroup label="Students">
-						<? 
+						<?php
 							$users = User::RetrieveUsersWhoCantSeeTemplate($template, $adminUser);
 
 							foreach($users as $user) {
-								?><option id="optionSourceSelect<? print $user->getId(); ?>" value="u<? print $user->getId(); ?>" ondblclick="doAddUserToGroup(this)"><? print $user->getUsername() . ' ( ' . $user->getFirstName() . " " . $user->getLastName() . ' )'; ?></option><?
+								?><option id="optionSourceSelect<?php print $user->getId(); ?>" value="u<?php print $user->getId(); ?>" ondblclick="doAddUserToGroup(this)"><?php print $user->getUsername() . ' ( ' . $user->getFirstName() . " " . $user->getLastName() . ' )'; ?></option><?
 							}
 						?>
 						</optgroup>
@@ -241,7 +241,7 @@ else {
 							$groups = Group::RetrieveWhoCantSeeTemplate($template, $adminUser);
 
 							foreach($groups as $group) {
-								?><option id="optionSourceSelect<? print $group->getId(); ?>" value="g<? print $group->getId(); ?>" ondblclick="doAddUserToGroup(this)"><? print $group->getTitle(); ?></option><?
+								?><option id="optionSourceSelect<?php print $group->getId(); ?>" value="g<?php print $group->getId(); ?>" ondblclick="doAddUserToGroup(this)"><?php print $group->getTitle(); ?></option><?
 							}
 						?>
 						</optgroup>
@@ -259,7 +259,7 @@ else {
 							$users = User::RetrieveUsersWhoCanSeeTemplate($template, $adminUser);
 
 							foreach($users as $user) {
-								?><option id="optionSourceSelect<? print $user->getId(); ?>" value="u<? print $user->getId(); ?>" ondblclick="doAddUserToGroup(this)"><? print $user->getUsername() . ' ( ' . $user->getFirstName() . " " . $user->getLastName() . ' )'; ?></option><?
+								?><option id="optionSourceSelect<?php print $user->getId(); ?>" value="u<?php print $user->getId(); ?>" ondblclick="doAddUserToGroup(this)"><?php print $user->getUsername() . ' ( ' . $user->getFirstName() . " " . $user->getLastName() . ' )'; ?></option><?
 							}
 						?>
 						</optgroup>
@@ -268,7 +268,7 @@ else {
 							$groups = Group::RetrieveWhoCanSeeTemplate($template, $adminUser);
 
 							foreach($groups as $group) {
-								?><option id="optionSourceSelect<? print $group->getId(); ?>" value="g<? print $group->getId(); ?>" ondblclick="doAddUserToGroup(this)"><? print $group->getTitle(); ?></option><?
+								?><option id="optionSourceSelect<?php print $group->getId(); ?>" value="g<?php print $group->getId(); ?>" ondblclick="doAddUserToGroup(this)"><?php print $group->getTitle(); ?></option><?
 							}
 						?>
 						</optgroup>
@@ -276,7 +276,7 @@ else {
 				</td>
 			</tr></table>	
 		</div>
-		<? endif; ?>
+		<?php endif; ?>
 		</div>
 		<?
 	}

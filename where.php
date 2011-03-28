@@ -15,8 +15,8 @@ $institutions = Institution::RetrieveAll()
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-	<title><? print $page->getTitle(); ?></title>
-	<? include('_includes/head.inc.php'); ?>
+	<title><?php print $page->getTitle(); ?></title>
+	<?php include('_includes/head.inc.php'); ?>
 </head>
 
 <body id="home">
@@ -33,7 +33,7 @@ $institutions = Institution::RetrieveAll()
 		<div class="rb">
 			<div class="bt"><div></div></div>
 
-			<? // Display all institution link boxes
+			<?php // Display all institution link boxes
 			foreach($institutions as $institution) {
 				print $institution->HtmlLinkBox();
 			}
@@ -46,6 +46,6 @@ $institutions = Institution::RetrieveAll()
 	</div><!-- /#wrap-content-inner -->
 	</div><!-- /#wrap-content -->
 </div><!-- /#wrap-main -->
-<? include('_includes/tracking.inc.php'); ?>
+<?php include('_includes/tracking.inc.php'); ?>
 </body>
 </html>

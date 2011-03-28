@@ -5,7 +5,7 @@ $uploader = new Uploader('Upload a new asset', UPLOAD_LIMIT);
 
 ?>
 <form action="." method="get">
-<input type="hidden" name="do" value="<? print $do; ?>" />
+<input type="hidden" name="do" value="<?php print $do; ?>" />
 
 <div style="width:25%; float:left;">
 <?
@@ -44,7 +44,7 @@ $uploader = new Uploader('Upload a new asset', UPLOAD_LIMIT);
 ?>
 <br /><label for="iFilterTags">Tags:<br /><select id="iFilterTags" style="width:60%">
 	<option value="">All tags</option>
-		<? // Get possible tags for this institute
+		<?php // Get possible tags for this institute
 		$tags = Tag::RetrieveByInstitution($institution);
 		foreach($tags as $tag) {
 		print "<option value=\"{$tag->getName()}\">{$tag->getName()}</option>";
@@ -55,12 +55,12 @@ $uploader = new Uploader('Upload a new asset', UPLOAD_LIMIT);
 <div class="formContainer" id="tabFormContainer" dojoType="dijit.layout.TabContainer" style="height:460px;">
 
 	<div dojoType="dijit.layout.ContentPane" title="Users" id="tabUsers" jsid="tabUsers">
-		<span dojoType="dojo.data.ItemFileReadStore" jsId="userData" url="/admin/ajax/users.list.php?z=z<? print $institutionQString; ?>"></span>
+		<span dojoType="dojo.data.ItemFileReadStore" jsId="userData" url="/admin/ajax/users.list.php?z=z<?php print $institutionQString; ?>"></span>
 		<span dojoType="widgets.DataDropList" jsId="userList" store="userData" type="'user'" onItemsDropped="onDrop" onItemClick="onUserClick"></span>
 	</div>
 	
 	<div dojoType="dijit.layout.ContentPane" title="Groups" id="tabGroups" jsid="tabGroups">
-		<span dojoType="dojo.data.ItemFileReadStore" jsId="groupData" url="/admin/ajax/groups.list.php?z=z<? print $institutionQString; ?>"></span>
+		<span dojoType="dojo.data.ItemFileReadStore" jsId="groupData" url="/admin/ajax/groups.list.php?z=z<?php print $institutionQString; ?>"></span>
 		<span dojoType="widgets.DataDropList" jsId="groupList" store="groupData" type="'group'" onItemsDropped="onDrop"  onItemClick="onGroupClick"></span>
 	</div>
 </div>
@@ -79,7 +79,7 @@ $uploader = new Uploader('Upload a new asset', UPLOAD_LIMIT);
 		<div dojoType="dijit.form.Button" onclick="onSortName" showLabel="true">Name</div>
 	</div>
 	<div style="height: 550px; overflow-y: scroll;">
-	<span dojoType="dojo.data.ItemFileReadStore" jsId="assetData" url="/admin/ajax/assets.list.php?filter=mine<? print $institutionQString; ?>"></span>
+	<span dojoType="dojo.data.ItemFileReadStore" jsId="assetData" url="/admin/ajax/assets.list.php?filter=mine<?php print $institutionQString; ?>"></span>
 	<div dojoType="widgets.ImageList" jsId="assetThumbnails" store="assetData" imagePath="" onSelect="onAssetSelect"></div>
 	</div>
 </div>
@@ -92,7 +92,7 @@ $emptyPicture = Image::GetPlaceHolder();
 <div style="border: 2px solid #666; background-color: #ccc; clear: both; padding: 3px;">
 	<table id="propertyTable" width="100%">
 	<tr>
-		<td rowspan="4" width="110"><? print $emptyPicture->Html(Image::SIZE_THUMBNAIL, null, "SelectedImage"); ?></td>
+		<td rowspan="4" width="110"><?php print $emptyPicture->Html(Image::SIZE_THUMBNAIL, null, "SelectedImage"); ?></td>
 		<th scope="row" width="10%">Title</th>
 		<td width="40%" id="title"></td>
 		<th scope="row" width="10%">Date</th>
@@ -115,7 +115,7 @@ $emptyPicture = Image::GetPlaceHolder();
 		<div jsid="paneTagEdit" dojoType="dijit.layout.ContentPane">
 			<label for="iNewTags">New tags: <select jsid="iNewTags" id="iNewTags" dojoType="dijit.form.ComboBox">
 			<option></option>
-			<? // Get possible tags for this institute
+			<?php // Get possible tags for this institute
 			foreach($tags as $tag) {
 				print "<option>{$tag->getName()}</option>";
 			}
@@ -134,12 +134,12 @@ $emptyPicture = Image::GetPlaceHolder();
 </form>
 <h2>Upload new asset</h2>
 <form action="." method="post" enctype="multipart/form-data">
-<input type="hidden" name="do" value="<? print $do; ?>" />
+<input type="hidden" name="do" value="<?php print $do; ?>" />
 <input type="hidden" value="upload" name="a" />
-<? print $uploader->HtmlUploadForm('upload', '.')?>
+<?php print $uploader->HtmlUploadForm('upload', '.')?>
 </form>
 
-<? // Delete older assets for super asset user
+<?php // Delete older assets for super asset user
 if( $adminUser->getPermissionManager()->hasRight(PermissionManager::RIGHT_ALL_ADMIN) )
 {
 	print "<h2>These assets have been removed and are more than 3 months old</h2><ul>";

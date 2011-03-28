@@ -35,7 +35,7 @@ function showGrid(){
 	?>
 	<script type="text/javascript" src="/admin/_scripts/bo-group-grid.js"></script>
 	<form action="." method="get">
-	<input type="hidden" name="do" value="<? print $do; ?>" />
+	<input type="hidden" name="do" value="<?php print $do; ?>" />
 
 	<?
 	// Admin users get to select institution they're acting on
@@ -72,7 +72,7 @@ function showGrid(){
 			<th>Group</th>
 			<th>Size</th>
 			<th>Owner</th>
-			<th class="actionTd"><a href="?do=<? print $do ?>&a=add&inst=<? print $chosenInstituteId; ?>">Create</a></th>
+			<th class="actionTd"><a href="?do=<?php print $do ?>&a=add&inst=<?php print $chosenInstituteId; ?>">Create</a></th>
 		</tr>
 		</thead>
 		<tbody>
@@ -82,17 +82,17 @@ function showGrid(){
 		foreach($groups as $group){
 			$i++;
 			?>
-			<tr class="<?php echo ($i%2==1)?"even":"odd"?>" id="g<? print $group->getId(); ?>">
+			<tr class="<?php echo ($i%2==1)?"even":"odd"?>" id="g<?php print $group->getId(); ?>">
 				<td class="noTd">
-					<input type="checkbox" name="groupId[]" value="<? print $group->getId(); ?>" id="assetId<? print $group->getId(); ?>" />
+					<input type="checkbox" name="groupId[]" value="<?php print $group->getId(); ?>" id="assetId<?php print $group->getId(); ?>" />
 				</td>
-				<td><a href="?do=<? print $do; ?>&amp;a=edit&amp;id=<? print $group->getId(); ?>&amp;inst=<? print $chosenInstituteId; ?>"><? print $group->getTitle(); ?></a></td>
-				<td><? print $group->getSize(); ?></td>
-				<td><? print $group->getCreatedBy()->getUsername(); ?></td>
+				<td><a href="?do=<?php print $do; ?>&amp;a=edit&amp;id=<?php print $group->getId(); ?>&amp;inst=<?php print $chosenInstituteId; ?>"><?php print $group->getTitle(); ?></a></td>
+				<td><?php print $group->getSize(); ?></td>
+				<td><?php print $group->getCreatedBy()->getUsername(); ?></td>
 				<td class="actionTd">
 					[&nbsp;
-					<a href="?do=<? print $do; ?>&amp;a=edit&amp;id=<? print $group->getId(); ?>&amp;inst=<? print $chosenInstituteId; ?>">Edit</a>
-					<a onclick="showDeleteMsg(<? print $group->getId(); ?>);" onkeyup="showDeleteMsg(<? print $group->getId(); ?>);">Delete</a>
+					<a href="?do=<?php print $do; ?>&amp;a=edit&amp;id=<?php print $group->getId(); ?>&amp;inst=<?php print $chosenInstituteId; ?>">Edit</a>
+					<a onclick="showDeleteMsg(<?php print $group->getId(); ?>);" onkeyup="showDeleteMsg(<?php print $group->getId(); ?>);">Delete</a>
 					&nbsp;]
 				</td>
 			</tr>			
@@ -147,11 +147,11 @@ function showForm()
 	?>
 	<script type="text/javascript" src="/admin/_scripts/bo-group-form.js"></script>
 	<form method="post" name="form" id="form" action=".">
-	<input type="hidden" name="id" id="id"<? if(isset($group)) print ' value="' . $group->getId() . '"'; ?> />
-	<input type="hidden" name="do" id="do" value="<? print SECTION_GROUP; ?>" />
+	<input type="hidden" name="id" id="id"<?php if(isset($group)) print ' value="' . $group->getId() . '"'; ?> />
+	<input type="hidden" name="do" id="do" value="<?php print SECTION_GROUP; ?>" />
 	<input type="hidden" name="operation" id="operation" value="<?php echo ((isset($group)) ? "update":"insert") ?>" />	
 	<input type="hidden" name="a" id="a" value="Group" />
-	<? if(isset($instField)) print $instField; ?>
+	<?php if(isset($instField)) print $instField; ?>
 	<input type="hidden" name="stupid" value="ye sthis is" />
 	<div class="tundra" id="code1" style="background-color:#f5f5f5">
 	<div class="formContainer" id="tabFormContainer" dojoType="dijit.layout.TabContainer" style="width:95%; min-height:600px;">
@@ -159,7 +159,7 @@ function showForm()
 		<div dojoType="dijit.Toolbar" style="clear:both;">
 			<div dojoType="dijit.form.Button" onclick="doSave" showLabel="true">Save</div>
 			<div dojoType="dijit.form.Button" id="btnDelete1" onclick="deleteGroup()" showLabel="true"
-			<? if(!isset($group)){ print 'style="display:none;"'; } ?>
+			<?php if(!isset($group)){ print 'style="display:none;"'; } ?>
 			>Delete</div>
 			<div dojoType="dijit.form.Button" onclick="doCancel" showLabel="true">Cancel</div>
 		</div>		
@@ -169,20 +169,20 @@ function showForm()
 			</tr>
 			<tr>
 				<td class="captionLabel">Group</td>
-				<td><input dojoType="dijit.form.ValidationTextBox" type="text" name="title" id="title" value="<? if (isset($group)) print $group->getTitle(); ?>" required="true" invalidMessage="Group title cannot be empty" /></td>
+				<td><input dojoType="dijit.form.ValidationTextBox" type="text" name="title" id="title" value="<?php if (isset($group)) print $group->getTitle(); ?>" required="true" invalidMessage="Group title cannot be empty" /></td>
 			</tr>
 			<tr>
 				<td class="captionLabel">Description</td>
-				<td><textarea id="description" dojoType="dijit.form.Textarea" name="description" class="dijitTextarea" style="height:100px;"><? if (isset($group)) print $group->getDescription(); ?></textarea></td>
+				<td><textarea id="description" dojoType="dijit.form.Textarea" name="description" class="dijitTextarea" style="height:100px;"><?php if (isset($group)) print $group->getDescription(); ?></textarea></td>
 			</tr>
 		</table>			
 	</div>
 	
-	<div dojoType="dijit.layout.ContentPane" title="Member" id="tabMember"<? if(!isset($group)) print ' style="display:none;"'; ?>>
+	<div dojoType="dijit.layout.ContentPane" title="Member" id="tabMember"<?php if(!isset($group)) print ' style="display:none;"'; ?>>
 		<div dojoType="dijit.Toolbar" style="clear:both;">
 			<div dojoType="dijit.form.Button" onclick="doSave" showLabel="true">Save</div>
 			<div dojoType="dijit.form.Button" id="btnDelete2" onclick="deleteGroup()" showLabel="true"
-			<? if(!isset($group)){ print 'style="display:none;"'; } ?>
+			<?php if(!isset($group)){ print 'style="display:none;"'; } ?>
 			>Delete</div>
 			<div dojoType="dijit.form.Button" onclick="doCancel" showLabel="true">Cancel</div>
 		</div>		
@@ -206,7 +206,7 @@ function showForm()
 								User::RetrieveUsers($adminUser, $fromInstitution);
 
 							foreach($users as $user) {
-								?><option id="optionSourceSelect<? print $user->getId(); ?>" value="<? print $user->getId(); ?>" ondblclick="doAddUserToGroup(this)"><? print $user->getUsername() . ' ( ' . $user->getFirstName() . " " . $user->getLastName() . ' )'; ?></option><?
+								?><option id="optionSourceSelect<?php print $user->getId(); ?>" value="<?php print $user->getId(); ?>" ondblclick="doAddUserToGroup(this)"><?php print $user->getUsername() . ' ( ' . $user->getFirstName() . " " . $user->getLastName() . ' )'; ?></option><?
 							}
 						?>
 					</select>
@@ -218,11 +218,11 @@ function showForm()
 				<td valign="top" width="47%">
 					Group members
 					<select id="targetSelect" name="targetSelect[]" multiple="multiple" style="width:100%;" size="7">
-						<? if(isset($group)) {
+						<?php if(isset($group)) {
 							$users = User::RetrieveUsersInGroup($group, $adminUser);
 
 							foreach($users as $user) {
-								?><option id="target<? print $user->getId(); ?>" value="<? print $user->getId(); ?>" ondblclick="doRemoveUserFromGroup(this)"><? print $user->getUsername() . ' ( ' . $user->getFirstName() . " " . $user->getLastName() . ' )'; ?></option><?
+								?><option id="target<?php print $user->getId(); ?>" value="<?php print $user->getId(); ?>" ondblclick="doRemoveUserFromGroup(this)"><?php print $user->getUsername() . ' ( ' . $user->getFirstName() . " " . $user->getLastName() . ' )'; ?></option><?
 							}
 						} ?>						
 					</select>

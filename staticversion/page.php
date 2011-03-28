@@ -20,42 +20,42 @@ include('staticversion/page.inc.php');
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-	<? print $page->htmlHead(); ?>
-	<? include('_includes/head.inc.php'); ?>
+	<?php print $page->htmlHead(); ?>
+	<?php include('_includes/head.inc.php'); ?>
 </head>
 
-<body class="<? print $studentTheme->getBodyClass(); ?>" id="home">
-<!--<? include('_includes/header.inc.php'); // Keep commented, still need code to run (mainly to init $tabsMenu), but not display ?>-->
-<div id="wrap-main" class="p<? print $page->getId(); ?>">
-	<? include('_includes/header-profile.inc.php'); ?>
+<body class="<?php print $studentTheme->getBodyClass(); ?>" id="home">
+<!--<?php include('_includes/header.inc.php'); // Keep commented, still need code to run (mainly to init $tabsMenu), but not display ?>-->
+<div id="wrap-main" class="p<?php print $page->getId(); ?>">
+	<?php include('_includes/header-profile.inc.php'); ?>
 	<div id="wrap-content">
 	<div id="wrap-content-inner">
-		<? print $page->HtmlTitle(); ?>
+		<?php print $page->HtmlTitle(); ?>
 
 		<div class="fix">&nbsp;</div>
 		
-		<? print $studentTheme->BoxIf($page->HtmlMessage($studentTheme), $page->HtmlMessageTitle()); ?>
+		<?php print $studentTheme->BoxIf($page->HtmlMessage($studentTheme), $page->HtmlMessageTitle()); ?>
 
-		<? // The blocks in this page
+		<?php // The blocks in this page
 		print '<div id="blocks">' .
 				$page->HtmlBlocks($studentTheme, $studentUser) . '</div>'; ?>
 
-		<? // This page's attachments
+		<?php // This page's attachments
 		print $studentTheme->SolidBox(
 			'<h2 id="attachments">Attachments</h2>' .
 			$page->HtmlAttachments()
 		);?>
 
-		<? // Paging menu (pages in the parent tab)
+		<?php // Paging menu (pages in the parent tab)
 		print $studentTheme->HtmlMenu($pagingMenu, Theme::LEFT); ?>
 
-		<? include('_includes/footer.inc.php'); ?>
+		<?php include('_includes/footer.inc.php'); ?>
 	</div><!-- /#wrap-content-inner -->
 	</div><!-- /#wrap-content -->
 </div><!-- /#wrap-main -->
 <script type="text/javascript" src="_scripts/jq/jquery-1.3.2.min.js"></script>
 <script type="text/javascript" src="_scripts/jq/scrollable.js"></script>
-<? print $page->getJavaScriptVariables()->HtmlJavaScriptBlock(); ?>
+<?php print $page->getJavaScriptVariables()->HtmlJavaScriptBlock(); ?>
 <script type="text/javascript" src="_scripts/main.js"></script>
 </body>
 </html>

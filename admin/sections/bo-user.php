@@ -37,7 +37,7 @@ function showGrid()
 ?>
 	<script type="text/javascript" src="/admin/_scripts/bo-user-grid.js"></script>
 	<form action="." method="get">
-	<input type="hidden" name="do" value="<? print $do; ?>" />
+	<input type="hidden" name="do" value="<?php print $do; ?>" />
 
 	<?
 	// Admin users get to select institution they're acting on
@@ -108,19 +108,19 @@ function showGrid()
 		foreach ($users as $aUser) {
 			$rowCount++;
 			?>
-			<tr class="<? print ($rowCount%2==1)?"even":"odd"?>" id="u<? print $aUser->getId(); ?>">
-				<td><a href=".?do=<?php echo $do?>&amp;a=edit&amp;id=<? print( $aUser->getId() ); ?>"><? print "{$aUser->getFullName()}"; ?></a></td>
-				<td><? print $aUser->getUsername(); ?></td>
-				<td><? print ( ucfirst($aUser->getPermissionManager()->getUserType()) ); ?></td>
-				<td><? print Date::formatForDatabase($aUser->getUpdatedTime()); ?></td>
+			<tr class="<?php print ($rowCount%2==1)?"even":"odd"?>" id="u<?php print $aUser->getId(); ?>">
+				<td><a href=".?do=<?php echo $do?>&amp;a=edit&amp;id=<?php print( $aUser->getId() ); ?>"><?php print "{$aUser->getFullName()}"; ?></a></td>
+				<td><?php print $aUser->getUsername(); ?></td>
+				<td><?php print ( ucfirst($aUser->getPermissionManager()->getUserType()) ); ?></td>
+				<td><?php print Date::formatForDatabase($aUser->getUpdatedTime()); ?></td>
 				<td class="actionTd">
 					[&nbsp;
-					<a href=".?do=<?php echo $do?>&amp;a=edit&amp;id=<? print( $aUser->getId() ); ?>">Edit</a> 
-					<a onclick="doDelete(<? print( $aUser->getId() ); ?>,'');" onkeyup="doDelete(<? print( $aUser->getId() ); ?>);" href="#">Delete</a>
+					<a href=".?do=<?php echo $do?>&amp;a=edit&amp;id=<?php print( $aUser->getId() ); ?>">Edit</a>
+					<a onclick="doDelete(<?php print( $aUser->getId() ); ?>,'');" onkeyup="doDelete(<?php print( $aUser->getId() ); ?>);" href="#">Delete</a>
 					&nbsp;]
 				</td>
 			</tr>			
-		<? } ?>
+		<?php } ?>
 		</tbody>
 	</table>
 	<div id="pager" class="pager">
@@ -195,22 +195,22 @@ function showForm(){
 	<script type="text/javascript" src="/admin/_scripts/bo-user-form.js"></script>
 	<div id="dataFormContainer">
 		
-		<? /** User details main tab **/ ?>
+		<?php /** User details main tab **/ ?>
 		<div id="mainTabContainer" dojoType="dijit.layout.TabContainer" class="mainTabContainer" doLayout="true" style="width:95%; height:650px;">
 			<div id="profileTab" dojoType="dijit.layout.ContentPane" class="tab" title="Profile">
 
 				<form method="post" id="userform" action="." dojoType="dijit.form.Form">
-				<input type="hidden" name="userid" id="userid" value="<? if(isset($user)) print $user->getId(); ?>" />
-				<input type="hidden" name="do" id="do" value="<? echo Safe::get('do'); ?>" />
+				<input type="hidden" name="userid" id="userid" value="<?php if(isset($user)) print $user->getId(); ?>" />
+				<input type="hidden" name="do" id="do" value="<?php echo Safe::get('do'); ?>" />
 				<input type="hidden" name="a" id="a" value="User" />
-				<input type="hidden" name="operation" id="operation" value="<? print ((isset($user)) ? 'Update' : 'Insert') ?>" />
+				<input type="hidden" name="operation" id="operation" value="<?php print ((isset($user)) ? 'Update' : 'Insert') ?>" />
                 <input type="hidden" name="share" id="share" value="<?php print $share; ?>" />
 
 				<div dojoType="dijit.Toolbar" style="clear:both;">
 					<div dojoType="dijit.form.Button" onclick="doSave" showLabel="true">Save</div>
 					<div dojoType="dijit.form.Button" id="btnDelete" showLabel="true"
 						onclick="doDelete"
-						<? if(!isset($gid)){?>style="display:none;"<? } ?>
+						<?php if(!isset($gid)){?>style="display:none;"<?php } ?>
 						>Delete</div>
 					<div dojoType="dijit.form.Button" onclick="doCancel" showLabel="true">Cancel</div>
 				</div>		
@@ -222,10 +222,10 @@ function showForm(){
 								type="text" 
 								name="firstName" 
 								id="firstName" 
-								value="<? print (isset($user)) ? $user->getFirstName() : '';?>" 
+								value="<?php print (isset($user)) ? $user->getFirstName() : '';?>"
 								regExp="[\w\s]+" 
 								required="true" 
-								invalidMessage="First name cannot be empty<br />System only accept character and number" /> <? print TEXT_FIELD_REQUIRED; ?></td>
+								invalidMessage="First name cannot be empty<br />System only accept character and number" /> <?php print TEXT_FIELD_REQUIRED; ?></td>
 					</tr>
 					<tr>
 						<td class="captionLabel">Last name</td>
@@ -234,10 +234,10 @@ function showForm(){
 								type="text" 
 								name="lastName" 
 								id="lastName" 
-								value="<? print (isset($user)) ? $user->getLastName() : '';?>" 
+								value="<?php print (isset($user)) ? $user->getLastName() : '';?>"
 								regExp="[\w\s]+" 
 								required="true" 
-								invalidMessage="Last name cannot be empty<br />System only accept character and number" /> <? print TEXT_FIELD_REQUIRED; ?></td>
+								invalidMessage="Last name cannot be empty<br />System only accept character and number" /> <?php print TEXT_FIELD_REQUIRED; ?></td>
 					</tr>
 					<tr>
 						<td class="captionLabel">Email</td>
@@ -245,15 +245,15 @@ function showForm(){
 								type="text" 
 								name="email" 
 								id="email" 
-								value="<? print (isset($user)) ? $user->getEmail() : ''; ?>" 
+								value="<?php print (isset($user)) ? $user->getEmail() : ''; ?>"
 								regExp="^([0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,9})$" 
 								invalidMessage="Must be a valid email" /></td>
 					</tr>
-					<? if($adminUser->getPermissionManager()->hasRight(PermissionManager::RIGHT_ALL_ADMIN)): ?>
+					<?php if($adminUser->getPermissionManager()->hasRight(PermissionManager::RIGHT_ALL_ADMIN)): ?>
 					<tr>
 						<td class="captionLabel">Institution</td>
 						<td>
-							<? if (isset($user)):
+							<?php if (isset($user)):
 								print $user->getInstitution()->getName();
 							else: ?>
 								<select dojoType="dijit.form.FilteringSelect" 
@@ -263,18 +263,18 @@ function showForm(){
 									validator="return this.getValue()!='';"
 									invalidMessage="You must choose an institution">
 									<option></option>
-									<? 
+									<?php
 										$institutions = Institution::RetrieveAll();
 										foreach($institutions as $institution)
 										{
-											?><option value="<? print $institution->getId(); ?>"><? print $institution->getName(); ?></option><?
+											?><option value="<?php print $institution->getId(); ?>"><?php print $institution->getName(); ?></option><?
 										}
 									?>
-								</select> <? print TEXT_FIELD_REQUIRED; ?>
-							<? endif; ?>
+								</select> <?php print TEXT_FIELD_REQUIRED; ?>
+							<?php endif; ?>
 						</td>
 					</tr>
-					<? endif; ?>
+					<?php endif; ?>
 
 					<tr>
 						<td class="captionLabel">Description</td>
@@ -283,7 +283,7 @@ function showForm(){
 								class="dijitTextarea" 
 								dojoType="dijit.form.Textarea" 
 								name="description" 
-								id="description"><? print (isset($user)) ? $user->getDescription() : ''; ?></textarea>
+								id="description"><?php print (isset($user)) ? $user->getDescription() : ''; ?></textarea>
 						</td>
 					</tr>
 				</table>
@@ -298,8 +298,8 @@ function showForm(){
 							name="username"
 							id="username"
 							required="true"
-							<? if(isset($gid)){?>disabled="disabled"<? } ?>
-							value="<? print (isset($user)) ? $user->getUsername() : ''; ?>" /> <? print TEXT_FIELD_REQUIRED; ?>
+							<?php if(isset($gid)){?>disabled="disabled"<?php } ?>
+							value="<?php print (isset($user)) ? $user->getUsername() : ''; ?>" /> <?php print TEXT_FIELD_REQUIRED; ?>
 							<div id="inlineNotificationUsername" class="inlineNotification"></div></td>
 					</tr>
 					<?
@@ -322,14 +322,14 @@ function showForm(){
 					
 					?>
 					<tr>
-						<td class="captionLabel"><? if(Safe::get('a')=="edit") print 'Change '; ?>Password</td>
+						<td class="captionLabel"><?php if(Safe::get('a')=="edit") print 'Change '; ?>Password</td>
 						<td><input 
 							dojoType="dijit.form.ValidationTextBox" 
 							type="text"
 							name="password"
 							id="password"
-							<? print $passwordValue . $passwordRequired; ?>
-							invalidMessage="Please type a password" /> <? print TEXT_FIELD_REQUIRED; ?>
+							<?php print $passwordValue . $passwordRequired; ?>
+							invalidMessage="Please type a password" /> <?php print TEXT_FIELD_REQUIRED; ?>
 							<div id="inlineNotificationPassword" class="inlineNotification"></div></td>
 					</tr>
 					<tr>
@@ -339,11 +339,11 @@ function showForm(){
 							type="text"
 							name="password2"
 							id="password2"
-							<? print $passwordValue . $passwordRequired;; ?>
+							<?php print $passwordValue . $passwordRequired;; ?>
 							validator="return theSame(this, dijit.byId('password'));"
-							invalidMessage="This password must match your first password" /> <? print TEXT_FIELD_REQUIRED; ?></td>
+							invalidMessage="This password must match your first password" /> <?php print TEXT_FIELD_REQUIRED; ?></td>
 					</tr>
-					<? print $passwordMessage; ?>
+					<?php print $passwordMessage; ?>
 					<tr>
 						<td class="captionLabel">User type</td>
 						<td>
@@ -351,45 +351,45 @@ function showForm(){
 								dojoType="dijit.form.FilteringSelect" 
 								id="userType" 
 								name="userType">
-								<? print PermissionManager::HtmlSelectOptions($user); ?>
+								<?php print PermissionManager::HtmlSelectOptions($user); ?>
 							</select> <?php echo TEXT_FIELD_REQUIRED?>
 						</td>
 					</tr>
 				</table>
 
-				<? if(isset($user)) { ?>
+				<?php if(isset($user)) { ?>
 				<h2>Switch Login</h2>
 				<span dojoType="dojo.data.ItemFileReadStore" jsId="loginShapeData" url="/system/ajax/flash/switch_loginShapes.json.php"></span>
 				<span dojoType="dojo.data.ItemFileReadStore" jsId="loginPhotoData" url="/system/ajax/flash/switch_loginPhotos.json.php"></span>
-				<p><label for="ppEnabled">Enabled: <input id="ppEnabled" name="ppEnabled" type="checkbox" value="yes"<? if($user->getPermissionManager()->getSymbolLogin()->isEnabled()) print 'checked="checked"'; ?> /></label></p>
+				<p><label for="ppEnabled">Enabled: <input id="ppEnabled" name="ppEnabled" type="checkbox" value="yes"<?php if($user->getPermissionManager()->getSymbolLogin()->isEnabled()) print 'checked="checked"'; ?> /></label></p>
 
 				<div id="symbolpass" style="margin: 0 0 0 2em; border: 2px solid #ccc; padding: 0 20px 0 20px; width:250px;">
 				<h3>Switch login symbol password</h3>
-				<? print $user->getPermissionManager()->getSymbolLogin()->HtmlAdminShow(); ?>
+				<?php print $user->getPermissionManager()->getSymbolLogin()->HtmlAdminShow(); ?>
 				<ul>
-				<li><a href="/admin/switch.inf.php?id=<? print $user->getId(); ?>">Download user inf file</a></li>
-				<li><a href="/admin/switch.inf.php?id=<? print $user->getId(); ?>&includepass=y">Download user inf file with password included</a></li>
+				<li><a href="/admin/switch.inf.php?id=<?php print $user->getId(); ?>">Download user inf file</a></li>
+				<li><a href="/admin/switch.inf.php?id=<?php print $user->getId(); ?>&includepass=y">Download user inf file with password included</a></li>
 				</ul>
 				</div>
-				<? } ?>
+				<?php } ?>
 				</form>
 			</div>
-			<? // Only show this tab if user has already been created
+			<?php // Only show this tab if user has already been created
 			if(isset($user)) { ?>
 			<div id="activityTab" dojoType="dijit.layout.ContentPane" class="tab" title="Activity">
-				<? print $user->HtmlLogActivity(); ?>
+				<?php print $user->HtmlLogActivity(); ?>
 			</div>
 			<div id="exportTab" dojoType="dijit.layout.ContentPane" class="tab" title="Export">
 				<p>Export produces a zip file of this user's infolio. This includes their tabs, pages and all their assets.
 				<strong>It can take a while to do the export (Up to a minute or possibly more).</strong></p>
 				<p>Select the tabs for this user that you would like to include in the export.</p>
-				<? print $user->HtmlExportProfileForm(); ?>
+				<?php print $user->HtmlExportProfileForm(); ?>
 			</div>
 			<div id="manageTabs" dojoType="dijit.layout.ContentPane" class="tab" title="Tabs">
 				<p>Tabs allows an adminstrator to manage a users tabs.  The administrator can disable and enable tabs that the user will then see.</p>
-				<? print $user->HtmlManageTabs(); ?>
+				<?php print $user->HtmlManageTabs(); ?>
 			</div>
-			<? } ?>
+			<?php } ?>
 		</div>			
 	</div>
 <?

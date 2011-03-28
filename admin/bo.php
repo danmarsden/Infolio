@@ -68,7 +68,7 @@ if($do == SECTION_ASSET && isset($pa) && $pa == 'upload') {
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <title>Techdis</title>
-<? include('_includes/head.inc.php'); ?>
+<?php include('_includes/head.inc.php'); ?>
 </head>
 <body class="tundra">
 	<div id="popupContainer" style="display:block;">
@@ -94,9 +94,9 @@ if($do == SECTION_ASSET && isset($pa) && $pa == 'upload') {
 					<span style="font-size:0.7em;">Administration Area</span>
 				</div>
 				<div id="moduleIcon">
-					<? if($backoffice->getIconForCurrentModule()!=""){?>
-						<img src="/_images/bo/icon/<? print $backoffice->getIconForCurrentModule(); ?>" width="55" height="55" />
-					<? } ?>
+					<?php if($backoffice->getIconForCurrentModule()!=""){?>
+						<img src="/_images/bo/icon/<?php print $backoffice->getIconForCurrentModule(); ?>" width="55" height="55" />
+					<?php } ?>
 				</div>
 			</div>
 			<div class="headerDivider">&nbsp;</div>
@@ -109,7 +109,7 @@ if($do == SECTION_ASSET && isset($pa) && $pa == 'upload') {
 				</div>
 			</div>
 			<div id="subSubHeader">
-				<p id="breadcrumbContainer"><? print $breadcrumb->create()?></p>
+				<p id="breadcrumbContainer"><?php print $breadcrumb->create()?></p>
 				<div id="printContainer">
 					<!-- <img src="<?php echo DIR_WS_IMAGES?>pdf.png" height="25" onclick="alert('not implemented yet')" />&nbsp;&nbsp; -->
 					<img src="/_images/bo/print.png" height="25" onclick="window.print();" alt="Print" />
@@ -121,16 +121,16 @@ if($do == SECTION_ASSET && isset($pa) && $pa == 'upload') {
 			<div id="leftContainer">
 				<div id="leftMenu">
 			
-					<? include_once("module/bo-left-menu.php");?>
+					<?php include_once("module/bo-left-menu.php");?>
 				</div>
 			</div>
 			<div id="workspaceContainer">
-				<? include_once("module/bo-main.php");?>
+				<?php include_once("module/bo-main.php");?>
 			</div>
 		</div>
 		<div id="footer">
 			<div id="footerContent">
-			<? include_once("module/bo-footer.php");?>
+			<?php include_once("module/bo-footer.php");?>
 			</div>
 			<div class="headerDivider">&nbsp;</div>
 			<div id="bottomCurve">

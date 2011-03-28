@@ -21,14 +21,14 @@
 if( isset($studentUser) ) {
 	print $studentUser->getProfilePicture()->Html(Image::SIZE_TAB_ICON, 'header_pic');
 	?>
-	<p id="site-name"><? print($studentUser->getFirstName()); ?>'s eFolio</p>
-	<p id="site-subname"><? print ($studentUser->getInstitution()->getName()) ?></p>
-<? }
+	<p id="site-name"><?php print($studentUser->getFirstName()); ?>'s eFolio</p>
+	<p id="site-subname"><?php print ($studentUser->getInstitution()->getName()) ?></p>
+<?php }
 
 // Page header for non-logged in person
 else { ?>
 	<h1>eFolio</h1>
-<? } ?>
+<?php } ?>
 </div><!-- /#wrap-profile -->
 <a id="my-tabs" href="managetabs.php" title="My tabs" >My tabs</a>
 <a id="my-collection" href="collection.php" title="My collection" >My collection</a>

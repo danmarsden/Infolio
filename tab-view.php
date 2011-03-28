@@ -102,19 +102,19 @@ if (!empty($pageviewid)) {
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-	<? print $page->htmlHead(); ?>
-	<? include('_includes/head.inc.php'); ?>
+	<?php print $page->htmlHead(); ?>
+	<?php include('_includes/head.inc.php'); ?>
     <style>#nav-tabs li {visibility: visible;}</style>
 </head>
 
-<body class="<? print $studentTheme->getBodyClass(); ?>" id="home">
+<body class="<?php print $studentTheme->getBodyClass(); ?>" id="home">
 <div id="wrap-main">
 <div id="wrap-profile">
 <?
 	print $tabUser->getProfilePicture()->Html(Image::SIZE_TAB_ICON, 'header_pic');
 ?>
-	<p id="site-name"><? print($tabUser->getFirstName()); ?>'s eFolio</p>
-	<p id="site-subname"><? print ($tabUser->getInstitution()->getName()) ?></p>
+	<p id="site-name"><?php print($tabUser->getFirstName()); ?>'s eFolio</p>
+	<p id="site-subname"><?php print ($tabUser->getInstitution()->getName()) ?></p>
 </div>
 <div id="nav-tabs" class="<?php print $studentTheme->getName(); ?>">
  <ul class="items">
@@ -143,8 +143,8 @@ if (!empty($pageviewid)) {
         if ($comment == '1' && !empty($commentapi)) { //if comments enabled
         ?>
                 <script>
-                var idcomments_acct = '<? print $commentapi; ?>';
-                var idcomments_post_id = '<? print $pageview->getId(); ?>';
+                var idcomments_acct = '<?php print $commentapi; ?>';
+                var idcomments_post_id = '<?php print $pageview->getId(); ?>';
                 var idcomments_post_url;
                 </script>
                 <span id="IDCommentsPostTitle" style="display:none"></span>
@@ -164,7 +164,7 @@ if (!empty($pageviewid)) {
          } elseif($tab->getNumPages() > 0) { ?>
 		<div class="rb">
 			<div class="bt"><div></div></div>
-			<? print $tab->HtmlPageListing($tabUser); ?>
+			<?php print $tab->HtmlPageListing($tabUser); ?>
 			<div class="clear"></div>
 			<div class="bb"><div></div></div>
 		</div>
@@ -177,15 +177,15 @@ if (!empty($pageviewid)) {
 ?>
 
 
-		<? include('_includes/footer.inc.php'); ?>
+		<?php include('_includes/footer.inc.php'); ?>
 	</div><!-- /#wrap-content-inner -->
 	</div><!-- /#wrap-content -->
 </div><!-- /#wrap-main -->
-<? Debugger::debugPrint(); ?>
+<?php Debugger::debugPrint(); ?>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
 <script type="text/javascript" src="/_scripts/jq/scrollable.js"></script>
-<? print $page->getJavaScriptVariables()->HtmlJavaScriptBlock(); ?>
+<?php print $page->getJavaScriptVariables()->HtmlJavaScriptBlock(); ?>
 <script type="text/javascript" src="/_scripts/main.min.js"></script>
-<? include('_includes/tracking.inc.php'); ?>
+<?php include('_includes/tracking.inc.php'); ?>
 </body>
 </html>
