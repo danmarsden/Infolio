@@ -23,7 +23,7 @@ include_once('model/Video.class.php');
 include_once('class/Events/PageEventDispatcher.class.php');
 include_once('class/si/Uploader.class.php');
 
-DEFINE('ADD_COMMAND', 'add');
+define('ADD_COMMAND', 'add');
 
 // Make sure they're logged in
 include_once('_includes/login.inc.php');
@@ -186,7 +186,7 @@ function onEnterEditPage($_page, $editPictureId = null, $assetFilter=AssetCollec
 	createTab($page);
 
 	// check for 'add' command
-	if( !isset($editBlockId) ) $editBlockId = checkForNewBlock($_GET, $page);
+	if( !isset($editBlockId) ) $editBlockId = checkForNewBlock(Safe::get(ADD_COMMAND), $page);
 
 	// Show an edit block
 	if( isset($editBlockId) ) {
@@ -272,8 +272,8 @@ function checkForNewBlock($commandInput, $page)
 	//TODO: Make this work so it saves the block before displaying it
 	global $studentUser;
 	// New 
-	if ( isset($commandInput[ADD_COMMAND]) ) {
-		$templateId = Safe::Input($commandInput[ADD_COMMAND]);
+	if ( isset($commandInput) ) {
+		$templateId = $commandInput;
 		$newBlock = $page->CreateNewBlock($templateId, $studentUser);
 		$newBlock->Save($studentUser);
 

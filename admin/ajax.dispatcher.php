@@ -52,7 +52,7 @@ switch($a) {
 		break;
 
 	case 'institution':
-		institutionOperations($operation, $adminUser, $_POST);
+		institutionOperations($operation, $adminUser);
 		break;
 
 	case 'user':
@@ -257,7 +257,7 @@ switch($a) {
 		}
 		break;
 	case 'switchpassword':
-		switchPasswordOperations($operation, $adminUser, $_POST);
+		switchPasswordOperations($operation, $adminUser);
 		break;
 }
  
@@ -284,31 +284,31 @@ function login($userName, $password, $institution)
 }
 
 
-function institutionOperations($operation, $adminUser, $requestData)
+function institutionOperations($operation, $adminUser)
 {
 	include_once(DIR_FS_MODEL . "Institution.class.php");
 
 	switch($operation) {
 		case 'insert':
 			$newInstitution = new Institution();
-			$newInstitution->setName($requestData['name']);
-			$newInstitution->setUrl($requestData['url']);
-            $newInstitution->setSharing($requestData['share']);
-            $newInstitution->setComment($requestData['comment']);
-            $newInstitution->setCommentApi($requestData['commentapi']);
-            $newInstitution->setLimitShare($requestData['limitshare']);
+			$newInstitution->setName(Safe::post('name'));
+			$newInstitution->setUrl(Safe::post('url'));
+            $newInstitution->setSharing(Safe::post('share'));
+            $newInstitution->setComment(Safe::post('comment'));
+            $newInstitution->setCommentApi(Safe::post('commentapi'));
+            $newInstitution->setLimitShare(Safe::post('limitshare'));
 			$newInstitution->CreateFolders();
 			$newInstitution->Save($adminUser);
 			print $newInstitution->getId();
 			break;
 		case 'update':
-			$institution = Institution::RetrieveById($requestData["id"]);
-			$institution->setName($requestData['name']);
-            $institution->setSharing($requestData['share']);
-            $institution->setComment($requestData['comment']);
-            $institution->setCommentApi($requestData['commentapi']);
-            $institution->setLimitShare($requestData['limitshare']);
-			if(!$institution->setUrl($requestData['url'])){
+			$institution = Institution::RetrieveById(Safe::post('id'));
+			$institution->setName(Safe::post('name'));
+            $institution->setSharing(Safe::post('share'));
+            $institution->setComment(Safe::post('comment'));
+            $institution->setCommentApi(Safe::post('commentapi'));
+            $institution->setLimitShare(Safe::post('limitshare'));
+			if(!$institution->setUrl(Safe::post('url'))){
 				print("Please try another URL");
 			}
 			else {
@@ -318,13 +318,13 @@ function institutionOperations($operation, $adminUser, $requestData)
 			}
 			break;
 		case 'delete':
-			$institution = Institution::RetrieveById($requestData["id"]);
+			$institution = Institution::RetrieveById(Safe::post("id"));
 			$institution->Delete($adminUser);
-			print $requestData["id"];
+			print Safe::post("id");
 			break;
 		case 'setpic':
-			$institution = Institution::RetrieveById($requestData["id"]);
-			$institution->setAssetId($requestData["asset_id"]);
+			$institution = Institution::RetrieveById(Safe::post("id"));
+			$institution->setAssetId(Safe::post("asset_id"));
 			$institution->Save($adminUser);
 			print 1;
 		default:
@@ -332,10 +332,10 @@ function institutionOperations($operation, $adminUser, $requestData)
 	}
 }
 
-function switchPasswordOperations($operation, $adminUser, $requestData)
+function switchPasswordOperations($operation, $adminUser)
 {
 	// All switchPassword ops on a user
-	$userId = Safe::GetArrayIndexValueWithDefault($requestData, 'user_id', 0);
+	$userId = Safe::postWithDefault('user_id', 0, PARAM_INT);
 	if(isValidNumberInRange($userId, 1)) {
 		$user = User::RetrieveById($userId);
 	}
@@ -345,7 +345,7 @@ function switchPasswordOperations($operation, $adminUser, $requestData)
 
 	switch($operation) {
 		case 'setphoto':
-			$photoId = Safe::GetArrayIndexValueWithDefault($requestData, 'id', 0);
+			$photoId = Safe::postWithDefault('id', 0, PARAM_INT);
 
 			if(isValidNumberInRange($photoId, 0, 14)) {
 				$user->getPermissionManager()->getSymbolLogin()->setPhoto($photoId);
@@ -358,7 +358,7 @@ function switchPasswordOperations($operation, $adminUser, $requestData)
 
 			break;
 		case 'setshape':
-			$shapeId = Safe::GetArrayIndexValueWithDefault($requestData, 'id', 0);
+			$shapeId = Safe::postWithDefault('id', 0, PARAM_INT);
 
 			if(isValidNumberInRange($shapeId, 0, 5)) {
 				$user->getPermissionManager()->getSymbolLogin()->setShape($shapeId);
@@ -413,11 +413,11 @@ function templateOperations($operation, $adminUser)
 			break;
 		case 'add_viewers':
 			$template = new Template($templateId);
-			print $template->AddViewersFromString($_POST['ids']);
+			print $template->AddViewersFromString(Safe::post('ids'));
 			break;
 		case 'remove_viewers':
 			$template = new Template($templateId);
-			$template->RemoveViewersFromString($_POST['ids']);
+			$template->RemoveViewersFromString(Safe::post('ids'));
 			break;
 		case 'seticon':
 			$template = new Template($templateId);

@@ -14,9 +14,9 @@
 */
 
 /**
- * PARAM_ALPHA - 
+ * PARAM_NORMAL - only does htmlspecialchars
  */
-define('PARAM_ALPHA',    'alpha');
+define('PARAM_NORMAL',    'normal');
 
 /**
  * PARAM_INT - integers only, use when expecting only numbers.
@@ -114,20 +114,20 @@ class Safe
 		
 		return $urlQueryVar;
 	}
-    public static function get($var, $type=PARAM_ALPHA) {
+    public static function get($var, $type=PARAM_NORMAL) {
         if (isset($_GET[$var])) {
             //ToDo: Filter the text better
             return htmlspecialchars($_GET[$var]);
         }
         return null;
     }
-    public static function post($var, $type=PARAM_ALPHA) {
+    public static function post($var, $type=PARAM_NORMAL) {
         if (isset($_POST[$var])) {
             return htmlspecialchars($_POST[$var]);
         }
         return null;
     }
-    public static function getWithDefault($var, $default, $type=PARAM_ALPHA) {
+    public static function getWithDefault($var, $default, $type=PARAM_NORMAL) {
        if( isset($_GET[$var]) ) {
 			$value = $_GET[$var];
 		} else {
@@ -135,7 +135,7 @@ class Safe
 		}
         return $value;
     }
-    public static function postWithDefault($var, $default, $type=PARAM_ALPHA) {
+    public static function postWithDefault($var, $default, $type=PARAM_NORMAL) {
         if( isset($_POST[$var]) ) {
              $value = $_GET[$var];
          } else {
