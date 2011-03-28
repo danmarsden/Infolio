@@ -28,11 +28,12 @@ $ignoreInstitutionUrl = true;
 include_once('_includes/login.inc.php');
 
 // Get page
-$page = Page::GetPageById($_GET['page_id'], $studentUser);
+$pid = Safe::get('page_id', PARAM_INT);
+$page = Page::GetPageById($pid, $studentUser);
 $page->setViewer($studentUser);
 
 if(!isset($page)) {
-	print "msg=No page with id {$_GET['page_id']}";
+	print "msg=No page with id {$pid}";
 	exit();
 }
 

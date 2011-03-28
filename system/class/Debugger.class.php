@@ -38,20 +38,6 @@ class Debugger {
 		}
 	}
 
-	public static function debugPostAndGetVars()
-	{
-		$debugText = '<p>POST vars</p><ul>';
-		foreach ($_POST as $key=>$val) {
-			$debugText .= "<li>{$key}=>{$val}</li>";
-		}
-		$debugText .= '</ul><p>GET vars</p><ul>';
-		foreach ($_GET as $key=>$val) {
-			$debugText .= "<li>{$key}=>{$val}</li>";
-		}
-		$debugText .= '</ul>';
-		self::debug($debugText, 'POST & GET vars');
-	}
-
 	public static function debugPrint()
 	{
 		global $debug;

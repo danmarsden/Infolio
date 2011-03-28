@@ -21,7 +21,7 @@ $allowedkeys = array(
     'institution',
 );
 
-$adminUser = User::RetrieveById($_POST['adminuser']);
+$adminUser = User::RetrieveById(Safe::post('adminuser'));
 $returnurl = $adminUser->getInstitution()->getUrl() . '/' . DIR_WS_ADMIN . '?do=' . SECTION_USER;
 
 if ($_FILES['bulk-user-file']['error'] != UPLOAD_ERR_OK) {

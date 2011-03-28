@@ -138,13 +138,15 @@ class BackOffice{
 	}
 	
 	/**
-	 * Get a $_GET[do] folder; 'do' determine the module that is being used
-	 * @return $_GET['do'] or $_POST['do']
+	 * Get a GET[do] folder; 'do' determine the module that is being used
+	 * @return GET['do'] or POST['do']
 	 */
 	private function getDo()
 	{
-		if(isset($_GET["do"])) return $_GET["do"];
-		else if(isset($_POST["do"])) return $_POST["do"];
+        $gdo = Safe::get('do');
+        $pdo = Safe::post('do');
+		if(isset($gdo)) return $gdo;
+		else if(isset($pdo)) return $pdo;
 	}
 	
 	/**

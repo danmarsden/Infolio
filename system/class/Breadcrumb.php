@@ -57,27 +57,30 @@ class Breadcrumb{
 	}
 
 	/**
-	 * Get a $_GET[do] folder; 'do' determine the module that is being used
-	 * @return $_GET['do'] or $_POST['do']
+	 * Get a GET[do] folder; 'do' determine the module that is being used
+	 * @return GET['do'] or POST['do']
 	 */	
 	private function getDo(){
-		if(isset($_GET["do"])){
-			return ($_GET["do"]!="") ? $_GET["do"] : $_POST["do"];
+        $gdo = Safe::get('do');
+		if(isset($gdo)){
+			return ($gdo!="") ? $gdo : Safe::Post('do');
 		}else{
 			return false;
 		}
 	}
 	
 	/**
-	 * Translate $_GET[action] to a more linguistic word, to be used in breadcrumb
-	 * @return $_GET['action'] or $_POST['action']
+	 * Translate GET[action] to a more linguistic word, to be used in breadcrumb
+	 * @return GET['action'] or POST['action']
 	 */	
 	private function getAction(){
 		$a="";
 		$action="";
-		if( isset( $_GET["a"] ) ) $a=$_GET["a"];
-		if( isset( $_POST["a"] ) ) $a=$_POST["a"];		
-		
+        $a = Safe::post('a');
+        if (!isset($a)) {
+            $a = Safe::get('a');
+        }
+
 		if($a=="edit") $action="edit";
 		else if($a=="insert" || $a=="add") $action="add a new";
 		else if($a=="delete") $action="delete";

@@ -29,9 +29,10 @@ $ignoreInstitutionUrl = true;
 include_once('_includes/login.inc.php');
 
 // Get tab
-$tab = Tab::GetTabById($_GET['tab_id']);
+$tid = Safe::get('tab_id', PARAM_INT);
+$tab = Tab::GetTabById($tid);
 if(!isset($tab)) {
-	print "msg=No tab with id {$_GET['tab_id']}";
+	print "msg=No tab with id {$tid}";
 	exit();
 }
 

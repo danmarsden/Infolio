@@ -84,8 +84,8 @@ function showGrid()
 		 * Search function not yet available
 		$where=array();
 		$whereClause=array();
-		if(isset($_GET["search"])) {
-			$searchQuery =	explode(" ",$_GET["search"]);
+		if(isset(Safe::get('search'))) {
+			$searchQuery =	explode(" ",Safe::get('search'));
 			array_push($whereClause, 'firstName');
 			array_push($whereClause, 'lastName');
 			array_push($whereClause, 'address');
@@ -180,8 +180,9 @@ function showGrid()
 function showForm(){
 	global $do, $adminUser, $userType;
 	$share = 0;
-    if(isset($_GET['id'])) {
-		$user = User::RetrieveById($_GET['id']);
+    $gid = Safe::get('id');
+    if(isset($gid)) {
+		$user = User::RetrieveById($gid);
         $share = $user->getShare();
     }
 
@@ -200,7 +201,7 @@ function showForm(){
 
 				<form method="post" id="userform" action="." dojoType="dijit.form.Form">
 				<input type="hidden" name="userid" id="userid" value="<? if(isset($user)) print $user->getId(); ?>" />
-				<input type="hidden" name="do" id="do" value="<? echo $_GET["do"]?>" />
+				<input type="hidden" name="do" id="do" value="<? echo Safe::get('do'); ?>" />
 				<input type="hidden" name="a" id="a" value="User" />
 				<input type="hidden" name="operation" id="operation" value="<? print ((isset($user)) ? 'Update' : 'Insert') ?>" />
                 <input type="hidden" name="share" id="share" value="<?php print $share; ?>" />
@@ -209,7 +210,7 @@ function showForm(){
 					<div dojoType="dijit.form.Button" onclick="doSave" showLabel="true">Save</div>
 					<div dojoType="dijit.form.Button" id="btnDelete" showLabel="true"
 						onclick="doDelete"
-						<? if(!isset($_GET['id'])){?>style="display:none;"<? } ?>
+						<? if(!isset($gid)){?>style="display:none;"<? } ?>
 						>Delete</div>
 					<div dojoType="dijit.form.Button" onclick="doCancel" showLabel="true">Cancel</div>
 				</div>		
@@ -297,7 +298,7 @@ function showForm(){
 							name="username"
 							id="username"
 							required="true"
-							<? if(isset($_GET["id"])){?>disabled="disabled"<? } ?> 
+							<? if(isset($gid)){?>disabled="disabled"<? } ?>
 							value="<? print (isset($user)) ? $user->getUsername() : ''; ?>" /> <? print TEXT_FIELD_REQUIRED; ?>
 							<div id="inlineNotificationUsername" class="inlineNotification"></div></td>
 					</tr>
@@ -321,7 +322,7 @@ function showForm(){
 					
 					?>
 					<tr>
-						<td class="captionLabel"><? if($_GET['a']=="edit") print 'Change '; ?>Password</td>
+						<td class="captionLabel"><? if(Safe::get('a')=="edit") print 'Change '; ?>Password</td>
 						<td><input 
 							dojoType="dijit.form.ValidationTextBox" 
 							type="text"

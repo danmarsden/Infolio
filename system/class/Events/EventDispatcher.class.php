@@ -45,7 +45,7 @@ abstract class EventDispatcher
 
 	/**
 	 * The constructor
-	 * @param Array $queryStringArray The $_GET array for the page
+	 * @param Array $queryStringArray The array for the page
 	 * @param Arrays $htmlClass A class to apply to this menu
 	 */
 	public function __construct(&$queryStringVars, &$formVars)

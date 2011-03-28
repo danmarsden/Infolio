@@ -86,15 +86,16 @@ else {
 	function showForm()
 	{
 		global $adminUser;
-
-		if(isset($_GET["id"])){
-			$template = new Template($_GET["id"]);
+        $gid = Safe::get('id');
+        $ginst = Safe::get('inst', PARAM_INT);
+		if(isset($gid)){
+			$template = new Template($gid);
 			$institutionQString = "?inst={$template->getInstitution()->getId()}";;
 		}
 		else {
 			// Check for institute
-			if(isset($_GET['inst']) && is_numeric($_GET['inst']) ) {
-				$instId = $_GET['inst'];
+			if(isset($ginst) && is_numeric($ginst) ) {
+				$instId = $ginst;
 				$instField = '<input type="hidden" name="inst" id="inst" value="' . $instId . '" />';
 				$institutionQString = "?inst={$instId}";
 			}
@@ -118,12 +119,12 @@ else {
 			<input type="hidden" name="id" id="id" value="<?php echo (isset($template))? $template->getId() : '' ?>" />
 			<input type="hidden" name="a" value="Template" />
 			<input type="hidden" name="do" id="do" value="<?php print SECTION_TEMPLATE; ?>" />
-			<input type="hidden" name="operation" value="<?php echo ((isset($_GET["id"])) ? 'update' : 'insert') ?>" />
+			<input type="hidden" name="operation" value="<?php echo ((isset($gid)) ? 'update' : 'insert') ?>" />
 			<? if(isset($instField)) print $instField; ?>
 			<div dojoType="dijit.Toolbar" style="clear:both;">
 				<div dojoType="dijit.form.Button" onclick="doSubmit" showLabel="true">Save</div>
-				<? if(isset($_GET["id"])) { ?>
-					<div dojoType="dijit.form.Button" onclick="doDelete(<? print $_GET["id"]; ?>)" showLabel="true">Delete</div>
+				<? if(isset($gid)) { ?>
+					<div dojoType="dijit.form.Button" onclick="doDelete(<? print $gid; ?>)" showLabel="true">Delete</div>
 				<? } ?>
 				<div dojoType="dijit.form.Button" onclick="doCancel" showLabel="true">Cancel</div>
 			</div>		

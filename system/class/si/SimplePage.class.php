@@ -38,12 +38,14 @@ class SimplePage
 		$this->m_mode = SimplePage::MODE_SHOW;
 		$this->m_href = $_SERVER['REQUEST_URI'];
 		$this->m_jsVariables = new JavaScriptVariables();
-		
-		if(isset($_GET['name'])) {
-			$this->m_name = Safe::Input( $_GET['name'] );
+
+        $gname = Safe::get('name');
+		if(isset($gname)) {
+			$this->m_name = $gname;
 		}
-		if(isset($_GET['sort'])) {
-			$this->m_sort = Safe::Input( $_GET['sort'] );
+        $gsort = Safe::get('sort');
+		if(isset($gsort)) {
+			$this->m_sort = $gsort;
 		}
 	}
 	

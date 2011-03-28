@@ -72,8 +72,9 @@ function showGrid()
  */
 function showForm()
 {
-	if(isset($_GET["id"])){
-		$institution =	Institution::RetrieveById($_GET["id"]);
+    $gid = Safe::get('id', PARAM_INT);
+	if(isset($gid)){
+		$institution =	Institution::RetrieveById($gid);
 	}
 	?>
 	<script type="text/javascript" src="/admin/_scripts/bo-institution-form.js"></script>
@@ -87,7 +88,7 @@ function showForm()
 				<input type="hidden" name="a" id="a" value="<? print ((isset($institution)) ? 'Update' : 'Insert' ) ?>" />
 				<div dojoType="dijit.Toolbar" style="clear:both;">
 					<div dojoType="dijit.form.Button" onclick="doSubmit" showLabel="true">Save</div>
-					<? if(isset($_GET["id"])){?>
+					<? if(isset($gid)){?>
 					<div dojoType="dijit.form.Button" onclick="deleteRow(dojo.byId('id').value,'')" showLabel="true">Delete</div>
 					<? } ?>
 					<div dojoType="dijit.form.Button" onclick="doCancel" showLabel="true">Cancel</div>

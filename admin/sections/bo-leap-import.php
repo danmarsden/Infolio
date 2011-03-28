@@ -10,7 +10,7 @@
  * @license    http://creativecommons.org/licenses/by-nc-sa/2.0/uk/
 */
 
-
+$gid = Safe::get('id');
      ?>
 
     <?php print render_messages(); ?>
@@ -29,7 +29,7 @@
                             name="username"
                             id="username"
                             required="true"
-                            <? if(isset($_GET["id"])){?>disabled="disabled"<? } ?> 
+                            <? if(isset($gid)){?>disabled="disabled"<? } ?>
                             value="<? print (isset($user)) ? $user->getUsername() : ''; ?>" /> <? print TEXT_FIELD_REQUIRED; ?>
                             <div id="inlineNotificationUsername" class="inlineNotification"></div></td>
                     </tr>

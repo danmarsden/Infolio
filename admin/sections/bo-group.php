@@ -133,14 +133,15 @@ function showGrid(){
 function showForm()
 {
 	global $do, $adminUser, $jsFramework;
-
-	if(isset($_GET["id"])) {
-		$group = Group::RetrieveGroupById($_GET["id"]);
+    $gid = Safe::get('id');
+    $ginst = Safe::get('inst', PARAM_INT);
+	if(isset($gid)) {
+		$group = Group::RetrieveGroupById($gid);
 	}
 	else {
 		// Check for institute
-		if(isset($_GET['inst']) && is_numeric($_GET['inst']) ) {
-			$instField = '<input type="hidden" name="inst" id="inst" value="' . $_GET['inst'] . '" />';
+		if(isset($ginst) && is_numeric($ginst) ) {
+			$instField = '<input type="hidden" name="inst" id="inst" value="' . $ginst . '" />';
 		}
 	}
 	?>
@@ -196,8 +197,8 @@ function showForm()
 					Student List
 					<select multiple="multiple" id="sourceSelect" style="width:100%;" size="7">
 						<?
-							$fromInstitution = (isset($_GET['inst'])) ?
-									Institution::RetrieveById($_GET['inst']) :
+							$fromInstitution = (isset($ginst)) ?
+									Institution::RetrieveById($ginst) :
 									null;
 
 							$users = (isset($group)) ?
