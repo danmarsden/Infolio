@@ -6,6 +6,11 @@
 include_once('conf.php'); //system configuration
 include_once(DIR_FS_CLASS . "Database.php");
 include_once(DIR_FS_CLASS . "si/Safe.class.php");
+include_once(DIR_FS_FUNCTION ."core.php");
+
+if (get_magic_quotes_gpc()) {
+    error("Site Error: magic_quotes_gpc(PHP setting) must be disabled.");
+}
 
 $db = Database::getInstance();
 if( substr(PHP_OS,0,3) == 'WIN' ){
