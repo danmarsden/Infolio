@@ -22,8 +22,11 @@ include_once('class/si/Safe.class.php');
 
 // Check user is logged in before letting them do stuff
 $adminUser = BackOffice::RetrieveAndCheckAjaxAdminUser($_SESSION);
+$fname = Safe::post('filename', PARAM_FILE);
+$ptitle = Safe::post('title');
+$pdesc = Safe::post('description');
 
-if(isset($_POST['filename'])) $filename = basename($_POST['filename']);
+if(isset($fname)) $filename = basename($fname);
 
 if(file_exists($adminUser->getInstitution()->getFullPath().DIR_FS_DATA_UPLOAD.$filename) && is_file($adminUser->getInstitution()->getFullPath().DIR_FS_DATA_UPLOAD.$filename)){
 
@@ -51,8 +54,8 @@ if(file_exists($adminUser->getInstitution()->getFullPath().DIR_FS_DATA_UPLOAD.$f
 	if(rename($adminUser->getInstitution()->getFullPath().DIR_FS_DATA_UPLOAD.$filename, $target_path)) {
 		// Add it to asset table
 		$tempUploadObject->setHref($fileBit . $newFileNum . $extension);
-		if(isset($_POST['title'])) $tempUploadObject->setTitle(Safe::Input($_POST['title']));
-		if(isset($_POST['description'])) $tempUploadObject->setDescription(Safe::Input($_POST['description']));
+		if(isset($ptitle)) $tempUploadObject->setTitle($ptitle);
+		if(isset($pdesc)) $tempUploadObject->setDescription($pdesc);
 		$tempUploadObject->Save($adminUser);
 		// add any chosen tags
 		doTagging($tempUploadObject);
@@ -78,9 +81,9 @@ if(file_exists($adminUser->getInstitution()->getFullPath().DIR_FS_DATA_UPLOAD.$f
 
 function doTagging($asset){
 	global $adminUser;
-
-	if(isset($_POST['tags'])){
-		$tags = split(',', Safe::Input($_POST['tags']));
+    $ptags = Safe::post('tags');
+	if(isset($ptags)){
+		$tags = split(',', Safe::Input($ptags));
 		foreach($tags as $tagname){
 			$tag = Tag::CreateOrRetrieveByName(trim($tagname), $adminUser->getInstitution(), $adminUser);
 			if(!is_null($tag)){

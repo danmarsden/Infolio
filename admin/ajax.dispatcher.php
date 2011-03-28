@@ -164,29 +164,35 @@ switch($a) {
 
 	/* ** ** ** Group ** ** ** */
 	case 'group':
-		include_once(DIR_FS_MODEL . "Group.class.php"); 
+		include_once(DIR_FS_MODEL . "Group.class.php");
+        $ptid = Safe::post('template_id');
+        $piid = Safe::post('institution_id');
+        $ptitle = Safe::post('title');
+        $pdesc  = Safe::post('description');
+        $p_id   = Safe::post('id');
 		switch($operation){
 			case "insert":
 				$newGroup = new Group();
-				$newGroup->setTitle($_POST["title"]);
-				$newGroup->setDescription($_POST["description"]);
-				if(isset($_POST["inst"]) && is_numeric($_POST["inst"]) && $adminUser->getPermissionManager()->hasRight(PermissionManager::RIGHT_ALL_ADMIN)) {
-					$newGroup->setInstitution(new Institution($_POST["inst"]));
+				$newGroup->setTitle($ptitle);
+				$newGroup->setDescription($pdesc);
+                $pinst = Safe::post('inst', PARAM_INT);
+				if(isset($pinst) && $adminUser->getPermissionManager()->hasRight(PermissionManager::RIGHT_ALL_ADMIN)) {
+					$newGroup->setInstitution(new Institution($pinst));
 				}
 				else {
 					$newGroup->setInstitution($adminUser->getInstitution());
 				}
-				if(isset($_POST["template_id"])) $group->setTemplateId($_POST["template_id"]);
+				if(isset($ptid)) $group->setTemplateId($ptid);
 				$newGroup->Save($adminUser);
 				print $newGroup->getId();
 				break;
 
 			case "update":
 				$group = Group::RetrieveGroupById($_REQUEST['id']);
-				$group->setTitle($_POST["title"]);
-				$group->setDescription($_POST["description"]);
-				if(isset($_POST["institution_id"])) $group->setInstitutionId($_POST["institution_id"]);
-				if(isset($_POST["template_id"])) $group->setTemplateId($_POST["template_id"]);		
+				$group->setTitle($ptitle);
+				$group->setDescription($pdesc);
+				if(isset($piid)) $group->setInstitutionId($piid);
+				if(isset($ptid)) $group->setTemplateId($ptid);
 				$group->Save($adminUser);
 				echo $group->getId();
 				break;
@@ -210,7 +216,7 @@ switch($a) {
 				break;
 
 			case "delete":
-				$group = new Group($_POST["id"]);
+				$group = new Group($p_id);
 				echo $group->delete();
 				break;
 				
@@ -372,25 +378,28 @@ function templateOperations($operation, $adminUser)
 
 	// Get template id - most operations need this
 	$templateId = Safe::postWithDefault('id', null, PARAM_INT);
-
+    $pinst = Safe::post('inst');
+    $pdesc = Safe::post('desc');
+    $ptitle = Safe::post('title');
+    $plocked = Safe::post('locked');
 	switch($operation){
 		case 'insert':
-			$institutionId = (isset($_POST['inst']) && is_numeric($_POST['inst'])) ?
-							new Institution($_POST['inst']) :
+			$institutionId = (isset($pinst)) ?
+							new Institution($pinst) :
 							$adminUser->getInstitution();
-			$description = (isset($_POST["description"])) ?
-							$_POST["description"] :
+			$description = (isset($pdesc)) ?
+							$pdesc :
 							'';
 
-			$template = Template::CreateNew($_POST["title"], $description, $institutionId);
+			$template = Template::CreateNew($ptitle, $description, $institutionId);
 			$template->Save($adminUser);
 			print $template->getId();
 			break;
 		case 'update':
 			$template = new Template($templateId);
-			$template->setTitle($_POST["title"]);
-			$template->setDescription($_POST["description"]);
-			$template->setLocked(isset($_POST['locked']) && $_POST['locked']=='on');
+			$template->setTitle($ptitle);
+			$template->setDescription($pdesc);
+			$template->setLocked(isset($plocked) && $plocked=='on');
 			$template->Save($adminUser);
 			print $template->getId();
 			break;
@@ -412,7 +421,7 @@ function templateOperations($operation, $adminUser)
 			break;
 		case 'seticon':
 			$template = new Template($templateId);
-			$template->getTab()->setIconById($_POST['icon_id']);
+			$template->getTab()->setIconById(Safe::post('icon_id'));
 			$template->Save($adminUser);
 			print '0';
 			break;

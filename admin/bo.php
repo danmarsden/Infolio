@@ -39,7 +39,8 @@ if( !isset($adminUser) ) {
 }
 
 // Asset upload (needs to be here for redirect)
-if($do == SECTION_ASSET && isset($_POST['a']) && $_POST['a'] == 'upload') {
+$pa = Safe::post('a');
+if($do == SECTION_ASSET && isset($pa) && $pa == 'upload') {
 	$uploader = new Uploader('Upload a new asset', UPLOAD_LIMIT);
 	$uploadProblems = false;
 	// Try to upload the file and show an error message if there is a problem.

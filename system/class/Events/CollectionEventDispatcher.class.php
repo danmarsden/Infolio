@@ -122,9 +122,10 @@ class CollectionEventDispatcher extends EventDispatcher
 		}
 
 		// Save asset
-		if(isset($_POST['title'])) {
+        $ptitle = Safe::post('title');
+		if(isset($ptitle)) {
 			// Call handler
-			call_user_func($this->mf_onSaveAssetHandler, $this->m_page, $assetId, $_POST['title']);
+			call_user_func($this->mf_onSaveAssetHandler, $this->m_page, $assetId, $ptitle);
 			return true;
 		}
 
@@ -136,8 +137,9 @@ class CollectionEventDispatcher extends EventDispatcher
 		}
 
 		// Add tag event
-		if(isset($_POST['newtag'])) {
-			call_user_func($this->mf_onTagAddHandler, $this->m_page, $assetId, Safe::Input($_POST['newtag']));
+        $newtag = Safe::post('newtag');
+		if(isset($newtag)) {
+			call_user_func($this->mf_onTagAddHandler, $this->m_page, $assetId, Safe::Input($newtag));
 			return true;
 		}
 

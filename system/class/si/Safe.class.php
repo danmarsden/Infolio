@@ -23,6 +23,8 @@ define('PARAM_ALPHA',    'alpha');
  */
 define('PARAM_INT',      'int');
 
+define('PARAM_FILE', 'file');
+
 /**
  * A class to store functions that help make input safe and secure.
  */

@@ -66,8 +66,8 @@ class LoginEventDispatcher extends EventDispatcher
 		// Login event - onLogin
 		if( $this->isAction(self::ACTION_LOGIN) && isset($this->mf_onLoginHandler) ) {
 			// Collect user input
-			$username = Safe::Input($_POST['tUser']);
-			$password = Safe::Input($_POST['tPass']);
+			$username = Safe::post('tUser');
+			$password = Safe::post('tPass');
 			
 			// Call handler
 			call_user_func($this->mf_onLoginHandler, $this->m_page, $username, $password, $institutionName);
