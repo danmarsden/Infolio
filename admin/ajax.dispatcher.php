@@ -66,39 +66,40 @@ switch($a) {
 		
 		switch($operation){
 			case 'view':
-				$template = new Template($_GET["templateId"]);
+				$template = new Template(Safe::get('templateId'));
 				$pages = $template->getPages();
 				print Template::CreateJsonString($pages);
 				break;
 			case 'insert':
-				$tab = new Tab(null, $_GET["name"]);
-				$tab->setDescription($_GET["description"]);
-				$tab->setTemplateId($_GET["templateId"]);
+				$tab = new Tab(null, Safe::get('name'));
+				$tab->setDescription(Safe::get('description'));
+				$tab->setTemplateId(Safe::get('templateId'));
 				$tab->setOwnerId($_SESSION["admin"]["id"]);
 				$tab->Save();
 				print $tab->getId();
 				break;			
 			case 'update':
-				if(isset($_GET['id'])) {
-					$tab = Tab::GetTabById($_GET['id']);
+                $gid = Safe::get('id');
+				if(isset($gid)) {
+					$tab = Tab::GetTabById($gid);
 				}
 				else {
 					// TODO: make this work
-					$template = new Template($_GET['templateId']);
+					$template = new Template(Safe::get('templateId'));
 					$tab = $template->getTab();
 				}
-				//$tab->setDescription($_GET["description"]);
-				$tab->setName($_GET['name']);
+				//$tab->setDescription(Safe::get('description'));
+				$tab->setName(Safe::get('name'));
 				
 				$tab->Save($adminUser);
 				print $tab->getId();
 				break;
 			case 'delete':
-				$tab = new Tab($_GET["id"]);
+				$tab = new Tab(Safe::get('id'));
 				$tab->Delete($adminUser);
 				break;
 			case 'restore':
-				$tab = new Tab($_GET['id']);
+				$tab = new Tab(Safe::get('id'));
 				print $tab->Restore($adminUser);
 				break;
 			default: break;
@@ -116,8 +117,8 @@ switch($a) {
 	
 		switch($operation){
 			case 'restore':
-				$asset = Asset::RetrieveById($_GET['id'], $adminUser);
-				print $asset->RestoreForUser(new User($_GET['user_id']), $adminUser);
+				$asset = Asset::RetrieveById(Safe::get('id'), $adminUser);
+				print $asset->RestoreForUser(new User(Safe::get('user_id')), $adminUser);
 				break;
 		}
 		break;
@@ -132,29 +133,29 @@ switch($a) {
 		switch($operation){
 			case "insert":
 				$page = new Page();
-				$page->setTitle($_GET["name"]);
-				
+				$page->setTitle(Safe::get('name'));
+				$tid = Safe::get('templateId');
 				// Get tab id from template
-				if(isset($_GET["templateId"])) {
-					$template = new Template($_GET["templateId"]);
+				if(isset($tid)) {
+					$template = new Template($tid);
 					$page->setTab($template->getTab());
 				}
 				// directly provide tab id
 				else {
-					$page->setTab( new Tab($_GET["parentId"]));
+					$page->setTab( new Tab(Safe::get('parentId')));
 				}
 				
 				$page->Save($adminUser);
 				print $page->getId();
 				break;
 			case "update":			
-				$page = Page::GetPageById($_GET["id"]);
-				$page->setTitle($_GET["name"]);
+				$page = Page::GetPageById(Safe::get('id'));
+				$page->setTitle(Safe::get('name'));
 				$page->Save($adminUser);
 				print $page->getId();
 				break;
 			case "delete":
-				$page = Page::GetPageById($_GET["id"]);
+				$page = Page::GetPageById(Safe::get('id'));
 				$page->Delete($adminUser);
 				break;
 			default: break;
@@ -215,7 +216,7 @@ switch($a) {
 				
 			case "getTemplatePreviewByTemplateId":
 				$sql="SELECT * FROM template WHERE 
-						ID='" . $_GET["template_id"] . "'
+						ID='" . Safe::get('templateId') . "'
 					ORDER BY title ASC
 					";
 				$queryTemplate=$db->query($sql);
@@ -427,20 +428,21 @@ function userOperations($operation, $adminUser)
 	switch($operation){
 		case 'insert':
 			// Set the institution ID, defaults to admin's own institution
-			$institutionId = ( isset($_GET['institution_id']) ) ? $_GET['institution_id'] : $adminUser->getInstitution()->getId();
+            $insid = Safe::get('templateId');
+			$institutionId = ( isset($insid) ) ? $insid : $adminUser->getInstitution()->getId();
 
 			try {
-				$permissionManager = PermissionManager::Create($_GET['username'], $_GET['password'], $_GET['userType'], $adminUser);
+				$permissionManager = PermissionManager::Create(Safe::get('username'), Safe::get('password'), Safe::get('userType'), $adminUser);
 			}
 			catch(Exception $e) {
 				die($e->getMessage());
 			}
 
 			$newUser = User::CreateNewUser(
-				$_GET['firstName'],
-				$_GET['lastName'],
-				$_GET['email'],
-				$_GET['description'],
+				Safe::get('firstName'),
+				Safe::get('lastName'),
+				Safe::get('email'),
+				Safe::get('description'),
 				$permissionManager,
 				new Institution($institutionId));
 
@@ -449,36 +451,37 @@ function userOperations($operation, $adminUser)
 				print $newUser->getId();
 			}
 			else {
-				print "<p><strong>There is already a '{$_GET['username']}' at " . $newUser->getInstitution()->getName() .'.</strong></p>';
+				print "<p><strong>There is already a '".Safe::get('username')."' at " . $newUser->getInstitution()->getName() .'.</strong></p>';
 				print '<p>Try using just the users initials, their nickname or familiar word such as a hobby or interest.</p>';
 			}
 
 			break;
 
 		case 'update':
-			$user = User::RetrieveById($_GET["userid"]);
-			$user->setFirstName($_GET['firstName']);
-			$user->setLastName($_GET['lastName']);
-			$user->setEmail($_GET['email']);
-			$user->setDescription($_GET['description']);
-            $user->setShare($_GET['share']);
+			$user = User::RetrieveById(Safe::get('userid'));
+			$user->setFirstName(Safe::get('firstName'));
+			$user->setLastName(Safe::get('lastName'));
+			$user->setEmail(Safe::get('email'));
+			$user->setDescription(Safe::get('description'));
+            $user->setShare(Safe::get('share'));
 			//$user->setUsername();
-			if(isset($_GET['userType']) && $_GET['userType'] != '0') {
+            $ut = Safe::get('userType');
+			if(isset($ut) && $ut != '0') {
 				try {
-					$user->getPermissionManager()->setUsertype($_GET['userType'], $adminUser);
+					$user->getPermissionManager()->setUsertype($ut, $adminUser);
 				}
 				catch (Exception $e) {
 					die($e->getMessage());
 				}
 			}
-			$user->getPermissionManager()->setPassword($_GET['password']);
-			$user->getPermissionManager()->getSymbolLogin()->setEnabled(isset($_GET['ppEnabled']));
+			$user->getPermissionManager()->setPassword(Safe::get('password'));
+			$user->getPermissionManager()->getSymbolLogin()->setEnabled(isset(Safe::get('ppEnabled')));
 			$user->Save($adminUser);
 			print $user->getId();
 			break;
 
 		case 'delete':
-			$user = User::RetrieveById($_GET['id']);
+			$user = User::RetrieveById(Safe::get('id'));
 			$userId = $user->getId();
 			$user->Delete($adminUser);
 			print $userId;

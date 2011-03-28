@@ -19,7 +19,7 @@ include_once('model/Asset.class.php');
 
 // Check user is logged in before letting them do stuff
 $adminUser = BackOffice::RetrieveAndCheckAjaxAdminUser($_SESSION);
-
-if( isset($_GET['id']) ) {
-	print Asset::getThoseWhoCanSeeMe($_GET['id']);
+$gid = Safe::get('id');
+if( isset($gid) ) {
+	print Asset::getThoseWhoCanSeeMe($gid);
 }

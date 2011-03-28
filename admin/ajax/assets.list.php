@@ -27,15 +27,19 @@ $fromInstitution = Safe::getWithDefault('inst', null);
 if(isset($fromInstitution)) $fromInstitution = new Institution($fromInstitution);
 
 // Get assets for specific user
-if(isset($_GET['user_id'])) {
-	$assets = Asset::RetrieveUsersAssets(new User($_GET['user_id']));
+$uid = Safe::get('user_id');
+$gid = Safe::get('group_id');
+$gfil = Safe::get('filter');
+$gtag  = Safe::get('tag');
+if(isset($uid)) {
+	$assets = Asset::RetrieveUsersAssets(new User($uid));
 }
 // Get assets for a specific group
-elseif(isset($_GET['group_id'])) {
-	$assets = Asset::RetrieveGroupAssets(new Group($_GET['group_id']));
+elseif(isset($gid)) {
+	$assets = Asset::RetrieveGroupAssets(new Group($gid));
 }
-elseif(isset($_GET['filter'])) {
-	switch($_GET['filter']) {
+elseif(isset($gfil)) {
+	switch($gfil) {
 		case 'recent':
 			$assets = Asset::RetrieveRecent($adminUser, $fromInstitution);
 			break;
@@ -46,13 +50,13 @@ elseif(isset($_GET['filter'])) {
 			$assets = Asset::RetrieveCreatedByAdmin($adminUser, $fromInstitution);
 			break;
 		default:
-			Logger::Write("Bad filter name '{$_GET['filter']}'", Logger::TYPE_ERROR, $adminUser);
+			Logger::Write("Bad filter name '{$gfil}'", Logger::TYPE_ERROR, $adminUser);
 	}
 }
-elseif(isset($_GET['tag'])) {
+elseif(isset($gtag)) {
 	if(!isset($fromInstitution))$fromInstitution = $adminUser->getInstitution();
 
-	$tag = Tag::RetrieveByName($_GET['tag'], $fromInstitution);
+	$tag = Tag::RetrieveByName($gtag, $fromInstitution);
 	if(isset($tag)) {
 		$assets = Asset::RetrieveByTag($tag);
 	}
