@@ -127,6 +127,12 @@ class Safe
         }
         return null;
     }
+    public static function request($var, $type=PARAM_NORMAL) {
+        if (isset($_REQUEST[$var])) {
+            return htmlspecialchars($_REQUEST[$var]);
+        }
+        return null;
+    }
     public static function getWithDefault($var, $default, $type=PARAM_NORMAL) {
        if( isset($_GET[$var]) ) {
 			$value = $_GET[$var];

@@ -23,8 +23,8 @@ include_once('../../initialiseBackOffice.php');
 include_once('model/User.class.php');
 
 // Get query data
-$userId = Safe::GetArrayIndexValueWithDefault($_REQUEST, 'user_id', null);
-$switchLoginNumber = Safe::GetArrayIndexValueWithDefault($_REQUEST, 'user_passcode', null);
+$userId = Safe::request('user_id');
+$switchLoginNumber = Safe::request('user_passcode');
 
 $loginCode = User::LoginSwitch($userId, $switchLoginNumber);
 if($loginCode == PermissionManager::SWITCH_LOGIN_ERROR_NO_ERROR) {

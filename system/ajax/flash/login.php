@@ -22,8 +22,8 @@ include_once('../../initialise.php');
 include_once('model/User.class.php');
 include_once('class/Logger.class.php');
 
-$flashUserName = $_REQUEST['user_name'];
-$flash_data_type = $_REQUEST['data_type'];
+$flashUserName = Safe::request('user_name');
+$flash_data_type = Safe::request('data_type');
 
 
 
@@ -33,11 +33,10 @@ $flash_data_type = $_REQUEST['data_type'];
     exit;   
 }*/
 
-
+$institutionId = Safe::request('institution_id');
 switch ($flash_data_type) {
 	case 'sub_photo':
-		$flash_photo_password = $_REQUEST['sub_pass'];
-		$institutionId = Safe::Input($_REQUEST['institution_id']);
+		$flash_photo_password = Safe::request('sub_pass');
 		$institution = new Institution($institutionId);
 		if ( User::CheckFlashPhotoCoordVal($flash_photo_password, $flashUserName, $institution) ) {
 			print "login_success=true";
@@ -50,8 +49,7 @@ switch ($flash_data_type) {
 	case 'photo_info':
 	default:
 		//TODO: Remove default action by modifying flash
-		if(isset($_REQUEST['institution_id'])) {
-			$institutionId = Safe::Input($_REQUEST['institution_id']);
+		if(isset($institutionId)) {
 			$institution = new Institution($institutionId);
 			print User::RetrieveFlashLoginStuffForUser($flashUserName, $institution);
 		}

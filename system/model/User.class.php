@@ -1010,7 +1010,8 @@ class User extends DatabaseObject
 		$html .= '<label for="pass">Password <input type="text" id="pass" name="passwd" value="' . $password . '" /></label>';
 		// Save button
 		$html .= '<input type="image" src="/_images/si/icons/save.gif" value="Save" />';
-		if(isset($_REQUEST['show'])) $html .= '<input type="hidden" id="hShow" name="show" value="true" />';
+        $rshow = Safe::request('show');
+		if(isset($rshow)) $html .= '<input type="hidden" id="hShow" name="show" value="true" />';
 		$html .= '</form>';
 
 		if(!$isStudentUser) {

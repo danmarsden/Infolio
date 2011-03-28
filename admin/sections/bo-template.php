@@ -26,8 +26,9 @@ else {
 		$institution = null;
 		if( $adminUser->getPermissionManager()->hasRight(PermissionManager::RIGHT_ALL_ADMIN) ) {
 			// Get id of institute to view (if one has been chosen, otherwise use default)
-			$chosenInstituteId = (isset($_REQUEST['inst'])) ?
-				$_REQUEST['inst'] :
+			$rinst = Safe::request('inst');
+            $chosenInstituteId = (isset($rinst)) ?
+				$rinst :
 				$adminUser->getInstitution()->getId();
 
 			$institutions = Institution::RetrieveAll();

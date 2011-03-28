@@ -19,8 +19,12 @@ include_once('../system/model/User.class.php');
 
 
 /** cast variable called operation; this will be used on switch statement **/
-$operation = (isset($_REQUEST['operation']))? $a = strtolower($_REQUEST['operation']) : '';
-$a = (isset($_REQUEST['a'])) ? $a = strtolower($_REQUEST['a']) : '';
+$rop = Safe::request('operation');
+$ra = Safe::request('a');
+$rid = Safe::request('id');
+$rids = Safe::request('ids');
+$operation = (isset($rop))? $a = strtolower($rop) : '';
+$a = (isset($ra)) ? $a = strtolower($ra) : '';
 
 // Check user is logged in before letting them do stuff (except logging in)
 if( isset($_SESSION) ) {
@@ -188,7 +192,7 @@ switch($a) {
 				break;
 
 			case "update":
-				$group = Group::RetrieveGroupById($_REQUEST['id']);
+				$group = Group::RetrieveGroupById($rid);
 				$group->setTitle($ptitle);
 				$group->setDescription($pdesc);
 				if(isset($piid)) $group->setInstitutionId($piid);
@@ -198,8 +202,8 @@ switch($a) {
 				break;
 			
 			case 'add_users':
-				$newUserIds = split(',', $_REQUEST['ids']);
-				$group = Group::RetrieveGroupById($_REQUEST['id']);
+				$newUserIds = split(',', $rids);
+				$group = Group::RetrieveGroupById($rid);
 				foreach($newUserIds as $newUserId) {
 					$group->addMember(new User($newUserId));
 				}
@@ -207,8 +211,8 @@ switch($a) {
 				break;
 			
 			case 'remove_users':
-				$userIds = split(',', $_REQUEST['ids']);
-				$group = Group::RetrieveGroupById($_REQUEST['id']);
+				$userIds = split(',', $rids);
+				$group = Group::RetrieveGroupById($rid);
 				foreach($userIds as $userId) {
 					$group->removeMember(new User($userId));
 				}

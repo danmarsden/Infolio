@@ -16,8 +16,10 @@
 include_once('../system/initialiseBackOffice.php');
 include_once('class/PermissionManager/PermissionManager.class.php');
 
-$do = isset($_REQUEST['do']) ? stripslashes($_REQUEST['do']) : "";
-$a = isset($_REQUEST['a']) ? stripslashes($_REQUEST['a']) : "";
+$do = Safe::request('do');
+$do = !isset($do) ? '': $do;
+$a = Safe::request('a');
+$a = !isset($a) ? '': $a;
 
 if($a == 'logout') {
 	PermissionManager::Logout();

@@ -1,5 +1,7 @@
 <?php
-$do = (isset($_REQUEST['do'])) ? $_REQUEST['do'] : 0;
+$do = Safe::request('do');
+$do = !isset($do) ? 0 : $do;
+
 ?><ul class="leftMenu">
 	<li<?php if($do==0)print ' id="bo-active"'; ?>><a href=".">Home</a></li>
 	<li<?php if($do==SECTION_USER)print ' id="bo-active"'; ?>><a href=".?do=<?php print SECTION_USER; ?>">User manager</a></li>

@@ -20,9 +20,10 @@ include_once('../system/model/Institution.class.php');
 
 define('UPLOAD_LIMIT', 4000000);
 
-$do = isset($_REQUEST['do']) ? stripslashes($_REQUEST['do']) : "";
-$a = isset($_REQUEST['a']) ? stripslashes($_REQUEST['a']) : "";
-
+$do = Safe::request('do');
+$do = !isset($do) ? '': $do;
+$a = Safe::request('a');
+$a = !isset($a) ? '': $a;
 
 // Get user details and redirect them to login page if they're not logged in
 //session_start();
