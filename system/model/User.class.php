@@ -333,7 +333,6 @@ class User extends DatabaseObject
 			$this->fetchAndSetTabs();
 		}
 	
-		$name = Safe::StripUnwantedSlashes($name);
 		Debugger::debug("Searching for tab {$name}", 'Tab-name');
 		
 		if( isset($this->m_tabs[$name]) ) {

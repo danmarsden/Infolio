@@ -67,11 +67,6 @@ class Safe
 			$value = $defaultValue;
 		}
 
-		// Strip unwanted slashes (if value is set)
-		if(isset($value)) {
-			$value = self::StripUnwantedSlashes($value);
-		}
-
 		return $value;
 	}
 
@@ -127,22 +122,6 @@ class Safe
                 //ToDo: Filter the text better
                 return htmlspecialchars($userInputText);
         }
-	}
-
-	/**
-	 * Removes slashes if they've been added by magic quotes,
-	 * but they're not needed because we aren't sending the text to a database
-	 * @param <type> $string
-	 * @return <type>
-	 */
-	public static function StripUnwantedSlashes($string)
-	{
-		if(!get_magic_quotes_gpc()) {
-			return $string;
-		}
-		else {
-			return stripslashes($string);
-		}
 	}
 	
 	/**
