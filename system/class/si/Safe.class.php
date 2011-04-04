@@ -137,13 +137,8 @@ class Safe
 
 	public static function StringForDatabase($dbField)
 	{
-		if(!get_magic_quotes_gpc()) {
-			return addslashes($dbField);
-		}
-		else {
-			return $dbField;
-		}
-	}
+        return addslashes($dbField);
+    }
 
 	public static function UrlQueryVarOutput($urlQueryVar)
 	{
