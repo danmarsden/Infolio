@@ -26,10 +26,14 @@
 		$html.= '<label for "inst">Select Institution</label><select name="inst">';
         $html.="<option value=''>Export All</option>";
 		foreach($institutions as $institution) {
-			$html.= "<option value=\"{$institution->getId()}\"";
-			if(isset($chosenInstituteId) && $institution->getId() == $chosenInstituteId) $html.= ' selected="selected"';
-			$html.= ">{$institution->getName()}</option>";
-		}
+            //check if institution has users.
+            $numusers= $institution->getNumUsers();
+            if (!empty($numusers)) {
+			    $html.= "<option value=\"{$institution->getId()}\"";
+			    if(isset($chosenInstituteId) && $institution->getId() == $chosenInstituteId) $html.= ' selected="selected"';
+		        $html.= ">{$institution->getName()}</option>";
+		    }
+        }
 		$html.= '</select><br/><br/>';
         $html .= '<input type="hidden" name="siteexport" value="true" />';
         $html .= '<input type="submit" value="Generate new institution export" />';

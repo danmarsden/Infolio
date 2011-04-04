@@ -71,10 +71,10 @@ $users = array();
 $usertabsarray = array();
 $usertabidarray = array();
 $institutionid='';
-$psi = Safe::post('siteexport');
+$psi = Safe::post('siteexport', PARAM_ALPHA);
 $pi = Safe::post('inst', PARAM_INT);
 $puid = Safe::post('user_id', PARAM_INT);
-$pf = Safe::post('format');
+$pf = Safe::post('format', PARAM_ALPHA);
 if (!empty($psi)) {
     //check if insitution is set
     $insql = '';
@@ -202,4 +202,6 @@ if (!empty($files)) {
     }
     send_temp_file($zipfilename, 'infolio-site-export'. '-' . time() . '.zip');
 
+} else {
+    error('no users were found to include in the export');
 }
