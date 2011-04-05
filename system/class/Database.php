@@ -163,7 +163,7 @@ class Database
             if (is_object($dataItem)) { //this shouldn't be cleaned or included in insert 
                 unset($data[$dataKey]);
             } else {
-			    $data[$dataKey] = Safe::StringForDatabase($dataItem);
+			    $data[$dataKey] = Safe::Input($dataItem);
             }
 		}
 		reset($data); //put array's internal pointer to the first element

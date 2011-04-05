@@ -135,11 +135,6 @@ class Safe
 		return $sessionInputText;
 	}
 
-	public static function StringForDatabase($dbField)
-	{
-        return addslashes($dbField);
-    }
-
 	public static function UrlQueryVarOutput($urlQueryVar)
 	{
 		//ToDo: Remove any unsafe characters

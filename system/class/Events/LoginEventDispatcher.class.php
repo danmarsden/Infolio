@@ -45,7 +45,7 @@ class LoginEventDispatcher extends EventDispatcher
 	 */
 	public function DispatchEvents()
 	{
-        $ins = Safe::get('institution');
+        $ins = Safe::get('institution',PARAM_ALPHANUMEXT);
 		if(!empty($ins)) {
 			$institutionName = $ins;
 		}

@@ -85,7 +85,7 @@ if($a == 'logout') {
 				default:
 					?>
 					<form onsubmit="doLogin(); return false;" method="get">
-						<input type="hidden" name="institution" id="institution" value="<?php print Safe::get('institution'); ?>" />
+						<input type="hidden" name="institution" id="institution" value="<?php print Safe::get('institution',PARAM_ALPHANUMEXT); ?>" />
 
 							<p>Please enter username and password</p>
 							<div id="errorNotificationContainer"></div>

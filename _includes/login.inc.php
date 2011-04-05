@@ -38,7 +38,7 @@ if(!isset($notSecured))
 	}
 	else {
 		// Check the url includes the institution
-        $ins = Safe::get('institution');
+        $ins = Safe::get('institution',PARAM_ALPHANUMEXT);
 		if(!isset($ins) && !isset($ignoreInstitutionUrl)) {
 			header('Location: /' . $studentUser->getInstitution()->getUrl() . '/');
 		}

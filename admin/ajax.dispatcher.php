@@ -51,7 +51,7 @@ switch($a) {
 	case 'login':
 		$inpUserName = Safe::get('username');
 		$inpPassword = Safe::get('password');
-		$inpInstitution = Safe::get('institution');
+		$inpInstitution = Safe::get('institution',PARAM_ALPHANUMEXT);
 		print login($inpUserName, $inpPassword, $inpInstitution);
 		break;
 

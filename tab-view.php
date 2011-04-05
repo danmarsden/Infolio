@@ -16,10 +16,10 @@ include_once('system/model/Page.class.php');
 
 $page = new SimplePage();
 $userid = Safe::getWithDefault('user_id', '', PARAM_INT);
-$institution = Safe::StringForDatabase(Safe::getWithDefault('institution', ''));
+$institution = Safe::getWithDefault('institution', '', PARAM_ALPHANUMEXT);
 $tabid = Safe::getWithDefault('tab', '', PARAM_INT);
-$sharehash = Safe::StringForDatabase(Safe::getWithDefault('sharehash', ''));
-$pageviewid = Safe::StringForDatabase(Safe::getWithDefault('page', ''));
+$sharehash = Safe::getWithDefault('sharehash', '', PARAM_ALPHANUM);
+$pageviewid = Safe::getWithDefault('page', '', PARAM_INT);
 
 if (empty($userid) or empty($institution)) {
     error("invalid request");

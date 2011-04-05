@@ -121,7 +121,7 @@ class AssetCollection
 				
 			}
 			elseif( substr($filterType, 0, 4) == 'tag=' ) {
-				$tagName = Safe::StringForDatabase(substr($filterType, 4));
+				$tagName = Safe::Input(substr($filterType, 4));
 				$filterSql = " assets.id IN (SELECT asset_id FROM tags_assets WHERE tag_id IN (SELECT id FROM tags WHERE name='{$tagName}'))";
 			}
             elseif($filterType == self::FILTER_INUSE) {
