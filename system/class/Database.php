@@ -162,8 +162,12 @@ class Database
 		foreach($data as $dataKey=>$dataItem) {
             if (is_object($dataItem)) { //this shouldn't be cleaned or included in insert 
                 unset($data[$dataKey]);
+            } elseif (strpos($dataItem, "'") !== false or //check for dodgy chars - these should be cleaned prior to using perform() but sanity check just in case.
+                      strpos($dataItem, '"') !== false) {
+                error_log("Var dumped - not cleaned properly - var: ".$dataKey);
+                unset($data[$dataKey]);
             } else {
-			    $data[$dataKey] = Safe::Input($dataItem);
+			    $data[$dataKey] = $dataItem;
             }
 		}
 		reset($data); //put array's internal pointer to the first element

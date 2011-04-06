@@ -77,10 +77,10 @@ class TabEventDispatcher extends EventDispatcher
 	 */
 	public function DispatchEvents()
 	{
-		$tabName = Safe::GetArrayIndexValueWithDefault($this->m_queryStringVars, 'name', null);
+		$tabName = Safe::get('name');
 		$this->checkRedirectTabs($tabName);
 		
-		$sortMethod = Safe::GetArrayIndexValueWithDefault($this->m_queryStringVars, 'sort', 'new');
+		$sortMethod = Safe::getWithDefault('sort', 'new', PARAM_ALPHANUMEXT);
 		
 		// Get tab
 		
@@ -88,8 +88,8 @@ class TabEventDispatcher extends EventDispatcher
 			$tab = $this->m_user->getTabByName($tabName, $sortMethod);
 		}
 		else {
-			$tabId = Safe::GetArrayIndexValueWithDefault($this->m_formVars, 'tab_id', 0);
-			if($tabId > 0) {
+			$tabId = Safe::post('tab_id', PARAM_INT);
+			if(!empty($tabId) && $tabId > 0) {
 				$tab = Tab::GetTabById($tabId);	
 			}
 		}
@@ -97,7 +97,7 @@ class TabEventDispatcher extends EventDispatcher
 			$tab = new Tab(null, 'Page not found.');
 		}
 
-		$mode = Safe::GetArrayIndexValueWithDefault($this->m_queryStringVars, 'mode', SimplePage::MODE_SHOW);
+		$mode = Safe::getWithDefault('mode', SimplePage::MODE_SHOW, PARAM_ALPHANUMEXT);
 
 		// Get page
 		$this->m_page = new SimplePage( $tab->getName() );
@@ -111,7 +111,7 @@ class TabEventDispatcher extends EventDispatcher
 		if($this->isAction(self::ACTION_SAVE) && isset($this->mf_onSaveTabHandler) )
 		{
 			// Collect user input
-			$newTabName = Safe::GetArrayIndexValueWithDefault($this->m_formVars, 'title', null);
+			$newTabName = Safe::post('title');
 			$newTabName = substr($newTabName, 0, Tab::MAX_TITLE_LENGTH); // Doesn't allow larger titles
 			
 			// Call handler
@@ -135,7 +135,7 @@ class TabEventDispatcher extends EventDispatcher
 
 		// ** Save icon event
 		elseif($this->isAction(self::ACTION_SAVE_ICON)) {
-			$iconAssetId = Safe::GetArrayIndexValueWithDefault($this->m_queryStringVars, 'c', null);
+			$iconAssetId = Safe::get('c');
 
 			// Call handler
 			call_user_func($this->mf_onSaveIconHandler, $tab, $iconAssetId, $sortMethod);

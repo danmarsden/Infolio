@@ -48,14 +48,14 @@ abstract class EventDispatcher
 	 * @param Array $queryStringArray The array for the page
 	 * @param Arrays $htmlClass A class to apply to this menu
 	 */
-	public function __construct(&$queryStringVars, &$formVars)
+	public function __construct($queryStringVars, $formVars)
 	{
 		$this->m_queryStringVars = $queryStringVars;
 		$this->m_formVars = $formVars;
 		$this->m_allVars = array_merge($queryStringVars, $formVars);
 
 		/* ** Get the action from user input ** */
-		$this->m_action = Safe::GetArrayIndexValueWithDefault($this->m_allVars, 'a', null);
+		$this->m_action = Safe::request('a');
 	}
 	
 	/* ** Accessors ** */

@@ -120,7 +120,7 @@ class Safe
                 $userInputText = preg_replace("~([^a-z])language([[:space:]]*)=~i", "$1Xlanguage=", $userInputText);
                 $userInputText = preg_replace("~([^a-z])on([a-z]+)([[:space:]]*)=~i", "$1Xon$2=", $userInputText);
                 //ToDo: Filter the text better
-                return htmlspecialchars($userInputText);
+                return htmlspecialchars($userInputText, ENT_QUOTES);
         }
 	}
 	
