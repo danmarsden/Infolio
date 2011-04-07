@@ -270,7 +270,11 @@ if ($pt =='site') {
 } else if ($pt === 'user'){
     $objects = scandir($uploaddir);
     if (!empty($objects)) {
-        $newUser = $_POST; // new user details
+        $newUser = array();
+        $newUser['userType'] = Safe::post('usertype', PARAM_ALPHANUMEXT);
+        $newUser['username'] = Safe::post('username', PARAM_ALPHANUMEXT);
+        $newUser['institution_id'] = Safe::post('institution_id', PARAM_INT);
+        $newUser['password'] = Safe::post('password');
         // trigger import of this folder
         leap_restore_user($uploaddir, $newUser);
 
