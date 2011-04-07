@@ -242,7 +242,7 @@ function onBlockDelete($page, $blockId)
 }
 
 // Set up events
-$eventD = new PageEventDispatcher($_GET, $_POST);
+$eventD = new PageEventDispatcher();
 $eventD->setUser($studentUser);
 $eventD->setOnAttachmentDeleteHandler('onAttachmentDelete');
 $eventD->setOnBlockDeleteHandler('onBlockDelete');

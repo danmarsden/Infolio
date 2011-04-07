@@ -98,8 +98,8 @@ class PageEventDispatcher extends EventDispatcher
 	 */
 	public function DispatchEvents()
 	{
-		$pageId = Safe::GetArrayIndexValueWithDefault($this->m_queryStringVars, 'id', null);
-		$mode = Safe::GetArrayIndexValueWithDefault($this->m_queryStringVars, 'mode', Page::MODE_SHOW);
+		$pageId = Safe::get('id', PARAM_INT);
+		$mode = Safe::getWithDefault('mode', Page::MODE_SHOW, PARAM_ALPHANUMEXT);
 		
 		// Create current page object
 		if($pageId > 0 ) {
@@ -112,16 +112,13 @@ class PageEventDispatcher extends EventDispatcher
 		// Call parent function and stop if it raises any events
 		if( parent::DispatchEvents() ) return true;
 
-		$allInputVars = array_merge($this->m_formVars, $this->m_queryStringVars);
-		$action = Safe::GetArrayIndexValueWithDefault($allInputVars, 'a', null);
+		$action = Safe::request('a');
 		
 		// Zero page ID indicates new page
 		if($pageId == 0 && isset($this->mf_onNewPageHandler)) {
 			// Check owner tab is provided
-			if( isset($this->m_queryStringVars['tab']) ) {
-				// Collect user input
-				$tabId = Safe::Input($this->m_queryStringVars['tab']);
-				
+            $tabId = Safe::get('tab', PARAM_INT);
+			if(!empty($tabId)) {
 				// Call handler
 				call_user_func($this->mf_onNewPageHandler, $tabId);
 			}
@@ -133,46 +130,40 @@ class PageEventDispatcher extends EventDispatcher
 		}
 		
 		// ** Block move events (only one)
-		$bup = Safe::get('blockup');
-        $bdn = Safe::get('blockdown');
-        $bdel = Safe::get('blockdelete');
+		$bup = Safe::get('blockup', PARAM_INT);
+        $bdn = Safe::get('blockdown', PARAM_INT);
+        $bdel = Safe::get('blockdelete', PARAM_INT);
 
 		// Block up event - onBlockUp
-		if( !empty($bup) && is_numeric($this->m_queryStringVars['blockup']) ) {
-			// Collect user input
-			$blockId = Safe::Input($this->m_queryStringVars['blockup']);
-			
+		if(!empty($bup)) {
 			// Call handler
-			call_user_func($this->mf_onBlockUpHandler, $blockId, $this->m_page);
+			call_user_func($this->mf_onBlockUpHandler, $bup, $this->m_page);
 			
 			// No other events to be called
 			return true;
 		}
 		// Block down event - onBlockDown
-		elseif( !empty($bdn) && is_numeric($this->m_queryStringVars['blockdown']) ) {
-			// Collect user input
-			$blockId = Safe::Input($this->m_queryStringVars['blockdown']);
-			
+		elseif(!empty($bdn)) {
+
 			// Stop commands persisting
-			unset($this->m_queryStringVars['blockdown']);
+			unset($_GET['blockdown']);
 			
 			// Call handler
-			call_user_func($this->mf_onBlockDownHandler, $blockId, $this->m_page);
+			call_user_func($this->mf_onBlockDownHandler, $bdn, $this->m_page);
 			
 			// No other events to be called
 			return true;
 		}
 
 		// ** Delete block event - onBlockDelete
-		elseif( !empty($bdel) /*&& is_numeric($bdel) && isset($this->mf_onBlockDeleteHandler)*/) {
-			$blockId = $bdel;
-			call_user_func($this->mf_onBlockDeleteHandler, $this->m_page, $blockId);
+		elseif(!empty($bdel)) {
+			call_user_func($this->mf_onBlockDeleteHandler, $this->m_page, $bdel);
 		}
 
 		// ** Page save event - onPageSave
 		if( isset($this->mf_onSavePageHandler) && $action==PageEventDispatcher::ACTION_SAVE ) {
 			// Collect user input
-			$title = Safe::Input($this->m_formVars['title']);
+			$title = Safe::post('title');
 			
 			// Call handler
 			call_user_func($this->mf_onSavePageHandler, $this->m_page, $title);
@@ -185,13 +176,13 @@ class PageEventDispatcher extends EventDispatcher
 		if( isset($this->mf_onBlockSaveHandler) && $action==PageEventDispatcher::ACTION_SAVE_BLOCK ) {
 			// Collect user input
 			$wordBlocks = array(
-								Safe::GetArrayIndexValueWithDefault($this->m_formVars, 'wb0', null),
-								Safe::GetArrayIndexValueWithDefault($this->m_formVars, 'wb1', null)
+								Safe::post('wb0'),
+								Safe::post('wb1')
 								);
-			$blockId = Safe::GetArrayIndexValueWithDefault($this->m_formVars, 'block_id', null);
-			$blockTitle = Safe::GetArrayIndexValueWithDefault($this->m_formVars, 'title', null);
-			$templateId = Safe::GetArrayIndexValueWithDefault($this->m_formVars, 'template_id', null);
-			$blockWeight = Safe::GetArrayIndexValueWithDefault($this->m_formVars, 'weight', null);
+			$blockId = Safe::post('block_id', PARAM_INT);
+			$blockTitle = Safe::post('title');
+			$templateId = Safe::post('template_id', PARAM_INT);
+			$blockWeight = Safe::post('weight');
 			
 			// Call handler
 			call_user_func($this->mf_onBlockSaveHandler, $this->m_page, $blockTitle, $wordBlocks, $blockId, $templateId, $blockWeight);
@@ -209,9 +200,9 @@ class PageEventDispatcher extends EventDispatcher
 		// ** Image set event - onSetImage
 		if( isset($this->mf_onSetImageHandler) && $action==PageEventDispatcher::ACTION_SET_IMAGE ) {
 			// Collect user input
-			$blockId = Safe::GetArrayIndexValueWithDefault($this->m_queryStringVars, 'blockedit', null);
-			$imagePlace = Safe::GetArrayIndexValueWithDefault($this->m_queryStringVars, 'imageedit', null);
-			$imageId = Safe::GetArrayIndexValueWithDefault($this->m_queryStringVars, 'c', null);
+			$blockId = Safe::get('blockedit', PARAM_INT);
+			$imagePlace = Safe::get('imageedit');
+			$imageId = Safe::get('c', PARAM_INT);
 			
 			// Call handler
 			call_user_func($this->mf_onSetImageHandler, $blockId, $imagePlace, $imageId, $this->m_page);
@@ -241,9 +232,9 @@ class PageEventDispatcher extends EventDispatcher
 		// Enter page in edit mode event - OnEnterEditPage
 		elseif( $mode ==  Page::MODE_EDIT && isset($this->mf_onEnterEditPageHandler) ) {
 			// Collect user input
-			$imageIdForEdit = Safe::GetArrayIndexValueWithDefault($this->m_queryStringVars, 'imageedit', null);
-			$blockIdForEdit = Safe::GetArrayIndexValueWithDefault($this->m_queryStringVars, 'blockedit', null);
-			$assetFilter = Safe::GetArrayIndexValueWithDefault($this->m_queryStringVars, 'f', AssetCollection::FILTER_ALL);
+			$imageIdForEdit = Safe::get('imageedit', PARAM_INT);
+			$blockIdForEdit = Safe::get('blockedit', PARAM_INT);
+			$assetFilter = Safe::getWithDefault('f', AssetCollection::FILTER_ALL, PARAM_ALPHANUMEXT);
 			$tag = Safe::get('tag');
             if(isset($tag)) $assetFilter = 'tag=' . $tag;
 

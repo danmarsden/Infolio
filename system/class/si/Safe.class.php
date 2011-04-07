@@ -52,25 +52,6 @@ include_once(DIR_FS_SYSTEM . "kses.php");
 class Safe
 {
 	/**
-	 * Returns value off $array at $index if it's set, otherwise returns $defaultValue
-	 * @return Mixed
-	 * @param $array Array
-	 * @param $index Mixed
-	 * @param $defaultValue Mixed
-	 */
-	public static function GetArrayIndexValueWithDefault($array, $index, $defaultValue)
-	{
-		if( isset($array[$index]) ) {
-			$value = $array[$index];
-		}
-		else {
-			$value = $defaultValue;
-		}
-
-		return $value;
-	}
-
-	/**
 	 * Checks a user's input is safe and takes out anything nasty
 	 * @return String
 	 * @param $userInputText String

@@ -155,7 +155,7 @@ function onSaveTab($tab, $newTabName)
 $sortMenu = null; $editMenu = null;
 
 // Set up events
-$eventD = new TabEventDispatcher(array(), array());
+$eventD = new TabEventDispatcher();
 $eventD->setUser($studentUser);
 $eventD->setOnColourSwapHandler('onColourSwap');
 $eventD->setOnDeleteTabHandler('onDeleteTab');

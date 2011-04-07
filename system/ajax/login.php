@@ -189,7 +189,7 @@ function errorMessage($error_type)
 					ERROR_ACCOUNT_LOCKOUT => "You are locked out.",
 					ERROR_TYPE_LOCKOUT => "You cannot login this way."
 					);
-	$error_msg = Safe::GetArrayIndexValueWithDefault($errors, $error_type, 'Unknown Server Issue.');
+	$error_msg = isset($errors[$error_type]) ? $errors[$error_type] : 'Unknown Server Issue.';
 
     print "error={$error_type}&error_msg={$error_msg} ({$flash_user_name} - {$flash_sub_pass})";
     exit;

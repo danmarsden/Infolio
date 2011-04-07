@@ -34,7 +34,7 @@ class ManageTabsEventDispatcher extends EventDispatcher
 	public function DispatchEvents()
 	{
         
-        $mode = Safe::GetArrayIndexValueWithDefault($this->m_queryStringVars, 'mode', SimplePage::MODE_SHOW);
+        $mode = Safe::getWithDefault('mode', SimplePage::MODE_SHOW, PARAM_ALPHANUMEXT);
 
 		$this->m_page = new SimplePage($this->m_user->getFirstName() . "'s tabs");
 		$this->m_page->setName('manage tabs');
@@ -44,7 +44,7 @@ class ManageTabsEventDispatcher extends EventDispatcher
 		if( parent::DispatchEvents() ) return true;
 		
 		// Get input
-        $tab = Safe::GetArrayIndexValueWithDefault($this->m_allVars, 't', null);
+        $tab = Safe::request('t', PARAM_INT);
 
 		// Tab move action - onTabMove
         if(($mode == self::ACTION_MOVE_UP || $mode == self::ACTION_MOVE_DOWN) && isset($this->mf_onMoveTabHandler)) {

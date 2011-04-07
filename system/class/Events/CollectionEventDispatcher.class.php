@@ -86,8 +86,8 @@ class CollectionEventDispatcher extends EventDispatcher
 		if( parent::DispatchEvents() ) return true;
 		
 		// Get input
-		$assetId = Safe::GetArrayIndexValueWithDefault($this->m_allVars, 'c', null);
-		$filter = Safe::GetArrayIndexValueWithDefault($this->m_queryStringVars, 'f', AssetCollection::FILTER_ALL);
+		$assetId = Safe::request('c', PARAM_INT);
+		$filter = Safe::getWithDefault('f', AssetCollection::FILTER_ALL, PARAM_ALPHANUMEXT);
 
 		// Get tag filter
         $tag = Safe::get('tag');

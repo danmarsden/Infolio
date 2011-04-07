@@ -51,7 +51,7 @@ function onEnterPage($_page, $helpItem)
 }
 
 // Set up events
-$eventD = new HelpEventDispatcher($_GET, $_POST);
+$eventD = new HelpEventDispatcher();
 if(isset($studentUser))
 {
 	$eventD->setUser($studentUser);

@@ -58,7 +58,7 @@ function onShowPage($_page, $_passwordChanged = false)
 }
 
 // Set up events
-$eventD = new SettingsEventDispatcher($_GET, $_POST);
+$eventD = new SettingsEventDispatcher();
 $eventD->setUser($studentUser);
 $eventD->setOnChangeColourHandler('onChangeColour');
 $eventD->setOnColourSwapHandler('onColourSwap');

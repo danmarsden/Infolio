@@ -87,7 +87,7 @@ function onShowPage($_page)
 }
 
 // Set up events
-$eventD = new HomePageEventDispatcher($_GET, $_POST);
+$eventD = new HomePageEventDispatcher();
 $eventD->setUser($studentUser);
 $eventD->setOnChangeUserDescriptionHandler('onChangeUserDescription');
 $eventD->setOnChangeUserPictureHandler('onChangeUserPicture');

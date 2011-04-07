@@ -31,7 +31,7 @@ class SharedTabsEventDispatcher extends EventDispatcher
 	public function DispatchEvents()
 	{
 
-        $mode = Safe::GetArrayIndexValueWithDefault($this->m_queryStringVars, 'mode', SimplePage::MODE_SHOW);
+        $mode = Safe::getWithDefault('mode', SimplePage::MODE_SHOW, PARAM_ALPHANUMEXT);
 
 		$this->m_page = new SimplePage("Shared tabs");
 		$this->m_page->setName('Shared Tabs');
@@ -41,7 +41,7 @@ class SharedTabsEventDispatcher extends EventDispatcher
 		if( parent::DispatchEvents() ) return true;
 
 		// Get input
-        $tab = Safe::GetArrayIndexValueWithDefault($this->m_allVars, 't', null);
+        $tab = Safe::request('t');
 
 
 		// Enter tabs page in show mode event - OnEnterShowTabs

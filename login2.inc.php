@@ -55,7 +55,7 @@ function logout()
 	$message = 'You have logged out.';
 }
 
-$eventD = new LoginEventDispatcher($_GET, $_POST);
+$eventD = new LoginEventDispatcher();
 $eventD->setOnEnterPageHandler('onEnterPage');
 $eventD->setOnLoginHandler('onLogin');
 $eventD->DispatchEvents();

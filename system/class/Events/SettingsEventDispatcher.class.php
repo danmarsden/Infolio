@@ -54,9 +54,9 @@ class SettingsEventDispatcher extends EventDispatcher
 		// Call parent function and stop if it raises any events
 		if( parent::DispatchEvents() ) return true;
 
-		$newColour = Safe::GetArrayIndexValueWithDefault($this->m_queryStringVars, 'colour', null);
-		$newPassword = Safe::GetArrayIndexValueWithDefault($this->m_allVars, 'passwd', null);
-		$changedPassword = Safe::GetArrayIndexValueWithDefault($this->m_allVars, 'changed', false);
+		$newColour = Safe::get('colour');
+		$newPassword = Safe::request('passwd');
+		$changedPassword = Safe::getWithDefault('changed', false);
 
 		// Change colour event
 		if( isset($newColour) && isset($this->mf_onChangeColourHandler) ) {

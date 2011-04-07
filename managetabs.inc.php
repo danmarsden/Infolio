@@ -42,7 +42,7 @@ function onMoveTab(SimplePage $_page, $_direction, $tabid)
 }
 
 // Set up events
-$eventD = new ManageTabsEventDispatcher($_GET, $_POST);
+$eventD = new ManageTabsEventDispatcher();
 $eventD->setUser($studentUser);
 $eventD->setOnColourSwapHandler('onColourSwap');
 $eventD->setOnEnterShowManageTabsHandler('onEnterShowManageTabs');

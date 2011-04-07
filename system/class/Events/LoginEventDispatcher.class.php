@@ -59,7 +59,7 @@ class LoginEventDispatcher extends EventDispatcher
 		
 		parent::DispatchEvents(); //(can't store size in user profile when not logged in)
 		
-		$action = Safe::GetArrayIndexValueWithDefault($this->m_formVars, 'a', null);
+		$action = Safe::post('a', null);
 		
 		// ** Block move events (only one)
 		

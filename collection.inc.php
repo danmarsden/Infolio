@@ -139,7 +139,7 @@ function onUpload($_page)
 }
 
 // Set up events
-$eventD = new CollectionEventDispatcher($_GET, $_POST);
+$eventD = new CollectionEventDispatcher();
 $eventD->setUser($studentUser);
 $eventD->setOnColourSwapHandler('onColourSwap');
 $eventD->setOnDeleteAssetHandler('onAssetDelete');

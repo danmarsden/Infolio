@@ -68,8 +68,8 @@ class HomePageEventDispatcher extends EventDispatcher
 		// Call parent function and stop if it raises any events
 		if( parent::DispatchEvents() ) return true;
 		
-		$newPictureId = Safe::GetArrayIndexValueWithDefault($this->m_queryStringVars, 'c', null);
-		$newDescription = Safe::GetArrayIndexValueWithDefault($this->m_queryStringVars, 'description', null);
+		$newPictureId = Safe::get('c', PARAM_INT);
+		$newDescription = Safe::get('description');
 		
 		// Change user picture - OnChangeUserPicture
 		if( $this->isAction(self::ACTION_CHANGE_USER_IMAGE) && isset($this->mf_onChangeUserPictureHandler)) {

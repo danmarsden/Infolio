@@ -33,7 +33,7 @@ function onEnterShowSharedTabs(SimplePage $_page)
 }
 
 // Set up events
-$eventD = new SharedTabsEventDispatcher($_GET, $_POST);
+$eventD = new SharedTabsEventDispatcher();
 $eventD->setUser($studentUser);
 $eventD->setOnEnterShowSharedTabsHandler('onEnterShowSharedTabs');
 $eventD->DispatchEvents();
