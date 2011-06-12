@@ -156,7 +156,7 @@ class Safe
     }
     public static function postWithDefault($var, $default, $type=PARAM_NORMAL) {
         if( isset($_POST[$var]) ) {
-             $value = Safe::Input($_GET[$var], $type);
+             $value = Safe::Input($_POST[$var], $type);
          } else {
              $value = $default;
          }
