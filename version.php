@@ -27,6 +27,6 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-$version = 2011060300;  // YYYYMMDD   = date of the last version bump
+$version = 2011100200;  // YYYYMMDD   = date of the last version bump
                         //         XX = daily increments
-$release = '1.3.1';
+$release = '1.3.2';
