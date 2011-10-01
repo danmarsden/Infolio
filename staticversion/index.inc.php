@@ -7,7 +7,7 @@
  *
  * @author     Richard Garside [www.richardsprojects.co.uk]
  * @copyright  2009 Rix Centre
- * @license    http://creativecommons.org/licenses/by-nc-sa/2.0/uk/
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @version    $Id: index.inc.php 825 2009-12-14 09:28:52Z richard $
  * @link       NA
  * @since      NA

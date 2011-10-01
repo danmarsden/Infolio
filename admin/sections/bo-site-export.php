@@ -7,7 +7,7 @@
  *
  * @author     Dan Marsden, Catalyst IT Ltd
  * @copyright  2010 Catalyst IT Ltd
- * @license    http://creativecommons.org/licenses/by-nc-sa/2.0/uk/
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 */
         $html = '<h2>Export Institution</h2>';
         $html .= '<form method="post" action="/export.php"><ul style="list-style:none;">';

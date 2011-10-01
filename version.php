@@ -13,7 +13,7 @@
  *
  * @package    core
  * @copyright  2008 Rix Centre
- * @license
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 $version = 2011060300;  // YYYYMMDD   = date of the last version bump

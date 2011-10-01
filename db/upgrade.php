@@ -4,7 +4,7 @@
  *
  * @author     Dan Marsden [danmarsden.com]
  * @copyright  2008 Rix Centre
- * @license
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
  /**
  *

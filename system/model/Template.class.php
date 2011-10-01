@@ -9,7 +9,7 @@
  *
  * @author     Richard Garside
  * @copyright  2009 Rix Centre
- * @license    http://creativecommons.org/licenses/by-nc-sa/2.0/uk/
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @version    $Id: Template.class.php 752 2009-08-09 15:37:34Z richard $
  * @link       NA
  * @since      NA

@@ -8,7 +8,7 @@
  * 
  * @author     	Elvir Leonard <elvir.leonard@rixcentre.org>
  * @copyright  	2008 Rix Centre
- * @license    	http://creativecommons.org/licenses/by-nc-sa/2.0/uk/
+ * @license    	http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @version    	$Id:$
  * @link       	NA
  * @since      	NA

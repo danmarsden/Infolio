@@ -7,7 +7,7 @@
  *
  * @author     Elvir Leonard
  * @copyright  2008 Rix Centre
- * @license    http://creativecommons.org/licenses/by-nc-sa/2.0/uk/
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @version    $Id: bo-group.php 818 2009-11-09 12:00:12Z richard $
  * @link       NA
  * @since      NA

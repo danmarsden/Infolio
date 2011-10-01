@@ -7,7 +7,7 @@
  *
  * @author     Richard Garside [www.richardsprojects.co.uk]
  * @copyright  2008 Rix Centre
- * @license    http://creativecommons.org/licenses/by-nc-sa/2.0/uk/
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @version    $Id: DatabaseObject.class.php 799 2009-09-01 21:19:41Z richard $
  * @link       NA
  * @since      NA

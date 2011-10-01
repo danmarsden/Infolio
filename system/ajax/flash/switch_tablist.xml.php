@@ -7,7 +7,7 @@
  *
  * @author     Richard Garside [www.richardsprojects.co.uk]
  * @copyright  2009 Rix Centre
- * @license    http://creativecommons.org/licenses/by-nc-sa/2.0/uk/
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @version    $Id: switch_tablist.xml.php 780 2009-08-26 12:21:16Z richard $
  * @link       NA
  * @since      NA

@@ -1,7 +1,7 @@
 /**
  * @author Richard garside
  * @copyright  2008 Rix Centre
- * @license    http://creativecommons.org/licenses/by-nc-sa/2.0/uk/
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 $(document).ready(function()
 {

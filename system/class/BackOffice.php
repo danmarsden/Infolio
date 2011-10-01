@@ -7,7 +7,7 @@
  * 
  * @author     	Elvir Leonard
  * @copyright  	2008 Rix Centre
- * @license    	http://creativecommons.org/licenses/by-nc-sa/2.0/uk/
+ * @license    	http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @version    	$Id: BackOffice.php 681 2009-07-07 14:36:14Z richard $
  * @link       	NA
  * @since      	NA

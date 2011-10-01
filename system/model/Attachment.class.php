@@ -8,7 +8,7 @@
  *
  * @author     Richard Garside
  * @copyright  2009 Rix Centre
- * @license    http://creativecommons.org/licenses/by-nc-sa/2.0/uk/
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @version    $Id: Attachment.class.php 816 2009-11-05 13:04:04Z richard $
  * @link       NA
  * @since      NA

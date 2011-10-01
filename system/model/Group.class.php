@@ -8,7 +8,7 @@
  *
  * @author     Elvir LEonard	
  * @copyright  2008 Rix Centre
- * @license    http://creativecommons.org/licenses/by-nc-sa/2.0/uk/
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @version    $Id: Group.class.php 708 2009-07-20 14:35:23Z richard $
  * @link       NA
  * @since      NA

@@ -8,7 +8,7 @@
  *
  * @author     Elvir Leonard <elvir.leonard@rixcentre.org>
  * @copyright  2008 Rix Centre
- * @license    http://creativecommons.org/licenses/by-nc-sa/2.0/uk/
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @version    $Id: initialiseBackOffice.php 715 2009-07-26 18:57:07Z richard $
  * @link       NA
  * @since      NA

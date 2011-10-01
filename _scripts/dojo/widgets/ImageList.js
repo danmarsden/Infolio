@@ -5,7 +5,7 @@
  *
  * @author     Richard Garside [www.richardsprojects.co.uk]
  * @copyright  2009 Rix Centre
- * @license    http://creativecommons.org/licenses/by-nc-sa/2.0/uk/
+ * @license    http://www.opensource.org/licenses/bsd-license.php
  * @version    $Id: ImageList.js 792 2009-09-01 19:49:26Z richard $
  * @link       NA
  * @since      NA
