@@ -5,7 +5,7 @@
  *
  * This class is used to hold Template data
  *
- * LICENSE: This is an Open Source Project
+
  *
  * @author     Richard Garside
  * @copyright  2008 onwards JISC TechDis (http://www.jisctechdis.ac.uk/)

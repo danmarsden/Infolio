@@ -5,7 +5,7 @@
  * 
  * Responsible to connect to db with details supplied on /system/conf.php
  * 
- * LICENSE: This is an Open Source Project
+
  * 
  * @author     	Elvir Leonard
  * @copyright  	2008 onwards JISC TechDis (http://www.jisctechdis.ac.uk/)

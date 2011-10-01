@@ -3,7 +3,7 @@
  * lib.php - Creates a LEAP export of a user's infolio
  * See http://wiki.cetis.ac.uk/LEAP2A_specification
  *
- * LICENSE: This is an Open Source Project
+
  *
  * @author     Dan Marsden, Catalyst IT Ltd
  * @copyright  2010 Catalyst IT Ltd

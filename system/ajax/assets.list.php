@@ -4,7 +4,7 @@
  * Prints a list of a user's assets in JSON/XL format.
  * The user must be logged in to get this data.
  *
- * LICENSE: This is an Open Source Project
+
  *
  * @author     Richard Garside [www.richardsprojects.co.uk]	
  * @copyright  2008 onwards JISC TechDis (http://www.jisctechdis.ac.uk/)

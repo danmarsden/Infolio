@@ -2,7 +2,7 @@
 /**
  * The Audio Class
  *
- * LICENSE: This is an Open Source Project
+
  *
  * @author     Elvir LEonard	
  * @copyright  2008 onwards JISC TechDis (http://www.jisctechdis.ac.uk/)

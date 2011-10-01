@@ -3,7 +3,7 @@
 /**
  * The Manage Event Dispatcher
  *
- * LICENSE: This is an Open Source Project
+
 */
 
 include_once('EventDispatcher.class.php');

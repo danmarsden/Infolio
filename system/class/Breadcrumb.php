@@ -2,7 +2,7 @@
 /**
  * Class Breadcrumb
  * 
- * LICENSE: This is an Open Source Project
+
  * 
  * This class is responsible for breadcrumb creation
  * 

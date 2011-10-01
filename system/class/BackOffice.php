@@ -2,7 +2,7 @@
 /**
  * Class Application
  * 
- * LICENSE: This is an Open Source Project
+
  * 
  * 
  * @author     	Elvir Leonard

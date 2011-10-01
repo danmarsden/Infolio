@@ -6,7 +6,7 @@
  * An abstract class that must be extended by any class that represents a type of asset that 
  * is held in a user's collection. Like an image or video.
  * 
- * LICENSE: This is an Open Source Project
+
  *
  * @author     Richard Garside [www.richardsprojects.co.uk]	
  * @copyright  2008 onwards JISC TechDis (http://www.jisctechdis.ac.uk/)

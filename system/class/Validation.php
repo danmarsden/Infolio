@@ -2,7 +2,7 @@
 /**
  * Class Validation
  * 
- * LICENSE: This is an Open Source Project
+
  * 
  * Class Notification
  * stackable error notification where can be stored in flat text file or db (see /system/Logger.php)

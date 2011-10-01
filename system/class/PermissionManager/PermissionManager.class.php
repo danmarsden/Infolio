@@ -2,7 +2,7 @@
 /**
  * Permission Manager
  * 
- * LICENSE: This is an Open Source Project
+
  * 
  * This class is responsible to handle login function in backoffice
  * 

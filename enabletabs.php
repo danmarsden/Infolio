@@ -3,7 +3,7 @@
 /**
  * enabletabs.php - enables and disables users tabs
  *
- * LICENSE: This is an Open Source Project
+
  *
 */
 

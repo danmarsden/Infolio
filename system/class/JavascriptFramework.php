@@ -2,7 +2,7 @@
 /**
  * Class JavascriptFramework
  * 
- * LICENSE: This is an Open Source Project
+
  * 
  * This class is responsible to handle all javascript framework
  * 

@@ -4,7 +4,7 @@
  * font-event.inc.php
  * The PHP event code to handle font-size events
  *
- * LICENSE: This is an Open Source Project
+
  *
  * @author     Richard Garside [www.richardsprojects.co.uk]
  * @copyright  2008 onwards JISC TechDis (http://www.jisctechdis.ac.uk/)

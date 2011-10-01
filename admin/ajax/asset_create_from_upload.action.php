@@ -3,7 +3,7 @@
  * Creates assets from uploaded files
  * A admin user must be logged in to get this data.
  *
- * LICENSE: This is an Open Source Project
+
  *
  * @author     Richard Billingham
  * @copyright  2008 onwards JISC TechDis (http://www.jisctechdis.ac.uk/)

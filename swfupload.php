@@ -1,7 +1,7 @@
 <?php
 /**
  *
- * LICENSE: This is an Open Source Project
+
  *
  * @author     Stacey Walker, Catalyst IT Ltd
  * @copyright  2010 Catalyst IT Ltd

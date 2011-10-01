@@ -3,7 +3,7 @@
 /**
  * Institution admin section
  *
- * LICENSE: This is an Open Source Project
+
  *
  * @author     Elvir Leonard
  * @copyright  2008 onwards JISC TechDis (http://www.jisctechdis.ac.uk/)

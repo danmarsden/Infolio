@@ -3,7 +3,7 @@
 /**
  * The code behind tabs.php
  *
- * LICENSE: This is an Open Source Project
+
 */
 
 //include_once('conf.php');

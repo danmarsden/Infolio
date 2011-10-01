@@ -5,7 +5,7 @@
  * 
  * This is based on a class from the book 'Professional PHP5' by Wrox Press.
  *
- * LICENSE: This is an Open Source Project
+
  *
  * @author     Richard Garside [www.richardsprojects.co.uk]
  * @copyright  2008 onwards JISC TechDis (http://www.jisctechdis.ac.uk/)

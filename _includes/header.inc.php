@@ -4,7 +4,7 @@
  * header.inc.php
  * Produces the HTML for the header section of the page with all the correct menus.
  *
- * LICENSE: This is an Open Source Project
+
  *
  * @author     Richard Garside [www.richardsprojects.co.uk]
  * @copyright  2008 onwards JISC TechDis (http://www.jisctechdis.ac.uk/)

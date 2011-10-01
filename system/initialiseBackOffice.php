@@ -4,7 +4,7 @@
  * initialiseBackOffice.php
  * initialise all general classes for backoffice
  *
- * LICENSE: This is an Open Source Project
+
  *
  * @author     Elvir Leonard <elvir.leonard@rixcentre.org>
  * @copyright  2008 onwards JISC TechDis (http://www.jisctechdis.ac.uk/)

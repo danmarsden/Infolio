@@ -2,7 +2,7 @@
 /**
  * Class Date
  * 
- * LICENSE: This is an Open Source Project
+
  * 
  * This class is handling date conversion
  * 

@@ -3,7 +3,7 @@
  * Moves assets to a user/group's collection.
  * A admin user must be logged in to get this data.
  *
- * LICENSE: This is an Open Source Project
+
  *
  * @author     Richard Garside [www.richardsprojects.co.uk]
  * @copyright  2008 onwards JISC TechDis (http://www.jisctechdis.ac.uk/)
