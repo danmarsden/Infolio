@@ -3,7 +3,7 @@
 /**
  * sharedtabsEventDispatcher.class.php -
  *
- * @author     Dan Marsden, Catalyst IT Ltd
+ * @author     Dan Marsden, Catalyst IT Ltd, (http://danmarsden.com)
  * @copyright  2008 onwards JISC TechDis (http://www.jisctechdis.ac.uk/)
 */
 

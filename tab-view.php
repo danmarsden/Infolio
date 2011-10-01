@@ -18,7 +18,7 @@
 /**
  * tabview.php -user to display read-only version of tabs for public access
  *
- * @author     Dan Marsden, Catalyst IT Ltd
+ * @author     Dan Marsden, Catalyst IT Ltd, (http://danmarsden.com)
  * @copyright  2008 onwards JISC TechDis (http://www.jisctechdis.ac.uk/)
 */
 include_once("system/initialise.php");

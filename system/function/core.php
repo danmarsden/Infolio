@@ -18,7 +18,7 @@
 /**
  * core.php - useful functions borrowed from MOODLE (GPL CODE)
  *
- * @author     Dan Marsden, Catalyst IT Ltd, Various Moodle developers
+ * @author     Dan Marsden, Catalyst IT Ltd, (http://danmarsden.com)
  * @copyright  2008 onwards JISC TechDis (http://www.jisctechdis.ac.uk/)
 */
 /**

@@ -18,7 +18,7 @@
 /**
  * import.php - import of Infolio Leap file.
  *
- * @author     Dan Marsden, Catalyst IT Ltd
+ * @author     Dan Marsden, Catalyst IT Ltd, (http://danmarsden.com)
  * @copyright  2008 onwards JISC TechDis (http://www.jisctechdis.ac.uk/)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 */
