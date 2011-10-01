@@ -21,14 +21,10 @@
  * 
  * This is based on a class from the book 'Professional PHP5' by Wrox Press.
  *
-
- *
  * @author     Richard Garside [www.richardsprojects.co.uk]
  * @copyright  2008 onwards JISC TechDis (http://www.jisctechdis.ac.uk/)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @version    $Id: Debugger.class.php 333 2009-01-09 12:02:46Z richard $
- * @link       NA
- * @since      NA
 */
 
 

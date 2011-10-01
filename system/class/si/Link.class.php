@@ -19,14 +19,10 @@
 /**
  * The Links Class
  *
-
- *
  * @author     Richard Garside [www.richardsprojects.co.uk]	
  * @copyright  2008 onwards JISC TechDis (http://www.jisctechdis.ac.uk/)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @version    $Id: Link.class.php 826 2009-12-14 12:05:32Z richard $
- * @link       NA
- * @since      NA
 */
 
 class Link

@@ -18,14 +18,10 @@
 /**
  * The Tab Class
  *
-
- *
  * @author     Elvir Leonard
  * @copyright  2008 onwards JISC TechDis (http://www.jisctechdis.ac.uk/)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @version    $Id: Tab.class.php 839 2009-12-29 17:17:30Z richard $
- * @link       NA
- * @since      NA
 */
 
 include_once('model/Template.class.php');

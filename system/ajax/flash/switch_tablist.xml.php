@@ -19,14 +19,10 @@
  * Tab list XML for switch browser
  * The user must be logged in to get this data.
  *
-
- *
  * @author     Richard Garside [www.richardsprojects.co.uk]
  * @copyright  2008 onwards JISC TechDis (http://www.jisctechdis.ac.uk/)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @version    $Id: switch_tablist.xml.php 780 2009-08-26 12:21:16Z richard $
- * @link       NA
- * @since      NA
 */
 
 /*

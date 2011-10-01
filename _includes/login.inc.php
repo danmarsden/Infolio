@@ -23,8 +23,6 @@
  * @copyright  2008 onwards JISC TechDis (http://www.jisctechdis.ac.uk/)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @version    $id$
- * @link       NA
- * @since      NA
 */
 
 include_once('model/User.class.php');

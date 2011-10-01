@@ -18,14 +18,10 @@
 /**
  * The Audio Class
  *
-
- *
  * @author     Elvir LEonard	
  * @copyright  2008 onwards JISC TechDis (http://www.jisctechdis.ac.uk/)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @version    $Id$
- * @link       NA
- * @since      NA
  */
 
 //include_once('model/Asset.class.php');

@@ -18,14 +18,10 @@
 /**
  * The iFile interface
  *
-
- *
  * @author     Richard Garside [www.richardsprojects.co.uk]
  * @copyright  2008 onwards JISC TechDis (http://www.jisctechdis.ac.uk/)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @version    $Id: iFile.int.php 487 2009-04-21 13:31:34Z richard $
- * @link       NA
- * @since      NA
 */
 
 /**

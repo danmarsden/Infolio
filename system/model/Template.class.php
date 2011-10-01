@@ -20,14 +20,10 @@
  *
  * This class is used to hold Template data
  *
-
- *
  * @author     Richard Garside
  * @copyright  2008 onwards JISC TechDis (http://www.jisctechdis.ac.uk/)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @version    $Id: Template.class.php 752 2009-08-09 15:37:34Z richard $
- * @link       NA
- * @since      NA
  */
 
 class Template extends DatabaseObject

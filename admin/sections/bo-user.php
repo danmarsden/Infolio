@@ -3,14 +3,10 @@
 /**
  * User admin screen
  *
-
- *
  * @author     Elvir Leonard
  * @copyright  2008 onwards JISC TechDis (http://www.jisctechdis.ac.uk/)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @version    $Id: bo-user.php 838 2009-12-29 15:31:07Z richard $
- * @link       NA
- * @since      NA
  */
 
 require_once('system/function/core.php');

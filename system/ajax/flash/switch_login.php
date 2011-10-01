@@ -19,14 +19,10 @@
  * Login switch browser
  * Logs the user in so they can access other data
  *
-
- *
  * @author     Richard Garside [www.richardsprojects.co.uk]
  * @copyright  2008 onwards JISC TechDis (http://www.jisctechdis.ac.uk/)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @version    $Id: switch_login.php 717 2009-07-27 08:52:44Z richard $
- * @link       NA
- * @since      NA
 */
 
 /*

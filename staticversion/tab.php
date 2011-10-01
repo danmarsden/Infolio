@@ -18,14 +18,10 @@
 /**
  * tab.php - A student's tab summary page
  *
-
- *
  * @author     Richard Garside [www.richardsprojects.co.uk]
  * @copyright  2008 onwards JISC TechDis (http://www.jisctechdis.ac.uk/)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @version    $Id: tab.php 831 2009-12-21 16:41:00Z richard $
- * @link       NA
- * @since      NA
 */
 
 include('staticversion/tab.inc.php');

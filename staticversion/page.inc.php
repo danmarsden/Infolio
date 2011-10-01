@@ -19,14 +19,10 @@
 /**
  * The code behind for page.php (static version))
  *
-
- *
  * @author     Richard Garside [www.richardsprojects.co.uk]
  * @copyright  2008 onwards JISC TechDis (http://www.jisctechdis.ac.uk/)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @version    $Id: page.inc.php 834 2009-12-23 10:24:45Z richard $
- * @link       NA
- * @since      NA
 */
 
 //include_once('conf.php');

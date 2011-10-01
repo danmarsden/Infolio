@@ -19,14 +19,10 @@
 /**
  * The Safe Class
  *
-
- *
  * @author     Richard Garside [www.richardsprojects.co.uk]	
  * @copyright  2008 onwards JISC TechDis (http://www.jisctechdis.ac.uk/)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @version    $Id: Safe.class.php 675 2009-07-06 14:34:00Z richard $
- * @link       NA
- * @since      NA
 */
 
 /**

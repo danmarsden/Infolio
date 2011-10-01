@@ -1,14 +1,10 @@
 /**
  * A Dojo Widget that shows a list of data from a data source
  *
-
- *
  * @author     Richard Garside [www.richardsprojects.co.uk]
  * @copyright  2008 onwards JISC TechDis (http://www.jisctechdis.ac.uk/)
  * @license    http://www.opensource.org/licenses/bsd-license.php
  * @version    $Id: DataList.js 366 2009-02-01 22:12:37Z richard $
- * @link       NA
- * @since      NA
 */
 
 dojo.provide("widgets.DataDropList");

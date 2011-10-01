@@ -4,14 +4,10 @@
  * Prints a list of groups in JSON format.
  * A admin user must be logged in to get this data.
  *
-
- *
  * @author     Richard Garside [www.richardsprojects.co.uk]	
  * @copyright  2008 onwards JISC TechDis (http://www.jisctechdis.ac.uk/)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @version    $Id: groups.list.php 431 2009-03-06 18:00:23Z richard $
- * @link       NA
- * @since      NA
 */
 
 include_once('../../system/initialiseBackOffice.php');

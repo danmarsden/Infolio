@@ -3,14 +3,10 @@
 /**
  * Institution admin section
  *
-
- *
  * @author     Elvir Leonard
  * @copyright  2008 onwards JISC TechDis (http://www.jisctechdis.ac.uk/)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @version    $Id: bo-institution.php 818 2009-11-09 12:00:12Z richard $
- * @link       NA
- * @since      NA
  */
 
 include_once('model/Institution.class.php');

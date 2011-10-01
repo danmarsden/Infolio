@@ -18,13 +18,9 @@
 /**
  * html/lib.php - Creates a static html version of a user's infolio
  *
-
- *
  * @author     Richard Garside [www.richardsprojects.co.uk]
  * @copyright  2008 onwards JISC TechDis (http://www.jisctechdis.ac.uk/)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- * @link       NA
- * @since      NA
 */
 
 function export_portfolio($studentUser, $tabIds, $returnfile=false) {

@@ -26,8 +26,6 @@
  * @copyright  2008 onwards JISC TechDis (http://www.jisctechdis.ac.uk/)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @version    $Id: Group.class.php 708 2009-07-20 14:35:23Z richard $
- * @link       NA
- * @since      NA
  */
 
 include_once('DatabaseObject.class.php');

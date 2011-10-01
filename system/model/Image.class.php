@@ -19,14 +19,10 @@
 /**
  * The Image Class
  *
-
- *
  * @author     Richard Garside [www.richardsprojects.co.uk]	
  * @copyright  2008 onwards JISC TechDis (http://www.jisctechdis.ac.uk/)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @version    $Id: Image.class.php 757 2009-08-12 21:34:20Z richard $
- * @link       NA
- * @since      NA
 */
 
 include_once('Asset.class.php');

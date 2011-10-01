@@ -18,14 +18,10 @@
 /**
  * page.php (static version) - A student's page that shows their generated content
  *
-
- *
  * @author     Richard Garside [www.richardsprojects.co.uk]
  * @copyright  2008 onwards JISC TechDis (http://www.jisctechdis.ac.uk/)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @version    $Id: page.php 832 2009-12-22 11:09:19Z richard $
- * @link       NA
- * @since      NA
 */
 
 include('staticversion/page.inc.php');

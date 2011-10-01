@@ -20,8 +20,6 @@
  * Prints a list of users in JSON format.
  * A admin user must be logged in to get this data.
  *
-
- *
  * @author     Richard Garside [www.richardsprojects.co.uk]	
  * @copyright  2008 onwards JISC TechDis (http://www.jisctechdis.ac.uk/)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later

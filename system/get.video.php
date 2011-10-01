@@ -18,14 +18,10 @@
 /**
  * Get image
  *
-
- *
  * @author     Richard Garside [www.richardsprojects.co.uk]
  * @copyright  2008 onwards JISC TechDis (http://www.jisctechdis.ac.uk/)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @version    $Id: get.video.php 821 2009-11-10 21:28:57Z richard $
- * @link       NA
- * @since      NA
 */
 $lastModifiedDateString = 'Tue, 28 Apr 2009 10:13:11 GMT';
 

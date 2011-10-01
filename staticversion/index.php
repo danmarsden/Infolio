@@ -19,14 +19,10 @@
 /**
  * index.php - The student's homepage (About me)
  *
-
- *
  * @author     Richard Garside [www.richardsprojects.co.uk]
  * @copyright  2008 onwards JISC TechDis (http://www.jisctechdis.ac.uk/)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @version    $Id: index.php 831 2009-12-21 16:41:00Z richard $
- * @link       NA
- * @since      NA
 */
 
 include_once('staticversion/index.inc.php');

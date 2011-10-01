@@ -19,14 +19,10 @@
 /**
  * The Institution Class
  *
-
- *
  * @author     Richard Garside
  * @copyright  2008 onwards JISC TechDis (http://www.jisctechdis.ac.uk/)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @version    $Id: Tag.class.php 803 2009-10-29 14:41:47Z richard $
- * @link       NA
- * @since      NA
  */
 
 include_once('DatabaseObject.class.php');

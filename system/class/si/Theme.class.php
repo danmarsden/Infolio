@@ -19,14 +19,10 @@
 /**
  * The Theme Class
  *
-
- *
  * @author     Richard Garside [www.richardsprojects.co.uk]	
  * @copyright  2008 onwards JISC TechDis (http://www.jisctechdis.ac.uk/)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @version    $Id: Theme.class.php 802 2009-10-29 14:29:02Z richard $
- * @link       NA
- * @since      NA
 */
 
 /**

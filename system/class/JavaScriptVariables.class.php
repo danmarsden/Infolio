@@ -19,14 +19,10 @@
 /**
  * A class to store Java Variable pairs to be passed from server to clientside
  *
-
- *
  * @author     Richard Garside [www.richardsprojects.co.uk]
  * @copyright  2008 onwards JISC TechDis (http://www.jisctechdis.ac.uk/)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @version    $Id: JavaScriptVariables.class.php 288 2008-12-06 18:11:33Z richard $
- * @link       NA
- * @since      NA
 */
 
 class JavaScriptVariables

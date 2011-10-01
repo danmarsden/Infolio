@@ -19,14 +19,10 @@
 /**
  * The code behind for page.php
  *
-
- *
  * @author     Richard Garside [www.richardsprojects.co.uk]
  * @copyright  2008 onwards JISC TechDis (http://www.jisctechdis.ac.uk/)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @version    $Id: size.php 472 2009-03-19 19:57:21Z richard $
- * @link       NA
- * @since      NA
 */
 
 include_once("../initialise.php");
