@@ -7,7 +7,7 @@
  * LICENSE: This is an Open Source Project
  *
  * @author     Richard Garside [www.richardsprojects.co.uk]
- * @copyright  2008 Rix Centre
+ * @copyright  2008 onwards JISC TechDis (http://www.jisctechdis.ac.uk/)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @version    $Id: asset-who-can-see.php 383 2009-02-11 19:41:47Z richard $
  * @link       NA

@@ -7,7 +7,7 @@
  * This class is responsible to handle login function in backoffice
  * 
  * @author     	Richard Garside [www.richardsprojects.co.uk]
- * @copyright  	2009 Rix Centre
+ * @copyright  	2008 onwards JISC TechDis (http://www.jisctechdis.ac.uk/)
  * @license    	http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @version    	$Id: SymbolLogin.class.php 799 2009-09-01 21:19:41Z richard $
  * @link       	NA

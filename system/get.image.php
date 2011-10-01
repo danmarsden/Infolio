@@ -8,7 +8,7 @@
  * LICENSE: This is an Open Source Project
  *
  * @author     Richard Garside [www.richardsprojects.co.uk]
- * @copyright  2009 Rix Centre
+ * @copyright  2008 onwards JISC TechDis (http://www.jisctechdis.ac.uk/)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @version    $Id: get.image.php 699 2009-07-13 22:07:46Z richard $
  * @link       NA

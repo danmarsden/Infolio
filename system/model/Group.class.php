@@ -7,7 +7,7 @@
  * LICENSE: This is an Open Source Project
  *
  * @author     Elvir LEonard	
- * @copyright  2008 Rix Centre
+ * @copyright  2008 onwards JISC TechDis (http://www.jisctechdis.ac.uk/)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @version    $Id: Group.class.php 708 2009-07-20 14:35:23Z richard $
  * @link       NA

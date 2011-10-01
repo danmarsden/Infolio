@@ -6,7 +6,7 @@
  * LICENSE: This is an Open Source Project
  *
  * @author     Elvir Leonard
- * @copyright  2008 Rix Centre
+ * @copyright  2008 onwards JISC TechDis (http://www.jisctechdis.ac.uk/)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @version    $Id: Institution.class.php 821 2009-11-10 21:28:57Z richard $
  * @link       NA

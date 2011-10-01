@@ -6,7 +6,7 @@
  * LICENSE: This is an Open Source Project
  *
  * @author     Elvir Leonard
- * @copyright  2008 Rix Centre
+ * @copyright  2008 onwards JISC TechDis (http://www.jisctechdis.ac.uk/)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @version    $Id: Tab.class.php 839 2009-12-29 17:17:30Z richard $
  * @link       NA

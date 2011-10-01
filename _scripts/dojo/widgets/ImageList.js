@@ -4,7 +4,7 @@
  * LICENSE: This is an Open Source Project
  *
  * @author     Richard Garside [www.richardsprojects.co.uk]
- * @copyright  2009 Rix Centre
+ * @copyright  2008 onwards JISC TechDis (http://www.jisctechdis.ac.uk/)
  * @license    http://www.opensource.org/licenses/bsd-license.php
  * @version    $Id: ImageList.js 792 2009-09-01 19:49:26Z richard $
  * @link       NA

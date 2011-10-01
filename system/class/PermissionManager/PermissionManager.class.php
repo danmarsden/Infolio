@@ -7,7 +7,7 @@
  * This class is responsible to handle login function in backoffice
  * 
  * @author     	Richard Garside [www.richardsprojects.co.uk]
- * @copyright  	2008 Rix Centre
+ * @copyright  	2008 onwards JISC TechDis (http://www.jisctechdis.ac.uk/)
  * @license    	http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @version    	$Id: PermissionManager.class.php 783 2009-08-27 11:24:13Z richard $
  * @link       	NA

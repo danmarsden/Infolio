@@ -3,7 +3,7 @@
  * upgrade.php - handles db upgrade routines
  *
  * @author     Dan Marsden [danmarsden.com]
- * @copyright  2008 Rix Centre
+ * @copyright  2008 onwards JISC TechDis (http://www.jisctechdis.ac.uk/)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 
  /**

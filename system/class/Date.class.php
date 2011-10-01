@@ -7,7 +7,7 @@
  * This class is handling date conversion
  * 
  * @author     	Elvir Leonard <elvir.leonard@rixcentre.org>
- * @copyright  	2008 Rix Centre
+ * @copyright  	2008 onwards JISC TechDis (http://www.jisctechdis.ac.uk/)
  * @license    	http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @version    	$Id: Date.class.php 849 2010-01-07 11:19:12Z richard $
  * @link       	NA

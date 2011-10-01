@@ -8,7 +8,7 @@
  * LICENSE: This is an Open Source Project
  *
  * @author     Richard Garside
- * @copyright  2009 Rix Centre
+ * @copyright  2008 onwards JISC TechDis (http://www.jisctechdis.ac.uk/)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @version    $Id: Template.class.php 752 2009-08-09 15:37:34Z richard $
  * @link       NA

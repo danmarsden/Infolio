@@ -6,7 +6,7 @@
  * LICENSE: This is an Open Source Project
  *
  * @author     Richard Garside [www.richardsprojects.co.uk]
- * @copyright  2009 Rix Centre
+ * @copyright  2008 onwards JISC TechDis (http://www.jisctechdis.ac.uk/)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @version    $Id: switch_page.xml.php 777 2009-08-25 13:31:39Z richard $
  * @link       NA

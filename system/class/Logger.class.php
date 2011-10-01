@@ -5,7 +5,7 @@
  * LICENSE: This is an Open Source Project
  * 
  * @author     	Elvir Leonard <elvir.leonard@rixcentre.org>
- * @copyright  	2008 Rix Centre
+ * @copyright  	2008 onwards JISC TechDis (http://www.jisctechdis.ac.uk/)
  * @license    	http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @version    	$Id: Logger.class.php 687 2009-07-08 14:25:35Z richard $
  * @link       	NA
