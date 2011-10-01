@@ -6,7 +6,7 @@
 
  *
  * @author     Dan Marsden, Catalyst IT Ltd
- * @copyright  2010 Catalyst IT Ltd
+ * @copyright  2008 onwards JISC TechDis (http://www.jisctechdis.ac.uk/)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 */
         $html = '<h2>Export Institution</h2>';

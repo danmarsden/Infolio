@@ -8,7 +8,7 @@
 //
 // Copyright (C) 2001 - 2003  Brent R. Matzelle
 //
-// License: LGPL, see LICENSE
+// License: LGPL, see PHPMailerLICENSE
 ////////////////////////////////////////////////////
 
 /**

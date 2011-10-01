@@ -4,7 +4,7 @@
  * sharedtabsEventDispatcher.class.php -
  *
  * @author     Dan Marsden, Catalyst IT Ltd
- * @copyright  2010 Catalyst IT Ltd
+ * @copyright  2008 onwards JISC TechDis (http://www.jisctechdis.ac.uk/)
 */
 
 include_once('EventDispatcher.class.php');

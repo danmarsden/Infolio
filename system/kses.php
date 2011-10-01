@@ -29,7 +29,6 @@
  *
  * [kses strips evil scripts!]
  *
- * @package   moodlecore
  * @copyright Ulf Harnhammar  {@link http://sourceforge.net/projects/kses}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
