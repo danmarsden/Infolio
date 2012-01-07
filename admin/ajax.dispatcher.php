@@ -453,7 +453,7 @@ function userOperations($operation, $adminUser)
 	switch($operation){
 		case 'insert':
 			// Set the institution ID, defaults to admin's own institution
-            $insid = Safe::get('templateId');
+            $insid = Safe::get('institution_id');
 			$institutionId = ( isset($insid) ) ? $insid : $adminUser->getInstitution()->getId();
 
 			try {

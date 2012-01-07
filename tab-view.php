@@ -34,7 +34,7 @@ $userid = Safe::getWithDefault('user_id', '', PARAM_INT);
 $institution = Safe::getWithDefault('institution', '', PARAM_ALPHANUMEXT);
 $tabid = Safe::getWithDefault('tab', '', PARAM_INT);
 $sharehash = Safe::getWithDefault('sharehash', '', PARAM_ALPHANUM);
-$pageviewid = Safe::getWithDefault('page', '', PARAM_INT);
+$pageviewid = Safe::getWithDefault('page', '', PARAM_ALPHANUMEXT);
 
 if (empty($userid) or empty($institution)) {
     error("invalid request");
