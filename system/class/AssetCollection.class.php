@@ -223,6 +223,7 @@ class AssetCollection
 			// Get HTML for each asset
 
 			foreach($filteredAssets as $asset) {
+				if (empty($asset)) continue; // TDM Laurent: issue here some assets are null. Would need to investigate why.
 				if( isset($page) && $showMenus ) {
 					$linkParams = array('c'=>$asset->getId());
 					$linkParams = (is_array($commandQueryParams))? array_merge( $linkParams, $commandQueryParams ) : $linkParams;
